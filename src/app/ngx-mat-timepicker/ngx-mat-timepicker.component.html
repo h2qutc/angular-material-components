@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+  <table class="table">
+    <tbody class="tbody">
+      <tr *ngIf="showSpinners">
+        <td>
+          <button mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('hour', true)"
+            [disabled]="disabled">
+            <mat-icon>expand_less</mat-icon>
+          </button>
+        </td>
+        <td></td>
+        <td>
+          <button mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('minute', true)"
+            [disabled]="disabled">
+            <mat-icon>expand_less</mat-icon>
+          </button> </td>
+        <td></td>
+        <td>
+          <button mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('second', true)"
+            [disabled]="disabled">
+            <mat-icon>expand_less</mat-icon>
+          </button> </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field>
+            <input type="text" matInput formControlName="hour" [placeholder]="hourPlaceholder">
+          </mat-form-field>
+        </td>
+        <td>&#58;</td>
+        <td>
+          <mat-form-field>
+            <input type="text" matInput formControlName="minute" >
+          </mat-form-field>
+        </td>
+        <td>&#58;</td>
+        <td>
+          <mat-form-field>
+            <input type="text" matInput formControlName="second" >
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr *ngIf="showSpinners">
+        <td>
+          <button mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('hour', false)"
+            [disabled]="disabled">
+            <mat-icon>expand_more</mat-icon>
+          </button> </td>
+        <td></td>
+        <td>
+          <button mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('minute', false)"
+            [disabled]="disabled">
+            <mat-icon>expand_more</mat-icon>
+          </button> </td>
+        <td></td>
+        <td>
+          <button mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('second', false)"
+            [disabled]="disabled">
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

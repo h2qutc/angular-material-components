@@ -1,0 +1,30 @@
+$fontSizeIcon: 24px;
+
+.ngx-mat-timepicker {
+  font-size: 13px;
+  form {
+    min-width: 90px;
+    .table {
+      .tbody {
+        tr {
+          td {
+            text-align: center;
+            .mat-icon-button {
+              height: $fontSizeIcon;
+              width: $fontSizeIcon;
+              line-height: $fontSizeIcon;
+              .mat-icon {
+                font-size: $fontSizeIcon;
+              }
+            }
+            .mat-form-field {
+              width: 20px;
+              max-width: 20px;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
