@@ -7,8 +7,6 @@ env:
 - NG_CLI_ANALYTICS=false
 
 script:
-- npm run lint
-- npm run test
 - npm run build
 
 notifications:
