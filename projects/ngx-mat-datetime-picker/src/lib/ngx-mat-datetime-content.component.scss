@@ -10,7 +10,7 @@
   .time-container {
     display: flex;
     position: relative;
-    padding: 15px;
+    padding-top: 5px;
     justify-content: center;
     &::before {
       content: '';
@@ -25,7 +25,7 @@
 
   .actions {
     display: flex;
-    padding: 15px;
+    padding: 5px 15px 10px 15px;
     justify-content: flex-end;
   }
 }
