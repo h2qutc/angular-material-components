@@ -1,10 +1,33 @@
 {
-  "name": "demo-angular",
-  "version": "0.0.0",
+  "name": "ngx-mat-datetime-picker",
+  "version": "1.0.0",
+  "description": "Angular Material Datetime Picker",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker/issues"
+  },
+  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular-material",
+    "material",
+    "datetime-picker",
+    "datepicker",
+    "timepicker",
+    "ngx-mat",
+    "ngx-mat-datetime-picker",
+    "ngx-mat-timepicker"
+  ],
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -34,6 +57,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-ng-packagr": "~0.13.0",
     "@angular/cli": "~7.3.5",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
@@ -48,8 +72,11 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^4.2.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
+    "tsickle": ">=0.34.0",
+    "tslib": "^1.9.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
   }

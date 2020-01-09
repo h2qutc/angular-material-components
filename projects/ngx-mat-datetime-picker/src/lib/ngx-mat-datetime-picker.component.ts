@@ -19,10 +19,11 @@ import {
 import { CanColor, CanColorCtor, DateAdapter, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendar, MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import * as moment from 'moment-timezone';
+import * as moment_ from 'moment';
+const moment = moment_;
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { createMissingDateImplError } from '../date-utils';
+import { createMissingDateImplError } from './utils/date-utils';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -151,7 +152,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       this._disabledChange.next(newValue);
     }
   }
-  private _disabled: boolean;
+  public _disabled: boolean;
 
   /**
    * Emits selected year in multiyear view.

@@ -22,4 +22,4 @@ import { NgxMatTimepickerComponent } from './ngx-mat-timepicker.component';
     NgxMatTimepickerComponent
   ]
 })
-export class MatTimePickerModule { }
+export class NgxMatTimepickerModule { }

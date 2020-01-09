@@ -33,8 +33,9 @@ import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
-import { createMissingDateImplError, sameTime, formatTime } from '../date-utils';
-import * as  moment from 'moment';
+import { createMissingDateImplError, sameTime, formatTime } from './utils/date-utils';
+import * as moment_ from 'moment';
+const moment = moment_;
 
 /** @docs-private */
 export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {

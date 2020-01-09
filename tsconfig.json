@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-mat-datetime-picker": [
+        "dist/ngx-mat-datetime-picker"
+      ],
+      "ngx-mat-datetime-picker/*": [
+        "dist/ngx-mat-datetime-picker/*"
+      ]
+    }
   }
 }

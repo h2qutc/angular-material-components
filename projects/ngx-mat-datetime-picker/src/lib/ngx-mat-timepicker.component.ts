@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, Input, OnChanges, SimpleChanges, ChangeDetectorRef, forwardRef } from '@angular/core';
-import * as moment from 'moment-timezone';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import * as moment_ from 'moment';
+import { Moment } from 'moment';
 import { Subject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
-import {
-  formatTwoDigitTimeValue, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE,
-  PATTERN_INPUT_SECOND, DEFAULT_STEP, DEFAULT_HOUR_PLACEHOLDER,
-  DEFAULT_SECOND_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, getHour, getMinute, getSecond, setHour, setMinute, setSecond
-} from '../date-utils';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, getHour, getMinute, getSecond, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND, setHour, setMinute, setSecond } from './utils/date-utils';
+const moment = moment_;
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -60,7 +58,7 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
   private _onChange: any = () => { };
   private _onTouched: any = () => { };
   private _disabled: boolean;
-  private _model: Date | moment.Moment;
+  private _model: Date | Moment;
 
   private _destroyed: Subject<void> = new Subject<void>();
   private _configEventForm = {

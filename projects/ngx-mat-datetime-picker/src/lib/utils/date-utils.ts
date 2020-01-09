@@ -1,4 +1,6 @@
-import * as moment from 'moment-timezone';
+import * as moment_ from 'moment';
+import { Moment } from 'moment';
+const moment = moment_;
 
 export const LIMIT_TIMES = {
     minHour: 0,
@@ -24,7 +26,7 @@ export function formatTwoDigitTimeValue(val: number) {
 }
 
 /** Get time in format hh:mm:ss */
-export function formatTime(value: Date | moment.Moment): string {
+export function formatTime(value: Date | Moment): string {
     const hour: number = getHour(value);
     const minute: number = getMinute(value);
     const second: number = getSecond(value);
@@ -61,7 +63,7 @@ export function createMissingDateImplError(provider: string) {
         `custom implementation.`);
 }
 
-export function setHour(model: Date | moment.Moment, val: number): void {
+export function setHour(model: Date | Moment, val: number): void {
     if (model instanceof Date) {
         model.setHours(val);
     } else if (moment.isMoment(model)) {
@@ -69,7 +71,7 @@ export function setHour(model: Date | moment.Moment, val: number): void {
     }
 }
 
-export function setMinute(model: Date | moment.Moment, val: number): void {
+export function setMinute(model: Date | Moment, val: number): void {
     if (model instanceof Date) {
         model.setMinutes(val);
     } else if (moment.isMoment(model)) {
@@ -77,7 +79,7 @@ export function setMinute(model: Date | moment.Moment, val: number): void {
     }
 }
 
-export function setSecond(model: Date | moment.Moment, val: number): void {
+export function setSecond(model: Date | Moment, val: number): void {
     if (model instanceof Date) {
         model.setSeconds(val);
     } else if (moment.isMoment(model)) {
@@ -85,7 +87,7 @@ export function setSecond(model: Date | moment.Moment, val: number): void {
     }
 }
 
-export function getHour(model: Date | moment.Moment): number {
+export function getHour(model: Date | Moment): number {
     if (model instanceof Date) {
         return model.getHours();
     } else if (moment.isMoment(model)) {
@@ -94,7 +96,7 @@ export function getHour(model: Date | moment.Moment): number {
     return null;
 }
 
-export function getMinute(model: Date | moment.Moment): number {
+export function getMinute(model: Date | Moment): number {
     if (model instanceof Date) {
         return model.getMinutes();
     } else if (moment.isMoment(model)) {
@@ -103,7 +105,7 @@ export function getMinute(model: Date | moment.Moment): number {
     return null;
 }
 
-export function getSecond(model: Date | moment.Moment): number {
+export function getSecond(model: Date | Moment): number {
     if (model instanceof Date) {
         return model.getSeconds();
     } else if (moment.isMoment(model)) {

@@ -5,11 +5,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { MatDatetimePickerModule } from './ngx-mat-datetime-picker/ngx-mat-datetime-picker.module';
-import { MatTimePickerModule } from './ngx-mat-timepicker/ngx-mat-timepicker.module';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'projects/ngx-mat-datetime-picker/src/public-api';
 
 @NgModule({
    declarations: [
@@ -22,8 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
       BrowserAnimationsModule,
       MatDatepickerModule,
       MatInputModule,
-      MatDatetimePickerModule,
-      MatTimePickerModule,
+      NgxMatDatetimePickerModule,
+      NgxMatTimepickerModule,
       FormsModule,
       ReactiveFormsModule,
       MatButtonModule

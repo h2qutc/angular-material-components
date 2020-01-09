@@ -8,7 +8,7 @@ import { MatDatepickerModule, MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatTimePickerModule } from '../ngx-mat-timepicker/ngx-mat-timepicker.module';
+import { NgxMatTimepickerModule } from './ngx-mat-timepicker.module';
 import { NgxMatDatetimeContent, NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 
@@ -23,9 +23,7 @@ import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-
-    MatTimePickerModule,
-
+    NgxMatTimepickerModule,
   ],
   exports: [
     NgxMatDatetimePicker,
@@ -43,4 +41,4 @@ import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
     MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER
   ]
 })
-export class MatDatetimePickerModule { }
+export class NgxMatDatetimePickerModule { }
