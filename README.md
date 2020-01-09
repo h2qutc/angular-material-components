@@ -55,7 +55,7 @@ Datetime picker using FormControl
 </mat-form-field>
 ```
 
-Timepicker using FormControl
+Timepicker
 
 ```
 <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>

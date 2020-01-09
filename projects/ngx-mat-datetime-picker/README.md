@@ -11,6 +11,8 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 ## DEMO
 @see [Demo here](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
+![](demo.gif)
+
 ## Getting started
 ```
 npm install --save ngx-mat-datetime-picker
@@ -55,7 +57,7 @@ Datetime picker using FormControl
 </mat-form-field>
 ```
 
-Timepicker using FormControl
+Timepicker
 
 ```
 <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
