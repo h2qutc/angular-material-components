@@ -1,27 +1,61 @@
-# ngx-mat-datetime-picker
+# Ngx Material DatetimePicker for @angular/material 7.x - 8.x
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
+Angular 7/8, @angular/material 7.x-8.x.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+A DatetimePicker like @angular/material [Datepicker](https://material.angular.io/components/datepicker/overview) by adding support for choosing time.
 
-## Code scaffolding
+# Usage
+## Installation
+```
+npm install ngx-mat-datetime-picker
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Setup
+Basically the same way the @angular/material Datepicker is configured and imported.
 
-## Build
+```
+imports: [
+  ...
+  BrowserModule,
+  BrowserAnimationsModule,
+  MatInputModule,
+  MatButtonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MatDatepickerModule
+  NgxMatDatetimePickerModule
+]
+```
+@see [src/app/app.module.ts](src/app/app.module.ts)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Using the component
 
-## Running unit tests
+The same API as @angular/material Datepicker (@see [API docs](https://material.angular.io/components/datepicker/api))
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Datetime picker using FormControl
 
-## Running end-to-end tests
+```
+<mat-form-field>
+    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+</mat-form-field>
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Timepicker using FormControl
 
-## Further help
+```
+<ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Theming
+- @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)
+- Add the Material Design icon font to your index.html
+```
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">
+```
