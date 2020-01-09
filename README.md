@@ -11,6 +11,8 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 ## DEMO
 @see [Demo here](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
+![Alt Text](demo.gif)
+
 ## Getting started
 ```
 npm install --save ngx-mat-datetime-picker
