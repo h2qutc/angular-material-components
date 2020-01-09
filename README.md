@@ -1,32 +1,43 @@
-# Ngx Material DatetimePicker for @angular/material 7.x - 8.x
+# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x
 
-Angular 7/8, @angular/material 7.x-8.x.
+[![Build Status](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker.svg?branch=master)](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker)
+[![codecov](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker)
+[![npm version](https://badge.fury.io/js/ngx-mat-datetime-picker.svg)](https://badge.fury.io/for/js/ngx-mat-datetime-picker)
 
 ## Description
 
 A DatetimePicker like @angular/material [Datepicker](https://material.angular.io/components/datepicker/overview) by adding support for choosing time.
 
-# Usage
-## Installation
+## DEMO
+@see [Demo here](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
+
+## Getting started
 ```
-npm install ngx-mat-datetime-picker
+npm install --save ngx-mat-datetime-picker
 ```
 
 ## Setup
 Basically the same way the @angular/material Datepicker is configured and imported.
 
 ```
-imports: [
-  ...
-  BrowserModule,
-  BrowserAnimationsModule,
-  MatInputModule,
-  MatButtonModule,
-  FormsModule,
-  ReactiveFormsModule,
-  MatDatepickerModule
-  NgxMatDatetimePickerModule
-]
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'ngx-mat-datetime-picker';
+@NgModule({
+   ...
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      MatDatepickerModule,
+      MatInputModule,
+      NgxMatTimepickerModule,
+      FormsModule,
+      ReactiveFormsModule,
+      MatButtonModule,
+      NgxMatDatetimePickerModule,
+   ],
+   ...
+})
+export class AppModule { }
 ```
 @see [src/app/app.module.ts](src/app/app.module.ts)
 
@@ -59,3 +70,6 @@ Timepicker using FormControl
 ```
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">
 ```
+
+## License
+MIT
