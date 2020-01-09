@@ -1,6 +1,29 @@
 {
   "name": "ngx-mat-datetime-picker",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.1",
+  "description": "Angular Material Datetime Picker",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker/issues"
+  },
+  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular-material",
+    "material",
+    "datetime-picker",
+    "datepicker",
+    "timepicker",
+    "ngx-mat",
+    "ngx-mat-datetime-picker",
+    "ngx-mat-timepicker"
+  ],
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0"
