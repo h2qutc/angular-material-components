@@ -1,6 +1,7 @@
 # Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x
 
 [![Build Status](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker.svg?branch=master)](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker)
+[![License](https://img.shields.io/npm/l/ngx-mat-datetime-picker.svg)](https://www.npmjs.com/package/ngx-mat-datetime-picker)
 [![npm version](https://badge.fury.io/js/ngx-mat-datetime-picker.svg)](https://badge.fury.io/for/js/ngx-mat-datetime-picker)
 
 ## Description
