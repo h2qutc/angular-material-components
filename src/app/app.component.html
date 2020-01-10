@@ -1,5 +1,36 @@
-<mat-form-field>
-  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-</mat-form-field>
+<div>
+  <h1> DEMO ngx-mat-datetime-picker</h1>
+  <hr />
+  <mat-form-field>
+    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+  </mat-form-field>
+
+  <div>{{dateControl.value}}</div>
+  <hr />
+
+  <h1> DEMO ngx-mat-timepicker</h1>
+  <hr />
+  <h3>Base</h3>
+  <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
+  <div>Date: {{date.toLocaleString()}}</div>
+
+  <hr />
+  <h3>Disabled</h3>
+  <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
+  <button mat-raised-button color="primary" (click)="disabled = !disabled">Enable/Disable</button>
+  <div>Date: {{date.toLocaleString()}}</div>
+
+  <hr />
+  <h3>Custom step: hour(2), minute(5), second(10) </h3>
+  <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
+  <div>Date: {{date.toLocaleString()}}</div>
+
+  <hr />
+  <h3>Show/hide spinners</h3>
+  <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
+  <div>Date: {{date.toLocaleString()}}</div>
+  
+  <button mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Enable/Disable</button>
+</div>
