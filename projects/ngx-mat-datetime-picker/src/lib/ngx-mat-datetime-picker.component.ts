@@ -12,19 +12,16 @@ import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef,
-  ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { CanColor, CanColorCtor, DateAdapter, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendar, MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as moment_ from 'moment';
-const moment = moment_;
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { createMissingDateImplError } from './utils/date-utils';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
+import { createMissingDateImplError } from './utils/date-utils';
+const moment = moment_;
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -237,6 +234,9 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** Emits new selected date when selected date changes. */
   readonly _selectedChanged = new Subject<D>();
 
+  /** Raw value before  */
+  private _rawValue: D;
+
   constructor(private _dialog: MatDialog,
     private _overlay: Overlay,
     private _ngZone: NgZone,
@@ -286,6 +286,12 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     this.close();
   }
 
+  _cancel(): void {
+    this._selected = this._rawValue;
+    this._selectedChanged.next(this._rawValue);
+    this.close();
+  }
+
   /**
    * Register an input with this datepicker.
    * @param input The datepicker input to register with this datepicker.
@@ -301,6 +307,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Open the calendar. */
   open(): void {
+    this._rawValue = this._dateAdapter.clone(this._selected);
+
     if (this._opened || this.disabled) {
       return;
     }
@@ -370,6 +378,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       direction: this._dir ? this._dir.value : 'ltr',
       viewContainerRef: this._viewContainerRef,
       panelClass: 'mat-datepicker-dialog',
+      hasBackdrop: false
     });
 
     this._dialogRef.afterClosed().subscribe(() => this.close());
@@ -404,7 +413,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _createPopup(): void {
     const overlayConfig = new OverlayConfig({
       positionStrategy: this._createPopupPositionStrategy(),
-      hasBackdrop: true,
+      hasBackdrop: false,
       backdropClass: 'mat-overlay-transparent-backdrop',
       direction: this._dir,
       scrollStrategy: this._scrollStrategy(),
