@@ -1,6 +1,6 @@
 {
   "name": "ngx-mat-datetime-picker",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "description": "Angular Material Datetime Picker",
   "author": "HO Hong Quan",
   "repository": {
