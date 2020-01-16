@@ -307,7 +307,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Open the calendar. */
   open(): void {
-    this._rawValue = this._dateAdapter.clone(this._selected);
+    this._rawValue =  this._selected != null 
+    ? this._dateAdapter.clone(this._selected) : null;
 
     if (this._opened || this.disabled) {
       return;

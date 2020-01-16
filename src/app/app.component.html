@@ -1,6 +1,7 @@
 <div>
   <h1> DEMO ngx-mat-datetime-picker</h1>
   <hr />
+  <div>Form Control</div>
   <mat-form-field>
     <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -8,6 +9,19 @@
   </mat-form-field>
 
   <div>{{dateControl.value}}</div>
+  <hr />
+
+  <div>Form Group</div>
+  <div [formGroup]="formGroup">
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date" 
+      formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+
+  <div>{{formGroup.get('date').value}}</div>
   <hr />
 
   <h1> DEMO ngx-mat-timepicker</h1>
