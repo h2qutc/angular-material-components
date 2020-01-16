@@ -322,11 +322,12 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     _onInput(value: string) {
         const lastValueWasValid = this._lastValueValid;
-        let date: any = new Date(value);
+        let date: any = value != null ? new Date(value) : null;
 
-        if (isNaN(date.getTime())) {
+        if (date != null && isNaN(date.getTime())) {
             date = null;
         }
+
         if (moment.isMoment(this._value) && date != null) {
             date = moment(date);
         }
@@ -336,7 +337,8 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
         const isSameTime = sameTime(date, this._value);
 
-        if (date != null && (!isSameTime || !this._dateAdapter.sameDate(date, this._value))) {
+        if ((date != null && (!isSameTime || !this._dateAdapter.sameDate(date, this._value)))
+        || (date == null && this._value != null))  {
             this._value = date;
             this._cvaOnChange(date);
             this._valueChange.emit(date);
