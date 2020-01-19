@@ -28,23 +28,23 @@
   <hr />
   <h3>Base</h3>
   <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
-  <div>Date: {{date.toLocaleString()}}</div>
+  <div>Date: {{date?.toLocaleString()}}</div>
 
   <hr />
   <h3>Disabled</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
   <button mat-raised-button color="primary" (click)="disabled = !disabled">Enable/Disable</button>
-  <div>Date: {{date.toLocaleString()}}</div>
+  <div>Date: {{date?.toLocaleString()}}</div>
 
   <hr />
   <h3>Custom step: hour(2), minute(5), second(10) </h3>
   <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
-  <div>Date: {{date.toLocaleString()}}</div>
+  <div>Date: {{date?.toLocaleString()}}</div>
 
   <hr />
   <h3>Show/hide spinners</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
-  <div>Date: {{date.toLocaleString()}}</div>
+  <div>Date: {{date?.toLocaleString()}}</div>
   
   <button mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Enable/Disable</button>
 </div>
