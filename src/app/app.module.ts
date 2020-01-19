@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'projects/ngx-mat-datetime-picker/src/public-api';
 import { AppComponent } from './app.component';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
    declarations: [
@@ -23,7 +24,8 @@ import { AppComponent } from './app.component';
       NgxMatTimepickerModule,
       FormsModule,
       ReactiveFormsModule,
-      MatButtonModule
+      MatButtonModule, 
+      MatMomentDateModule
    ],
    bootstrap: [
       AppComponent

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +9,20 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 })
 export class AppComponent implements OnInit {
 
-  public date: Date;
+  public date: moment.Moment;
   public disabled = false;
   public showSpinners = true;
 
   public formGroup = new FormGroup({
     date: new FormControl(null, [Validators.required])
   })
-  public dateControl = new FormControl(new Date());
+  public dateControl = new FormControl(moment());
 
   constructor(private http: HttpClient, private zone: NgZone) {
   }
 
   ngOnInit() {
-    this.date = new Date();
+    this.date = null;
   }
 
 }
