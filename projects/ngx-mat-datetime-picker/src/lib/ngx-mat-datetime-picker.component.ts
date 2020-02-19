@@ -183,7 +183,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _opened = false;
 
   /** Whether the timepicker'spinners is shown. */
-  @Input() showSpinners = true;
+  @Input()
+  get showSpinners(): boolean { return this._showSpinners; }
+  set showSpinners(value: boolean) { this._showSpinners = value; }
+  private _showSpinners = true;
+
+   /** Whether the second part is disabled. */
+   @Input()
+   get disableSecond(): boolean { return this._disableSecond; }
+   set disableSecond(value: boolean) { this._disableSecond = value; }
+   private _disableSecond = false;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;

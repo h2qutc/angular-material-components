@@ -6,8 +6,8 @@
     (monthSelected)="datepicker._selectMonth($event)">
 </mat-calendar>
 <div class="time-container">
-    <ngx-mat-timepicker [showSpinners]="datepicker.showSpinners" [disabled]="datepicker._disabled"
-        [(ngModel)]="datepicker._selected"></ngx-mat-timepicker>
+    <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners" [disableSecond]="datepicker._disableSecond"
+        [disabled]="datepicker._disabled" [(ngModel)]="datepicker._selected"></ngx-mat-timepicker>
 </div>
 <div class="actions">
     <button mat-button (click)="datepicker._cancel()" mat-icon-button>
