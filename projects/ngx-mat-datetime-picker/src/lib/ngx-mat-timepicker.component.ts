@@ -36,6 +36,7 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
   @Input() stepHour: number = DEFAULT_STEP;
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
+  @Input() disableSecond = false;
 
   /** Hour */
   private get hour() {

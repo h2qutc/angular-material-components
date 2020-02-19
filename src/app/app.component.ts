@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   public date: moment.Moment;
   public disabled = false;
   public showSpinners = true;
+  public disableSecond = true;
 
   public formGroup = new FormGroup({
     date: new FormControl(null, [Validators.required])

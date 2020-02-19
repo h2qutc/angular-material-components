@@ -47,4 +47,11 @@
   <div>Date: {{date?.toLocaleString()}}</div>
   
   <button mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Enable/Disable</button>
+
+  <hr />
+  <h3>Disable second</h3>
+  <ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
+  <div>Date: {{date.toLocaleString()}}</div>
+  <button mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Enable/Disable second</button>
+
 </div>
