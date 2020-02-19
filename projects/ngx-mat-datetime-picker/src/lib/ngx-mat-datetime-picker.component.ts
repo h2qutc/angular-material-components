@@ -288,14 +288,15 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     this.monthSelected.emit(normalizedMonth);
   }
 
-  /** OK button handler */
-  _ok(): void {
+  /** OK button handler and close*/
+  public ok(): void {
     const cloned = this._dateAdapter.clone(this._selected);
     this._selectedChanged.next(cloned);
     this.close();
   }
 
-  _cancel(): void {
+  /** Cancel and close */
+  public cancel(): void {
     this._selected = this._rawValue;
     this._selectedChanged.next(this._rawValue);
     this.close();

@@ -10,10 +10,10 @@
         [disabled]="datepicker._disabled" [(ngModel)]="datepicker._selected"></ngx-mat-timepicker>
 </div>
 <div class="actions">
-    <button mat-button (click)="datepicker._cancel()" mat-icon-button>
+    <button mat-button (click)="datepicker.cancel()" mat-icon-button>
         <mat-icon>close</mat-icon>
     </button>
-    <button mat-button (click)="datepicker._ok()" mat-icon-button color="primary" cdkFocusInitial>
+    <button mat-button (click)="datepicker.ok()" mat-icon-button color="primary" cdkFocusInitial>
         <mat-icon>done</mat-icon>
     </button>
 </div>

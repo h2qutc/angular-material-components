@@ -9,9 +9,11 @@
   <mat-form-field>
     <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker ></ngx-mat-datetime-picker>
+    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
   </mat-form-field>
-  
+  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
+    manually</button>
+
   <hr />
   <h3>@Input showSpinners = {{showSpinners}}</h3>
   <mat-form-field>
@@ -19,7 +21,8 @@
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker2 [showSpinners]="showSpinners"></ngx-mat-datetime-picker>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Toggle showSpinners </button>
+  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Toggle
+    showSpinners </button>
 
   <hr />
   <h3>@Input disableSecond = {{disableSecond}}</h3>
@@ -28,17 +31,17 @@
     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker3 [disableSecond]="disableSecond"></ngx-mat-datetime-picker>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Toggle disableSecond</button>
+  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Toggle
+    disableSecond</button>
   <hr />
 
 
-    <!-- ==============================TIME PICKER================================== -->
+  <!-- ==============================TIME PICKER================================== -->
 
   <div>Form Group</div>
   <div [formGroup]="formGroup">
     <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" 
-      formControlName="date">
+      <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
     </mat-form-field>
@@ -56,7 +59,8 @@
   <hr />
   <h3>Disabled</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
-  <button mat-raised-button color="primary" (click)="disabled = !disabled">Enable/Disable</button>
+  <button style="margin-top: 20px;" mat-raised-button color="primary"
+    (click)="disabled = !disabled">Enable/Disable</button>
   <div>Date: {{date?.toLocaleString()}}</div>
 
   <hr />
@@ -68,13 +72,15 @@
   <h3>Show/hide spinners</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
   <div>Date: {{date?.toLocaleString()}}</div>
-  
-  <button mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Enable/Disable</button>
+
+  <button style="margin-top: 20px;" mat-raised-button color="primary"
+    (click)="showSpinners = !showSpinners">Enable/Disable</button>
 
   <hr />
   <h3>Disable second</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
   <div>Date: {{date?.toLocaleString()}}</div>
-  <button mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Enable/Disable second</button>
+  <button style="margin-top: 20px;" mat-raised-button color="primary"
+    (click)="disableSecond = !disableSecond">Enable/Disable second</button>
 
 </div>
