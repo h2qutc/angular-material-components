@@ -186,31 +186,31 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   @Input()
   get showSpinners(): boolean { return this._showSpinners; }
   set showSpinners(value: boolean) { this._showSpinners = value; }
-  private _showSpinners = true;
+  public _showSpinners = true;
 
   /** Whether the second part is disabled. */
   @Input()
   get disableSecond(): boolean { return this._disableSecond; }
   set disableSecond(value: boolean) { this._disableSecond = value; }
-  private _disableSecond = false;
+  public _disableSecond = false;
 
   /** Step hour */
   @Input()
   get stepHour(): number { return this._stepHour; }
   set stepHour(value: number) { this._stepHour = value; }
-  private _stepHour: number = DEFAULT_STEP;
+  public _stepHour: number = DEFAULT_STEP;
 
   /** Step minute */
   @Input()
   get stepMinute(): number { return this._stepMinute; }
   set stepMinute(value: number) { this._stepMinute = value; }
-  private _stepMinute: number = DEFAULT_STEP;
+  public _stepMinute: number = DEFAULT_STEP;
 
   /** Step second */
   @Input()
   get stepSecond(): number { return this._stepSecond; }
   set stepSecond(value: number) { this._stepSecond = value; }
-  private _stepSecond: number = DEFAULT_STEP;
+  public _stepSecond: number = DEFAULT_STEP;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;
