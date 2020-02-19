@@ -183,7 +183,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _opened = false;
 
   /** Whether the timepicker'spinners is shown. */
-  @Input() showSpinners = true;
+  @Input()
+  get showSpinners(): boolean { return this._showSpinners; }
+  set showSpinners(value: boolean) { this._showSpinners = value; }
+  private _showSpinners = true;
+
+   /** Whether the second part is disabled. */
+   @Input()
+   get disableSecond(): boolean { return this._disableSecond; }
+   set disableSecond(value: boolean) { this._disableSecond = value; }
+   private _disableSecond = false;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;
@@ -279,14 +288,15 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     this.monthSelected.emit(normalizedMonth);
   }
 
-  /** OK button handler */
-  _ok(): void {
+  /** OK button handler and close*/
+  public ok(): void {
     const cloned = this._dateAdapter.clone(this._selected);
     this._selectedChanged.next(cloned);
     this.close();
   }
 
-  _cancel(): void {
+  /** Cancel and close */
+  public cancel(): void {
     this._selected = this._rawValue;
     this._selectedChanged.next(this._rawValue);
     this.close();

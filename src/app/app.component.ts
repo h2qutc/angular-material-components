@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -9,9 +9,12 @@ import * as moment from 'moment';
 })
 export class AppComponent implements OnInit {
 
+  @ViewChild('picker') picker: any;
+
   public date: moment.Moment;
   public disabled = false;
   public showSpinners = true;
+  public disableSecond = true;
 
   public formGroup = new FormGroup({
     date: new FormControl(null, [Validators.required])
@@ -23,6 +26,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.date = null;
+  }
+
+  closePicker(){
+    this.picker.cancel();
   }
 
 }
