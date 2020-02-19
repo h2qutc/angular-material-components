@@ -37,9 +37,9 @@
   <div>Form Group</div>
   <div [formGroup]="formGroup">
     <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date" 
+      <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" 
       formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
     </mat-form-field>
   </div>
@@ -74,7 +74,7 @@
   <hr />
   <h3>Disable second</h3>
   <ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
-  <div>Date: {{date.toLocaleString()}}</div>
+  <div>Date: {{date?.toLocaleString()}}</div>
   <button mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Enable/Disable second</button>
 
 </div>
