@@ -20,7 +20,7 @@ import * as moment_ from 'moment';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
-import { createMissingDateImplError } from './utils/date-utils';
+import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 const moment = moment_;
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -188,11 +188,29 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   set showSpinners(value: boolean) { this._showSpinners = value; }
   private _showSpinners = true;
 
-   /** Whether the second part is disabled. */
-   @Input()
-   get disableSecond(): boolean { return this._disableSecond; }
-   set disableSecond(value: boolean) { this._disableSecond = value; }
-   private _disableSecond = false;
+  /** Whether the second part is disabled. */
+  @Input()
+  get disableSecond(): boolean { return this._disableSecond; }
+  set disableSecond(value: boolean) { this._disableSecond = value; }
+  private _disableSecond = false;
+
+  /** Step hour */
+  @Input()
+  get stepHour(): number { return this._stepHour; }
+  set stepHour(value: number) { this._stepHour = value; }
+  private _stepHour: number = DEFAULT_STEP;
+
+  /** Step minute */
+  @Input()
+  get stepMinute(): number { return this._stepMinute; }
+  set stepMinute(value: number) { this._stepMinute = value; }
+  private _stepMinute: number = DEFAULT_STEP;
+
+  /** Step second */
+  @Input()
+  get stepSecond(): number { return this._stepSecond; }
+  set stepSecond(value: number) { this._stepSecond = value; }
+  private _stepSecond: number = DEFAULT_STEP;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;

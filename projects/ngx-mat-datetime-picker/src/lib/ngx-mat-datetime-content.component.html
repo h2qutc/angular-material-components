@@ -7,7 +7,9 @@
 </mat-calendar>
 <div class="time-container">
     <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners" [disableSecond]="datepicker._disableSecond"
-        [disabled]="datepicker._disabled" [(ngModel)]="datepicker._selected"></ngx-mat-timepicker>
+        [disabled]="datepicker._disabled" 
+        [stepHour]="datepicker._stepHour" [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond"
+        [(ngModel)]="datepicker._selected"></ngx-mat-timepicker>
 </div>
 <div class="actions">
     <button mat-button (click)="datepicker.cancel()" mat-icon-button>
