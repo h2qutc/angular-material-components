@@ -14,6 +14,17 @@
   <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
     manually</button>
 
+    <hr />
+  <h3>Form Group</h3>
+  <div [formGroup]="formGroup">
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+  <div>{{formGroup.get('date').value}}</div>
+
   <hr />
   <h3>@Input showSpinners = {{showSpinners}}</h3>
   <mat-form-field>
@@ -35,20 +46,16 @@
     disableSecond</button>
   <hr />
 
+  <h3>@Input stepHour, stepMinute, stepSecond </h3>
+  <mat-form-field>
+    <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" [formControl]="dateControl">
+    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker4 [stepHour]="3" [stepMinute]="5" [stepSecond]="10"></ngx-mat-datetime-picker>
+  </mat-form-field>
+  <hr />
+
 
   <!-- ==============================TIME PICKER================================== -->
-
-  <div>Form Group</div>
-  <div [formGroup]="formGroup">
-    <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
-    </mat-form-field>
-  </div>
-
-  <div>{{formGroup.get('date').value}}</div>
-  <hr />
 
   <h1> DEMO ngx-mat-timepicker</h1>
   <hr />
