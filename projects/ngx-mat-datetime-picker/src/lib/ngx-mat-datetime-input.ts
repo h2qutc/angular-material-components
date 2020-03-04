@@ -12,12 +12,10 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
 import { MatDateFormats, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
-import * as moment_ from 'moment';
 import { Subscription } from 'rxjs';
 import { NgxMatDateAdapter } from './core';
 import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
-const moment = moment_;
 
 /** @docs-private */
 export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {

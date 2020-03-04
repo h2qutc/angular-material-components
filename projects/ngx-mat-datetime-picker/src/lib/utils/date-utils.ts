@@ -24,7 +24,7 @@ export function formatTwoDigitTimeValue(val: number) {
 export function createMissingDateImplError(provider: string) {
     return Error(
         `MatDatepicker: No provider found for ${provider}. You must import one of the following ` +
-        `modules at your application root: MatNativeDateModule, MatMomentDateModule, or provide a ` +
+        `modules at your application root: NgxMatNativeDateModule, NgxMatMomentModule, or provide a ` +
         `custom implementation.`);
 }
 

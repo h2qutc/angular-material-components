@@ -155,7 +155,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     this._dateAdapter.setHour(this._model, this.hour);
     this._dateAdapter.setMinute(this._model, this.minute);
     this._dateAdapter.setSecond(this._model, this.second);
-    this._onChange(this._model);
+    this._onChange(this._dateAdapter.clone(this._model));
   }
 
 }

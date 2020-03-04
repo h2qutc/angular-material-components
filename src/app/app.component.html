@@ -14,7 +14,7 @@
   <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
     manually</button>
 
-    <hr />
+  <hr />
   <h3>Form Group</h3>
   <div [formGroup]="formGroup">
     <mat-form-field>
@@ -89,5 +89,12 @@
   <div>Date: {{date?.toLocaleString()}}</div>
   <button style="margin-top: 20px;" mat-raised-button color="primary"
     (click)="disableSecond = !disableSecond">Enable/Disable second</button>
+
+  <hr />
+  <form [formGroup]="formGroup">
+    <h3>Working with FormControl</h3>
+    <ngx-mat-timepicker formControlName="date"></ngx-mat-timepicker>
+    <div>FormControl value: {{formGroup.get('date').value}}</div>
+  </form>
 
 </div>
