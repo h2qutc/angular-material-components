@@ -21,7 +21,7 @@ import { NgxMatDateAdapter } from 'projects/ngx-mat-datetime-picker/src/lib/core
 const moment = _moment;
 
 /** Configurable options for {@see MomentDateAdapter}. */
-export interface MatMomentDateAdapterOptions {
+export interface NgxMatMomentDateAdapterOptions {
 
   /**
    * When enabled, the dates have to match the format exactly.
@@ -38,7 +38,7 @@ export interface MatMomentDateAdapterOptions {
 }
 
 /** InjectionToken for moment date adapter to configure options. */
-export const MAT_MOMENT_DATE_ADAPTER_OPTIONS = new InjectionToken<MatMomentDateAdapterOptions>(
+export const MAT_MOMENT_DATE_ADAPTER_OPTIONS = new InjectionToken<NgxMatMomentDateAdapterOptions>(
   'MAT_MOMENT_DATE_ADAPTER_OPTIONS', {
   providedIn: 'root',
   factory: MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY
@@ -46,7 +46,7 @@ export const MAT_MOMENT_DATE_ADAPTER_OPTIONS = new InjectionToken<MatMomentDateA
 
 
 /** @docs-private */
-export function MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY(): MatMomentDateAdapterOptions {
+export function MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY(): NgxMatMomentDateAdapterOptions {
   return {
     useUtc: false
   };
@@ -84,7 +84,7 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
 
   constructor(@Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
     @Optional() @Inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS)
-    private _options?: MatMomentDateAdapterOptions) {
+    private _options?: NgxMatMomentDateAdapterOptions) {
 
     super();
     this.setLocale(dateLocale || moment.locale());
@@ -274,7 +274,7 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
     format?: MomentFormatSpecification,
     locale?: string,
   ): Moment {
-    const { strict, useUtc }: MatMomentDateAdapterOptions = this._options || {};
+    const { strict, useUtc }: NgxMatMomentDateAdapterOptions = this._options || {};
 
     return useUtc
       ? moment.utc(date, format, locale, strict)

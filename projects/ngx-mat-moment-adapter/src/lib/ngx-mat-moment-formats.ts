@@ -8,13 +8,14 @@
 
 import {MatDateFormats} from '@angular/material/core';
 
+const DEFAULT_DATE_INPUT = 'l, LTS';
 
 export const NGX_MAT_MOMENT_FORMATS: MatDateFormats = {
   parse: {
-    dateInput: 'l',
+    dateInput: DEFAULT_DATE_INPUT,
   },
   display: {
-    dateInput: 'l',
+    dateInput: DEFAULT_DATE_INPUT,
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
