@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import * as moment_ from 'moment';
-import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, getHour, getMinute, getSecond, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND, setHour, setMinute, setSecond } from './utils/date-utils';
-const moment = moment_;
+import { NgxDateAdapter } from './core';
+import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -24,7 +22,7 @@ const moment = moment_;
   exportAs: 'ngxMatTimepicker',
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnInit, OnChanges {
 
   public form: FormGroup;
 
@@ -59,7 +57,7 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
   private _onChange: any = () => { };
   private _onTouched: any = () => { };
   private _disabled: boolean;
-  private _model: Date | Moment;
+  private _model: D;
 
   private _destroyed: Subject<void> = new Subject<void>();
   private _configEventForm = {
@@ -67,7 +65,11 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
     emitEvent: false
   }
 
-  constructor(private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
+  constructor(@Optional() public _dateAdapter: NgxDateAdapter<D>,
+    private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
+    if (!this._dateAdapter) {
+      throw createMissingDateImplError('DateAdapter');
+    }
     this.form = this.formBuilder.group(
       {
         hour: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)]],
@@ -98,8 +100,8 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
    * Writes a new value to the element.
    * @param obj
    */
-  writeValue(val: Date): void {
-    this._model = val || new Date();
+  writeValue(val: D): void {
+    this._model = val || this._dateAdapter.today();
     this._updateHourMinuteSecond();
   }
 
@@ -139,16 +141,20 @@ export class NgxMatTimepickerComponent implements ControlValueAccessor, OnInit, 
 
   /** Update controls of form by model */
   private _updateHourMinuteSecond() {
-    this.form.controls['hour'].setValue(formatTwoDigitTimeValue(getHour(this._model)));
-    this.form.controls['minute'].setValue(formatTwoDigitTimeValue(getMinute(this._model)));
-    this.form.controls['second'].setValue(formatTwoDigitTimeValue(getSecond(this._model)));
+    const _hour = this._dateAdapter.getHour(this._model);
+    const _minute = this._dateAdapter.getMinute(this._model);
+    const _second = this._dateAdapter.getSecond(this._model);
+
+    this.form.controls['hour'].setValue(formatTwoDigitTimeValue(_hour));
+    this.form.controls['minute'].setValue(formatTwoDigitTimeValue(_minute));
+    this.form.controls['second'].setValue(formatTwoDigitTimeValue(_second));
   }
 
   /** Update model */
   private _updateModel() {
-    setHour(this._model, this.hour);
-    setMinute(this._model, this.minute);
-    setSecond(this._model, this.second);
+    this._dateAdapter.setHour(this._model, this.hour);
+    this._dateAdapter.setMinute(this._model, this.minute);
+    this._dateAdapter.setSecond(this._model, this.second);
     this._onChange(this._model);
   }
 

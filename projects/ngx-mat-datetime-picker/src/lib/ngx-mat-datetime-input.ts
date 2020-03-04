@@ -7,34 +7,16 @@
  */
 
 import { DOWN_ARROW } from '@angular/cdk/keycodes';
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Inject,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-} from '@angular/core';
-import {
-    AbstractControl,
-    ControlValueAccessor,
-    NG_VALIDATORS,
-    NG_VALUE_ACCESSOR,
-    ValidationErrors,
-    Validator,
-    ValidatorFn,
-    Validators,
-} from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, ThemePalette, NativeDateAdapter } from '@angular/material/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, Optional, Output } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
+import { MatDateFormats, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
-import { Subscription } from 'rxjs';
-import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
-import { createMissingDateImplError, sameTime, formatTime } from './utils/date-utils';
 import * as moment_ from 'moment';
+import { Subscription } from 'rxjs';
+import { NgxDateAdapter } from './core';
+import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
+import { createMissingDateImplError } from './utils/date-utils';
 const moment = moment_;
 
 /** @docs-private */
@@ -242,7 +224,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     constructor(
         private _elementRef: ElementRef<HTMLInputElement>,
-        @Optional() public _dateAdapter: DateAdapter<D>,
+        @Optional() public _dateAdapter: NgxDateAdapter<D>,
         @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
         @Optional() private _formField: MatFormField) {
         if (!this._dateAdapter) {
@@ -335,10 +317,10 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         this._lastValueValid = !date || this._dateAdapter.isValid(date);
         date = this._getValidDateOrNull(date);
 
-        const isSameTime = sameTime(date, this._value);
+        const isSameTime = this._dateAdapter.isSameTime(date, this._value);
 
         if ((date != null && (!isSameTime || !this._dateAdapter.sameDate(date, this._value)))
-        || (date == null && this._value != null))  {
+            || (date == null && this._value != null)) {
             this._value = date;
             this._cvaOnChange(date);
             this._valueChange.emit(date);
@@ -369,13 +351,8 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     /** Formats a value and sets it on the input element. */
     private _formatValue(value: D | null) {
-        let displayValue = '';
-        if (value) {
-            const formattedTime = this._formatTime(value);
-            const formattedDate = this._dateAdapter.format(value, this._dateFormats.display.dateInput);
-            displayValue = `${formattedDate} ${formattedTime}`;
-        }
-        this._elementRef.nativeElement.value = displayValue;
+        this._elementRef.nativeElement.value =
+            value ? this._dateAdapter.format(value, this._dateFormats.display.dateInput) : '';
     }
 
     /**
@@ -384,10 +361,6 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
      */
     private _getValidDateOrNull(obj: any): D | null {
         return (this._dateAdapter.isDateInstance(obj) && this._dateAdapter.isValid(obj)) ? obj : null;
-    }
-
-    private _formatTime(value: D): string {
-        return formatTime(value as any);
     }
 
 }
