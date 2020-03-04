@@ -8,8 +8,8 @@
 
 import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, Optional } from '@angular/core';
-import { NgxDateAdapter } from './ngx-date-adapter';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxMatDateAdapter } from './ngx-mat-date-adapter';
 
 // TODO(mmalerba): Remove when we no longer support safari 9.
 /** Whether the browser supports the Intl API. */
@@ -69,7 +69,7 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
 
 /** Adapts the native JS Date for use with cdk-based components that work with dates. */
 @Injectable()
-export class NativeDateAdapter extends NgxDateAdapter<Date> {
+export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
 
   /** Whether to clamp the date between 1 and 9999 to avoid IE and Edge errors. */
   private readonly _clampDate: boolean;

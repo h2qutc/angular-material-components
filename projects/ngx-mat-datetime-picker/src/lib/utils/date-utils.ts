@@ -1,8 +1,3 @@
-import * as moment_ from 'moment';
-import { Moment } from 'moment';
-import { NgxDateAdapter } from '../core';
-const moment = moment_;
-
 export const LIMIT_TIMES = {
     minHour: 0,
     maxHour: 23,
@@ -31,5 +26,10 @@ export function createMissingDateImplError(provider: string) {
         `MatDatepicker: No provider found for ${provider}. You must import one of the following ` +
         `modules at your application root: MatNativeDateModule, MatMomentDateModule, or provide a ` +
         `custom implementation.`);
+}
+
+/** Formats a range of years. */
+export function formatYearRange(start: string, end: string): string {
+    return `${start} \u2013 ${end}`;
 }
 

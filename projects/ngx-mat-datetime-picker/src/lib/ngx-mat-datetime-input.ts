@@ -14,7 +14,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import * as moment_ from 'moment';
 import { Subscription } from 'rxjs';
-import { NgxDateAdapter } from './core';
+import { NgxMatDateAdapter } from './core';
 import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
 const moment = moment_;
@@ -224,11 +224,11 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     constructor(
         private _elementRef: ElementRef<HTMLInputElement>,
-        @Optional() public _dateAdapter: NgxDateAdapter<D>,
+        @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
         @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
         @Optional() private _formField: MatFormField) {
         if (!this._dateAdapter) {
-            throw createMissingDateImplError('DateAdapter');
+            throw createMissingDateImplError('NgxMatDateAdapter');
         }
         if (!this._dateFormats) {
             throw createMissingDateImplError('MAT_DATE_FORMATS');

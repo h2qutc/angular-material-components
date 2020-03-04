@@ -7,3 +7,4 @@ export * from './lib/ngx-mat-datetime-input';
 export * from './lib/ngx-mat-datetime-picker.module';
 export * from './lib/ngx-mat-timepicker.component';
 export * from './lib/ngx-mat-timepicker.module';
+export * from './lib/core/';

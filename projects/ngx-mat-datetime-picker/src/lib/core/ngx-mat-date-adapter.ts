@@ -1,6 +1,6 @@
 import { DateAdapter } from '@angular/material/core';
 
-export abstract class NgxDateAdapter<D> extends DateAdapter<D> {
+export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
     /**
    * Gets the hour component of the given date.
    * @param date The date to extract the month from.

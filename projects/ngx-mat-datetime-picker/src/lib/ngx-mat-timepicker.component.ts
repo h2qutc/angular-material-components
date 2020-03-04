@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Opt
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { NgxDateAdapter } from './core';
+import { NgxMatDateAdapter } from './core';
 import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
@@ -65,10 +65,10 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     emitEvent: false
   }
 
-  constructor(@Optional() public _dateAdapter: NgxDateAdapter<D>,
+  constructor(@Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
     this.form = this.formBuilder.group(
       {
