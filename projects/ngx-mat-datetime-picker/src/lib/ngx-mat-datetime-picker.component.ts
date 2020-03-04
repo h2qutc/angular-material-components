@@ -16,14 +16,12 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, Elemen
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import * as moment_ from 'moment';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 import { NgxMatDateAdapter } from './core';
 import { NgxMatCalendar } from './ngx-mat-calendar';
-const moment = moment_;
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -294,7 +292,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Selects the given date */
   select(date: D): void {
-    this._copyTime(date, this._selected);
+    this._dateAdapter.copyTime(date, this._selected);
     this._selected = date;
   }
 
@@ -527,20 +525,6 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     }
     if (this._dialogRef) {
       this._dialogRef.componentInstance.color = color;
-    }
-  }
-
-
-  /** Copy time */
-  private _copyTime(toDate: D, fromDate: D) {
-    if (toDate instanceof Date) {
-      toDate.setHours((<any>fromDate).getHours());
-      toDate.setMinutes((<any>fromDate).getMinutes());
-      toDate.setSeconds((<any>fromDate).getSeconds());
-    } else if (moment.isMoment(toDate)) {
-      toDate.hour((<any>fromDate).hour());
-      toDate.minute((<any>fromDate).minute());
-      toDate.second((<any>fromDate).second());
     }
   }
 

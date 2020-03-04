@@ -304,16 +304,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     _onInput(value: string) {
         const lastValueWasValid = this._lastValueValid;
-        let date: any = value != null ? new Date(value) : null;
-
-        if (date != null && isNaN(date.getTime())) {
-            date = null;
-        }
-
-        if (moment.isMoment(this._value) && date != null) {
-            date = moment(date);
-        }
-
+        let date = this._dateAdapter.parse(value, this._dateFormats.parse.dateInput);
         this._lastValueValid = !date || this._dateAdapter.isValid(date);
         date = this._getValidDateOrNull(date);
 
