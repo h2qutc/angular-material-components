@@ -16,12 +16,12 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, Elemen
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NgxMatDateAdapter } from 'ngx-mat-core';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { NgxMatCalendar } from './ngx-mat-calendar';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
-import { NgxMatCalendar } from './ngx-mat-calendar';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;

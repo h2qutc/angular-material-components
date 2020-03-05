@@ -15,10 +15,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 // TODO(mmalerba): See if we can clean this up at some point.
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
-import { Moment, MomentFormatSpecification, MomentInput } from 'moment';
+import { default as _rollupMoment, Moment, MomentFormatSpecification, MomentInput } from 'moment';
 import { NgxMatDateAdapter } from 'ngx-mat-core';
 
-const moment = _moment;
+const moment = _rollupMoment || _moment;
 
 /** Configurable options for {@see MomentDateAdapter}. */
 export interface NgxMatMomentDateAdapterOptions {

@@ -6,9 +6,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { NgxMatMomentModule } from 'projects/ngx-mat-moment-adapter/src/public-api';
 import { AppComponent } from './app.component';
-// import { NgxMatNativeDateModule } from 'ngx-mat-core';
+import { NgxMatNativeDateModule } from 'ngx-mat-core';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'ngx-mat-datetime-picker';
 import { NgxMatMomentModule } from 'ngx-mat-moment-adapter';
 

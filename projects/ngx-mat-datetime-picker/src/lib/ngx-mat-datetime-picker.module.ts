@@ -14,12 +14,10 @@ import { NgxMatMonthView } from './ngx-mat-month-view';
 import { NgxMatMultiYearView } from './ngx-mat-multi-year-view';
 import { NgxMatTimepickerModule } from './ngx-mat-timepicker.module';
 import { NgxMatYearView } from './ngx-mat-year-view';
-import { NgxMatNativeDateModule } from 'ngx-mat-core';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgxMatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule,
     PortalModule,
