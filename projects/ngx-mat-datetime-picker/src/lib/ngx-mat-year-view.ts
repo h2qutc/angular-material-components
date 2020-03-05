@@ -11,7 +11,7 @@ import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARR
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 import { createMissingDateImplError } from './utils/date-utils';
 
 /**

@@ -15,7 +15,7 @@ import { NgxMatMonthView } from './ngx-mat-month-view';
 import { getActiveOffset, isSameMultiYearView, NgxMatMultiYearView, yearsPerPage } from './ngx-mat-multi-year-view';
 import { NgxMatYearView } from './ngx-mat-year-view';
 import { createMissingDateImplError, formatYearRange } from './utils/date-utils';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 
 /**
  * Possible views for the calendar.

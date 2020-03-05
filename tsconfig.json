@@ -31,12 +31,6 @@
       ],
       "ngx-mat-moment-adapter/*": [
         "dist/ngx-mat-moment-adapter/*"
-      ],
-      "ngx-mat-core": [
-        "dist/ngx-mat-core"
-      ],
-      "ngx-mat-core/*": [
-        "dist/ngx-mat-core/*"
       ]
     }
   }
