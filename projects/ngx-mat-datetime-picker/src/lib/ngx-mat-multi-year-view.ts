@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 import {Directionality} from '@angular/cdk/bidi';
 import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 
 export const yearsPerPage = 24;
 

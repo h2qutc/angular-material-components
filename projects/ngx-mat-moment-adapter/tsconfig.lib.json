@@ -28,11 +28,5 @@
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
-  ],
-  "ngx-mat-core": [
-    "../../projects/ngx-mat-core"
-  ],
-  "ngx-mat-core/*": [
-    "../../projects/ngx-mat-core/*"
   ]
 }

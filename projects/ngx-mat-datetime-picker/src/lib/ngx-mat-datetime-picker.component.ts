@@ -16,7 +16,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, Elemen
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './ngx-mat-calendar';

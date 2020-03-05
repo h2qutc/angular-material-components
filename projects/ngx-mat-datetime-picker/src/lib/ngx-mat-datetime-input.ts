@@ -15,7 +15,7 @@ import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
-import { NgxMatDateAdapter } from 'ngx-mat-core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 
 /** @docs-private */
 export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {
