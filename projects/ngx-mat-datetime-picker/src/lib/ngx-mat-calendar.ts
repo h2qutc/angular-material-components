@@ -11,7 +11,7 @@ import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, ChangeDete
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarCellCssClasses, MatDatepickerIntl } from '@angular/material/datepicker';
 import { Subject, Subscription } from 'rxjs';
-import { NgxMatDateAdapter } from './core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 import { NgxMatMonthView } from './ngx-mat-month-view';
 import { getActiveOffset, isSameMultiYearView, NgxMatMultiYearView, yearsPerPage } from './ngx-mat-multi-year-view';
 import { NgxMatYearView } from './ngx-mat-year-view';

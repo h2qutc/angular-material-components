@@ -16,7 +16,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { Moment, MomentFormatSpecification, MomentInput } from 'moment';
-import { NgxMatDateAdapter } from 'projects/ngx-mat-datetime-picker/src/lib/core';
+import { NgxMatDateAdapter } from 'projects/ngx-mat-datetime-picker/src/public-api';
 
 const moment = _moment;
 

@@ -13,7 +13,7 @@ import { MatDateFormats, MAT_DATE_FORMATS, ThemePalette } from '@angular/materia
 import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
-import { NgxMatDateAdapter } from './core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 import { NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
 

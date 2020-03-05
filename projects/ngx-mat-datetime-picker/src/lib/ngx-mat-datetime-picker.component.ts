@@ -20,7 +20,7 @@ import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core';
+import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
 import { NgxMatCalendar } from './ngx-mat-calendar';
 
 /** Used to generate a unique ID for each datepicker instance. */

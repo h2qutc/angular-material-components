@@ -7,7 +7,7 @@ import { MatDatepickerModule, MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { NgxMatNativeDateModule } from './core';
+import { NgxMatNativeDateModule } from './core/ngx-mat-native-date.module';
 import { NgxMatCalendar, NgxMatCalendarHeader } from './ngx-mat-calendar';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { NgxMatDatetimeContent, NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';

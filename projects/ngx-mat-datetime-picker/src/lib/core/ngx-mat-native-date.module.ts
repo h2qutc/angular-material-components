@@ -13,10 +13,6 @@ import { NgxMatDateAdapter } from './ngx-mat-date-adapter';
 import { NgxMatNativeDateAdapter } from './ngx-mat-native-date-adapter';
 import { NGX_MAT_NATIVE_DATE_FORMATS } from './ngx-mat-native-date-formats';
 
-export * from './ngx-mat-date-adapter';
-export * from './ngx-mat-native-date-adapter';
-export * from './ngx-mat-native-date-formats';
-
 
 @NgModule({
     imports: [PlatformModule],
