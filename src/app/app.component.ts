@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.date = null;
   }
 
-  closePicker(){
+  closePicker() {
     this.picker.cancel();
   }
 

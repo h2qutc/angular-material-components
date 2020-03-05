@@ -13,15 +13,15 @@ import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } 
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { CanColor, CanColorCtor, DateAdapter, mixinColor, ThemePalette } from '@angular/material/core';
-import { MatCalendar, MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
+import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
+import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import * as moment_ from 'moment';
+import { NgxMatDateAdapter } from 'ngx-mat-core';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { NgxMatCalendar } from './ngx-mat-calendar';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
-const moment = moment_;
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -36,7 +36,7 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContent
 
 /**
  * Component used as the content for the datepicker dialog and popup. We use this instead of using
- * MatCalendar directly as the content so we can control the initial focus. This also gives us a
+ * NgxMatCalendar directly as the content so we can control the initial focus. This also gives us a
  * place to put additional features of the popup that are not part of the calendar itself in the
  * future. (e.g. confirmation buttons).
  * @docs-private
@@ -63,7 +63,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   implements AfterViewInit, CanColor {
 
   /** Reference to the internal calendar component. */
-  @ViewChild(MatCalendar) _calendar: MatCalendar<D>;
+  @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
 
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatetimePicker<D>;
@@ -269,11 +269,11 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     private _ngZone: NgZone,
     private _viewContainerRef: ViewContainerRef,
     @Inject(MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
-    @Optional() private _dateAdapter: DateAdapter<D>,
+    @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir: Directionality,
     @Optional() @Inject(DOCUMENT) private _document: any) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
 
     this._scrollStrategy = scrollStrategy;
@@ -292,7 +292,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Selects the given date */
   select(date: D): void {
-    this._copyTime(date, this._selected);
+    this._dateAdapter.copyTime(date, this._selected);
     this._selected = date;
   }
 
@@ -525,20 +525,6 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     }
     if (this._dialogRef) {
       this._dialogRef.componentInstance.color = color;
-    }
-  }
-
-
-  /** Copy time */
-  private _copyTime(toDate: D, fromDate: D) {
-    if (toDate instanceof Date) {
-      toDate.setHours((<any>fromDate).getHours());
-      toDate.setMinutes((<any>fromDate).getMinutes());
-      toDate.setSeconds((<any>fromDate).getSeconds());
-    } else if (moment.isMoment(toDate)) {
-      toDate.hour((<any>fromDate).hour());
-      toDate.minute((<any>fromDate).minute());
-      toDate.second((<any>fromDate).second());
     }
   }
 
