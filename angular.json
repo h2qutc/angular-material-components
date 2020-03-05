@@ -170,11 +170,11 @@
         }
       }
     },
-    "ngx-mat-moment-adapter": {
+    "NgxMatMomentAdapter": {
       "root": "projects/ngx-mat-moment-adapter",
       "sourceRoot": "projects/ngx-mat-moment-adapter/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "NgxMat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -197,6 +197,41 @@
             "tsConfig": [
               "projects/ngx-mat-moment-adapter/tsconfig.lib.json",
               "projects/ngx-mat-moment-adapter/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "NgxMatCore": {
+      "root": "projects/ngx-mat-core",
+      "sourceRoot": "projects/ngx-mat-core/src",
+      "projectType": "library",
+      "prefix": "NgxMat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-mat-core/tsconfig.lib.json",
+            "project": "projects/ngx-mat-core/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-mat-core/src/test.ts",
+            "tsConfig": "projects/ngx-mat-core/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mat-core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-mat-core/tsconfig.lib.json",
+              "projects/ngx-mat-core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

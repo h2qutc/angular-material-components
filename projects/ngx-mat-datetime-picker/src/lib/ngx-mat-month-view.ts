@@ -12,7 +12,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell, MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { createMissingDateImplError } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from 'ngx-mat-core';
 
 
 const DAYS_PER_WEEK = 7;
