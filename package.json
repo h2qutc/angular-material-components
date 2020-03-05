@@ -47,6 +47,8 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "core-js": "^2.5.4",
+    "moment": "^2.24.0",
+    "ngx-mat-moment-adapter": "0.0.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.8.26"
