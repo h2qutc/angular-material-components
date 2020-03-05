@@ -1,6 +1,14 @@
 {
   "name": "ngx-mat-moment-adapter",
   "version": "0.0.1",
+  "description": "Angular Material Moment Adapter",
+  "author": "HO Hong Quan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+  },
+  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",

@@ -66,7 +66,58 @@ Timepicker
 <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
+<ngx-mat-timepicker [formControl]="formControl"></ngx-mat-timepicker>
 ```
+
+## Choosing a date implementation and date format settings
+
+The datepicker was built to be date implementation agnostic. This means that it can be made to work with a variety of different date implementations. However it also means that developers need to make sure to provide the appropriate pieces for the datepicker to work with their chosen implementation.
+
+The easiest way to ensure this is to import one of the provided date modules:
+
+* **NgxMatNativeDateModule**
+   **Date type**:	Date
+   **Supported locales**:	en-US
+   **Dependencies**:	None
+   **Import from**:	ngx-mat-datetime-picker
+
+* **NgxMatMomentModule**
+   **Date type**:	Moment
+   **Dependencies**:	Moment.js
+   **Import** from**:	[ngx-mat-moment-adapter](https://www.npmjs.com/package/ngx-mat-moment-adapter)
+
+   ```
+   npm install --save ngx-mat-moment-adapter
+   ```
+
+Please note: NgxMatNativeDateModule is based off the functionality available in JavaScript's native Date object. Thus it is not suitable for many locales. One of the biggest shortcomings of the native Date object is the inability to set the parse format.
+
+We highly recommend using the **NgxMatMomentModule** or a custom **NgxMatDateAdapter** that works with the formatting/parsing library of your choice.
+
+For example:
+
+Creating a custom date adapter:
+
+```
+@Injectable()
+export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}
+// D can be Date, Moment or customized type
+```
+
+Creating a custom date adapter module
+```
+@NgModule({
+  providers: [
+    {
+      provide: NgxMatDateAdapter,
+      useClass: CustomDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    }
+  ],
+})
+export class CustomDateModule { }
+```
+
 
 ## Theming
 - @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)

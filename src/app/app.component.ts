@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('picker') picker: any;
 
-  public date: moment.Moment;
+  public date: Date;
   public disabled = false;
   public showSpinners = true;
   public disableSecond = true;
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   public formGroup = new FormGroup({
     date: new FormControl(null, [Validators.required])
   })
-  public dateControl = new FormControl(moment());
+  public dateControl = new FormControl(new Date());
 
   constructor(private http: HttpClient, private zone: NgZone) {
   }
