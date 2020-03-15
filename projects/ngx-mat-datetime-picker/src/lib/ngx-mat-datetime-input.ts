@@ -68,6 +68,7 @@ export class MatDatetimePickerInputEvent<D> {
         '(input)': '_onInput($event.target.value)',
         '(change)': '_onChange()',
         '(blur)': '_onBlur()',
+        '(focus)': '_onFocus()',
         '(keydown)': '_onKeydown($event)',
     },
     exportAs: 'ngxMatDatetimePickerInput',
@@ -293,6 +294,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
 
     _onKeydown(event: KeyboardEvent) {
+        console.log('_onKeydown');
         const isAltDownArrow = event.altKey && event.keyCode === DOWN_ARROW;
 
         if (this._datepicker && isAltDownArrow && !this._elementRef.nativeElement.readOnly) {
@@ -302,6 +304,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
 
     _onInput(value: string) {
+        console.log('_onInput');
         const lastValueWasValid = this._lastValueValid;
         let date = this._dateAdapter.parse(value, this._dateFormats.parse.dateInput);
         this._lastValueValid = !date || this._dateAdapter.isValid(date);
@@ -337,6 +340,15 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         }
 
         this._onTouched();
+    }
+
+    /** Handles focus events on the input. */
+    _onFocus() {
+        console.log('_onFocus');
+        // Close datetime picker if opened
+        if(this._datepicker && this._datepicker.opened){
+            this._datepicker.cancel();
+        }
     }
 
     /** Formats a value and sets it on the input element. */
