@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatTimepickerComponent } from './ngx-mat-timepicker.component';
+import { NgxMatInputOnlyNumericDirective } from './ngx-mat-input-only-numeric.directive';
 
 @NgModule({
   imports: [
@@ -16,10 +17,12 @@ import { NgxMatTimepickerComponent } from './ngx-mat-timepicker.component';
     MatButtonModule,
   ],
   exports: [
-    NgxMatTimepickerComponent
+    NgxMatTimepickerComponent,
+    NgxMatInputOnlyNumericDirective
   ],
   declarations: [
-    NgxMatTimepickerComponent
+    NgxMatTimepickerComponent,
+    NgxMatInputOnlyNumericDirective
   ]
 })
 export class NgxMatTimepickerModule { }

@@ -25,15 +25,15 @@
       <tr>
         <td>
           <mat-form-field>
-            <input type="text" matInput formControlName="hour" [placeholder]="hourPlaceholder"
-              (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
+            <input type="text" matInput ngxMatInputOnlyNumeric maxlength="2" formControlName="hour"
+              [placeholder]="hourPlaceholder" (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
               (keydown.ArrowDown)="change('hour', false); $event.preventDefault()">
           </mat-form-field>
         </td>
         <td class="spacer">&#58;</td>
         <td>
           <mat-form-field>
-            <input type="text" matInput formControlName="minute"
+            <input type="text" matInput ngxMatInputOnlyNumeric maxlength="2" formControlName="minute"
               (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
               (keydown.ArrowDown)="change('minute', false); $event.preventDefault()">
           </mat-form-field>
@@ -41,7 +41,7 @@
         <td *ngIf="!disableSecond" class="spacer">&#58;</td>
         <td *ngIf="!disableSecond">
           <mat-form-field>
-            <input type="text" matInput formControlName="second"
+            <input type="text" matInput ngxMatInputOnlyNumeric maxlength="2" formControlName="second"
               (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
               (keydown.ArrowDown)="change('second', false); $event.preventDefault()">
           </mat-form-field>
