@@ -85,6 +85,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         this._datepickerSubscription.unsubscribe();
 
         this._datepickerSubscription = this._datepicker._selectedChanged.subscribe((selected: D) => {
+            console.log('_selectedChanged', selected);
             this.value = selected;
             this._cvaOnChange(selected);
             this._onTouched();
