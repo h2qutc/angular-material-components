@@ -123,9 +123,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     this.cd.markForCheck();
   }
 
-  /** Handler arrow's click event */
-  public onArrowClick(prop: string, up: boolean) {
-    console.log('onArrowClick')
+  /** Change property of time */
+  public change(prop: string, up: boolean) {
+    console.log('change');
     //hour => stepHour
     const keyProp = prop[0].toUpperCase() + prop.slice(1);
     let nextVal = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];

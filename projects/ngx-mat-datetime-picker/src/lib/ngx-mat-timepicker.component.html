@@ -3,20 +3,20 @@
     <tbody class="tbody">
       <tr *ngIf="showSpinners">
         <td>
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('hour', true)"
+          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('hour', true)"
             [disabled]="disabled">
             <mat-icon>expand_less</mat-icon>
           </button>
         </td>
         <td></td>
         <td>
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('minute', true)"
+          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('minute', true)"
             [disabled]="disabled">
             <mat-icon>expand_less</mat-icon>
           </button> </td>
         <td></td>
         <td *ngIf="!disableSecond">
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="onArrowClick('second', true)"
+          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('second', true)"
             [disabled]="disabled">
             <mat-icon>expand_less</mat-icon>
           </button>
@@ -25,19 +25,25 @@
       <tr>
         <td>
           <mat-form-field>
-            <input type="text" matInput formControlName="hour" [placeholder]="hourPlaceholder">
+            <input type="text" matInput formControlName="hour" [placeholder]="hourPlaceholder"
+              (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()">
           </mat-form-field>
         </td>
         <td>&#58;</td>
         <td>
           <mat-form-field>
-            <input type="text" matInput formControlName="minute">
+            <input type="text" matInput formControlName="minute"
+              (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()">
           </mat-form-field>
         </td>
         <td *ngIf="!disableSecond">&#58;</td>
         <td *ngIf="!disableSecond">
           <mat-form-field>
-            <input type="text" matInput formControlName="second">
+            <input type="text" matInput formControlName="second"
+              (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('second', false); $event.preventDefault()">
           </mat-form-field>
         </td>
       </tr>
