@@ -52,6 +52,11 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     return isNaN(val) ? 0 : val;
   };
 
+  /** Whether or not the form is valid */
+  public get isValid(): boolean {
+    return this.form.valid;
+  }
+
   public limit = LIMIT_TIMES;
 
   private _onChange: any = () => { };
@@ -64,6 +69,8 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     onlySelf: false,
     emitEvent: false
   }
+
+  public pattern = PATTERN_INPUT_HOUR;
 
   constructor(@Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {

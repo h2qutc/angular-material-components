@@ -30,7 +30,7 @@
               (keydown.ArrowDown)="change('hour', false); $event.preventDefault()">
           </mat-form-field>
         </td>
-        <td>&#58;</td>
+        <td class="spacer">&#58;</td>
         <td>
           <mat-form-field>
             <input type="text" matInput formControlName="minute"
@@ -38,7 +38,7 @@
               (keydown.ArrowDown)="change('minute', false); $event.preventDefault()">
           </mat-form-field>
         </td>
-        <td *ngIf="!disableSecond">&#58;</td>
+        <td *ngIf="!disableSecond" class="spacer">&#58;</td>
         <td *ngIf="!disableSecond">
           <mat-form-field>
             <input type="text" matInput formControlName="second"
