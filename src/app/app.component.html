@@ -2,17 +2,6 @@
 
   <!-- ==============================DATE TIME PICKER================================== -->
   <h1> DEMO ngx-mat-datetime-picker</h1>
-  <strong> SELECTED DATE: {{dateControl.value}}</strong>
-
-  <hr />
-  <h3>Base</h3>
-  <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-  </mat-form-field>
-  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
-    manually</button>
 
   <hr />
   <h3>Form Group</h3>
@@ -26,43 +15,80 @@
   <div>{{formGroup.get('date').value}}</div>
 
   <hr />
-  <h3>@Input showSpinners = {{showSpinners}}</h3>
+  <h3>Base</h3>
   <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker2 [showSpinners]="showSpinners"></ngx-mat-datetime-picker>
+    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+      [min]="minDate" [max]="maxDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond" [stepHour]="stepHour"
+      [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+    </ngx-mat-datetime-picker>
   </mat-form-field>
-  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="showSpinners = !showSpinners">Toggle
-    showSpinners </button>
+  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
+    manually</button>
 
-  <hr />
-  <h3>@Input disableSecond = {{disableSecond}}</h3>
-  <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker3" placeholder="Choose a date" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker3 [disableSecond]="disableSecond"></ngx-mat-datetime-picker>
-  </mat-form-field>
-  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="disableSecond = !disableSecond">Toggle
-    disableSecond</button>
-  <hr />
+  <h3><strong> SELECTED DATE: {{dateControl.value}}</strong></h3>
 
-  <h3>@Input stepHour, stepMinute, stepSecond </h3>
-  <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker4" placeholder="Choose a date" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker4 [stepHour]="3" [stepMinute]="5" [stepSecond]="10"></ngx-mat-datetime-picker>
-  </mat-form-field>
-  <hr />
+  <div class="container">
+    <span class="label">showSpinners </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-  <h3>Min = {{minDate.toLocaleString()}} </h3>
-  <h3>Max = {{maxDate.toLocaleString()}} </h3>
-  <mat-form-field>
-    <input matInput [min]="minDate" [max]="maxDate" [ngxMatDatetimePicker]="picker5" placeholder="Choose a date"
-      [formControl]="dateControlMinMax">
-    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker5 [disableSecond]="disableSecond"></ngx-mat-datetime-picker>
+  <div class="container">
+    <span class="label">disableSecond </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disableSecond">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-  </mat-form-field>
+  <div class="container container_step">
+    <span class="label">stepHour </span>
+    <mat-form-field>
+      <mat-label>Select step hour</mat-label>
+      <mat-select [(ngModel)]="stepHour">
+        <mat-option *ngFor="let step of stepHours" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="label">stepMinute </span>
+    <mat-form-field>
+      <mat-label>Select step minute</mat-label>
+      <mat-select [(ngModel)]="stepMinute">
+        <mat-option *ngFor="let step of stepMinutes" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="label">stepSecond </span>
+    <mat-form-field>
+      <mat-label>Select step second</mat-label>
+      <mat-select [(ngModel)]="stepSecond">
+        <mat-option *ngFor="let step of stepSeconds" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="container">
+    <mat-checkbox (change)="toggleMinDate($event)">
+      Min date (Demo: now - 1 day) = {{minDate?.toLocaleString()}}
+    </mat-checkbox>
+  </div>
+
+  <div class="container">
+    <mat-checkbox (change)="toggleMaxDate($event)">
+      Max date (Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
+    </mat-checkbox>
+  </div>
+
   <hr />
 
 

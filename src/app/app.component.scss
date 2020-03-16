@@ -1,0 +1,17 @@
+.container {
+  margin-bottom: 15px;
+  .label{
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  &_step{
+    .mat-form-field{
+      margin-right: 10px;
+    }
+  }
+}
+
