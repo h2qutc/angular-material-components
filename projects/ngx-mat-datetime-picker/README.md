@@ -48,17 +48,20 @@ export class AppModule { }
 
 The same API as @angular/material Datepicker (@see [API docs](https://material.angular.io/components/datepicker/api))
 
-Datetime picker using FormControl
+### Datetime Picker (ngx-mat-datetime-picker)
 
 ```
 <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+   <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+      [min]="minDate" [max]="maxDate" [disabled]="disabled">
+   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+   <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond"
+      [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+   </ngx-mat-datetime-picker>
 </mat-form-field>
 ```
 
-Timepicker
+### Timepicker (ngx-mat-timepicker)
 
 ```
 <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
@@ -69,23 +72,30 @@ Timepicker
 <ngx-mat-timepicker [formControl]="formControl"></ngx-mat-timepicker>
 ```
 
+#### List of @Input
+| @Input        	| Type     	| Default value 	| Description                                                          	|
+|---------------	|----------	|---------------	|----------------------------------------------------------------------	|
+| **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
+| **showSpinners**  	| boolean  	| true          	| If true, the spinners above and below input are visible              	|
+| **disableSecond** 	| boolean  	| true          	| If true, it is not possible to select seconds                        	|
+| **stepHour**      	| number   	| 1             	| The number of hours to add/substract when clicking hour spinners     	|
+| **stepMinute**    	| number   	| 1             	| The number of minutes to add/substract when clicking minute spinners 	|
+| **stepSecond**    	| number   	| 1             	| The number of seconds to add/substract when clicking second spinners 	|
+
 ## Choosing a date implementation and date format settings
 
 The datepicker was built to be date implementation agnostic. This means that it can be made to work with a variety of different date implementations. However it also means that developers need to make sure to provide the appropriate pieces for the datepicker to work with their chosen implementation.
 
 The easiest way to ensure this is to import one of the provided date modules:
 
-* **NgxMatNativeDateModule**
-   **Date type**:	Date
-   **Supported locales**:	en-US
-   **Dependencies**:	None
-   **Import from**:	ngx-mat-datetime-picker
+|                       	| **NgxMatNativeDateModule** 	| **NgxMatMomentModule**                                                              	|
+|-----------------------	|----------------------------	|-------------------------------------------------------------------------------------	|
+| **Date type**         	| Date                       	| Moment                                                                              	|
+| **Supported locales** 	| en-US                      	| [See project for details](https://github.com/moment/moment/tree/develop/src/locale) 	|
+| **Dependencies**      	| None                       	| [Moment.js](https://momentjs.com/)                                                  	|
+| **Import from**       	| ngx-mat-datetime-picker    	| [ngx-mat-moment-adapter](https://www.npmjs.com/package/ngx-mat-moment-adapter)      	|
 
-* **NgxMatMomentModule**
-   **Date type**:	Moment
-   **Dependencies**:	Moment.js
-   **Import** from**:	[ngx-mat-moment-adapter](https://www.npmjs.com/package/ngx-mat-moment-adapter)
-
+To use NgxMatMomentModule: 
    ```
    npm install --save ngx-mat-moment-adapter
    ```

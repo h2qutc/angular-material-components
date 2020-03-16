@@ -68,6 +68,7 @@ export class MatDatetimePickerInputEvent<D> {
         '(input)': '_onInput($event.target.value)',
         '(change)': '_onChange()',
         '(blur)': '_onBlur()',
+        '(focus)': '_onFocus()',
         '(keydown)': '_onKeydown($event)',
     },
     exportAs: 'ngxMatDatetimePickerInput',
@@ -193,7 +194,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     private _minValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
         const controlValue = this._getValidDateOrNull(this._dateAdapter.deserialize(control.value));
         return (!this.min || !controlValue ||
-            this._dateAdapter.compareDate(this.min, controlValue) <= 0) ?
+            this._dateAdapter.compareDateWithTime(this.min, controlValue, this._datepicker.disableSecond) <= 0) ?
             null : { 'matDatetimePickerMin': { 'min': this.min, 'actual': controlValue } };
     }
 
@@ -201,7 +202,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     private _maxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
         const controlValue = this._getValidDateOrNull(this._dateAdapter.deserialize(control.value));
         return (!this.max || !controlValue ||
-            this._dateAdapter.compareDate(this.max, controlValue) >= 0) ?
+            this._dateAdapter.compareDateWithTime(this.max, controlValue,  this._datepicker.disableSecond) >= 0) ?
             null : { 'matDatetimePickerMax': { 'max': this.max, 'actual': controlValue } };
     }
 
@@ -336,6 +337,14 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         }
 
         this._onTouched();
+    }
+
+    /** Handles focus events on the input. */
+    _onFocus() {
+        // Close datetime picker if opened
+        if(this._datepicker && this._datepicker.opened){
+            this._datepicker.cancel();
+        }
     }
 
     /** Formats a value and sets it on the input element. */

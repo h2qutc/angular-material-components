@@ -8,6 +8,9 @@ $fontSizeIcon: 24px;
       .tbody {
         tr {
           td {
+            &.spacer {
+              font-weight: bold;
+            }
             text-align: center;
             .mat-icon-button {
               height: $fontSizeIcon;

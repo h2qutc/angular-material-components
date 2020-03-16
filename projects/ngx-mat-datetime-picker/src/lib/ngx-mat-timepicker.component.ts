@@ -3,7 +3,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
-import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
+import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -34,7 +34,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() stepHour: number = DEFAULT_STEP;
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
-  @Input() disableSecond = false;
+  @Input() disableSecond = true;
 
   /** Hour */
   private get hour() {
@@ -52,7 +52,10 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     return isNaN(val) ? 0 : val;
   };
 
-  public limit = LIMIT_TIMES;
+  /** Whether or not the form is valid */
+  public get valid(): boolean {
+    return this.form.valid;
+  }
 
   private _onChange: any = () => { };
   private _onTouched: any = () => { };
@@ -64,6 +67,8 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     onlySelf: false,
     emitEvent: false
   }
+
+  public pattern = PATTERN_INPUT_HOUR;
 
   constructor(@Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
@@ -123,13 +128,25 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     this.cd.markForCheck();
   }
 
-  /** Handler arrow's click event */
-  public onArrowClick(prop: string, up: boolean) {
+  public formatInput(input: HTMLInputElement) {
+    input.value = input.value.replace(NUMERIC_REGEX, '');
+  }
+
+  public onBlur(prop: string) {
+    const keyProp = prop[0].toUpperCase() + prop.slice(1);
+    const max = LIMIT_TIMES[`max${keyProp}`];
+    const nextVal = this[prop] % (max + 1);
+    this.form.controls[prop].setValue(formatTwoDigitTimeValue(nextVal), this._configEventForm);
+    this._updateModel();
+  }
+
+  /** Change property of time */
+  public change(prop: string, up: boolean) {
     //hour => stepHour
     const keyProp = prop[0].toUpperCase() + prop.slice(1);
     let nextVal = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
-    const min = this.limit[`min${keyProp}`];
-    const max = this.limit[`max${keyProp}`];
+    const min = LIMIT_TIMES[`min${keyProp}`];
+    const max = LIMIT_TIMES[`max${keyProp}`];
     if (up) {
       nextVal = nextVal > max ? (nextVal - max + min - 1) : nextVal;
     } else {

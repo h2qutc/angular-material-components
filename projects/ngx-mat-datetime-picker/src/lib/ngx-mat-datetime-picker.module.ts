@@ -16,42 +16,42 @@ import { NgxMatTimepickerModule } from './ngx-mat-timepicker.module';
 import { NgxMatYearView } from './ngx-mat-year-view';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    PortalModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    NgxMatTimepickerModule,
-  ],
-  exports: [
-    NgxMatDatetimePicker,
-    NgxMatDatetimeInput,
-    NgxMatCalendar,
-    NgxMatMonthView,
-    NgxMatYearView,
-    NgxMatMultiYearView,
-    NgxMatCalendarHeader
-  ],
-  declarations: [
-    NgxMatDatetimePicker,
-    NgxMatDatetimeContent,
-    NgxMatDatetimeInput,
-    NgxMatCalendar,
-    NgxMatMonthView,
-    NgxMatYearView,
-    NgxMatMultiYearView,
-    NgxMatCalendarHeader
-  ],
-  entryComponents: [
-    NgxMatDatetimeContent,
-    NgxMatCalendarHeader
-  ],
-  providers: [
-    MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER
-  ]
+   imports: [
+      CommonModule,
+      MatDatepickerModule,
+      MatDialogModule,
+      PortalModule,
+      FormsModule,
+      MatIconModule,
+      MatButtonModule,
+      MatInputModule,
+      NgxMatTimepickerModule
+   ],
+   exports: [
+      NgxMatDatetimePicker,
+      NgxMatDatetimeInput,
+      NgxMatCalendar,
+      NgxMatMonthView,
+      NgxMatYearView,
+      NgxMatMultiYearView,
+      NgxMatCalendarHeader
+   ],
+   declarations: [
+      NgxMatDatetimePicker,
+      NgxMatDatetimeContent,
+      NgxMatDatetimeInput,
+      NgxMatCalendar,
+      NgxMatMonthView,
+      NgxMatYearView,
+      NgxMatMultiYearView,
+      NgxMatCalendarHeader
+   ],
+   entryComponents: [
+      NgxMatDatetimeContent,
+      NgxMatCalendarHeader
+   ],
+   providers: [
+      MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER
+   ]
 })
 export class NgxMatDatetimePickerModule { }

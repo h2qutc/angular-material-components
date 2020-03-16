@@ -12,6 +12,13 @@
     position: relative;
     padding-top: 5px;
     justify-content: center;
+    &.disable-second{
+      .ngx-mat-timepicker{
+        .table{
+          margin-left: 9px;
+        }
+      }
+    }
     &::before {
       content: '';
       position: absolute;

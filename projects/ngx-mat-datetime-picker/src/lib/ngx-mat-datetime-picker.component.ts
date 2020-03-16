@@ -22,6 +22,8 @@ import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './ngx-mat-calendar';
 import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
+import { NgxMatTimepickerComponent } from './ngx-mat-timepicker.component';
+import { ValidationErrors } from '@angular/forms';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -65,11 +67,19 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
 
+  /** Reference to the internal time picker component. */
+  @ViewChild(NgxMatTimepickerComponent) _timePicker: NgxMatTimepickerComponent<D>;
+
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatetimePicker<D>;
 
   /** Whether the datepicker is above or below the input. */
   _isAbove: boolean;
+
+  /** Whether or not the selected date is valid (min,max...) */
+  get valid(): boolean {
+    return this._timePicker.valid && this.datepicker.valid;
+  }
 
   constructor(elementRef: ElementRef) {
     super(elementRef);
@@ -78,6 +88,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   ngAfterViewInit() {
     this._calendar.focusActiveCell();
   }
+
 }
 
 
@@ -192,7 +203,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   @Input()
   get disableSecond(): boolean { return this._disableSecond; }
   set disableSecond(value: boolean) { this._disableSecond = value; }
-  public _disableSecond = false;
+  public _disableSecond = true;
 
   /** Step hour */
   @Input()
@@ -228,6 +239,12 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** The maximum selectable date. */
   get _maxDate(): D | null {
     return this._datepickerInput && this._datepickerInput.max;
+  }
+
+  get valid(): boolean {
+    const minValidators = this._minValidator();
+    const maxValidators = this._maxValidator();
+    return minValidators == null && maxValidators == null;
   }
 
   get _dateFilter(): (date: D | null) => boolean {
@@ -290,6 +307,20 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     }
   }
 
+  /** The form control validator for the min date. */
+  private _minValidator = (): ValidationErrors | null => {
+    return (!this._minDate || !this._selected ||
+      this._dateAdapter.compareDateWithTime(this._minDate, this._selected, this.disableSecond) <= 0) ?
+      null : { 'matDatetimePickerMin': { 'min': this._minDate, 'actual': this._selected } };
+  }
+
+  /** The form control validator for the max date. */
+  private _maxValidator = (): ValidationErrors | null => {
+    return (!this._maxDate || !this._selected ||
+      this._dateAdapter.compareDateWithTime(this._maxDate, this._selected, this.disableSecond) >= 0) ?
+      null : { 'matDatetimePickerMax': { 'max': this._maxDate, 'actual': this._selected } };
+  }
+
   /** Selects the given date */
   select(date: D): void {
     this._dateAdapter.copyTime(date, this._selected);
@@ -316,7 +347,6 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** Cancel and close */
   public cancel(): void {
     this._selected = this._rawValue;
-    this._selectedChanged.next(this._rawValue);
     this.close();
   }
 

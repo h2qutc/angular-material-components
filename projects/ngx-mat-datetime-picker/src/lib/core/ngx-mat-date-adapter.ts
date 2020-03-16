@@ -64,6 +64,23 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
     this.setHour(toDate, this.getHour(fromDate));
     this.setMinute(toDate, this.getMinute(fromDate));
     this.setSecond(toDate, this.getSecond(fromDate));
-
   }
+
+  /**
+ * Compares two dates.
+ * @param first The first date to compare.
+ * @param second The second date to compare.
+ * @returns 0 if the dates are equal, a number less than 0 if the first date is earlier,
+ *     a number greater than 0 if the first date is later.
+ */
+  compareDateWithTime(first: D, second: D, disableSecond?: boolean): number {
+    let res = super.compareDate(first, second) ||
+      this.getHour(first) - this.getHour(second) ||
+      this.getMinute(first) - this.getMinute(second);
+    if (!disableSecond) {
+      res = res || this.getSecond(first) - this.getSecond(second);
+    }
+    return res;
+  }
+
 }

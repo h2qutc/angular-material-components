@@ -11,6 +11,7 @@ export const DEFAULT_STEP = 1;
 export const DEFAULT_HOUR_PLACEHOLDER = '';
 export const DEFAULT_MINUTE_PLACEHOLDER = '';
 export const DEFAULT_SECOND_PLACEHOLDER = '';
+export const NUMERIC_REGEX = /[^0-9]/g;
 
 export const PATTERN_INPUT_HOUR = /^(2[0-3]|[0-1][0-9]|[0-9])$/;
 export const PATTERN_INPUT_MINUTE = /^([0-5][0-9]|[0-9])$/;
