@@ -132,7 +132,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     input.value = input.value.replace(NUMERIC_REGEX, '');
   }
 
-  public onBlur(prop: string, event: any) {
+  public onBlur(prop: string) {
     const keyProp = prop[0].toUpperCase() + prop.slice(1);
     const max = LIMIT_TIMES[`max${keyProp}`];
     const nextVal = this[prop] % (max + 1);

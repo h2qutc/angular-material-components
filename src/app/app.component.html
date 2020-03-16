@@ -37,7 +37,7 @@
       </tr>
       <tr>
         <td>
-          Errors:
+          <strong>Errors (min, max, parse...):</strong>
           <pre> {{dateControl.errors | json}}</pre>
         </td>
         <td>
@@ -132,6 +132,7 @@
   <hr />
 
   <h3>Working with FormGroup</h3>
+  <h4>ngx-mat-datetime-picker</h4>
   <div>
     <pre>{{codeFormGroup}}</pre>
   </div>
@@ -144,9 +145,14 @@
   </div>
   <div><span [innerHTML]="code1"></span> = {{formGroup.get('date').value?.toLocaleString()}}</div>
 
-  <!-- <form [formGroup]="formGroup">
-    <h3>Working with FormControl</h3>
-    <ngx-mat-timepicker formControlName="date"></ngx-mat-timepicker>
-    <div>FormControl value: {{formGroup.get('date').value}}</div>
-  </form> -->
+  <hr/>
+  <h4>ngx-mat-time-picker</h4>
+  <div>
+    <pre>{{codeFormGroup2}}</pre>
+  </div>
+  <form [formGroup]="formGroup">
+    <ngx-mat-timepicker formControlName="date2"></ngx-mat-timepicker>
+  </form>
+  <div><span [innerHTML]="code2"></span> = {{formGroup.get('date2').value?.toLocaleString()}}</div>
+
 </div>

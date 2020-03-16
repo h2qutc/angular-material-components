@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
   public stepSecond = 1;
 
   public formGroup = new FormGroup({
-    date: new FormControl(null, [Validators.required])
+    date: new FormControl(null, [Validators.required]),
+    date2: new FormControl(null, [Validators.required])
   })
   public dateControl = new FormControl(new Date());
   public dateControlMinMax = new FormControl(new Date());
@@ -75,6 +76,13 @@ public codeTimePicker = `
   </div>`;
 
   public code1 = `formGroup.get('date').value?.toLocaleString()`;
+
+  public codeFormGroup2 = `
+  <form [formGroup]="formGroup">
+    <ngx-mat-timepicker formControlName="date2"></ngx-mat-timepicker>
+  </form>`;
+
+  public code2 = `formGroup.get('date2').value?.toLocaleString()`;
 
   constructor(private http: HttpClient, private zone: NgZone) {
   }
