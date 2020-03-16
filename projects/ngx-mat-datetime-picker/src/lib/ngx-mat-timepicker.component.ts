@@ -53,7 +53,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   };
 
   /** Whether or not the form is valid */
-  public get isValid(): boolean {
+  public get valid(): boolean {
     return this.form.valid;
   }
 

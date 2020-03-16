@@ -54,6 +54,17 @@
   </mat-form-field>
   <hr />
 
+  <h3>Min = {{minDate.toLocaleString()}} </h3>
+  <h3>Max = {{maxDate.toLocaleString()}} </h3>
+  <mat-form-field>
+    <input matInput [min]="minDate" [max]="maxDate" [ngxMatDatetimePicker]="picker5" placeholder="Choose a date"
+      [formControl]="dateControlMinMax">
+    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker5 [disableSecond]="disableSecond"></ngx-mat-datetime-picker>
+
+  </mat-form-field>
+  <hr />
+
 
   <!-- ==============================TIME PICKER================================== -->
 

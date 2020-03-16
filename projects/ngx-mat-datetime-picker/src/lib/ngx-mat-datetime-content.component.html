@@ -6,7 +6,7 @@
     (monthSelected)="datepicker._selectMonth($event)">
 </ngx-mat-calendar>
 <div class="time-container" [class.disable-second]="datepicker._disableSecond">
-    <ngx-mat-timepicker #timepicker [showSpinners]="datepicker._showSpinners"
+    <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners"
         [disableSecond]="datepicker._disableSecond" [disabled]="datepicker._disabled" [stepHour]="datepicker._stepHour"
         [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected">
     </ngx-mat-timepicker>
@@ -16,7 +16,7 @@
         <mat-icon>close</mat-icon>
     </button>
     <button mat-button (click)="datepicker.ok()" mat-icon-button color="primary" cdkFocusInitial
-        [disabled]="!timepicker.isValid">
+        [disabled]="!valid">
         <mat-icon>done</mat-icon>
     </button>
 </div>
