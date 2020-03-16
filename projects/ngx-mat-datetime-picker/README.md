@@ -77,7 +77,7 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
 | **showSpinners**  	| boolean  	| true          	| If true, the spinners above and below input are visible              	|
-| **disableSecond** 	| boolean  	| null          	| If true, it is not possible to select seconds                        	|
+| **disableSecond** 	| boolean  	| true          	| If true, it is not possible to select seconds                        	|
 | **stepHour**      	| number   	| 1             	| The number of hours to add/substract when clicking hour spinners     	|
 | **stepMinute**    	| number   	| 1             	| The number of minutes to add/substract when clicking minute spinners 	|
 | **stepSecond**    	| number   	| 1             	| The number of seconds to add/substract when clicking second spinners 	|

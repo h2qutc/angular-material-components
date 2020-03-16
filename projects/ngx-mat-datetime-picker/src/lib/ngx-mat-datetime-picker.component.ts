@@ -203,7 +203,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   @Input()
   get disableSecond(): boolean { return this._disableSecond; }
   set disableSecond(value: boolean) { this._disableSecond = value; }
-  public _disableSecond = false;
+  public _disableSecond = true;
 
   /** Step hour */
   @Input()
