@@ -1,17 +1,46 @@
-.container {
-  margin-bottom: 15px;
-  .label{
-    font-weight: bold;
-    margin-right: 15px;
-  }
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
+.page {
+  padding: 20px;
+  .table {
+    border-collapse: collapse;
+    //width: 100%;
+    margin-bottom: 30px;
+    height: 250px;
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      color: white;
+      &:first-of-type{
+        background-color: #268fa7;
+      }
+      &:last-of-type{
+        background-color: #8a178c;
+      }
+    }
   }
 
-  &_step{
-    .mat-form-field{
-      margin-right: 10px;
+  .config-wrapper {
+    margin-bottom: 15px;
+    .label {
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .mat-radio-button ~ .mat-radio-button {
+      margin-left: 16px;
+    }
+
+    &_step {
+      .mat-form-field {
+        margin-right: 10px;
+      }
     }
   }
 }
-

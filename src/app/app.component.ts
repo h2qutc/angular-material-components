@@ -37,6 +37,45 @@ export class AppComponent implements OnInit {
   public stepMinutes = [1, 5, 10, 15, 20, 25];
   public stepSeconds = [1, 5, 10, 15, 20, 25];
 
+  public codeDatePicker = `
+<mat-form-field>
+  <input matInput [ngxMatDatetimePicker]="picker" 
+                  placeholder="Choose a date" 
+                  [formControl]="dateControl"
+                  [min]="minDate" [max]="maxDate" 
+                  [disabled]="disabled">
+  <mat-datepicker-toggle matSuffix [for]="picker">
+  </mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker 
+    [showSpinners]="showSpinners" 
+    [disableSecond]="disableSecond"
+    [stepHour]="stepHour" [stepMinute]="stepMinute" 
+    [stepSecond]="stepSecond">
+  </ngx-mat-datetime-picker>
+</mat-form-field>`;
+
+public codeTimePicker = `
+<ngx-mat-timepicker 
+            [(ngModel)]="date" [disabled]="disabled" 
+            [showSpinners]="showSpinners"
+            [stepHour]="stepHour" [stepMinute]="stepMinute" 
+            [stepSecond]="stepSecond" 
+            [disableSecond]="disableSecond">
+  </ngx-mat-timepicker>`;
+
+
+  public codeFormGroup= `
+  <div [formGroup]="formGroup">
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker1" 
+      placeholder="Choose a date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>`;
+
+  public code1 = `formGroup.get('date').value?.toLocaleString()`;
+
   constructor(private http: HttpClient, private zone: NgZone) {
   }
 

@@ -1,52 +1,88 @@
-<div>
+<div class="page">
 
-  <!-- ==============================DATE TIME PICKER================================== -->
-  <h1> DEMO ngx-mat-datetime-picker</h1>
+  <h3>DEMO</h3>
 
-  <hr />
-  <h3>Form Group</h3>
-  <div [formGroup]="formGroup">
-    <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
-    </mat-form-field>
+  <table class="table">
+    <thead>
+      <tr>
+        <th><strong>ngx-mat-datetime-picker</strong></th>
+        <th><strong>ngx-mat-timepicker</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <pre>{{codeDatePicker}}</pre>
+        </td>
+        <td>
+          <pre>{{codeTimePicker}}</pre>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+              [min]="minDate" [max]="maxDate" [disabled]="disabled">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond"
+              [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+        </td>
+        <td>
+          <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners"
+            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [disableSecond]="disableSecond">
+          </ngx-mat-timepicker>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Errors:
+          <pre> {{dateControl.errors | json}}</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>
+          Date: {{dateControl.value?.toLocaleString()}}
+        </th>
+        <th>
+          Date: {{date?.toLocaleString()}}
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="config-wrapper">
+    <span class="label">Disabled (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
   </div>
-  <div>{{formGroup.get('date').value}}</div>
 
-  <hr />
-  <h3>Base</h3>
-  <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
-      [min]="minDate" [max]="maxDate">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond" [stepHour]="stepHour"
-      [stepMinute]="stepMinute" [stepSecond]="stepSecond">
-    </ngx-mat-datetime-picker>
-  </mat-form-field>
-  <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="closePicker()">Close picker
-    manually</button>
-
-  <h3><strong> SELECTED DATE: {{dateControl.value}}</strong></h3>
-
-  <div class="container">
-    <span class="label">showSpinners </span>
+  <div class="config-wrapper">
+    <span class="label">showSpinners (Default: true) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <div class="container">
-    <span class="label">disableSecond </span>
+  <div class="config-wrapper">
+    <span class="label">disableSecond (Default: true) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="disableSecond">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <div class="container container_step">
-    <span class="label">stepHour </span>
+  <div class="config-wrapper">
+    <span class="label">stepHour (Default: 1) </span>
     <mat-form-field>
       <mat-label>Select step hour</mat-label>
       <mat-select [(ngModel)]="stepHour">
@@ -55,8 +91,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
 
-    <span class="label">stepMinute </span>
+  <div class="config-wrapper">
+    <span class="label">stepMinute (Default: 1) </span>
     <mat-form-field>
       <mat-label>Select step minute</mat-label>
       <mat-select [(ngModel)]="stepMinute">
@@ -65,8 +103,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
 
-    <span class="label">stepSecond </span>
+  <div class="config-wrapper">
+    <span class="label">stepSecond (Default: 1) </span>
     <mat-form-field>
       <mat-label>Select step second</mat-label>
       <mat-select [(ngModel)]="stepSecond">
@@ -77,61 +117,36 @@
     </mat-form-field>
   </div>
 
-  <div class="container">
+  <div class="config-wrapper">
     <mat-checkbox (change)="toggleMinDate($event)">
-      Min date (Demo: now - 1 day) = {{minDate?.toLocaleString()}}
+      Min date (Default: null, Demo: now - 1 day) = {{minDate?.toLocaleString()}}
     </mat-checkbox>
   </div>
 
-  <div class="container">
+  <div class="config-wrapper">
     <mat-checkbox (change)="toggleMaxDate($event)">
-      Max date (Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
+      Max date (Default: null, Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
     </mat-checkbox>
   </div>
 
   <hr />
 
+  <h3>Working with FormGroup</h3>
+  <div>
+    <pre>{{codeFormGroup}}</pre>
+  </div>
+  <div [formGroup]="formGroup">
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+  <div><span [innerHTML]="code1"></span> = {{formGroup.get('date').value?.toLocaleString()}}</div>
 
-  <!-- ==============================TIME PICKER================================== -->
-
-  <h1> DEMO ngx-mat-timepicker</h1>
-  <hr />
-  <h3>Base</h3>
-  <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
-  <div>Date: {{date?.toLocaleString()}}</div>
-
-  <hr />
-  <h3>Disabled</h3>
-  <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
-  <button style="margin-top: 20px;" mat-raised-button color="primary"
-    (click)="disabled = !disabled">Enable/Disable</button>
-  <div>Date: {{date?.toLocaleString()}}</div>
-
-  <hr />
-  <h3>Custom step: hour(2), minute(5), second(10) </h3>
-  <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
-  <div>Date: {{date?.toLocaleString()}}</div>
-
-  <hr />
-  <h3>Show/hide spinners</h3>
-  <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
-  <div>Date: {{date?.toLocaleString()}}</div>
-
-  <button style="margin-top: 20px;" mat-raised-button color="primary"
-    (click)="showSpinners = !showSpinners">Enable/Disable</button>
-
-  <hr />
-  <h3>Disable second</h3>
-  <ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
-  <div>Date: {{date?.toLocaleString()}}</div>
-  <button style="margin-top: 20px;" mat-raised-button color="primary"
-    (click)="disableSecond = !disableSecond">Enable/Disable second</button>
-
-  <hr />
-  <form [formGroup]="formGroup">
+  <!-- <form [formGroup]="formGroup">
     <h3>Working with FormControl</h3>
     <ngx-mat-timepicker formControlName="date"></ngx-mat-timepicker>
     <div>FormControl value: {{formGroup.get('date').value}}</div>
-  </form>
-
+  </form> -->
 </div>
