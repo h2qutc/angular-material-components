@@ -1,4 +1,4 @@
-<form [formGroup]="form" [class.no-second]="disableSecond">
+<form [formGroup]="form">
   <table class="table">
     <tbody class="tbody">
       <tr *ngIf="showSpinners">
@@ -52,19 +52,19 @@
       </tr>
       <tr *ngIf="showSpinners">
         <td>
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('hour', false)"
+          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('hour', false)"
             [disabled]="disabled">
             <mat-icon>expand_more</mat-icon>
           </button> </td>
         <td></td>
         <td>
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('minute', false)"
+          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('minute', false)"
             [disabled]="disabled">
             <mat-icon>expand_more</mat-icon>
           </button> </td>
         <td *ngIf="!disableSecond"></td>
         <td *ngIf="!disableSecond">
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="onArrowClick('second', false)"
+          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('second', false)"
             [disabled]="disabled">
             <mat-icon>expand_more</mat-icon>
           </button>

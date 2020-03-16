@@ -5,7 +5,7 @@
     (selectedChange)="datepicker.select($event)" (yearSelected)="datepicker._selectYear($event)"
     (monthSelected)="datepicker._selectMonth($event)">
 </ngx-mat-calendar>
-<div class="time-container">
+<div class="time-container" [class.disable-second]="datepicker._disableSecond">
     <ngx-mat-timepicker #timepicker [showSpinners]="datepicker._showSpinners"
         [disableSecond]="datepicker._disableSecond" [disabled]="datepicker._disabled" [stepHour]="datepicker._stepHour"
         [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected">
