@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" [class.no-second]="disableSecond">
   <table class="table">
     <tbody class="tbody">
       <tr *ngIf="showSpinners">
@@ -27,7 +27,8 @@
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="hour"
               [placeholder]="hourPlaceholder" (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()">
+              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()"
+              (blur)="onBlur('hour')">
           </mat-form-field>
         </td>
         <td class="spacer">&#58;</td>
@@ -35,7 +36,8 @@
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="minute"
               (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()">
+              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()"
+              (blur)="onBlur('minute')">
           </mat-form-field>
         </td>
         <td *ngIf="!disableSecond" class="spacer">&#58;</td>
@@ -43,7 +45,8 @@
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="second"
               (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('second', false); $event.preventDefault()">
+              (keydown.ArrowDown)="change('second', false); $event.preventDefault()"
+              (blur)="onBlur('second')">
           </mat-form-field>
         </td>
       </tr>

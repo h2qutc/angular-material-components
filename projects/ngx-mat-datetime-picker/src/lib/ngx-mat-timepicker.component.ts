@@ -57,8 +57,6 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     return this.form.valid;
   }
 
-  public limit = LIMIT_TIMES;
-
   private _onChange: any = () => { };
   private _onTouched: any = () => { };
   private _disabled: boolean;
@@ -130,16 +128,25 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     this.cd.markForCheck();
   }
 
-  formatInput(input: HTMLInputElement) { input.value = input.value.replace(NUMERIC_REGEX, ''); }
+  public formatInput(input: HTMLInputElement) {
+    input.value = input.value.replace(NUMERIC_REGEX, '');
+  }
+
+  public onBlur(prop: string, event: any) {
+    const keyProp = prop[0].toUpperCase() + prop.slice(1);
+    const max = LIMIT_TIMES[`max${keyProp}`];
+    const nextVal = this[prop] % (max + 1);
+    this.form.controls[prop].setValue(formatTwoDigitTimeValue(nextVal), this._configEventForm);
+    this._updateModel();
+  }
 
   /** Change property of time */
   public change(prop: string, up: boolean) {
-    console.log('change');
     //hour => stepHour
     const keyProp = prop[0].toUpperCase() + prop.slice(1);
     let nextVal = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
-    const min = this.limit[`min${keyProp}`];
-    const max = this.limit[`max${keyProp}`];
+    const min = LIMIT_TIMES[`min${keyProp}`];
+    const max = LIMIT_TIMES[`max${keyProp}`];
     if (up) {
       nextVal = nextVal > max ? (nextVal - max + min - 1) : nextVal;
     } else {

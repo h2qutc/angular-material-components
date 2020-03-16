@@ -86,7 +86,6 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         this._datepickerSubscription.unsubscribe();
 
         this._datepickerSubscription = this._datepicker._selectedChanged.subscribe((selected: D) => {
-            console.log('_selectedChanged', selected);
             this.value = selected;
             this._cvaOnChange(selected);
             this._onTouched();
@@ -294,7 +293,6 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
 
     _onKeydown(event: KeyboardEvent) {
-        console.log('_onKeydown');
         const isAltDownArrow = event.altKey && event.keyCode === DOWN_ARROW;
 
         if (this._datepicker && isAltDownArrow && !this._elementRef.nativeElement.readOnly) {
@@ -304,7 +302,6 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
 
     _onInput(value: string) {
-        console.log('_onInput');
         const lastValueWasValid = this._lastValueValid;
         let date = this._dateAdapter.parse(value, this._dateFormats.parse.dateInput);
         this._lastValueValid = !date || this._dateAdapter.isValid(date);
@@ -344,7 +341,6 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
     /** Handles focus events on the input. */
     _onFocus() {
-        console.log('_onFocus');
         // Close datetime picker if opened
         if(this._datepicker && this._datepicker.opened){
             this._datepicker.cancel();

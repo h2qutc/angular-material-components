@@ -4,11 +4,15 @@ $fontSizeIcon: 24px;
   font-size: 13px;
   form {
     min-width: 90px;
+    &.no-second {
+      display: flex;
+      justify-content: space-around;
+    }
     .table {
       .tbody {
         tr {
           td {
-            &.spacer{
+            &.spacer {
               font-weight: bold;
             }
             text-align: center;
