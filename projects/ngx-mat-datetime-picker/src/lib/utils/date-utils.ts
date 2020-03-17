@@ -1,10 +1,16 @@
 export const LIMIT_TIMES = {
     minHour: 0,
-    maxHour: 23,
+    maxHour: 24,
     minMinute: 0,
-    maxMinute: 59,
+    maxMinute: 60,
     minSecond: 0,
-    maxSecond: 59
+    maxSecond: 60,
+    meridian: 12
+}
+
+export const MERIDIANS = {
+    AM: 'AM',
+    PM: 'PM'
 }
 
 export const DEFAULT_STEP = 1;

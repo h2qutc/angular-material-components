@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,15 @@ export class AppComponent implements OnInit {
   public date: Date;
   public disabled = false;
   public showSpinners = true;
-  public disableSecond = true;
+  public showSeconds = false;
+  public touchUi = false;
+  public enableMeridian = false;
   public minDate: Date;
   public maxDate: Date;
   public stepHour = 1;
   public stepMinute = 1;
   public stepSecond = 1;
+  public color: ThemePalette = 'primary';
 
   public formGroup = new FormGroup({
     date: new FormControl(null, [Validators.required]),
@@ -33,6 +37,8 @@ export class AppComponent implements OnInit {
     { value: true, label: 'True' },
     { value: false, label: 'False' }
   ];
+
+  public listColors = ['primary', 'accent', 'warn'];
 
   public stepHours = [1, 2, 3, 4, 5];
   public stepMinutes = [1, 5, 10, 15, 20, 25];
@@ -49,23 +55,25 @@ export class AppComponent implements OnInit {
   </mat-datepicker-toggle>
   <ngx-mat-datetime-picker #picker 
     [showSpinners]="showSpinners" 
-    [disableSecond]="disableSecond"
+    [showSeconds]="showSeconds"
     [stepHour]="stepHour" [stepMinute]="stepMinute" 
-    [stepSecond]="stepSecond">
+    [stepSecond]="stepSecond"
+    [touchUi]="touchUi"
+    [color]="color">
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
-public codeTimePicker = `
+  public codeTimePicker = `
 <ngx-mat-timepicker 
             [(ngModel)]="date" [disabled]="disabled" 
             [showSpinners]="showSpinners"
             [stepHour]="stepHour" [stepMinute]="stepMinute" 
             [stepSecond]="stepSecond" 
-            [disableSecond]="disableSecond">
-  </ngx-mat-timepicker>`;
+            [showSeconds]="showSeconds">
+</ngx-mat-timepicker>`;
 
 
-  public codeFormGroup= `
+  public codeFormGroup = `
   <div [formGroup]="formGroup">
     <mat-form-field>
       <input matInput [ngxMatDatetimePicker]="picker1" 

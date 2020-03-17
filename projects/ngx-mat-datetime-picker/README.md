@@ -55,7 +55,7 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
       [min]="minDate" [max]="maxDate" [disabled]="disabled">
    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-   <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond"
+   <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
       [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
    </ngx-mat-datetime-picker>
 </mat-form-field>
@@ -68,19 +68,23 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [disableSecond]="disableSecond"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [showSeconds]="showSeconds"></ngx-mat-timepicker>
 <ngx-mat-timepicker [formControl]="formControl"></ngx-mat-timepicker>
 ```
 
 #### List of @Input
+
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
 | **showSpinners**  	| boolean  	| true          	| If true, the spinners above and below input are visible              	|
-| **disableSecond** 	| boolean  	| true          	| If true, it is not possible to select seconds                        	|
+| **showSeconds** 	| boolean  	| true          	| If true, it is not possible to select seconds                        	|
 | **stepHour**      	| number   	| 1             	| The number of hours to add/substract when clicking hour spinners     	|
 | **stepMinute**    	| number   	| 1             	| The number of minutes to add/substract when clicking minute spinners 	|
 | **stepSecond**    	| number   	| 1             	| The number of seconds to add/substract when clicking second spinners 	|
+| **color**    	   | ThemePalette   	| undefined             	| Color palette to use on the datepicker's calendar. 	|
+| **enableMeridian** | boolean   	| false             	| Whether to display 12H or 24H mode. 	|
+| **touchUi**    	   | boolean   | false           | Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather than a popup and elements have more padding to allow for bigger touch targets. 	|
 
 ## Choosing a date implementation and date format settings
 

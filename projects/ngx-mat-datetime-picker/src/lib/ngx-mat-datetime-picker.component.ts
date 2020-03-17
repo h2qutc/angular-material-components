@@ -78,7 +78,11 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
 
   /** Whether or not the selected date is valid (min,max...) */
   get valid(): boolean {
-    return this._timePicker.valid && this.datepicker.valid;
+    return this._timePicker && this._timePicker.valid && this.datepicker.valid;
+  }
+
+  get isCurrentViewMonth(): boolean {
+    return this._calendar && (!this._calendar.currentView || this._calendar.currentView == 'month');
   }
 
   constructor(elementRef: ElementRef) {
@@ -128,7 +132,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   @Input()
   get color(): ThemePalette {
     return this._color ||
-      (this._datepickerInput ? this._datepickerInput._getThemePalette() : undefined);
+      (this._datepickerInput ? this._datepickerInput._getThemePalette() : 'primary');
   }
   set color(value: ThemePalette) {
     this._color = value;
@@ -201,9 +205,9 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Whether the second part is disabled. */
   @Input()
-  get disableSecond(): boolean { return this._disableSecond; }
-  set disableSecond(value: boolean) { this._disableSecond = value; }
-  public _disableSecond = true;
+  get showSeconds(): boolean { return this._showSeconds; }
+  set showSeconds(value: boolean) { this._showSeconds = value; }
+  public _showSeconds = false;
 
   /** Step hour */
   @Input()
@@ -222,6 +226,14 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   get stepSecond(): number { return this._stepSecond; }
   set stepSecond(value: number) { this._stepSecond = value; }
   public _stepSecond: number = DEFAULT_STEP;
+
+  /** Enable meridian */
+  @Input()
+  get enableMeridian(): boolean { return this._enableMeridian; }
+  set enableMeridian(value: boolean) { this._enableMeridian = value; }
+  public _enableMeridian: boolean = false;
+
+  private _hasBackdrop: boolean = true;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;
@@ -310,14 +322,14 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** The form control validator for the min date. */
   private _minValidator = (): ValidationErrors | null => {
     return (!this._minDate || !this._selected ||
-      this._dateAdapter.compareDateWithTime(this._minDate, this._selected, this.disableSecond) <= 0) ?
+      this._dateAdapter.compareDateWithTime(this._minDate, this._selected, this.showSeconds) <= 0) ?
       null : { 'matDatetimePickerMin': { 'min': this._minDate, 'actual': this._selected } };
   }
 
   /** The form control validator for the max date. */
   private _maxValidator = (): ValidationErrors | null => {
     return (!this._maxDate || !this._selected ||
-      this._dateAdapter.compareDateWithTime(this._maxDate, this._selected, this.disableSecond) >= 0) ?
+      this._dateAdapter.compareDateWithTime(this._maxDate, this._selected, this.showSeconds) >= 0) ?
       null : { 'matDatetimePickerMax': { 'max': this._maxDate, 'actual': this._selected } };
   }
 
@@ -441,7 +453,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       direction: this._dir ? this._dir.value : 'ltr',
       viewContainerRef: this._viewContainerRef,
       panelClass: 'mat-datepicker-dialog',
-      hasBackdrop: false
+      hasBackdrop: this._hasBackdrop
     });
 
     this._dialogRef.afterClosed().subscribe(() => this.close());
@@ -476,7 +488,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _createPopup(): void {
     const overlayConfig = new OverlayConfig({
       positionStrategy: this._createPopupPositionStrategy(),
-      hasBackdrop: false,
+      hasBackdrop: this._hasBackdrop,
       backdropClass: 'mat-overlay-transparent-backdrop',
       direction: this._dir,
       scrollStrategy: this._scrollStrategy(),
@@ -499,7 +511,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
         event.preventDefault();
       }
 
-      this.close();
+      (this._hasBackdrop && event) ? this.cancel() : this.close();
+
     });
   }
 
