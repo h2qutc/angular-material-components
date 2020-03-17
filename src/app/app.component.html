@@ -59,7 +59,7 @@
   </table>
 
   <div class="config-wrapper">
-    <span class="label">Disabled (Default: false) </span>
+    <span class="label">disabled (Default: false) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
@@ -90,34 +90,27 @@
     </mat-radio-group>
   </div>
 
-  <div class="config-wrapper">
-    <span class="label">stepHour (Default: 1) </span>
+  <div class="config-wrapper config-wrapper_step">
+    <span class="label">steps </span>
     <mat-form-field>
-      <mat-label>Select step hour</mat-label>
+      <mat-label>hour (default: 1)</mat-label>
       <mat-select [(ngModel)]="stepHour">
         <mat-option *ngFor="let step of stepHours" [value]="step">
           {{step}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-
-  <div class="config-wrapper">
-    <span class="label">stepMinute (Default: 1) </span>
     <mat-form-field>
-      <mat-label>Select step minute</mat-label>
+      <mat-label>minute (default: 1)</mat-label>
       <mat-select [(ngModel)]="stepMinute">
         <mat-option *ngFor="let step of stepMinutes" [value]="step">
           {{step}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
 
-  <div class="config-wrapper">
-    <span class="label">stepSecond (Default: 1) </span>
     <mat-form-field>
-      <mat-label>Select step second</mat-label>
+      <mat-label>second (default: 1)</mat-label>
       <mat-select [(ngModel)]="stepSecond">
         <mat-option *ngFor="let step of stepSeconds" [value]="step">
           {{step}}

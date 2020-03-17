@@ -6,6 +6,8 @@ All notable changes to this library will be documented in this file.
 
 ### Changed
 - @Input **disableSecond** become @Input **showSeconds**.
+- Remove button Cancel (x)
+- Enable closing picker when clicking the backdrop
 
 ## [2.0.2] - 2019-03-16
 ### Fixed
