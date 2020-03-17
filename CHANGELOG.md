@@ -8,6 +8,7 @@ All notable changes to this library will be documented in this file.
 - @Input **disableSecond** become @Input **showSeconds**.
 - Remove button Cancel (x).
 - Enable closing picker when clicking the backdrop.
+- Add @Input **enableMeridian** - Whether to display 12H or 24H mode.
 
 ## [2.0.2] - 2019-03-16
 ### Fixed

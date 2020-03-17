@@ -81,7 +81,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
     return this._timePicker && this._timePicker.valid && this.datepicker.valid;
   }
 
-  get isCurrentViewMonth(): boolean{
+  get isCurrentViewMonth(): boolean {
     return this._calendar && (!this._calendar.currentView || this._calendar.currentView == 'month');
   }
 
@@ -226,6 +226,12 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   get stepSecond(): number { return this._stepSecond; }
   set stepSecond(value: number) { this._stepSecond = value; }
   public _stepSecond: number = DEFAULT_STEP;
+
+  /** Enable meridian */
+  @Input()
+  get enableMeridian(): boolean { return this._enableMeridian; }
+  set enableMeridian(value: boolean) { this._enableMeridian = value; }
+  public _enableMeridian: boolean = false;
 
   private _hasBackdrop: boolean = true;
 

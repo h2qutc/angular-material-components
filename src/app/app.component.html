@@ -26,13 +26,14 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
               [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
-              [color]="color">
+              [color]="color" [enableMeridian]="enableMeridian">
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </td>
         <td>
           <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners"
-            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds">
+            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds"
+            [color]="color" [enableMeridian]="enableMeridian">
           </ngx-mat-timepicker>
         </td>
       </tr>
@@ -85,6 +86,14 @@
   <div class="config-wrapper">
     <span class="label">touchUi (Default: false) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">enableMeridian (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>

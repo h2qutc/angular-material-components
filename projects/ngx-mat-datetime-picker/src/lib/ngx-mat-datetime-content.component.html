@@ -9,7 +9,8 @@
     <div class="time-container" [class.disable-seconds]="!datepicker._showSeconds">
         <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners" [showSeconds]="datepicker._showSeconds"
             [disabled]="datepicker._disabled" [stepHour]="datepicker._stepHour" [stepMinute]="datepicker._stepMinute"
-            [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected">
+            [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected" [color]="datepicker._color"
+            [enableMeridian]="datepicker._enableMeridian">
         </ngx-mat-timepicker>
     </div>
     <div class="actions">

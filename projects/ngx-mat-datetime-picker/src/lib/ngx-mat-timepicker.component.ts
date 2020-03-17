@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
-import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND, MERIDIANS } from './utils/date-utils';
-import { ThemePalette } from '@angular/material/core';
+import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -36,7 +36,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
   @Input() showSeconds = false;
-  @Input() enableMeridian = true;
+  @Input() enableMeridian = false;
   @Input() color: ThemePalette = 'primary';
 
   public meridian: string = MERIDIANS.AM;
@@ -204,7 +204,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       next = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
       if (prop === 'hour' && this.enableMeridian) {
         next = next % (max + 1);
-        if(next === 0) next = up ? 1 : max;
+        if (next === 0) next = up ? 1 : max;
       } else {
         next = next % max;
       }

@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   public showSpinners = true;
   public showSeconds = false;
   public touchUi = false;
+  public enableMeridian = false;
   public minDate: Date;
   public maxDate: Date;
   public stepHour = 1;
