@@ -9,6 +9,8 @@
 
 A DatetimePicker like @angular/material [Datepicker](https://material.angular.io/components/datepicker/overview) by adding support for choosing time.
 
+[![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=69STP3V6JZFH8&source=url)
+
 ## DEMO
 @see [Demo here](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
