@@ -73,11 +73,11 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
  * @returns 0 if the dates are equal, a number less than 0 if the first date is earlier,
  *     a number greater than 0 if the first date is later.
  */
-  compareDateWithTime(first: D, second: D, disableSecond?: boolean): number {
+  compareDateWithTime(first: D, second: D, showSeconds?: boolean): number {
     let res = super.compareDate(first, second) ||
       this.getHour(first) - this.getHour(second) ||
       this.getMinute(first) - this.getMinute(second);
-    if (!disableSecond) {
+    if (showSeconds) {
       res = res || this.getSecond(first) - this.getSecond(second);
     }
     return res;

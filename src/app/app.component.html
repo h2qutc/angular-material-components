@@ -24,14 +24,14 @@
             <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
               [min]="minDate" [max]="maxDate" [disabled]="disabled">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [disableSecond]="disableSecond"
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
               [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </td>
         <td>
           <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners"
-            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [disableSecond]="disableSecond">
+            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds">
           </ngx-mat-timepicker>
         </td>
       </tr>
@@ -74,8 +74,8 @@
   </div>
 
   <div class="config-wrapper">
-    <span class="label">disableSecond (Default: true) </span>
-    <mat-radio-group aria-label="Select an option" [(ngModel)]="disableSecond">
+    <span class="label">showSeconds (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>

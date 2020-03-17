@@ -201,9 +201,9 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Whether the second part is disabled. */
   @Input()
-  get disableSecond(): boolean { return this._disableSecond; }
-  set disableSecond(value: boolean) { this._disableSecond = value; }
-  public _disableSecond = true;
+  get showSeconds(): boolean { return this._showSeconds; }
+  set showSeconds(value: boolean) { this._showSeconds = value; }
+  public _showSeconds = false;
 
   /** Step hour */
   @Input()
@@ -310,14 +310,14 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** The form control validator for the min date. */
   private _minValidator = (): ValidationErrors | null => {
     return (!this._minDate || !this._selected ||
-      this._dateAdapter.compareDateWithTime(this._minDate, this._selected, this.disableSecond) <= 0) ?
+      this._dateAdapter.compareDateWithTime(this._minDate, this._selected, this.showSeconds) <= 0) ?
       null : { 'matDatetimePickerMin': { 'min': this._minDate, 'actual': this._selected } };
   }
 
   /** The form control validator for the max date. */
   private _maxValidator = (): ValidationErrors | null => {
     return (!this._maxDate || !this._selected ||
-      this._dateAdapter.compareDateWithTime(this._maxDate, this._selected, this.disableSecond) >= 0) ?
+      this._dateAdapter.compareDateWithTime(this._maxDate, this._selected, this.showSeconds) >= 0) ?
       null : { 'matDatetimePickerMax': { 'max': this._maxDate, 'actual': this._selected } };
   }
 

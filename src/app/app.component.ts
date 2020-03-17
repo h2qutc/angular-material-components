@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   public date: Date;
   public disabled = false;
   public showSpinners = true;
-  public disableSecond = true;
+  public showSeconds = false;
   public minDate: Date;
   public maxDate: Date;
   public stepHour = 1;
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   </mat-datepicker-toggle>
   <ngx-mat-datetime-picker #picker 
     [showSpinners]="showSpinners" 
-    [disableSecond]="disableSecond"
+    [showSeconds]="showSeconds"
     [stepHour]="stepHour" [stepMinute]="stepMinute" 
     [stepSecond]="stepSecond">
   </ngx-mat-datetime-picker>
@@ -61,7 +61,7 @@ public codeTimePicker = `
             [showSpinners]="showSpinners"
             [stepHour]="stepHour" [stepMinute]="stepMinute" 
             [stepSecond]="stepSecond" 
-            [disableSecond]="disableSecond">
+            [showSeconds]="showSeconds">
   </ngx-mat-timepicker>`;
 
 
