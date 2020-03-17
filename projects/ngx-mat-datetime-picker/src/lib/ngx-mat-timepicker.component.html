@@ -21,35 +21,43 @@
             <mat-icon>expand_less</mat-icon>
           </button>
         </td>
+        <td *ngIf="enableMeridian" class="spacer"></td>
+        <td *ngIf="enableMeridian"></td>
       </tr>
+
       <tr>
         <td>
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="hour"
               [placeholder]="hourPlaceholder" (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()"
-              (blur)="onBlur('hour')">
+              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()" (blur)="change('hour')">
           </mat-form-field>
         </td>
         <td class="spacer">&#58;</td>
         <td>
           <mat-form-field>
-            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="minute"
-              (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()"
-              (blur)="onBlur('minute')">
+            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
+              formControlName="minute" (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()" (blur)="change('minute')">
           </mat-form-field>
         </td>
         <td *ngIf="showSeconds" class="spacer">&#58;</td>
         <td *ngIf="showSeconds">
           <mat-form-field>
-            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="second"
-              (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('second', false); $event.preventDefault()"
-              (blur)="onBlur('second')">
+            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
+              formControlName="second" (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('second', false); $event.preventDefault()" (blur)="change('second')">
           </mat-form-field>
         </td>
+
+        <td *ngIf="enableMeridian" class="spacer"></td>
+        <td *ngIf="enableMeridian" class="meridian">
+          <button mat-button (click)="toggleMeridian()" mat-stroked-button [color]="color" [disabled]="disabled">
+            {{meridian}}
+          </button>
+        </td>
       </tr>
+
       <tr *ngIf="showSpinners">
         <td>
           <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('hour', false)"
@@ -69,6 +77,8 @@
             <mat-icon>expand_more</mat-icon>
           </button>
         </td>
+        <td *ngIf="enableMeridian" class="spacer"></td>
+        <td *ngIf="enableMeridian"></td>
       </tr>
     </tbody>
   </table>

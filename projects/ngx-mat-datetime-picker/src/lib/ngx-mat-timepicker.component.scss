@@ -1,4 +1,5 @@
 $fontSizeIcon: 24px;
+$sizeButtonMeridian: 36px;
 
 .ngx-mat-timepicker {
   font-size: 13px;
@@ -8,10 +9,25 @@ $fontSizeIcon: 24px;
       .tbody {
         tr {
           td {
+            text-align: center;
+
             &.spacer {
               font-weight: bold;
             }
-            text-align: center;
+            &.meridian {
+              .mat-button {
+                min-width: 64px;
+                line-height: $sizeButtonMeridian;
+                border-radius: 4px;
+                min-width: 0;
+                border-radius: 50%;
+                width: $sizeButtonMeridian;
+                height: $sizeButtonMeridian;
+                padding: 0;
+                flex-shrink: 0;
+              }
+            }
+
             .mat-icon-button {
               height: $fontSizeIcon;
               width: $fontSizeIcon;

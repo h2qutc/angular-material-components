@@ -3,7 +3,8 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
-import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
+import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND, MERIDIANS } from './utils/date-utils';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -35,6 +36,10 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
   @Input() showSeconds = false;
+  @Input() enableMeridian = true;
+  @Input() color: ThemePalette = 'primary';
+
+  public meridian: string = MERIDIANS.AM;
 
   /** Hour */
   private get hour() {
@@ -63,10 +68,6 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   private _model: D;
 
   private _destroyed: Subject<void> = new Subject<void>();
-  private _configEventForm = {
-    onlySelf: false,
-    emitEvent: false
-  }
 
   public pattern = PATTERN_INPUT_HOUR;
 
@@ -128,39 +129,41 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     this.cd.markForCheck();
   }
 
+  /**
+   * Format input
+   * @param input 
+   */
   public formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(NUMERIC_REGEX, '');
   }
 
-  public onBlur(prop: string) {
-    const keyProp = prop[0].toUpperCase() + prop.slice(1);
-    const max = LIMIT_TIMES[`max${keyProp}`];
-    const nextVal = this[prop] % (max + 1);
-    this.form.controls[prop].setValue(formatTwoDigitTimeValue(nextVal), this._configEventForm);
-    this._updateModel();
+  /** Toggle meridian */
+  public toggleMeridian() {
+    this.meridian = (this.meridian === MERIDIANS.AM) ? MERIDIANS.PM : MERIDIANS.AM;
+    this.change('hour');
   }
 
   /** Change property of time */
-  public change(prop: string, up: boolean) {
-    //hour => stepHour
-    const keyProp = prop[0].toUpperCase() + prop.slice(1);
-    let nextVal = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
-    const min = LIMIT_TIMES[`min${keyProp}`];
-    const max = LIMIT_TIMES[`max${keyProp}`];
-    if (up) {
-      nextVal = nextVal > max ? (nextVal - max + min - 1) : nextVal;
-    } else {
-      nextVal = nextVal < min ? (nextVal - min + max + 1) : nextVal;
-    }
-    this.form.controls[prop].setValue(formatTwoDigitTimeValue(nextVal), this._configEventForm);
+  public change(prop: string, up?: boolean) {
+    const next = this._getNextValueByProp(prop, up);
+    this.form.controls[prop].setValue(formatTwoDigitTimeValue(next), { onlySelf: false, emitEvent: false });
     this._updateModel();
   }
 
   /** Update controls of form by model */
   private _updateHourMinuteSecond() {
-    const _hour = this._dateAdapter.getHour(this._model);
+    let _hour = this._dateAdapter.getHour(this._model);
     const _minute = this._dateAdapter.getMinute(this._model);
     const _second = this._dateAdapter.getSecond(this._model);
+
+    if (this.enableMeridian) {
+      if (_hour > LIMIT_TIMES.meridian) {
+        _hour = _hour - LIMIT_TIMES.meridian;
+        this.meridian = MERIDIANS.PM;
+      } else {
+        this.meridian = MERIDIANS.AM;
+      }
+    }
 
     this.form.controls['hour'].setValue(formatTwoDigitTimeValue(_hour));
     this.form.controls['minute'].setValue(formatTwoDigitTimeValue(_minute));
@@ -169,10 +172,51 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /** Update model */
   private _updateModel() {
-    this._dateAdapter.setHour(this._model, this.hour);
+    let _hour = this.hour;
+    if (this.enableMeridian && this.meridian === MERIDIANS.PM && _hour !== LIMIT_TIMES.meridian) {
+      _hour = _hour + LIMIT_TIMES.meridian;
+    }
+
+    this._dateAdapter.setHour(this._model, _hour);
     this._dateAdapter.setMinute(this._model, this.minute);
     this._dateAdapter.setSecond(this._model, this.second);
     this._onChange(this._model);
+  }
+
+  /**
+   * Get next value by property
+   * @param prop 
+   * @param up
+   */
+  private _getNextValueByProp(prop: string, up?: boolean): number {
+    const keyProp = prop[0].toUpperCase() + prop.slice(1);
+    const min = LIMIT_TIMES[`min${keyProp}`];
+    let max = LIMIT_TIMES[`max${keyProp}`];
+
+    if (prop === 'hour' && this.enableMeridian) {
+      max = LIMIT_TIMES.meridian;
+    }
+
+    let next;
+    if (up == null) {
+      next = this[prop] % (max);
+    } else {
+      next = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
+      if (prop === 'hour' && this.enableMeridian) {
+        next = next % (max + 1);
+        if(next === 0) next = up ? 1 : max;
+      } else {
+        next = next % max;
+      }
+      if (up) {
+        next = next > max ? (next - max + min) : next;
+      } else {
+        next = next < min ? (next - min + max) : next;
+      }
+
+    }
+
+    return next;
   }
 
 }
