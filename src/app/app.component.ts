@@ -56,7 +56,9 @@ export class AppComponent implements OnInit {
     [showSpinners]="showSpinners" 
     [showSeconds]="showSeconds"
     [stepHour]="stepHour" [stepMinute]="stepMinute" 
-    [stepSecond]="stepSecond">
+    [stepSecond]="stepSecond"
+    [touchUi]="touchUi"
+    [color]="color">
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit {
             [stepHour]="stepHour" [stepMinute]="stepMinute" 
             [stepSecond]="stepSecond" 
             [showSeconds]="showSeconds">
-  </ngx-mat-timepicker>`;
+</ngx-mat-timepicker>`;
 
 
   public codeFormGroup = `

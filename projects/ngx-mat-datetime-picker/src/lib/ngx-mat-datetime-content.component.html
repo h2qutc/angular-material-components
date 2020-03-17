@@ -5,15 +5,17 @@
     (selectedChange)="datepicker.select($event)" (yearSelected)="datepicker._selectYear($event)"
     (monthSelected)="datepicker._selectMonth($event)">
 </ngx-mat-calendar>
-<div class="time-container" [class.disable-seconds]="!datepicker._showSeconds">
-    <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners"
-        [showSeconds]="datepicker._showSeconds" [disabled]="datepicker._disabled" [stepHour]="datepicker._stepHour"
-        [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected">
-    </ngx-mat-timepicker>
-</div>
-<div class="actions">
-    <button mat-button (click)="datepicker.ok()" mat-stroked-button [color]="datepicker._color" cdkFocusInitial
-        [disabled]="!valid">
-        <mat-icon>done</mat-icon>
-    </button>
-</div>
+<ng-container *ngIf="isCurrentViewMonth">
+    <div class="time-container" [class.disable-seconds]="!datepicker._showSeconds">
+        <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners" [showSeconds]="datepicker._showSeconds"
+            [disabled]="datepicker._disabled" [stepHour]="datepicker._stepHour" [stepMinute]="datepicker._stepMinute"
+            [stepSecond]="datepicker._stepSecond" [(ngModel)]="datepicker._selected">
+        </ngx-mat-timepicker>
+    </div>
+    <div class="actions">
+        <button mat-button (click)="datepicker.ok()" mat-stroked-button [color]="datepicker._color" cdkFocusInitial
+            [disabled]="!valid">
+            <mat-icon>done</mat-icon>
+        </button>
+    </div>
+</ng-container>
