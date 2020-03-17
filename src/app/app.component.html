@@ -25,7 +25,8 @@
               [min]="minDate" [max]="maxDate" [disabled]="disabled">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-              [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+              [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+              [color]="color">
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </td>
@@ -82,6 +83,14 @@
   </div>
 
   <div class="config-wrapper">
+    <span class="label">touchUi (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
     <span class="label">stepHour (Default: 1) </span>
     <mat-form-field>
       <mat-label>Select step hour</mat-label>
@@ -118,6 +127,18 @@
   </div>
 
   <div class="config-wrapper">
+    <span class="label">color (Default: primary) </span>
+    <mat-form-field>
+      <mat-label>Select color</mat-label>
+      <mat-select [(ngModel)]="color">
+        <mat-option *ngFor="let item of listColors" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="config-wrapper">
     <mat-checkbox (change)="toggleMinDate($event)">
       Min date (Default: null, Demo: now - 1 day) = {{minDate?.toLocaleString()}}
     </mat-checkbox>
@@ -145,7 +166,7 @@
   </div>
   <div><span [innerHTML]="code1"></span> = {{formGroup.get('date').value?.toLocaleString()}}</div>
 
-  <hr/>
+  <hr />
   <h4>ngx-mat-time-picker</h4>
   <div>
     <pre>{{codeFormGroup2}}</pre>

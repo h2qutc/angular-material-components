@@ -128,7 +128,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   @Input()
   get color(): ThemePalette {
     return this._color ||
-      (this._datepickerInput ? this._datepickerInput._getThemePalette() : undefined);
+      (this._datepickerInput ? this._datepickerInput._getThemePalette() : 'primary');
   }
   set color(value: ThemePalette) {
     this._color = value;
@@ -222,6 +222,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   get stepSecond(): number { return this._stepSecond; }
   set stepSecond(value: number) { this._stepSecond = value; }
   public _stepSecond: number = DEFAULT_STEP;
+
+  private _hasBackdrop: boolean = true;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;
@@ -441,7 +443,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       direction: this._dir ? this._dir.value : 'ltr',
       viewContainerRef: this._viewContainerRef,
       panelClass: 'mat-datepicker-dialog',
-      hasBackdrop: false
+      hasBackdrop: this._hasBackdrop
     });
 
     this._dialogRef.afterClosed().subscribe(() => this.close());
@@ -476,7 +478,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _createPopup(): void {
     const overlayConfig = new OverlayConfig({
       positionStrategy: this._createPopupPositionStrategy(),
-      hasBackdrop: false,
+      hasBackdrop: this._hasBackdrop,
       backdropClass: 'mat-overlay-transparent-backdrop',
       direction: this._dir,
       scrollStrategy: this._scrollStrategy(),
@@ -499,7 +501,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
         event.preventDefault();
       }
 
-      this.close();
+      (this._hasBackdrop && event) ? this.cancel() : this.close();
+
     });
   }
 
