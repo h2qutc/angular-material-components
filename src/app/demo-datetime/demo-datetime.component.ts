@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
@@ -11,7 +11,6 @@ export class DemoDatetimeComponent implements OnInit {
 
   @ViewChild('picker') picker: any;
 
-  public date: Date;
   public disabled = false;
   public showSpinners = true;
   public showSeconds = false;
@@ -23,15 +22,8 @@ export class DemoDatetimeComponent implements OnInit {
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  public panelOpenState = false;
 
-
-  public formGroup = new FormGroup({
-    date: new FormControl(null, [Validators.required]),
-    date2: new FormControl(null, [Validators.required])
-  })
   public dateControl = new FormControl(new Date());
-  public dateControlMinMax = new FormControl(new Date());
 
   public options = [
     { value: true, label: 'True' },
@@ -44,58 +36,21 @@ export class DemoDatetimeComponent implements OnInit {
   public stepMinutes = [1, 5, 10, 15, 20, 25];
   public stepSeconds = [1, 5, 10, 15, 20, 25];
 
-  public codeDatePicker = `
+  public codeDatePicker =
+    `
 <mat-form-field>
-  <input matInput [ngxMatDatetimePicker]="picker" 
-                  placeholder="Choose a date" 
-                  [formControl]="dateControl"
-                  [min]="minDate" [max]="maxDate" 
-                  [disabled]="disabled">
-  <mat-datepicker-toggle matSuffix [for]="picker">
-  </mat-datepicker-toggle>
-  <ngx-mat-datetime-picker #picker 
-    [showSpinners]="showSpinners" 
-    [showSeconds]="showSeconds"
-    [stepHour]="stepHour" [stepMinute]="stepMinute" 
-    [stepSecond]="stepSecond"
-    [touchUi]="touchUi"
-    [color]="color">
+  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+                  [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+    [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+    [touchUi]="touchUi" [color]="color">
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
-
-  public codeTimePicker = `
-<ngx-mat-timepicker 
-            [(ngModel)]="date" [disabled]="disabled" 
-            [showSpinners]="showSpinners"
-            [stepHour]="stepHour" [stepMinute]="stepMinute" 
-            [stepSecond]="stepSecond" 
-            [showSeconds]="showSeconds">
-</ngx-mat-timepicker>`;
-
-
-  public codeFormGroup = `
-  <div [formGroup]="formGroup">
-    <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker1" 
-      placeholder="Choose a date" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
-    </mat-form-field>
-  </div>`;
-
-  public code1 = `formGroup.get('date').value?.toLocaleString()`;
-
-  public codeFormGroup2 = `
-  <form [formGroup]="formGroup">
-    <ngx-mat-timepicker formControlName="date2"></ngx-mat-timepicker>
-  </form>`;
-
-  public code2 = `formGroup.get('date2').value?.toLocaleString()`;
 
   constructor() { }
 
   ngOnInit() {
-    this.date = null;
   }
 
   toggleMinDate(evt: any) {

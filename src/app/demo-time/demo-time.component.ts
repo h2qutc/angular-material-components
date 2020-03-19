@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-time',
@@ -9,27 +8,26 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class DemoTimeComponent implements OnInit {
 
-  public date: Date;
   public disabled = false;
   public showSpinners = true;
   public showSeconds = false;
-  public touchUi = false;
   public enableMeridian = false;
-  public minDate: Date;
-  public maxDate: Date;
   public stepHour = 1;
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  public panelOpenState = false;
+
+  public codeTimePicker = `
+  <ngx-mat-timepicker 
+              [(ngModel)]="date" [disabled]="disabled" 
+              [showSpinners]="showSpinners"
+              [stepHour]="stepHour" [stepMinute]="stepMinute" 
+              [stepSecond]="stepSecond" 
+              [showSeconds]="showSeconds">
+  </ngx-mat-timepicker>`;
 
 
-  public formGroup = new FormGroup({
-    date: new FormControl(null, [Validators.required]),
-    date2: new FormControl(null, [Validators.required])
-  })
-  public dateControl = new FormControl(new Date());
-  public dateControlMinMax = new FormControl(new Date());
+  public date: Date;
 
   public options = [
     { value: true, label: 'True' },
@@ -44,7 +42,6 @@ export class DemoTimeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

@@ -1,55 +1,3 @@
-<!-- <table class="table">
-  <thead>
-    <tr>
-      <th><strong>ngx-mat-datetime-picker</strong></th>
-      <th><strong>ngx-mat-timepicker</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <pre>{{codeDatePicker}}</pre>
-      </td>
-      <td>
-        <pre>{{codeTimePicker}}</pre>
-      </td>
-    </tr>
-    <tr>
-      <td>
-       
-
-      </td>
-      <td>
-        <mat-card>
-          <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners"
-            [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds"
-            [color]="color" [enableMeridian]="enableMeridian">
-          </ngx-mat-timepicker>
-        </mat-card>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Errors (min, max, parse...):</strong>
-        <pre> {{dateControl.errors | json}}</pre>
-      </td>
-      <td>
-        <pre></pre>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>
-        Date: {{dateControl.value?.toLocaleString()}}
-      </th>
-      <th>
-        Date: {{date?.toLocaleString()}}
-      </th>
-    </tr>
-  </tfoot>
-</table> -->
-
 <mat-card class="zone zone-value">
   Selected date: {{dateControl.value?.toLocaleString()}}
 </mat-card>
@@ -163,32 +111,10 @@
 
 </mat-card>
 
-<pre>
+<mat-card class="zone zone-code">
+  <pre>
   <code>
     {{codeDatePicker}}
   </code>
 </pre>
-<!-- 
-<h3>Working with FormGroup</h3>
-<h4>ngx-mat-datetime-picker</h4>
-<div>
-  <pre>{{codeFormGroup}}</pre>
-</div>
-<div [formGroup]="formGroup">
-  <mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" formControlName="date">
-    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
-  </mat-form-field>
-</div>
-<div><span [innerHTML]="code1"></span> = {{formGroup.get('date').value?.toLocaleString()}}</div>
-
-<hr />
-<h4>ngx-mat-time-picker</h4>
-<div>
-  <pre>{{codeFormGroup2}}</pre>
-</div>
-<form [formGroup]="formGroup">
-  <ngx-mat-timepicker formControlName="date2"></ngx-mat-timepicker>
-</form>
-<div><span [innerHTML]="code2"></span> = {{formGroup.get('date2').value?.toLocaleString()}}</div> -->
+</mat-card>
