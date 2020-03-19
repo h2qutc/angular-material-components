@@ -1,0 +1,36 @@
+.config-wrapper {
+  margin-bottom: 15px;
+  .label {
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  &_step {
+    .mat-form-field {
+      margin-right: 20px;
+      width: 100px;
+    }
+  }
+}
+
+.zone {
+  display: flex;
+  justify-content: center;
+
+  &-value {
+    font-weight: bold;
+  }
+
+  &-picker {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  &-config {
+    flex-direction: column;
+  }
+}
+

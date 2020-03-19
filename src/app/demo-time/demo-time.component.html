@@ -1,0 +1,84 @@
+<mat-card class="zone zone-value">Selected date: {{date?.toLocaleString()}}</mat-card>
+
+<mat-card class="zone zone-picker">
+  <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
+    [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
+    [enableMeridian]="enableMeridian">
+  </ngx-mat-timepicker>
+</mat-card>
+
+<mat-card class="zone zone-config">
+  <div class="config-wrapper">
+    <span class="label">disabled (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">showSpinners (Default: true) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div class="config-wrapper">
+    <span class="label">showSeconds (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">enableMeridian (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper config-wrapper_step">
+    <span class="label">steps </span>
+    <mat-form-field>
+      <mat-label>hour (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepHour">
+        <mat-option *ngFor="let step of stepHours" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>minute (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepMinute">
+        <mat-option *ngFor="let step of stepMinutes" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>second (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepSecond">
+        <mat-option *ngFor="let step of stepSeconds" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">color (Default: primary) </span>
+    <mat-form-field>
+      <mat-label>Select color</mat-label>
+      <mat-select [(ngModel)]="color">
+        <mat-option *ngFor="let item of listColors" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-card>
