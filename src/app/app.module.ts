@@ -22,9 +22,9 @@ import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
-   { path: '', redirectTo: '/datetime', pathMatch: 'full' },
    { path: 'datetime', component: DemoDatetimeComponent },
    { path: 'time', component: DemoTimeComponent },
+   { path: '', redirectTo: '/datetime', pathMatch: 'full' }
 ]
 
 @NgModule({
