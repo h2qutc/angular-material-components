@@ -1,0 +1,120 @@
+<mat-card class="zone zone-value">
+  Selected date: {{dateControl.value?.toLocaleString()}}
+</mat-card>
+
+<mat-card class="zone zone-picker">
+  <mat-form-field>
+    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+      [min]="minDate" [max]="maxDate" [disabled]="disabled">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+      [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+      [enableMeridian]="enableMeridian">
+    </ngx-mat-datetime-picker>
+  </mat-form-field>
+</mat-card>
+
+<mat-card class="zone zone-config">
+  <div class="config-wrapper">
+    <span class="label">disabled (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">showSpinners (Default: true) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div class="config-wrapper">
+    <span class="label">showSeconds (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">touchUi (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">enableMeridian (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper config-wrapper_step">
+    <span class="label">steps </span>
+    <mat-form-field>
+      <mat-label>hour (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepHour">
+        <mat-option *ngFor="let step of stepHours" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>minute (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepMinute">
+        <mat-option *ngFor="let step of stepMinutes" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>second (default: 1)</mat-label>
+      <mat-select [(ngModel)]="stepSecond">
+        <mat-option *ngFor="let step of stepSeconds" [value]="step">
+          {{step}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">color (Default: primary) </span>
+    <mat-form-field>
+      <mat-label>Select color</mat-label>
+      <mat-select [(ngModel)]="color">
+        <mat-option *ngFor="let item of listColors" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="config-wrapper">
+    <mat-checkbox (change)="toggleMinDate($event)">
+      Min date (Default: null, Demo: now - 1 day) = {{minDate?.toLocaleString()}}
+    </mat-checkbox>
+  </div>
+
+  <div class="config-wrapper">
+    <mat-checkbox (change)="toggleMaxDate($event)">
+      Max date (Default: null, Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
+    </mat-checkbox>
+  </div>
+
+</mat-card>
+
+<mat-card class="zone zone-code">
+  <pre>
+  <code>
+    {{codeDatePicker}}
+  </code>
+</pre>
+</mat-card>

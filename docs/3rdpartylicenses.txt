@@ -87,6 +87,8 @@ THE SOFTWARE.
 
 @angular/material/button
 
+@angular/material/card
+
 @angular/material/checkbox
 
 @angular/material/core
@@ -99,11 +101,20 @@ THE SOFTWARE.
 
 @angular/material/icon
 
+@angular/material/list
+
 @angular/material/radio
 
 @angular/material/select
 
+@angular/material/sidenav
+
+@angular/material/toolbar
+
 @angular/platform-browser
+MIT
+
+@angular/router
 MIT
 
 core-js

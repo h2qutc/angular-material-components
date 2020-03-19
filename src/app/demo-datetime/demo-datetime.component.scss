@@ -1,0 +1,28 @@
+@import "../shared/_common";
+
+.table {
+  border-collapse: collapse;
+  //width: 100%;
+  margin-bottom: 30px;
+  height: 250px;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: white;
+    &:first-of-type {
+      background-color: #268fa7;
+    }
+    &:last-of-type {
+      background-color: #8a178c;
+    }
+  }
+}

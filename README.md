@@ -12,7 +12,10 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 [![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=69STP3V6JZFH8&source=url)
 
 ## DEMO
-@see [Demo here](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
+
+@see [LIVE DEMO](https://h2qutc.github.io/ngx-mat-datetime-picker/)
+
+@see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
 ![Alt Text](demo.png)
 

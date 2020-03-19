@@ -1,0 +1,59 @@
+.config-wrapper {
+  margin-bottom: 15px;
+  .label {
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  &_step {
+    .mat-form-field {
+      margin-right: 20px;
+      width: 100px;
+    }
+  }
+}
+
+.zone {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  &-value {
+    font-weight: bold;
+  }
+
+  &-config {
+    flex-direction: column;
+  }
+}
+
+pre {
+  font-family: "Courier 10 Pitch", Courier, monospace;
+  font-size: 95%;
+  line-height: 140%;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+}       
+
+code {
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  font-size: 95%;
+  line-height: 140%;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  background: #faf8f0;
+}
+
+#content code {
+  display: block;
+  padding: 0.5em 1em;
+  border: 1px solid #bebab0;
+}
+
