@@ -24,7 +24,8 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
    { path: 'datetime', component: DemoDatetimeComponent },
    { path: 'time', component: DemoTimeComponent },
-   { path: '', redirectTo: '/datetime', pathMatch: 'full' }
+   { path: '', redirectTo: '/datetime', pathMatch: 'full' },
+   { path: '**', redirectTo: '/datetime', pathMatch: 'full' }
 ]
 
 @NgModule({
