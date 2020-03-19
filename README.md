@@ -13,9 +13,9 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 
 ## DEMO
 
-@see [DEMO](https://h2qutc.github.io/ngx-mat-datetime-picker/)
+@see [LIVE DEMO](https://h2qutc.github.io/ngx-mat-datetime-picker/)
 
-@see [Demo stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
+@see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
 ![Alt Text](demo.png)
 
