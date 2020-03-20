@@ -1,24 +1,59 @@
-$widthPalette: 150px;
-$heightPalette: 150px;
+$widthPalette: 178px;
+$heightPalette: 178px;
 $widthStrip: 15px;
 
 .ngx-mat-palette {
-  display: flex;
-  canvas:hover {
-    cursor: crosshair;
-  }
-
-  .zone-canvas {
+  .row {
     display: flex;
-    &-block {
-      width: $widthPalette;
-      height: $heightPalette;
+    &:first-of-type {
+      height: 178px;
+      margin-bottom: 10px;
     }
 
-    &-strip {
-      flex-basis: auto;
-      max-width: $widthStrip;
-      margin-left: 5px;
+    canvas:hover {
+      cursor: crosshair;
+    }
+
+    .zone {
+      display: flex;
+      &-block {
+        width: $widthPalette;
+        height: $heightPalette;
+      }
+
+      &-strip {
+        flex-basis: auto;
+        max-width: $widthStrip;
+        height: $heightPalette;
+        margin-left: 10px;
+      }
+
+      &-inputs {
+        display: flex;
+        width: 40px;
+        flex-direction: column;
+        margin-left: 10px;
+      }
+    }
+
+    &:nth-of-type(2) {
+      display: flex;
+      .preview {
+        min-width: 45px;
+        min-height: 45px;
+        height: 45px;
+      }
+
+      .mat-form-field {
+          margin-left: 10px;
+          &:first-of-type{
+            width: 150px;
+          }
+
+          &:last-of-type{
+              width: 40px;
+          }
+      }
     }
   }
 }

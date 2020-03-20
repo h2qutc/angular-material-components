@@ -1,3 +1,34 @@
-<canvas id="color-block" class="zone-canvas-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
-  (mousemove)="onMousemove($event)"></canvas>
-<canvas id="color-strip" class="zone-canvas-strip" (click)="onStripClicked($event)"></canvas>
+<div class="row">
+    <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
+        (mousemove)="onMousemove($event)"></canvas>
+    <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
+
+    <div class="zone-inputs">
+        <mat-form-field>
+            <mat-label>R</mat-label>
+            <input matInput [value]="color.r">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>G</mat-label>
+            <input matInput [value]="color.g">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>B</mat-label>
+            <input matInput [value]="color.b">
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row">
+    <div [style.background-color]="color.toString()" class="preview"></div>
+    <mat-form-field>
+        <mat-label>HEX</mat-label>
+        <input matInput [value]="hex" disabled>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>A</mat-label>
+        <input matInput [value]="color.a" disabled>
+    </mat-form-field>
+</div>

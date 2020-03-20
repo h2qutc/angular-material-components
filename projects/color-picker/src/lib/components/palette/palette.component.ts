@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Color } from '../../models';
 
 @Component({
@@ -14,6 +14,8 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
 
   @Output() change: EventEmitter<Color> = new EventEmitter<Color>();
 
+  @Input() color: Color;
+
   canvasBlock: HTMLCanvasElement;
   canvasStrip: HTMLCanvasElement;
 
@@ -28,15 +30,17 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   x: number = 0;
   y: number = 0;
 
-  rgbaColor = 'rgba(255,0,0,1)';
   drag = false;
+
+  get hex(): string {
+    return this.color.toHex();
+  }
 
   constructor() {
 
   }
 
   ngOnInit() {
-
   }
 
   ngAfterViewInit(): void {
@@ -71,7 +75,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   }
 
   private fillGradient() {
-    this.ctxBlock.fillStyle = this.rgbaColor;
+    this.ctxBlock.fillStyle = this.color.toString();
 
     this.ctxBlock.fillRect(0, 0, this.widthBlock, this.heightBlock);
 
@@ -92,10 +96,9 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
     this.x = e.offsetX;
     this.y = e.offsetY;
     const imageData: Uint8ClampedArray = this.ctxStrip.getImageData(this.x, this.y, 1, 1).data;
-    const color = new Color(imageData[0], imageData[1], imageData[2]);
-    this.rgbaColor = color.toString();
+    this.color = new Color(imageData[0], imageData[1], imageData[2]);
     this.fillGradient();
-    this.emitChange(color);
+    this.emitChange(this.color);
   }
 
   public onMousedown(e: MouseEvent) {
@@ -117,10 +120,8 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
     this.x = e.offsetX;
     this.y = e.offsetY;
     const imageData: Uint8ClampedArray = this.ctxBlock.getImageData(this.x, this.y, 1, 1).data;
-    const color = new Color(imageData[0], imageData[1], imageData[2]);
-    this.rgbaColor = color.toString();
-    this.emitChange(color);
-    //colorLabel.style.backgroundColor = rgbaColor;
+    this.color = new Color(imageData[0], imageData[1], imageData[2]);
+    this.emitChange(this.color);
   }
 
   private emitChange(color: Color) {

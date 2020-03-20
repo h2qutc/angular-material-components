@@ -1,3 +1,5 @@
+import { rgbaToHex } from '../helpers';
+
 export class Color {
 
     public r: number;
@@ -16,4 +18,7 @@ export class Color {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;
     }
 
+    public toHex(allow4Char?: boolean) {
+        return rgbaToHex(this.r, this.g, this.b, this.a, allow4Char);
+    }
 }

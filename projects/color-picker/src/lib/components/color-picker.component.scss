@@ -1,17 +1,21 @@
-.zone-input {
+.ngx-mat-color-picker {
+  .actions {
     margin-top: 10px;
     display: flex;
     .left {
       display: flex;
+      flex-direction: column;
+      margin-right: 15px;
       .preview {
         flex: 2 1 auto;
-        width: 30px;
-        height: 30px;
+        margin-bottom: 10px;
       }
     }
 
     .right {
       display: flex;
+      width: 40px;
       flex-direction: column;
     }
   }
+}
