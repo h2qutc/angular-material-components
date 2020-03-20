@@ -1,4 +1,4 @@
-# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x
+# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x, 9.x
 
 [![Build Status](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker.svg?branch=master)](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker)
 [![codecov](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker)
@@ -15,14 +15,23 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 
 @see [LIVE DEMO](https://h2qutc.github.io/ngx-mat-datetime-picker/)
 
-@see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
-
 ![Alt Text](demo.png)
 
 ## Getting started
+
+#### Angular 7.x, 8.x: Install the version v2.x
+
 ```
-npm install --save ngx-mat-datetime-picker
+npm install --save ngx-mat-datetime-picker@2.x
 ```
+@see [DEMO stackblitz for Angular 7, Angular 8](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
+
+#### Angular 9.x: Install the version v3.x
+
+```
+npm install --save ngx-mat-datetime-picker@3.x
+```
+@see [DEMO stackblitz for Angular 9](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker-angular9)
 
 ## Setup
 Basically the same way the @angular/material Datepicker is configured and imported.
