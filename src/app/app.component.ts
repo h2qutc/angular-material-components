@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  public nameApp = 'ngx-mat-datetime-picker';
+  public nameApp = 'ngx-mat-components';
 
 
 

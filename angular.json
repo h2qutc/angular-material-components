@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-mat-datetime-picker": {
+    "ngx-mat-components": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-mat-datetime-picker",
+            "outputPath": "dist/ngx-mat-components",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-mat-datetime-picker:build"
+            "browserTarget": "ngx-mat-components:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-mat-datetime-picker:build:production"
+              "browserTarget": "ngx-mat-components:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-mat-datetime-picker:build"
+            "browserTarget": "ngx-mat-components:build"
           }
         },
         "test": {
@@ -107,7 +107,7 @@
         }
       }
     },
-    "ngx-mat-datetime-picker-e2e": {
+    "ngx-mat-components-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -116,11 +116,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-mat-datetime-picker:serve"
+            "devServerTarget": "ngx-mat-components:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-mat-datetime-picker:serve:production"
+              "devServerTarget": "ngx-mat-components:serve:production"
             }
           }
         },
@@ -206,5 +206,5 @@
       }
     }
   },
-  "defaultProject": "ngx-mat-datetime-picker"
+  "defaultProject": "ngx-mat-components"
 }
