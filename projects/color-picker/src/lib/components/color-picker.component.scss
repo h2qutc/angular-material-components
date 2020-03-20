@@ -1,0 +1,17 @@
+.zone-input {
+    margin-top: 10px;
+    display: flex;
+    .left {
+      display: flex;
+      .preview {
+        flex: 2 1 auto;
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+    }
+  }

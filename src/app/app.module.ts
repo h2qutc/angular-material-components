@@ -26,8 +26,8 @@ const appRoutes: Routes = [
       path: 'colorpicker',
       loadChildren: './demo-colorpicker/demo-colorpicker.module#DemoColorpickerModule'
    },
-   { path: '', redirectTo: '/home', pathMatch: 'full' },
-   { path: '**', redirectTo: '/home', pathMatch: 'full' }
+   { path: '', redirectTo: '/colorpicker', pathMatch: 'full' },
+   { path: '**', redirectTo: '/colorpicker', pathMatch: 'full' }
 ]
 
 @NgModule({

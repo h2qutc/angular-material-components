@@ -1,0 +1,24 @@
+$widthPalette: 150px;
+$heightPalette: 150px;
+$widthStrip: 15px;
+
+.ngx-mat-palette {
+  display: flex;
+  canvas:hover {
+    cursor: crosshair;
+  }
+
+  .zone-canvas {
+    display: flex;
+    &-block {
+      width: $widthPalette;
+      height: $heightPalette;
+    }
+
+    &-strip {
+      flex-basis: auto;
+      max-width: $widthStrip;
+      margin-left: 5px;
+    }
+  }
+}

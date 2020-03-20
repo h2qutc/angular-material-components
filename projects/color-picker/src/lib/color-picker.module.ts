@@ -1,10 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ColorPickerComponent } from './color-picker.component';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatColorPickerComponent, NgxMatPaletteComponent } from './components';
 
 @NgModule({
-  declarations: [ColorPickerComponent],
-  imports: [
+  declarations: [
+    NgxMatColorPickerComponent,
+    NgxMatPaletteComponent
   ],
-  exports: [ColorPickerComponent]
+  imports: [
+    CommonModule,
+    MatInputModule,
+  ],
+  exports: [
+    NgxMatColorPickerComponent
+  ]
 })
-export class ColorPickerModule { }
+export class NgxMatColorPickerModule { }
