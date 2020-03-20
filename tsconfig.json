@@ -22,6 +22,12 @@
     "paths": {
       "@ngx-mat-components/*": [
         "dist/@ngx-mat-components/*"
+      ],
+      "color-picker": [
+        "dist/color-picker"
+      ],
+      "color-picker/*": [
+        "dist/color-picker/*"
       ]
     }
   }
