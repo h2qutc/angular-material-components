@@ -2,8 +2,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -13,13 +15,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from 'projects/ngx-mat-datetime-picker/src/public-api';
-import { AppComponent } from './app.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { DemoTimeComponent } from './demo-time/demo-time.component';
-import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from 'projects/datetime-picker/src';
+import { AppComponent } from './app.component';
+import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
+import { DemoTimeComponent } from './demo-time/demo-time.component';
 
 const appRoutes: Routes = [
    { path: 'datetime', component: DemoDatetimeComponent },

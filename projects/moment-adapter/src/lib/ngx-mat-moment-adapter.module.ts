@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentAdapter } from './ngx-mat-moment-adapter';
 import { NGX_MAT_MOMENT_FORMATS } from './ngx-mat-moment-formats';
-import { NgxMatDateAdapter } from 'ngx-mat-datetime-picker';
+import { NgxMatDateAdapter } from '@ngx-mat-components/datetime-picker';
 
 @NgModule({
   providers: [

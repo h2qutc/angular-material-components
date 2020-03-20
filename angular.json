@@ -136,32 +136,32 @@
       }
     },
     "NgxMatDatetimePicker": {
-      "root": "projects/ngx-mat-datetime-picker",
-      "sourceRoot": "projects/ngx-mat-datetime-picker/src",
+      "root": "projects/datetime-picker",
+      "sourceRoot": "projects/datetime-picker/src",
       "projectType": "library",
       "prefix": "NgxMat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-mat-datetime-picker/tsconfig.lib.json",
-            "project": "projects/ngx-mat-datetime-picker/ng-package.json"
+            "tsConfig": "projects/datetime-picker/tsconfig.lib.json",
+            "project": "projects/datetime-picker/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-mat-datetime-picker/src/test.ts",
-            "tsConfig": "projects/ngx-mat-datetime-picker/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-mat-datetime-picker/karma.conf.js"
+            "main": "projects/datetime-picker/src/test.ts",
+            "tsConfig": "projects/datetime-picker/tsconfig.spec.json",
+            "karmaConfig": "projects/datetime-picker/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-mat-datetime-picker/tsconfig.lib.json",
-              "projects/ngx-mat-datetime-picker/tsconfig.spec.json"
+              "projects/datetime-picker/tsconfig.lib.json",
+              "projects/datetime-picker/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
