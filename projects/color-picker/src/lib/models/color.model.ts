@@ -1,4 +1,4 @@
-import { rgbaToHex } from '../helpers';
+import { rgbaToHex, rgbToHex } from '../helpers';
 
 export class Color {
 
@@ -18,7 +18,11 @@ export class Color {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;
     }
 
-    public toHex(allow4Char?: boolean) {
-        return rgbaToHex(this.r, this.g, this.b, this.a, allow4Char);
+    public toHex(allow3Char?: boolean): string {
+        return rgbToHex(this.r, this.g, this.b, allow3Char);
+    }
+
+    public toHexString(allow3Char?: boolean): string {
+        return '#' + this.toHex(allow3Char);
     }
 }
