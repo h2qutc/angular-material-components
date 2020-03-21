@@ -14,7 +14,11 @@ export class Color {
         this.r = _r > MAX_RGB ? MAX_RGB : _r;
         this.g = _g > MAX_RGB ? MAX_RGB : _g;
         this.b = _b > MAX_RGB ? MAX_RGB : _b;
-        this.a = _a != null ? _a : 1;
+        if (_a != null) {
+            this.a = _a > 1 ? 1 : _a;
+        } else {
+            this.a = 1;
+        }
         this.hex = rgbToHex(this.r, this.g, this.b);
         this.rgba = this._toRgba();
     }

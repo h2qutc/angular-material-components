@@ -1,8 +1,8 @@
 <form [formGroup]="formGroup">
     <div class="row">
         <mat-card class="card">
-            <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
-                (mousemove)="onMousemove($event)"></canvas>
+            <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)"
+                (mouseup)="onMouseup($event)"></canvas>
             <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
         </mat-card>
 
@@ -32,7 +32,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>A</mat-label>
-            <input matInput formControlName="a" ngxMatNumericColorInput>
+            <input matInput formControlName="a" type="number" min="0" max="1" step="0.1">
         </mat-form-field>
     </div>
 </form>

@@ -20,7 +20,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   @Input()
   set color(val: Color) {
     console.log('color', val);
-    const config = {emitEvent: false};
+    const config = { emitEvent: false };
     this._color = val;
     this.rCtrl.setValue(val.r, config);
     this.gCtrl.setValue(val.g, config);
@@ -77,17 +77,17 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
       b: new FormControl(null, [Validators.required]),
       a: new FormControl(null, [Validators.required]),
       hex: new FormControl(null, [Validators.required]),
-    })
+    });
   }
 
   ngOnInit() {
     this.formGroup.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
-    .subscribe(values => {
-      console.log('values changes',values);
-      this._color = new Color(Number(this.rCtrl.value), 
-      Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
-      this.emitChange(this._color);
-    })
+      .subscribe(values => {
+        console.log('values changes', values);
+        this._color = new Color(Number(this.rCtrl.value),
+          Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
+        this.emitChange(this._color);
+      })
   }
 
   ngAfterViewInit(): void {
