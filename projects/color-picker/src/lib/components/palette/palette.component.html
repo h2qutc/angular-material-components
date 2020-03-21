@@ -1,7 +1,9 @@
 <div class="row">
-    <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
-        (mousemove)="onMousemove($event)"></canvas>
-    <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
+    <mat-card class="card">
+        <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
+            (mousemove)="onMousemove($event)"></canvas>
+        <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
+    </mat-card>
 
     <div class="zone-inputs">
         <mat-form-field>
@@ -23,7 +25,7 @@
 
 <div class="row">
     <!-- <div [style.background-color]="color.toString()" class="preview"> -->
-        <button mat-fab [style.background-color]="color.toString()" class="preview"></button>
+    <button mat-mini-fab [style.background-color]="color.toString()" class="preview"></button>
     <!-- </div> -->
     <mat-form-field>
         <mat-label>HEX</mat-label>
