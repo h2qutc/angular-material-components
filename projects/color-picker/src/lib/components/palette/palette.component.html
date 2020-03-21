@@ -2,8 +2,9 @@
     <div class="row">
         <mat-card class="card">
             <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)"
-                (mouseup)="onMouseup($event)"></canvas>
-            <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
+                (mouseup)="onMouseup($event)" (mousemove)="onMousemove($event)" width="178" height="178"></canvas>
+            <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"
+            width="15" height="178"></canvas>
         </mat-card>
 
         <div class="zone-inputs">

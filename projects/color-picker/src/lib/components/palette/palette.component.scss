@@ -20,15 +20,9 @@ $sizeButtonPreview: 40px;
 
     .zone {
       display: flex;
-      &-block {
-        width: $widthPalette;
-        height: $heightPalette;
-      }
 
       &-strip {
         flex-basis: auto;
-        max-width: $widthStrip;
-        height: $heightPalette;
         margin-left: 10px;
       }
 

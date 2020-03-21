@@ -17,7 +17,6 @@ export class NgxMatColorCollectionComponent implements OnInit {
 
   @Input()
   set color(c: Color) {
-    console.log('setter', c)
     this.selectedColor = c.toHexString();
   }
 
