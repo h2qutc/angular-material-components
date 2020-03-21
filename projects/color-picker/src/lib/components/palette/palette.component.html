@@ -1,36 +1,38 @@
-<div class="row">
-    <mat-card class="card">
-        <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
-            (mousemove)="onMousemove($event)"></canvas>
-        <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
-    </mat-card>
+<form [formGroup]="formGroup">
+    <div class="row">
+        <mat-card class="card">
+            <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
+                (mousemove)="onMousemove($event)"></canvas>
+            <canvas id="color-strip" class="zone-strip" (click)="onStripClicked($event)"></canvas>
+        </mat-card>
 
-    <div class="zone-inputs">
+        <div class="zone-inputs">
+            <mat-form-field>
+                <mat-label>R</mat-label>
+                <input matInput formControlName="r" ngxMatNumericColorInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>G</mat-label>
+                <input matInput formControlName="g" ngxMatNumericColorInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>B</mat-label>
+                <input matInput formControlName="b" ngxMatNumericColorInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <button mat-mini-fab [style.background-color]="_color?.rgba" class="preview"></button>
         <mat-form-field>
-            <mat-label>R</mat-label>
-            <input matInput [value]="color.r">
+            <mat-label>HEX</mat-label>
+            <input matInput formControlName="hex">
         </mat-form-field>
-
         <mat-form-field>
-            <mat-label>G</mat-label>
-            <input matInput [value]="color.g">
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>B</mat-label>
-            <input matInput [value]="color.b">
+            <mat-label>A</mat-label>
+            <input matInput formControlName="a" ngxMatNumericColorInput>
         </mat-form-field>
     </div>
-</div>
-
-<div class="row">
-    <button mat-mini-fab [style.background-color]="color.toString()" class="preview"></button>
-    <mat-form-field>
-        <mat-label>HEX</mat-label>
-        <input matInput [value]="hex" disabled>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>A</mat-label>
-        <input matInput [value]="color.a" disabled>
-    </mat-form-field>
-</div>
+</form>

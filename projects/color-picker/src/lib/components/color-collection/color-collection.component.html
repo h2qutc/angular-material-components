@@ -1,10 +1,10 @@
 <div class="row">
-  <button *ngFor="let color of colors1" mat-mini-fab [style.background-color]="color" class="btn-color"
-    (click)="select(color)" [ngClass]="{'active': selectedColor === color}">
+  <button *ngFor="let c of colors1" mat-mini-fab [style.background-color]="c" class="btn-color"
+    (click)="select(c)" [ngClass]="{'active': selectedColor === c}">
   </button>
 </div>
 <div class="row">
-  <button *ngFor="let color of colors2" mat-mini-fab [style.background-color]="color" class="btn-color"
-    (click)="select(color)" [ngClass]="{'active': selectedColor === color}">
+  <button *ngFor="let c of colors2" mat-mini-fab [style.background-color]="c" class="btn-color"
+    (click)="select(c)" [ngClass]="{'active': selectedColor === c}">
   </button>
 </div>

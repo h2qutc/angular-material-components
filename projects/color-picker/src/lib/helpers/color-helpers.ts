@@ -8,6 +8,10 @@ const mathMin = Math.min;
 const mathMax = Math.max;
 const mathRandom = Math.random;
 
+export const NUMERIC_REGEX = /[^0-9]/g;
+export const MAX_RGB = 255;
+export const MIN_RGB = 0;
+
 
 /** List basic colors */
 export const BASIC_COLORS = ["#ffffff", "#ffff00", "#ff00ff", "#ff0000",

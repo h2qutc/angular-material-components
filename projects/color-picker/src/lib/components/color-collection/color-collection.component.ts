@@ -13,10 +13,11 @@ import { BASIC_COLORS, stringInputToObject } from '../../helpers';
 })
 export class NgxMatColorCollectionComponent implements OnInit {
 
-  @Output() change: EventEmitter<Color> = new EventEmitter<Color>();
+  @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
 
   @Input()
   set color(c: Color) {
+    console.log('setter', c)
     this.selectedColor = c.toHexString();
   }
 
@@ -33,7 +34,7 @@ export class NgxMatColorCollectionComponent implements OnInit {
   select(hex: string) {
     this.selectedColor = hex;
     const { r, g, b, a } = stringInputToObject(hex);
-    this.change.emit(new Color(r, g, b, a));
+    this.colorChanged.emit(new Color(r, g, b, a));
   }
 
 }

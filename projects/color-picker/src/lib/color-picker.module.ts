@@ -1,23 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { NgxMatColorPickerComponent, NgxMatPaletteComponent, NgxMatColorCollectionComponent } from './components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { NgxMatColorCollectionComponent, NgxMatColorPickerComponent, NgxMatPaletteComponent } from './components';
+import { NumericColorInputDirective } from './directives';
 
 @NgModule({
   declarations: [
     NgxMatColorPickerComponent,
     NgxMatPaletteComponent,
-    NgxMatColorCollectionComponent
+    NgxMatColorCollectionComponent,
+    NumericColorInputDirective
   ],
   imports: [
     CommonModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatRadioModule
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     NgxMatColorPickerComponent

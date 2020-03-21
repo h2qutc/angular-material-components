@@ -1,5 +1,8 @@
 import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Color } from '../../models';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { NUMERIC_REGEX } from '../../helpers';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-mat-palette',
@@ -12,9 +15,40 @@ import { Color } from '../../models';
 })
 export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
 
-  @Output() change: EventEmitter<Color> = new EventEmitter<Color>();
+  @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
 
-  @Input() color: Color;
+  @Input()
+  set color(val: Color) {
+    console.log('color', val);
+    const config = {emitEvent: false};
+    this._color = val;
+    this.rCtrl.setValue(val.r, config);
+    this.gCtrl.setValue(val.g, config);
+    this.bCtrl.setValue(val.b, config);
+    this.aCtrl.setValue(val.a, config);
+    this.hexCtrl.setValue(val.hex, config);
+  }
+  _color: Color;
+
+  get rCtrl(): AbstractControl {
+    return this.formGroup.get('r');
+  }
+
+  get gCtrl(): AbstractControl {
+    return this.formGroup.get('g');
+  }
+
+  get bCtrl(): AbstractControl {
+    return this.formGroup.get('b');
+  }
+
+  get aCtrl(): AbstractControl {
+    return this.formGroup.get('a');
+  }
+
+  get hexCtrl(): AbstractControl {
+    return this.formGroup.get('hex');
+  }
 
   canvasBlock: HTMLCanvasElement;
   canvasStrip: HTMLCanvasElement;
@@ -32,15 +66,28 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
 
   drag = false;
 
-  get hex(): string {
-    return this.color.toHex();
-  }
+  formGroup: FormGroup;
+
+  rgba: string;
 
   constructor() {
-
+    this.formGroup = new FormGroup({
+      r: new FormControl(null, [Validators.required]),
+      g: new FormControl(null, [Validators.required]),
+      b: new FormControl(null, [Validators.required]),
+      a: new FormControl(null, [Validators.required]),
+      hex: new FormControl(null, [Validators.required]),
+    })
   }
 
   ngOnInit() {
+    this.formGroup.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
+    .subscribe(values => {
+      console.log('values changes',values);
+      this._color = new Color(Number(this.rCtrl.value), 
+      Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
+      this.emitChange(this._color);
+    })
   }
 
   ngAfterViewInit(): void {
@@ -55,6 +102,14 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
     this.heightStrip = this.canvasStrip.height;
 
     this.drawBlock();
+  }
+
+  /**
+  * Format input
+  * @param input 
+  */
+  public formatInput(input: HTMLInputElement) {
+    input.value = input.value.replace(NUMERIC_REGEX, '');
   }
 
   private drawBlock() {
@@ -75,7 +130,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   }
 
   private fillGradient() {
-    this.ctxBlock.fillStyle = this.color.toString();
+    this.ctxBlock.fillStyle = this._color.rgba;
 
     this.ctxBlock.fillRect(0, 0, this.widthBlock, this.heightBlock);
 
@@ -98,7 +153,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
     const imageData: Uint8ClampedArray = this.ctxStrip.getImageData(this.x, this.y, 1, 1).data;
     this.color = new Color(imageData[0], imageData[1], imageData[2]);
     this.fillGradient();
-    this.emitChange(this.color);
+    this.emitChange(this._color);
   }
 
   public onMousedown(e: MouseEvent) {
@@ -121,11 +176,11 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
     this.y = e.offsetY;
     const imageData: Uint8ClampedArray = this.ctxBlock.getImageData(this.x, this.y, 1, 1).data;
     this.color = new Color(imageData[0], imageData[1], imageData[2]);
-    this.emitChange(this.color);
+    this.emitChange(this._color);
   }
 
   private emitChange(color: Color) {
-    this.change.emit(color);
+    this.colorChanged.emit(color);
   }
 
 
