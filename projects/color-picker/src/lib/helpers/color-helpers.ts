@@ -1,4 +1,3 @@
-import { Color } from '../models';
 
 const trimLeft = /^\s+/;
 const trimRight = /\s+$/;
@@ -19,6 +18,17 @@ export const BASIC_COLORS = ["#ffffff", "#ffff00", "#ff00ff", "#ff0000",
     "#800000", "#00ffff", "#00ff00", "#008080",
     "#008000", "#0000ff", "#000080", "#000000"
 ];
+
+/**
+ * Get color at position
+ * @param ctx 
+ * @param x 
+ * @param y 
+ */
+export function getColorAtPosition(ctx: CanvasRenderingContext2D, x: number, y: number): { r: number, g: number, b: number } {
+    const imageData: Uint8ClampedArray = ctx.getImageData(x, y, 1, 1).data;
+    return { r: imageData[0], g: imageData[1], b: imageData[2] };
+}
 
 // `rgbaToHex`
 // Converts an RGBA color plus alpha transparency to hex

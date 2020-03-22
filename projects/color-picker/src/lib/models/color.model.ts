@@ -1,4 +1,4 @@
-import { rgbaToHex, rgbToHex, MAX_RGB } from '../helpers';
+import { MAX_RGB, rgbToHex } from '../helpers';
 
 export class Color {
 

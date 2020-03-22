@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Color } from '../../models';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { NUMERIC_REGEX } from '../../helpers';
+import { NUMERIC_REGEX, getColorAtPosition } from '../../helpers';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 const RADIUS_NOB = 5;
@@ -15,21 +15,13 @@ const RADIUS_NOB = 5;
     'class': 'ngx-mat-palette'
   }
 })
-export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
+export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
 
-  @Input()
-  set color(val: Color) {
-    const config = { emitEvent: false };
-    this._color = val;
-    this.rCtrl.setValue(val.r, config);
-    this.gCtrl.setValue(val.g, config);
-    this.bCtrl.setValue(val.b, config);
-    this.aCtrl.setValue(val.a, config);
-    this.hexCtrl.setValue(val.hex, config);
-  }
-  _color: Color;
+  @Input() color: Color;
+
+  _baseColor: Color;
 
   get rCtrl(): AbstractControl {
     return this.formGroup.get('r');
@@ -52,17 +44,14 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   }
 
   ctx: CanvasRenderingContext2D;
-  ctxStrip: CanvasRenderingContext2D;
-
   width: number;
   height: number;
-  widthStrip: number;
-  heightStrip: number;
 
   x: number = 0;
   y: number = 0;
 
-  drag = false;
+  _drag = false;
+  _resetBaseColor = true;
 
   formGroup: FormGroup;
 
@@ -81,119 +70,113 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.formGroup.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
       .subscribe(_ => {
-        this._color = new Color(Number(this.rCtrl.value),
+        const color = new Color(Number(this.rCtrl.value),
           Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
-        this.emitChange(this._color);
+        this.emitChange(color);
       })
   }
 
-  ngAfterViewInit(): void {
-    const canvasBlock = <HTMLCanvasElement>document.getElementById('color-block');
-    this.ctx = canvasBlock.getContext('2d');
-    this.width = canvasBlock.width;
-    this.height = canvasBlock.height;
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes', changes);
+    if (changes.color && changes.color.currentValue) {
+      this.updateForm(changes.color.currentValue);
+      if (this._resetBaseColor) {
+        this._baseColor = changes.color.currentValue;
+      }
 
-    const canvasStrip = <HTMLCanvasElement>document.getElementById('color-strip');
-    this.ctxStrip = canvasStrip.getContext('2d');
-    this.widthStrip = canvasStrip.width;
-    this.heightStrip = canvasStrip.height;
+      this._resetBaseColor = true;
 
-    this.drawBlock();
-    this.drawStrip();
-  }
-
-  /**
-  * Format input
-  * @param input 
-  */
-  public formatInput(input: HTMLInputElement) {
-    input.value = input.value.replace(NUMERIC_REGEX, '');
-  }
-
-  private drawBlock() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
-    this.ctx.rect(0, 0, this.width, this.height);
-    this.fillGradientBlock();
-
-    if (this.y) {
-      this.ctx.beginPath();
-      this.ctx.strokeStyle = 'white';
-      this.ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI, false);
-      this.ctx.stroke();
-      this.ctx.closePath();
+      if (!changes.color.firstChange) {
+        this.draw();
+      }
     }
   }
 
-
-  private drawStrip() {
-    this.ctxStrip.rect(0, 0, this.widthStrip, this.heightStrip);
-    const grd = this.ctxStrip.createLinearGradient(0, 0, 0, this.height);
-    grd.addColorStop(0, 'rgba(255, 0, 0, 1)');
-    grd.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
-    grd.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
-    grd.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
-    grd.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
-    grd.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
-    grd.addColorStop(1, 'rgba(255, 0, 0, 1)');
-
-    this.ctxStrip.fillStyle = grd;
-    this.ctxStrip.fill();
+  ngAfterViewInit(): void {
+    const canvas = <HTMLCanvasElement>document.getElementById('color-block');
+    this.ctx = canvas.getContext('2d');
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.draw();
   }
 
-  private fillGradientBlock() {
-    this.ctx.fillStyle = this._color.rgba;
+  private updateForm(val: Color): void {
+    const config = { emitEvent: false };
+    this.rCtrl.setValue(val.r, config);
+    this.gCtrl.setValue(val.g, config);
+    this.bCtrl.setValue(val.b, config);
+    this.aCtrl.setValue(val.a, config);
+    this.hexCtrl.setValue(val.hex, config);
+  }
+
+  private draw() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.rect(0, 0, this.width, this.height);
+    this.fillGradient();
+    if (this.y) {
+      this.redrawIndicator(this.ctx, this.x, this.y);
+    }
+  }
+
+  private redrawIndicator(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    ctx.beginPath();
+    this.ctx.strokeStyle = 'white';
+    this.ctx.arc(x, y, RADIUS_NOB, 0, 2 * Math.PI, false);
+    this.ctx.stroke();
+    this.ctx.closePath();
+  }
+
+  private fillGradient() {
+    this.ctx.fillStyle = this._baseColor ? this._baseColor.rgba : 'rgba(255,255,255,1)';
     this.ctx.fillRect(0, 0, this.width, this.height);
 
-    const grdWhite = this.ctxStrip.createLinearGradient(0, 0, this.width, 0);
+    const grdWhite = this.ctx.createLinearGradient(0, 0, this.width, 0);
     grdWhite.addColorStop(0, 'rgba(255,255,255,1)');
     grdWhite.addColorStop(1, 'rgba(255,255,255,0)');
     this.ctx.fillStyle = grdWhite;
     this.ctx.fillRect(0, 0, this.width, this.height);
 
-    const grdBlack = this.ctxStrip.createLinearGradient(0, 0, 0, this.height);
+    const grdBlack = this.ctx.createLinearGradient(0, 0, 0, this.height);
     grdBlack.addColorStop(0, 'rgba(0,0,0,0)');
     grdBlack.addColorStop(1, 'rgba(0,0,0,1)');
     this.ctx.fillStyle = grdBlack;
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
-  public onStripClicked(e: MouseEvent) {
-    this.color = this.getColorAtPosition(this.ctxStrip, e.offsetX, e.offsetY);
-    this.fillGradientBlock();
-    this.emitChange(this._color);
+  public onSliderColorChanged(c: Color) {
+    console.log('onSliderColorChanged')
+    this._baseColor = c;
+    this.color = c;
+    this.fillGradient();
+    this.emitChange(c);
   }
 
   public onMousedown(e: MouseEvent) {
-    this.drag = true;
+    this._drag = true;
     this.changeColor(e);
   }
 
   public onMousemove(e: MouseEvent) {
-    if (this.drag) {
+    if (this._drag) {
       this.changeColor(e);
     }
   }
 
   public onMouseup(e: MouseEvent) {
-    this.drag = false;
+    this._drag = false;
   }
 
   private changeColor(e: MouseEvent) {
     this.x = e.offsetX;
     this.y = e.offsetY;
-    console.log(this.x, this.y)
-    this.drawBlock();
-    this.color = this.getColorAtPosition(this.ctx, e.offsetX, e.offsetY);
-    this.emitChange(this._color);
+    this._resetBaseColor = false;
+    this.draw();
+    const { r, g, b } = getColorAtPosition(this.ctx, e.offsetX, e.offsetY);
+    this.emitChange(new Color(r, g, b));
   }
 
   private emitChange(color: Color) {
     this.colorChanged.emit(color);
-  }
-
-  private getColorAtPosition(ctx: CanvasRenderingContext2D, x: number, y: number): Color {
-    const imageData: Uint8ClampedArray = ctx.getImageData(x, y, 1, 1).data;
-    return new Color(imageData[0], imageData[1], imageData[2]);
   }
 
 
