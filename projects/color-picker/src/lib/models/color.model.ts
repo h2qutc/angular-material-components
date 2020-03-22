@@ -30,4 +30,8 @@ export class Color {
     public toHexString(): string {
         return '#' + this.hex;
     }
+
+    public isSame(other: Color){
+       return this.rgba === other.rgba;
+    }
 }

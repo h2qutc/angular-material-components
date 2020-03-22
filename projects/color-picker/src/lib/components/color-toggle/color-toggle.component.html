@@ -1,0 +1,11 @@
+<button
+  #button
+  mat-icon-button
+  type="button"
+  [attr.aria-haspopup]="colorPicker ? 'dialog' : null"
+  [attr.tabindex]="disabled ? -1 : tabIndex"
+  [disabled]="disabled"
+  [disableRipple]="disableRipple"
+  (click)="open($event)">
+  <mat-icon>palette</mat-icon>
+</button>

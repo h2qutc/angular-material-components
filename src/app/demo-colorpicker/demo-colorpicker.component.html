@@ -1,1 +1,7 @@
-<ngx-mat-color-palette></ngx-mat-color-palette>
+<mat-card class="zone zone-picker">
+    <mat-form-field>
+        <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">
+        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+        <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+    </mat-form-field>
+</mat-card>
