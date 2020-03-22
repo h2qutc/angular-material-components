@@ -1,3 +1,8 @@
+<mat-card class="zone zone-value">
+    <div>HEX: {{colorCtr.value?.hex}}</div>
+    <div>RGBA: {{colorCtr.value?.rgba}}</div>
+</mat-card>
+
 <mat-card class="zone zone-picker">
     <mat-form-field>
         <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">

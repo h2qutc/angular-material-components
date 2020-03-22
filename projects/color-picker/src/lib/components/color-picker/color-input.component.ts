@@ -68,7 +68,6 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
     this._pickerSubscription.unsubscribe();
 
     this._pickerSubscription = this._picker._selectedChanged.subscribe((selected: Color) => {
-      console.log('_selectedChanged', selected);
       this.value = selected;
       this._cvaOnChange(selected);
       this._onTouched();

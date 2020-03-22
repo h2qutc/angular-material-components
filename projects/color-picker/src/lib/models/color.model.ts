@@ -23,14 +23,14 @@ export class Color {
         }
         this.roundA = Math.round(this.a);
         this.hex = rgbToHex(this.r, this.g, this.b);
-        this.rgba = this._toRgba();
+        this.rgba = this.toRgba();
     }
 
     public toHex(allow3Char?: boolean, ): string {
         return rgbToHex(this.r, this.g, this.b, allow3Char);
     }
 
-    public _toRgba(): string {
+    public toRgba(): string {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;
     }
 
