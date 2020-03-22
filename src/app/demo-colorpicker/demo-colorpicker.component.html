@@ -1,6 +1,6 @@
 <mat-card class="zone zone-value">
-    <div>HEX: {{colorCtr.value?.hex}}</div>
-    <div>RGBA: {{colorCtr.value?.rgba}}</div>
+    <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
+    <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
 </mat-card>
 
 <mat-card class="zone zone-picker">

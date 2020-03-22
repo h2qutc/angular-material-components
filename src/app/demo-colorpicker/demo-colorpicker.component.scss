@@ -1,1 +1,10 @@
-@import "../shared/_common";
+@import '../shared/_common';
+
+.zone-value {
+  display: flex;
+  flex-direction: column;
+  .row {
+    display: block;
+    padding: 5px;
+  }
+}

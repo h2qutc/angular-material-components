@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Color } from 'projects/color-picker/src/lib/models';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
