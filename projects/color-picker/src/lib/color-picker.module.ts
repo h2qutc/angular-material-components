@@ -5,13 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { NgxMatColorCollectionComponent, NgxMatColorPickerComponent, NgxMatColorSliderComponent, NgxMatPaletteComponent } from './components';
+import { NgxMatColorCollectionComponent, NgxMatColorPaletteComponent, NgxMatColorSliderComponent, NgxMatColorCanvasComponent } from './components';
 import { NumericColorInputDirective } from './directives';
 
 @NgModule({
   declarations: [
-    NgxMatColorPickerComponent,
-    NgxMatPaletteComponent,
+    NgxMatColorPaletteComponent,
+    NgxMatColorCanvasComponent,
     NgxMatColorCollectionComponent,
     NgxMatColorSliderComponent,
     NumericColorInputDirective,
@@ -26,7 +26,7 @@ import { NumericColorInputDirective } from './directives';
     ReactiveFormsModule
   ],
   exports: [
-    NgxMatColorPickerComponent
+    NgxMatColorPaletteComponent
   ]
 })
 export class NgxMatColorPickerModule { }

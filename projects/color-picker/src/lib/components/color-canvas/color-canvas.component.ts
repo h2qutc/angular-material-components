@@ -4,20 +4,20 @@ import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
 import { Color } from '../../models';
-import { BaseColorPalette } from './base-color-palette';
+import { NgxMatBaseColorCanvas } from './base-color-canvas';
 
 const RADIUS_NOB = 5;
 
 @Component({
-  selector: 'ngx-mat-palette',
-  templateUrl: './palette.component.html',
-  styleUrls: ['./palette.component.scss'],
+  selector: 'ngx-mat-color-canvas',
+  templateUrl: './color-canvas.component.html',
+  styleUrls: ['./color-canvas.component.scss'],
   encapsulation: ViewEncapsulation.None,
   host: {
-    'class': 'ngx-mat-palette'
+    'class': 'ngx-mat-color-canvas'
   }
 })
-export class NgxMatPaletteComponent extends BaseColorPalette implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
   private _baseColor: Color;
 

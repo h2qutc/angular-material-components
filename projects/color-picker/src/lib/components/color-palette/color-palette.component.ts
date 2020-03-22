@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Color } from '../models';
+import { Color } from '../../models';
 
 @Component({
-  selector: 'ngx-mat-color-picker',
-  templateUrl: 'color-picker.component.html',
-  styleUrls: ['color-picker.component.scss'],
+  selector: 'ngx-mat-color-palette',
+  templateUrl: 'color-palette.component.html',
+  styleUrls: ['color-palette.component.scss'],
   encapsulation: ViewEncapsulation.None,
   host: {
-    'class': 'ngx-mat-color-picker'
+    'class': 'ngx-mat-color-palette'
   }
 })
-export class NgxMatColorPickerComponent implements OnInit {
+export class NgxMatColorPaletteComponent implements OnInit {
 
   color: Color;
 
