@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Color } from '../../models';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { NUMERIC_REGEX, getColorAtPosition } from '../../helpers';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { BaseColorPalette } from './base-color-palette';
 
 const RADIUS_NOB = 5;
 
@@ -15,13 +16,9 @@ const RADIUS_NOB = 5;
     'class': 'ngx-mat-palette'
   }
 })
-export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges {
+export class NgxMatPaletteComponent extends BaseColorPalette implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-  @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
-
-  @Input() color: Color;
-
-  _baseColor: Color;
+  private _baseColor: Color;
 
   get rCtrl(): AbstractControl {
     return this.formGroup.get('r');
@@ -43,14 +40,6 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
     return this.formGroup.get('hex');
   }
 
-  ctx: CanvasRenderingContext2D;
-  width: number;
-  height: number;
-
-  x: number = 0;
-  y: number = 0;
-
-  _drag = false;
   _resetBaseColor = true;
 
   formGroup: FormGroup;
@@ -58,6 +47,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
   rgba: string;
 
   constructor() {
+    super('color-block');
     this.formGroup = new FormGroup({
       r: new FormControl(null, [Validators.required]),
       g: new FormControl(null, [Validators.required]),
@@ -68,7 +58,7 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   ngOnInit() {
-    this.formGroup.valueChanges.pipe(debounceTime(400), distinctUntilChanged())
+    this.formGroup.valueChanges.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
       .subscribe(_ => {
         const color = new Color(Number(this.rCtrl.value),
           Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
@@ -92,14 +82,6 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
     }
   }
 
-  ngAfterViewInit(): void {
-    const canvas = <HTMLCanvasElement>document.getElementById('color-block');
-    this.ctx = canvas.getContext('2d');
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.draw();
-  }
-
   private updateForm(val: Color): void {
     const config = { emitEvent: false };
     this.rCtrl.setValue(val.r, config);
@@ -109,24 +91,15 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
     this.hexCtrl.setValue(val.hex, config);
   }
 
-  private draw() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
-    this.ctx.rect(0, 0, this.width, this.height);
-    this.fillGradient();
-    if (this.y) {
-      this.redrawIndicator(this.ctx, this.x, this.y);
-    }
-  }
-
-  private redrawIndicator(ctx: CanvasRenderingContext2D, x: number, y: number) {
-    ctx.beginPath();
+  public redrawIndicator(x: number, y: number) {
+    this.ctx.beginPath();
     this.ctx.strokeStyle = 'white';
     this.ctx.arc(x, y, RADIUS_NOB, 0, 2 * Math.PI, false);
     this.ctx.stroke();
     this.ctx.closePath();
   }
 
-  private fillGradient() {
+  public fillGradient() {
     this.ctx.fillStyle = this._baseColor ? this._baseColor.rgba : 'rgba(255,255,255,1)';
     this.ctx.fillRect(0, 0, this.width, this.height);
 
@@ -144,29 +117,13 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   public onSliderColorChanged(c: Color) {
-    console.log('onSliderColorChanged')
     this._baseColor = c;
     this.color = c;
     this.fillGradient();
     this.emitChange(c);
   }
 
-  public onMousedown(e: MouseEvent) {
-    this._drag = true;
-    this.changeColor(e);
-  }
-
-  public onMousemove(e: MouseEvent) {
-    if (this._drag) {
-      this.changeColor(e);
-    }
-  }
-
-  public onMouseup(e: MouseEvent) {
-    this._drag = false;
-  }
-
-  private changeColor(e: MouseEvent) {
+  public changeColor(e: MouseEvent): void {
     this.x = e.offsetX;
     this.y = e.offsetY;
     this._resetBaseColor = false;
@@ -174,10 +131,5 @@ export class NgxMatPaletteComponent implements OnInit, AfterViewInit, OnChanges 
     const { r, g, b } = getColorAtPosition(this.ctx, e.offsetX, e.offsetY);
     this.emitChange(new Color(r, g, b));
   }
-
-  private emitChange(color: Color) {
-    this.colorChanged.emit(color);
-  }
-
 
 }
