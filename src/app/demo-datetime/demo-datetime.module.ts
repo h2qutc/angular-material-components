@@ -11,7 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 //TODO replace import path
-import { NgxMatNativeDateModule, NgxMatTimepickerModule, NgxMatDatetimePickerModule } from 'projects/datetime-picker/src';
+import { NgxMatNativeDateModule, NgxMatTimepickerModule, NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const routes: Routes = [

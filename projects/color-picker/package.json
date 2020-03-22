@@ -1,8 +1,35 @@
 {
   "name": "@angular-material-components/color-picker",
-  "version": "0.0.1-beta.1",
+  "version": "1.0.0-beta.1",
+  "description": "Angular Material Color Picker",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker/issues"
+  },
+  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular-material",
+    "angular material color picker",
+    "color-picker",
+    "colorpicker",
+    "ngx-mat",
+    "ngx-mat-color-picker",
+    "ngx-material-color-picker"
+  ],
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0"
+    "@angular/platform-browser": "~7.2.0",
+    "@angular/common": "~7.2.0",
+    "@angular/core": "~7.2.0",
+    "@angular/forms": "~7.2.0",
+    "@angular/material": "~7.3.7",
+    "@angular/cdk": "~7.3.7",
+    "rxjs": "~6.3.3"
   }
 }

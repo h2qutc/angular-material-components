@@ -23,11 +23,17 @@
       "@angular-material-components/*": [
         "dist/@angular-material-components/*"
       ],
-      "color-picker": [
-        "dist/color-picker"
+      "@angular-material-components/color-picker": [
+        "dist/@angular-material-components/color-picker"
       ],
-      "color-picker/*": [
-        "dist/color-picker/*"
+      "@angular-material-components/color-picker/*": [
+        "dist/@angular-material-components/color-picker/*"
+      ],
+      "@angular-material-components/datetime-picker": [
+        "dist/@angular-material-components/datetime-picker"
+      ],
+      "@angular-material-components/datetime-picker/*": [
+        "dist/@angular-material-components/color-picker/*"
       ]
     }
   }
