@@ -1,4 +1,4 @@
-import { EventEmitter, Output, Input, OnDestroy, AfterViewInit } from '@angular/core';
+import { EventEmitter, Output, Input, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
 import { Color } from '../../models';
 import { Subject } from 'rxjs';
 
@@ -6,6 +6,8 @@ export abstract class BaseColorPalette implements OnDestroy, AfterViewInit {
 
 	@Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
 	@Input() color: Color;
+
+	canvas: HTMLCanvasElement;
 
 	elementId: string;
 
@@ -20,7 +22,7 @@ export abstract class BaseColorPalette implements OnDestroy, AfterViewInit {
 
 	protected _destroyed: Subject<void> = new Subject<void>();
 
-	constructor(elementId: string) {
+	constructor(protected zone: NgZone, elementId: string) {
 		this.elementId = elementId;
 	}
 
@@ -30,10 +32,10 @@ export abstract class BaseColorPalette implements OnDestroy, AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		const canvas = <HTMLCanvasElement>document.getElementById(this.elementId);
-		this.ctx = canvas.getContext('2d');
-		this.width = canvas.width;
-		this.height = canvas.height;
+		this.canvas = <HTMLCanvasElement>document.getElementById(this.elementId);
+		this.ctx = this.canvas.getContext('2d');
+		this.width = this.canvas.width;
+		this.height = this.canvas.height;
 		this.draw();
 	}
 
@@ -50,16 +52,23 @@ export abstract class BaseColorPalette implements OnDestroy, AfterViewInit {
 	public onMousedown(e: MouseEvent) {
 		this.drag = true;
 		this.changeColor(e);
+
+		this.zone.runOutsideAngular(() => {
+			this.canvas.addEventListener('mousemove', this.onMousemove.bind(this));
+		})
 	}
 
 	public onMousemove(e: MouseEvent) {
 		if (this.drag) {
-			this.changeColor(e);
+			this.zone.run(() =>{
+				this.changeColor(e) ;
+			})
 		}
 	}
 
 	public onMouseup(e: MouseEvent) {
 		this.drag = false;
+		this.canvas.removeEventListener('mousemove', this.onMousemove);
 	}
 
 	public emitChange(color: Color) {

@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 import { NUMERIC_REGEX } from '../helpers';
 
 @Directive({
@@ -9,7 +9,7 @@ export class NumericColorInputDirective {
   constructor() { }
 
   @HostListener('input', ['$event'])
-  onInput($event: InputEvent) {
+  onInput($event: any) {
     this._formatInput($event.target);
   }
 

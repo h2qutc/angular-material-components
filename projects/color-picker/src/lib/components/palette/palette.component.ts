@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
 import { Color } from '../../models';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { NUMERIC_REGEX, getColorAtPosition } from '../../helpers';
@@ -46,8 +46,8 @@ export class NgxMatPaletteComponent extends BaseColorPalette implements OnInit, 
 
   rgba: string;
 
-  constructor() {
-    super('color-block');
+  constructor(protected zone: NgZone) {
+    super(zone, 'color-block');
     this.formGroup = new FormGroup({
       r: new FormControl(null, [Validators.required]),
       g: new FormControl(null, [Validators.required]),
