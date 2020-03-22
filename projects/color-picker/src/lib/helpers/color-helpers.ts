@@ -99,7 +99,7 @@ const CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
 const PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
 const PERMISSIVE_MATCH4 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
 
-const matchers = {
+export const matchers = {
     CSS_UNIT: new RegExp(CSS_UNIT),
     rgb: new RegExp("rgb" + PERMISSIVE_MATCH3),
     rgba: new RegExp("rgba" + PERMISSIVE_MATCH4),

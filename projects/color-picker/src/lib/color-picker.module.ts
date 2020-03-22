@@ -14,7 +14,7 @@ import { NumericColorInputDirective } from './directives';
     NgxMatPaletteComponent,
     NgxMatColorCollectionComponent,
     NgxMatColorSliderComponent,
-    NumericColorInputDirective
+    NumericColorInputDirective,
   ],
   imports: [
     CommonModule,

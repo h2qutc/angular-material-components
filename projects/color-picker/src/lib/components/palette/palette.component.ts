@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewEncapsulation, Input, OnChanges, SimpleChanges, OnDestroy, NgZone } from '@angular/core';
-import { Color } from '../../models';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { NUMERIC_REGEX, getColorAtPosition } from '../../helpers';
+import { AfterViewInit, Component, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
+import { Color } from '../../models';
 import { BaseColorPalette } from './base-color-palette';
-import { combineLatest, merge } from 'rxjs';
 
 const RADIUS_NOB = 5;
 
@@ -54,23 +54,33 @@ export class NgxMatPaletteComponent extends BaseColorPalette implements OnInit, 
       g: new FormControl(null, [Validators.required]),
       b: new FormControl(null, [Validators.required]),
       a: new FormControl(null, [Validators.required]),
-      hex: new FormControl(null, [Validators.required]),
+      hex: new FormControl(null, [Validators.required, Validators.pattern(matchers.hex6)]),
     });
   }
 
   ngOnInit() {
 
-    const rgbCtrl$ = merge(this.rCtrl.valueChanges, this.gCtrl.valueChanges, this.bCtrl.valueChanges);
-    rgbCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
+    const rgbaCtrl$ = merge(this.rCtrl.valueChanges, this.gCtrl.valueChanges,
+      this.bCtrl.valueChanges, this.aCtrl.valueChanges);
+    rgbaCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
       .subscribe(_ => {
         const color = new Color(Number(this.rCtrl.value),
           Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
         this.emitChange(color);
+      });
+
+    const hexCtrl$ = this.hexCtrl.valueChanges;
+    hexCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
+      .subscribe(hex => {
+        const obj = stringInputToObject(hex);
+        if (obj != null) {
+          const color = new Color(obj.r, obj.g, obj.b, obj.a);
+          this.emitChange(color);
+        }
       })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
     if (changes.color && changes.color.currentValue) {
       this.updateForm(changes.color.currentValue);
       if (this._resetBaseColor) {
