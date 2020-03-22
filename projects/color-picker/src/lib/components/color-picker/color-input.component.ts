@@ -1,21 +1,23 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DOWN_ARROW } from '@angular/cdk/keycodes';
-import { Directive, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
 import { Subscription } from 'rxjs';
+import { createMissingDateImplError } from '../../helpers';
 import { Color } from '../../models';
+import { ColorAdapter, MatColorFormats, MAT_COLOR_FORMATS } from '../../services';
 import { NgxMatColorPickerComponent } from './color-picker.component';
 
 export class NgxMatColorPickerInputEvent {
-  /** The new value for the target datepicker input. */
+  /** The new value for the target colorpicker input. */
   value: Color | null;
 
   constructor(
-    /** Reference to the datepicker input component that emitted the event. */
+    /** Reference to the colorpicker input component that emitted the event. */
     public target: NgxMatColorPickerInput,
-    /** Reference to the native input element associated with the datepicker input. */
+    /** Reference to the native input element associated with the colorpicker input. */
     public targetElement: HTMLElement) {
     this.value = this.target.value;
   }
@@ -43,10 +45,8 @@ export const MAT_COLORPICKER_VALIDATORS: any = {
     { provide: MAT_COLORPICKER_VALUE_ACCESSOR, useExisting: NgxMatColorPickerInput },
   ],
   host: {
-    '[attr.aria-haspopup]': '_datepicker ? "dialog" : null',
-    '[attr.aria-owns]': '(_datepicker?.opened && _datepicker.id) || null',
-    '[attr.min]': 'min ? _dateAdapter.toIso8601(min) : null',
-    '[attr.max]': 'max ? _dateAdapter.toIso8601(max) : null',
+    '[attr.aria-haspopup]': '_picker ? "dialog" : null',
+    '[attr.aria-owns]': '(_picker?.opened && _picker.id) || null',
     '[disabled]': 'disabled',
     '(input)': '_onInput($event.target.value)',
     '(change)': '_onChange()',
@@ -68,6 +68,7 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
     this._pickerSubscription.unsubscribe();
 
     this._pickerSubscription = this._picker._selectedChanged.subscribe((selected: Color) => {
+      console.log('_selectedChanged', selected);
       this.value = selected;
       this._cvaOnChange(selected);
       this._onTouched();
@@ -77,7 +78,7 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
   }
   _picker: NgxMatColorPickerComponent;
 
-  /** Whether the datepicker-input is disabled. */
+  /** Whether the colorpicker-input is disabled. */
   @Input()
   get disabled(): boolean { return !!this._disabled; }
   set disabled(value: boolean) {
@@ -103,8 +104,14 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
   @Input()
   get value(): Color | null { return this._value; }
   set value(value: Color | null) {
+    const oldValue = this.value;
     this._value = value;
-    this._valueChange.emit(value);
+    this._formatValue(value);
+
+    if (!this._adapter.sameColor(oldValue, value)) {
+      this._valueChange.emit(value);
+    }
+
   }
   private _value: Color | null;
 
@@ -138,7 +145,13 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
   private _lastValueValid = false;
 
   constructor(private _elementRef: ElementRef<HTMLInputElement>,
-    @Optional() private _formField: MatFormField) { }
+    @Optional() private _formField: MatFormField,
+    @Optional() @Inject(MAT_COLOR_FORMATS) private _colorFormats: MatColorFormats,
+    private _adapter: ColorAdapter) {
+    if (!this._colorFormats) {
+      throw createMissingDateImplError('MAT_COLOR_FORMATS');
+    }
+  }
 
   /** Returns the palette used by the input's form field, if any. */
   public getThemePalette(): ThemePalette {
@@ -164,7 +177,7 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
   }
 
   /**
-  * Gets the element that the datepicker popup should be connected to.
+  * Gets the element that the colorpicker popup should be connected to.
   * @return The element to connect the popup to.
   */
   getConnectedOverlayOrigin(): ElementRef {
@@ -226,15 +239,14 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
 
   /** Formats a value and sets it on the input element. */
   private _formatValue(value: Color | null) {
-    this._elementRef.nativeElement.value = value ? value.rgba : '';
+    this._elementRef.nativeElement.value = value ? this._adapter.format(value, this._colorFormats.display.colorInput) : '';
   }
 
   _onInput(value: string) {
     const lastValueWasValid = this._lastValueValid;
-    const nextValue = this._getValidValueOrNull(value);
+    const nextValue = this._adapter.parse(value);
 
-    //TODO
-    if (!nextValue.isSame(this._value)) {
+    if (!this._adapter.sameColor(nextValue, this._value)) {
       this._value = nextValue;
       this._cvaOnChange(nextValue);
       this._valueChange.emit(nextValue);
@@ -242,14 +254,6 @@ export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnD
     } else if (lastValueWasValid !== this._lastValueValid) {
       this._validatorOnChange();
     }
-  }
-
-  /**
- * @param obj The object to check.
- * @returns The given object if it is both a date instance and valid, otherwise null.
- */
-  private _getValidValueOrNull(obj: any): Color | null {
-    return new Color(0, 0, 0);
   }
 
 }

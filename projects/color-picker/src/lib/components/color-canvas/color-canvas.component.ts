@@ -17,7 +17,8 @@ const RADIUS_NOB = 5;
     'class': 'ngx-mat-color-canvas'
   }
 })
-export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
   private _baseColor: Color;
 

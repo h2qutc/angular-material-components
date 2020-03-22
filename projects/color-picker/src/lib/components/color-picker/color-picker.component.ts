@@ -13,6 +13,7 @@ import { filter, take } from 'rxjs/operators';
 import { Color } from '../../models';
 import { NgxMatColorPickerInput } from './color-input.component';
 import { NgxMatColorPaletteComponent } from '../color-palette/color-palette.component';
+import { ColorAdapter } from '../../services';
 
 /** Injection token that determines the scroll handling while the calendar is open. */
 export const NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY =
@@ -61,7 +62,7 @@ export class NgxMatColorPickerContentComponent extends _MatDatepickerContentMixi
   @ViewChild(NgxMatColorPaletteComponent) _palette: NgxMatColorPaletteComponent;
 
   ngAfterViewInit(): void {
-   // this._palette
+    // this._palette
   }
 
   picker: NgxMatColorPickerComponent;
@@ -161,6 +162,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   constructor(private _dialog: MatDialog,
     private _overlay: Overlay,
     private _zone: NgZone,
+    private _adapter: ColorAdapter,
     @Optional() private _dir: Directionality,
     @Inject(NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY) scrollStrategy: any,
     @Optional() @Inject(DOCUMENT) private _document: any,
@@ -187,7 +189,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   select(nextVal: Color): void {
     let oldValue = this._selected;
     this._selected = nextVal;
-    if (!oldValue.isSame(this._selected)) {
+    if (!this._adapter.sameColor(oldValue, this._selected)) {
       this._selectedChanged.next(nextVal);
     }
   }

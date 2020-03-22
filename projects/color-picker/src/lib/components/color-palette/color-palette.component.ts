@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 import { Color } from '../../models';
 
 @Component({
@@ -12,16 +12,17 @@ import { Color } from '../../models';
 })
 export class NgxMatColorPaletteComponent implements OnInit {
 
-  color: Color;
+  @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
+
+  @Input() color: Color;
 
   constructor() { }
 
   ngOnInit() {
-    this.color = new Color(255, 0, 0);
   }
 
   public handleColorChanged(color: Color) {
-    this.color = color;
+    this.colorChanged.emit(color);
   }
 
 }

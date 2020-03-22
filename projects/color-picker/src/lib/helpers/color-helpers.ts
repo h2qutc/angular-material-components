@@ -168,3 +168,8 @@ export function stringInputToObject(color: string): { r: number, g: number, b: n
 
     return null;
 }
+
+export function createMissingDateImplError(provider: string) {
+    return Error(
+        `NgxMatColorPicker: No provider found for ${provider}. You must define MAT_COLOR_FORMATS in your module`);
+}

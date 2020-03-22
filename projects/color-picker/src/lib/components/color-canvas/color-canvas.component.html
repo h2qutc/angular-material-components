@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-        <button mat-mini-fab [style.background-color]="color.rgba" class="preview"></button>
+        <button mat-mini-fab [style.background-color]="color?.rgba || 'transparent'" class="preview"></button>
         <mat-form-field>
             <mat-label>HEX6</mat-label>
             <input matInput formControlName="hex" autocomplete="off">

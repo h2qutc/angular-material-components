@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation, OnChanges, SimpleChanges, AfterContentInit, OnDestroy } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { Subscription, of, merge } from 'rxjs';
+import { merge, of, Subscription } from 'rxjs';
 import { NgxMatColorPickerComponent } from '../color-picker/color-picker.component';
 
 @Component({
@@ -18,8 +18,7 @@ import { NgxMatColorPickerComponent } from '../color-picker/color-picker.compone
     '(focus)': '_button.focus()',
   },
   exportAs: 'ngxMatColorPickerToggle',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
 
@@ -67,6 +66,7 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
   }
 
   private _watchStateChanges() {
+    console.log('_watchStateChanges')
     const disabled$ = this.picker ? this.picker._disabledChange : of();
     const inputDisabled$ = this.picker && this.picker._colorPickerInput ?
       this.picker._colorPickerInput._disabledChange : of();

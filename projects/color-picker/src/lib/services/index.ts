@@ -1,1 +1,2 @@
-export * from './color-picker.service';
+export * from './color-adapter';
+export * from './color-formats';

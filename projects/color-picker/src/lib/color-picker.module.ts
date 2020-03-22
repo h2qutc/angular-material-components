@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxMatColorCanvasComponent, NgxMatColorCollectionComponent, NgxMatColorPaletteComponent, NgxMatColorPickerComponent, NgxMatColorPickerContentComponent, NgxMatColorPickerInput, NgxMatColorSliderComponent, NgxMatColorToggleComponent, NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } from './components';
 import { NumericColorInputDirective } from './directives';
+import { ColorAdapter } from './services';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { NumericColorInputDirective } from './directives';
     NgxMatColorPickerContentComponent
   ],
   providers: [
+    ColorAdapter,
     NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER
   ]
 })
