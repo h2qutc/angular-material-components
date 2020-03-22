@@ -20,8 +20,8 @@
       "dom"
     ],
     "paths": {
-      "@ngx-mat-components/*": [
-        "dist/@ngx-mat-components/*"
+      "@angular-material-components/*": [
+        "dist/@angular-material-components/*"
       ],
       "color-picker": [
         "dist/color-picker"
