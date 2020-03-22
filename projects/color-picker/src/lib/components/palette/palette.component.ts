@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { NUMERIC_REGEX, getColorAtPosition } from '../../helpers';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { BaseColorPalette } from './base-color-palette';
+import { combineLatest, merge } from 'rxjs';
 
 const RADIUS_NOB = 5;
 
@@ -58,7 +59,9 @@ export class NgxMatPaletteComponent extends BaseColorPalette implements OnInit, 
   }
 
   ngOnInit() {
-    this.formGroup.valueChanges.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
+
+    const rgbCtrl$ = merge(this.rCtrl.valueChanges, this.gCtrl.valueChanges, this.bCtrl.valueChanges);
+    rgbCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
       .subscribe(_ => {
         const color = new Color(Number(this.rCtrl.value),
           Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
