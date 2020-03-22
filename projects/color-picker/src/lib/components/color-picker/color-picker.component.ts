@@ -4,16 +4,16 @@ import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { matDatepickerAnimations } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { Color } from '../../models';
-import { NgxMatColorPickerInput } from './color-input.component';
-import { NgxMatColorPaletteComponent } from '../color-palette/color-palette.component';
 import { ColorAdapter } from '../../services';
+import { NgxMatColorPaletteComponent } from '../color-palette/color-palette.component';
+import { NgxMatColorPickerInput } from './color-input.component';
 
 /** Injection token that determines the scroll handling while the calendar is open. */
 export const NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY =
@@ -56,21 +56,16 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof NgxMatColorPickerCon
   inputs: ['color']
 })
 export class NgxMatColorPickerContentComponent extends _MatDatepickerContentMixinBase
-  implements CanColor, AfterViewInit {
+  implements CanColor {
 
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatColorPaletteComponent) _palette: NgxMatColorPaletteComponent;
-
-  ngAfterViewInit(): void {
-    // this._palette
-  }
 
   picker: NgxMatColorPickerComponent;
   _isAbove: boolean;
 
   constructor(elementRef: ElementRef) {
     super(elementRef);
-
   }
 
 }
@@ -93,7 +88,8 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   @Output('closed') closedStream: EventEmitter<void> = new EventEmitter<void>();
 
   @Input() get disabled() {
-    return this._disabled;
+    return this._disabled === undefined && this._pickerInput ?
+      this._pickerInput.disabled : !!this._disabled;
   }
   set disabled(value: boolean) {
     const newValue = coerceBooleanProperty(value);
@@ -122,7 +118,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   @Input()
   get color(): ThemePalette {
     return this._color ||
-      (this._colorPickerInput ? this._colorPickerInput.getThemePalette() : undefined);
+      (this._pickerInput ? this._pickerInput.getThemePalette() : undefined);
   }
   set color(value: ThemePalette) {
     this._color = value;
@@ -136,7 +132,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   private _validSelected: Color = null;
 
 
-  _colorPickerInput: NgxMatColorPickerInput;
+  _pickerInput: NgxMatColorPickerInput;
   /** A reference to the overlay when the picker is opened as a popup. */
   _popupRef: OverlayRef;
 
@@ -200,19 +196,19 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
  * @param input The datepicker input to register with this datepicker.
  */
   registerInput(input: NgxMatColorPickerInput): void {
-    if (this._colorPickerInput) {
+    if (this._pickerInput) {
       throw Error('A ColorPicker can only be associated with a single input.');
     }
-    this._colorPickerInput = input;
+    this._pickerInput = input;
     this._inputSubscription =
-      this._colorPickerInput._valueChange.subscribe((value: Color) => this._selected = value);
+      this._pickerInput._valueChange.subscribe((value: Color) => this._selected = value);
   }
 
   public open(): void {
     if (this._opened || this.disabled) {
       return;
     }
-    if (!this._colorPickerInput) {
+    if (!this._pickerInput) {
       throw Error('Attempted to open an ColorPicker with no associated input.');
     }
 
@@ -240,6 +236,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
 
     this._dialogRef.afterClosed().subscribe(() => this.close());
     this._dialogRef.componentInstance.picker = this;
+    this._setColor();
   }
 
   /** Open the calendar as a popup. */
@@ -286,7 +283,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
       this._popupRef.keydownEvents().pipe(filter(event => {
         // Closing on alt + up is only valid when there's an input associated with the datepicker.
         return event.keyCode === ESCAPE ||
-          (this._colorPickerInput && event.altKey && event.keyCode === UP_ARROW);
+          (this._pickerInput && event.altKey && event.keyCode === UP_ARROW);
       }))
     ).subscribe(event => {
       if (event) {
@@ -351,7 +348,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   /** Create the popup PositionStrategy. */
   private _createPopupPositionStrategy(): PositionStrategy {
     return this._overlay.position()
-      .flexibleConnectedTo(this._colorPickerInput.getConnectedOverlayOrigin())
+      .flexibleConnectedTo(this._pickerInput.getConnectedOverlayOrigin())
       .withTransformOriginOn('.ngx-mat-colorpicker-content')
       .withFlexibleDimensions(false)
       .withViewportMargin(8)

@@ -67,8 +67,8 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
 
   private _watchStateChanges() {
     const disabled$ = this.picker ? this.picker._disabledChange : of();
-    const inputDisabled$ = this.picker && this.picker._colorPickerInput ?
-      this.picker._colorPickerInput._disabledChange : of();
+    const inputDisabled$ = this.picker && this.picker._pickerInput ?
+      this.picker._pickerInput._disabledChange : of();
 
     const pickerToggled$ = this.picker ?
       merge(this.picker.openedStream, this.picker.closedStream) : of();
