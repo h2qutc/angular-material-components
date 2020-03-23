@@ -1,4 +1,4 @@
-# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x, 9.x
+# Angular Material Extra Components (DatetimePicker, TimePicker, ColorPicker...) for @angular/material 7.x, 8.x, 9.x
 
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![codecov](https://codecov.io/gh/h2qutc/angular-material-components/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/angular-material-components)
@@ -7,9 +7,13 @@
 
 ## Description
 
-Angular Material Library provide extra components for every project. Please do not hesitate to contact us if you have any question or suggestion.
+Angular Material Library provide extra components for every project (Datetime picker, Time picker, Color picker...).
 
-If you like this project, support angular-material-components by starring⭐️
+Please do not hesitate to contact us if you have any question or suggestion.
+
+Feel free to open the [issues](https://github.com/h2qutc/angular-material-components/issues) or provide a PR.
+
+If you like this project, support angular-material-components by starring⭐.
 
 [![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SAAY32BP5KPPC&source=url)
 
