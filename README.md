@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![codecov](https://codecov.io/gh/h2qutc/angular-material-components/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/angular-material-components)
 [![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
-[![npm version](https://badge.fury.io/js/angular-material-components.svg)](https://badge.fury.io/for/js/angular-material-components)
 
 ## Description
 
@@ -23,6 +22,7 @@ If you like this project, support angular-material-components by starring⭐.
 
 ### Datetime Picker
 
+[![npm version](https://badge.fury.io/js/%40angular-material-components%2Fdatetime-picker.svg)](https://www.npmjs.com/package/@angular-material-components/datetime-picker)
 [@see more detail](projects/datetime-picker/README.md)
 
 ```
@@ -36,6 +36,8 @@ npm install --save  @angular-material-components/datetime-picker
 @see [DEMO stackblitz for Angular 9](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker-angular9)
 
 ### Color Picker
+
+[![npm version](https://badge.fury.io/js/%40angular-material-components%2Fcolor-picker.svg)](https://www.npmjs.com/package/@angular-material-components/color-picker)
 
 [@see more detail](projects/color-picker/README.md)
 
