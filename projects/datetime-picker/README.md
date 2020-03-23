@@ -17,11 +17,11 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 
 @see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
-![Alt Text](demo.png)
+![Alt Text](demo_datetime_picker.png)
 
 ## Getting started
 ```
-npm install --save ngx-mat-datetime-picker
+npm install --save  @angular-material-components/datetime-picker
 ```
 
 ## Setup
@@ -106,7 +106,7 @@ The easiest way to ensure this is to import one of the provided date modules:
 
 To use NgxMatMomentModule: 
    ```
-   npm install --save ngx-mat-moment-adapter
+   npm install --save  @angular-material-components/moment-adapter
    ```
 
 Please note: NgxMatNativeDateModule is based off the functionality available in JavaScript's native Date object. Thus it is not suitable for many locales. One of the biggest shortcomings of the native Date object is the inability to set the parse format.
