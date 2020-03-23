@@ -8,5 +8,4 @@ export * from './lib/directives';
 export * from './lib/helpers';
 export * from './lib/models';
 export * from './lib/services';
-export * from './lib/services/color-adapter';
 

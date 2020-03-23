@@ -1,9 +1,10 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DOWN_ARROW } from '@angular/cdk/keycodes';
 import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
+import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { createMissingDateImplError } from '../../helpers';
 import { Color } from '../../models';
@@ -42,7 +43,7 @@ export const MAT_COLORPICKER_VALIDATORS: any = {
   providers: [
     MAT_COLORPICKER_VALUE_ACCESSOR,
     MAT_COLORPICKER_VALIDATORS,
-    { provide: MAT_COLORPICKER_VALUE_ACCESSOR, useExisting: NgxMatColorPickerInput },
+    { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatColorPickerInput },
   ],
   host: {
     '[attr.aria-haspopup]': '_picker ? "dialog" : null',
@@ -55,7 +56,7 @@ export const MAT_COLORPICKER_VALIDATORS: any = {
   },
   exportAs: 'ngxMatColorPickerInput',
 })
-export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnDestroy {
+export class NgxMatColorPickerInput implements ControlValueAccessor, OnInit, OnDestroy, Validator {
 
   @Input()
   set ngxMatColorPicker(value: NgxMatColorPickerComponent) {

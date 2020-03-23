@@ -81,8 +81,9 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
     return this._timePicker && this._timePicker.valid && this.datepicker.valid;
   }
 
-  get isCurrentViewMonth(): boolean {
-    return this._calendar && (!this._calendar.currentView || this._calendar.currentView == 'month');
+  get isViewMonth(): boolean {
+    if (!this._calendar || this._calendar.currentView == null) return true;
+    return this._calendar.currentView == 'month';
   }
 
   constructor(elementRef: ElementRef) {

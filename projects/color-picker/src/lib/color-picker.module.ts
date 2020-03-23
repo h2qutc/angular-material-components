@@ -8,7 +8,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { NgxMatColorCanvasComponent, NgxMatColorCollectionComponent, NgxMatColorPaletteComponent, NgxMatColorPickerComponent, NgxMatColorPickerContentComponent, NgxMatColorPickerInput, NgxMatColorSliderComponent, NgxMatColorToggleComponent, NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } from './components';
+import {
+  NgxMatColorCanvasComponent,
+  NgxMatColorCollectionComponent,
+  NgxMatColorPaletteComponent,
+  NgxMatColorPickerComponent,
+  NgxMatColorPickerInput, NgxMatColorSliderComponent,
+  NgxMatColorToggleComponent,
+  NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  NgxMatColorPickerContentComponent
+} from './components';
 import { NumericColorInputDirective } from './directives';
 import { ColorAdapter } from './services';
 
