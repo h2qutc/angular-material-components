@@ -7,13 +7,13 @@ import { MatDatepickerModule, MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { NgxMatCalendar, NgxMatCalendarHeader } from './ngx-mat-calendar';
-import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
-import { NgxMatDatetimeContent, NgxMatDatetimePicker } from './ngx-mat-datetime-picker.component';
-import { NgxMatMonthView } from './ngx-mat-month-view';
-import { NgxMatMultiYearView } from './ngx-mat-multi-year-view';
-import { NgxMatTimepickerModule } from './ngx-mat-timepicker.module';
-import { NgxMatYearView } from './ngx-mat-year-view';
+import { NgxMatCalendar, NgxMatCalendarHeader } from './calendar';
+import { NgxMatDatetimeInput } from './datetime-input';
+import { NgxMatDatetimeContent, NgxMatDatetimePicker } from './datetime-picker.component';
+import { NgxMatMonthView } from './month-view';
+import { NgxMatMultiYearView } from './multi-year-view';
+import { NgxMatTimepickerModule } from './timepicker.module';
+import { NgxMatYearView } from './year-view';
 
 @NgModule({
    imports: [

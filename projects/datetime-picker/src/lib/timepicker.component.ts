@@ -3,13 +3,13 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Valida
 import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
   selector: 'ngx-mat-timepicker',
-  templateUrl: './ngx-mat-timepicker.component.html',
-  styleUrls: ['./ngx-mat-timepicker.component.scss'],
+  templateUrl: './timepicker.component.html',
+  styleUrls: ['./timepicker.component.scss'],
   host: {
     'class': 'ngx-mat-timepicker'
   },

@@ -11,11 +11,11 @@ import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, ChangeDete
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarCellCssClasses, MatDatepickerIntl } from '@angular/material/datepicker';
 import { Subject, Subscription } from 'rxjs';
-import { NgxMatMonthView } from './ngx-mat-month-view';
-import { getActiveOffset, isSameMultiYearView, NgxMatMultiYearView, yearsPerPage } from './ngx-mat-multi-year-view';
-import { NgxMatYearView } from './ngx-mat-year-view';
+import { NgxMatMonthView } from './month-view';
+import { getActiveOffset, isSameMultiYearView, NgxMatMultiYearView, yearsPerPage } from './multi-year-view';
+import { NgxMatYearView } from './year-view';
 import { createMissingDateImplError, formatYearRange } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 
 /**
  * Possible views for the calendar.
@@ -26,7 +26,7 @@ export type MatCalendarView = 'month' | 'year' | 'multi-year';
 /** Default header for NgxMatCalendar */
 @Component({
   selector: 'ngx-mat-calendar-header',
-  templateUrl: 'ngx-mat-calendar-header.html',
+  templateUrl: 'calendar-header.html',
   exportAs: 'ngxMatCalendarHeader',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -149,8 +149,8 @@ export class NgxMatCalendarHeader<D> {
  */
 @Component({
   selector: 'ngx-mat-calendar',
-  templateUrl: 'ngx-mat-calendar.html',
-  styleUrls: ['ngx-mat-calendar.scss'],
+  templateUrl: 'calendar.html',
+  styleUrls: ['calendar.scss'],
   host: {
     'class': 'mat-calendar',
   },

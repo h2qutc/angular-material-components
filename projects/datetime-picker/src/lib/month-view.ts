@@ -12,7 +12,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell, MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { createMissingDateImplError } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 
 
 const DAYS_PER_WEEK = 7;
@@ -24,7 +24,7 @@ const DAYS_PER_WEEK = 7;
  */
 @Component({
   selector: 'ngx-mat-month-view',
-  templateUrl: 'ngx-mat-month-view.html',
+  templateUrl: 'month-view.html',
   exportAs: 'ngxMatMonthView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

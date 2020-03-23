@@ -16,13 +16,13 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, Elemen
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { NgxMatCalendar } from './ngx-mat-calendar';
-import { NgxMatDatetimeInput } from './ngx-mat-datetime-input';
+import { NgxMatCalendar } from './calendar';
+import { NgxMatDatetimeInput } from './datetime-input';
 import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
-import { NgxMatTimepickerComponent } from './ngx-mat-timepicker.component';
+import { NgxMatTimepickerComponent } from './timepicker.component';
 import { ValidationErrors } from '@angular/forms';
 
 /** Used to generate a unique ID for each datepicker instance. */
@@ -45,8 +45,8 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContent
  */
 @Component({
   selector: 'ngx-mat-datetime-content',
-  templateUrl: 'ngx-mat-datetime-content.component.html',
-  styleUrls: ['ngx-mat-datetime-content.component.scss'],
+  templateUrl: 'datetime-content.component.html',
+  styleUrls: ['datetime-content.component.scss'],
   host: {
     'class': 'mat-datepicker-content',
     '[@transformPanel]': '"enter"',

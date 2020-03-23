@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 import {Directionality} from '@angular/cdk/bidi';
 import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 
 export const yearsPerPage = 24;
 
@@ -44,7 +44,7 @@ export const yearsPerRow = 4;
  */
 @Component({
   selector: 'ngx-mat-multi-year-view',
-  templateUrl: 'ngx-mat-multi-year-view.html',
+  templateUrl: 'multi-year-view.html',
   exportAs: 'ngxMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

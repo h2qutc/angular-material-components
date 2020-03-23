@@ -11,7 +11,7 @@ import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARR
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
-import { NgxMatDateAdapter } from './core/ngx-mat-date-adapter';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import { createMissingDateImplError } from './utils/date-utils';
 
 /**
@@ -20,7 +20,7 @@ import { createMissingDateImplError } from './utils/date-utils';
  */
 @Component({
   selector: 'ngx-mat-year-view',
-  templateUrl: 'ngx-mat-year-view.html',
+  templateUrl: 'year-view.html',
   exportAs: 'ngxMatYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

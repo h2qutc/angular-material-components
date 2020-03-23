@@ -8,8 +8,8 @@
 
 import { NgModule } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentAdapter } from './ngx-mat-moment-adapter';
-import { NGX_MAT_MOMENT_FORMATS } from './ngx-mat-moment-formats';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentAdapter } from './moment-adapter';
+import { NGX_MAT_MOMENT_FORMATS } from './moment-formats';
 import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 
 @NgModule({
