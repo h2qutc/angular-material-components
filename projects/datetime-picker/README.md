@@ -1,9 +1,9 @@
-# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x
+# Ngx Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x, 9.x
 
-[![Build Status](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker.svg?branch=master)](https://travis-ci.com/h2qutc/ngx-mat-datetime-picker)
-[![codecov](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/ngx-mat-datetime-picker)
-[![License](https://img.shields.io/npm/l/ngx-mat-datetime-picker.svg)](https://www.npmjs.com/package/ngx-mat-datetime-picker)
-[![npm version](https://badge.fury.io/js/ngx-mat-datetime-picker.svg)](https://badge.fury.io/for/js/ngx-mat-datetime-picker)
+[![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
+[![codecov](https://codecov.io/gh/h2qutc/angular-material-components/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/angular-material-components)
+[![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
+[![npm version](https://badge.fury.io/js/angular-material-components.svg)](https://badge.fury.io/for/js/angular-material-components)
 
 ## Description
 
@@ -13,7 +13,7 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 
 ## DEMO
 
-@see [LIVE DEMO](https://h2qutc.github.io/ngx-mat-datetime-picker/)
+@see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
 
 @see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
@@ -28,7 +28,7 @@ npm install --save  @angular-material-components/datetime-picker
 Basically the same way the @angular/material Datepicker is configured and imported.
 
 ```
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from 'ngx-mat-datetime-picker';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 @NgModule({
    ...
    imports: [
@@ -102,7 +102,7 @@ The easiest way to ensure this is to import one of the provided date modules:
 | **Date type**         	| Date                       	| Moment                                                                              	|
 | **Supported locales** 	| en-US                      	| [See project for details](https://github.com/moment/moment/tree/develop/src/locale) 	|
 | **Dependencies**      	| None                       	| [Moment.js](https://momentjs.com/)                                                  	|
-| **Import from**       	| ngx-mat-datetime-picker    	| [ngx-mat-moment-adapter](https://www.npmjs.com/package/ngx-mat-moment-adapter)      	|
+| **Import from**       	| @angular-material-components/datetime-picker    	| [@angular-material-components/datetime-picker](https://www.npmjs.com/package/@angular-material-components/datetime-picker)      	|
 
 To use NgxMatMomentModule: 
    ```

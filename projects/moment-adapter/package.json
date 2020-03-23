@@ -6,9 +6,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+    "url": "https://github.com/h2qutc/angular-material-components.git"
   },
-  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
+  "homepage": "https://github.com/h2qutc/angular-material-components",
   "peerDependencies": {
     "@angular/common": "0.0.0-NG",
     "@angular/core": "0.0.0-NG",
