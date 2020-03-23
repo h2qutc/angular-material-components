@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@angular-material-components/moment-adapter",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@angular-material-components/datetime-picker": "@angular-material-components/datetime-picker"
+    }
+  }
+}

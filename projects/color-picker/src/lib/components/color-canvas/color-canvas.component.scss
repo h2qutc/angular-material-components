@@ -1,0 +1,63 @@
+
+$sizeButtonPreview: 40px;
+
+.ngx-mat-color-canvas {
+  .row {
+    display: flex;
+    &:first-of-type {
+      height: 210px;
+      margin-bottom: 16px;
+      .card {
+        height: 180px;
+      }
+    }
+
+    canvas:hover {
+      cursor: crosshair;
+    }
+
+    .zone {
+      display: flex;
+
+      &-strip {
+        flex-basis: auto;
+        margin-left: 10px;
+      }
+
+      &-inputs {
+        display: flex;
+        width: 40px;
+        flex-direction: column;
+        margin-left: 16px;
+        margin-top: 16px;
+      }
+    }
+
+    &:nth-of-type(2) {
+      display: flex;
+      .preview {
+        min-width: $sizeButtonPreview;
+        min-height: $sizeButtonPreview;
+        height: $sizeButtonPreview;
+        width: $sizeButtonPreview;
+      }
+
+      .mat-form-field {
+        margin-left: 16px;
+        &:first-of-type {
+          width: 180px;
+        }
+
+        &:last-of-type {
+          width: 40px;
+        }
+      }
+    }
+  }
+
+  .mat-form-field {
+    &-label {
+      font-weight: bold;
+    }
+  }
+}

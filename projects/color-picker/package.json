@@ -1,0 +1,35 @@
+{
+  "name": "@angular-material-components/color-picker",
+  "version": "1.0.1",
+  "description": "Angular Material Color Picker",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/ngx-mat-datetime-picker/issues"
+  },
+  "homepage": "https://github.com/h2qutc/ngx-mat-datetime-picker",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular-material",
+    "angular material color picker",
+    "color-picker",
+    "colorpicker",
+    "ngx-mat",
+    "ngx-mat-color-picker",
+    "ngx-material-color-picker"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/platform-browser": "0.0.0-NG",
+    "@angular/common": "0.0.0-NG",
+    "@angular/core": "0.0.0-NG",
+    "@angular/forms": "0.0.0-NG",
+    "@angular/material": "0.0.0-PLACEHOLDER",
+    "@angular/cdk": "0.0.0-PLACEHOLDER",
+    "tslib": "0.0.0-TSLIB"
+  }
+}

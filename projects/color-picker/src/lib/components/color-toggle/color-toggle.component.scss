@@ -1,0 +1,24 @@
+.mat-form-field-appearance-legacy {
+    .mat-form-field-prefix,
+    .mat-form-field-suffix {
+      .ngx-mat-color-toggle-default-icon {
+        width: 1em;
+      }
+    }
+  }
+  
+  .mat-form-field:not(.mat-form-field-appearance-legacy) {
+    .mat-form-field-prefix,
+    .mat-form-field-suffix {
+      .ngx-mat-color-toggle-default-icon {
+        display: block;
+        width: 1.5em;
+        height: 1.5em;
+      }
+  
+      .mat-icon-button .ngx-mat-color-toggle-default-icon {
+        margin: auto;
+      }
+    }
+  }
+  

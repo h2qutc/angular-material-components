@@ -1,0 +1,21 @@
+.ngx-mat-color-palette {
+  .actions {
+    margin-top: 10px;
+    display: flex;
+    .left {
+      display: flex;
+      flex-direction: column;
+      margin-right: 15px;
+      .preview {
+        flex: 2 1 auto;
+        margin-bottom: 10px;
+      }
+    }
+
+    .right {
+      display: flex;
+      width: 40px;
+      flex-direction: column;
+    }
+  }
+}
