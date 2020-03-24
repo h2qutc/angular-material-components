@@ -108,12 +108,10 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
    * @param obj
    */
   writeValue(val: D): void {
-    console.log('writeValue', val);
     if (val != null) {
       this._model = val;
     } else {
       this._model = this._dateAdapter.today();
-      console.log('defaultTime', this.defaultTime);
       if (this.defaultTime != null) {
         this._dateAdapter.setTimeByDefaultValues(this._model, this.defaultTime);
       }
