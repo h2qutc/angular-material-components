@@ -11,7 +11,7 @@
         <td></td>
         <td>
           <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('minute', true)"
-            [disabled]="disabled">
+            [disabled]="disabled || disableMinute">
             <mat-icon>expand_less</mat-icon>
           </button> </td>
         <td></td>
@@ -29,7 +29,7 @@
         <td>
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="hour"
-              [placeholder]="hourPlaceholder" (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
+              (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
               (keydown.ArrowDown)="change('hour', false); $event.preventDefault()" (blur)="change('hour')">
           </mat-form-field>
         </td>
@@ -67,7 +67,7 @@
         <td></td>
         <td>
           <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('minute', false)"
-            [disabled]="disabled">
+            [disabled]="disabled || disableMinute">
             <mat-icon>expand_more</mat-icon>
           </button> </td>
         <td *ngIf="showSeconds"></td>

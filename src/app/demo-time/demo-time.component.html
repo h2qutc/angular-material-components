@@ -3,7 +3,7 @@
 <mat-card class="zone zone-picker">
   <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
     [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
-    [enableMeridian]="enableMeridian">
+    [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
   </ngx-mat-timepicker>
 </mat-card>
 
@@ -28,6 +28,15 @@
   <div class="config-wrapper">
     <span class="label">showSeconds (Default: false) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div class="config-wrapper">
+    <span class="label">disableMinute (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disableMinute">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
