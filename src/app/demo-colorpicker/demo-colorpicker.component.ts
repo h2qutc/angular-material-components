@@ -22,12 +22,11 @@ export class DemoColorpickerComponent implements OnInit {
 
   public listColors = ['primary', 'accent', 'warn'];
 
-  public codeColorPicker = `
-  <mat-form-field>
-    <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">
-    <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-    <ngx-mat-color-picker #picker></ngx-mat-color-picker>
-  </mat-form-field>`;
+  public codeColorPicker = `\n<mat-form-field>
+  <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">
+  <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+  <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+</mat-form-field>`;
 
   constructor() { }
 

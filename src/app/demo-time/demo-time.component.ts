@@ -11,6 +11,7 @@ export class DemoTimeComponent implements OnInit {
   public disabled = false;
   public showSpinners = true;
   public showSeconds = false;
+  public disableMinute = false;
   public enableMeridian = false;
   public stepHour = 1;
   public stepMinute = 1;

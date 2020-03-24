@@ -9,7 +9,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
       [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-      [enableMeridian]="enableMeridian">
+      [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
     </ngx-mat-datetime-picker>
   </mat-form-field>
 </mat-card>
@@ -35,6 +35,14 @@
   <div class="config-wrapper">
     <span class="label">showSeconds (Default: false) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">disableMinute (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disableMinute">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
@@ -111,10 +119,8 @@
 
 </mat-card>
 
-<mat-card class="zone zone-code">
-  <pre>
+<pre>
   <code>
     {{codeDatePicker}}
   </code>
 </pre>
-</mat-card>

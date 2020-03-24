@@ -74,16 +74,22 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [showSeconds]="showSeconds"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [disableMinute]="disableMinute"></ngx-mat-timepicker>
+<ngx-mat-timepicker [(ngModel)]="date" [defaultTime]="defaultTime"></ngx-mat-timepicker>
 <ngx-mat-timepicker [formControl]="formControl"></ngx-mat-timepicker>
 ```
 
-#### List of @Input
+#### List of @Input of ngx-mat-timepicker
+
+*You can use all @Input of ngx-mat-timepicker for ngx-mat-datetime-picker*
 
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
 | **showSpinners**  	| boolean  	| true          	| If true, the spinners above and below input are visible              	|
 | **showSeconds** 	| boolean  	| true          	| If true, it is not possible to select seconds                        	|
+| **disableMinute** 	| boolean  	| false          	| If true, the minute is readonly                        	|
+| **defaultTime** 	| Array  	| undefined          	| An array [hour, minute, second] for default time when the date is not yet defined                        	|
 | **stepHour**      	| number   	| 1             	| The number of hours to add/substract when clicking hour spinners     	|
 | **stepMinute**    	| number   	| 1             	| The number of minutes to add/substract when clicking minute spinners 	|
 | **stepSecond**    	| number   	| 1             	| The number of seconds to add/substract when clicking second spinners 	|
@@ -137,6 +143,27 @@ Creating a custom date adapter module
 export class CustomDateModule { }
 ```
 
+You can also customize the date format by providing your custom MAT_DATE_FORMATS in your module.
+
+```
+// If using Moment
+const CUSTOM_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: "l, LTS"
+  },
+  display: {
+    dateInput: "l, LTS",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "LL",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
+
+//and in the module providers 
+providers: [
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
+  ]
+```
 
 ## Theming
 - @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)

@@ -9,8 +9,6 @@ export class AppComponent implements OnInit {
 
   public nameApp = 'angular-material-components';
 
-
-
   constructor() {
   }
 

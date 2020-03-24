@@ -22,8 +22,9 @@ export class DemoDatetimeComponent implements OnInit {
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
+  public disableMinute = false;
 
-  public dateControl = new FormControl(new Date());
+  public dateControl = new FormControl(null);
 
   public options = [
     { value: true, label: 'True' },
@@ -36,17 +37,15 @@ export class DemoDatetimeComponent implements OnInit {
   public stepMinutes = [1, 5, 10, 15, 20, 25];
   public stepSeconds = [1, 5, 10, 15, 20, 25];
 
-  public codeDatePicker =
-    `
-<mat-form-field>
-  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
+  public codeDatePicker =`<mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
                   [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-    [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
-    [touchUi]="touchUi" [color]="color">
-  </ngx-mat-datetime-picker>
-</mat-form-field>`;
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+        [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+        [touchUi]="touchUi" [color]="color">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>`;
 
   constructor() { }
 

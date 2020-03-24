@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/date-adapter';
-import { createMissingDateImplError, DEFAULT_HOUR_PLACEHOLDER, DEFAULT_MINUTE_PLACEHOLDER, DEFAULT_SECOND_PLACEHOLDER, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
+import { createMissingDateImplError, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -29,14 +29,13 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   @Input() disabled = false;
   @Input() showSpinners = true;
-  @Input() hourPlaceholder = DEFAULT_HOUR_PLACEHOLDER;
-  @Input() minutePlaceholder = DEFAULT_MINUTE_PLACEHOLDER;
-  @Input() secondPlaceholder = DEFAULT_SECOND_PLACEHOLDER;
   @Input() stepHour: number = DEFAULT_STEP;
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
   @Input() showSeconds = false;
+  @Input() disableMinute = false;
   @Input() enableMeridian = false;
+  @Input() defaultTime: number[];
   @Input() color: ThemePalette = 'primary';
 
   public meridian: string = MERIDIANS.AM;
@@ -95,6 +94,8 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       this.disabled ? this.form.disable() : this.form.enable();
     }
 
+    this.disableMinute ? this.form.get('minute').disable() : this.form.get('minute').enable();
+
   }
 
   ngOnDestroy() {
@@ -107,7 +108,14 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
    * @param obj
    */
   writeValue(val: D): void {
-    this._model = val || this._dateAdapter.today();
+    if (val != null) {
+      this._model = val;
+    } else {
+      this._model = this._dateAdapter.today();
+      if (this.defaultTime != null) {
+        this._dateAdapter.setTimeByDefaultValues(this._model, this.defaultTime);
+      }
+    }
     this._updateHourMinuteSecond();
   }
 
