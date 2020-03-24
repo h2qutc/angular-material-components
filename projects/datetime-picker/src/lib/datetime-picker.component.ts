@@ -234,6 +234,18 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   set enableMeridian(value: boolean) { this._enableMeridian = value; }
   public _enableMeridian: boolean = false;
 
+  /** disable minute */
+  @Input()
+  get disableMinute(): boolean { return this._disableMinute; }
+  set disableMinute(value: boolean) { this._disableMinute = value; }
+  public _disableMinute: boolean;
+
+  /** Step second */
+  @Input()
+  get defaultTime(): number[] { return this._defaultTime; }
+  set defaultTime(value: number[]) { this._defaultTime = value; }
+  public _defaultTime: number[];
+
   private _hasBackdrop: boolean = true;
 
   /** The id for the datepicker calendar. */
@@ -383,6 +395,9 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
     if (this._selected == null) {
       this._selected = this._dateAdapter.today();
+      if (this.defaultTime != null) {
+        this._dateAdapter.setTimeByDefaultValues(this._selected, this.defaultTime);
+      }
     }
 
     if (this._opened || this.disabled) {

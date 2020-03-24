@@ -11,12 +11,11 @@ export class DemoTimeComponent implements OnInit {
   public disabled = false;
   public showSpinners = true;
   public showSeconds = false;
-  public disableMinute;
+  public disableMinute = false;
   public enableMeridian = false;
   public stepHour = 1;
   public stepMinute = 1;
   public stepSecond = 1;
-  public defaultTime = [1, 5, 10];
   public color: ThemePalette = 'primary';
 
   public codeTimePicker = `

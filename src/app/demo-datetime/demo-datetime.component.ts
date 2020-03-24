@@ -22,8 +22,9 @@ export class DemoDatetimeComponent implements OnInit {
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
+  public disableMinute = false;
 
-  public dateControl = new FormControl(new Date());
+  public dateControl = new FormControl(null);
 
   public options = [
     { value: true, label: 'True' },
