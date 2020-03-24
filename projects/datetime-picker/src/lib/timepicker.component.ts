@@ -35,6 +35,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() showSeconds = false;
   @Input() disableMinute = false;
   @Input() enableMeridian = false;
+  @Input() defaultTime: number[];
   @Input() color: ThemePalette = 'primary';
 
   public meridian: string = MERIDIANS.AM;
@@ -107,7 +108,21 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
    * @param obj
    */
   writeValue(val: D): void {
-    this._model = val || this._dateAdapter.today();
+    console.log('writeValue', val);
+    if (val != null) {
+      this._model = val;
+    } else {
+      this._model = this._dateAdapter.today();
+      console.log('defaultTime', this.defaultTime);
+      if (this.defaultTime != null) {
+        if (!Array.isArray(this.defaultTime)) {
+          throw Error('The @Input defaultTime should be an array');
+        }
+        this._dateAdapter.setHour(this._model, this.defaultTime[0] || 0);
+        this._dateAdapter.setMinute(this._model, this.defaultTime[1] || 0);
+        this._dateAdapter.setSecond(this._model, this.defaultTime[2] || 0);
+      }
+    }
     this._updateHourMinuteSecond();
   }
 
