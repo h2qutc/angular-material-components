@@ -1,9 +1,13 @@
 <mat-card class="zone zone-picker">
   <mat-form-field>
-    <!-- <input matInput autocomplete="off" [value]="fileNames"> -->
-    <ngx-mat-file-input matSuffix [color]="color" [disabled]="disabled" (fileChanged)="onFileChanged($event);">
+    <ngx-mat-file-input [color]="color" (fileChanged)="onFileChanged($event);"
+    placeholder="Choose a file">
     </ngx-mat-file-input>
+    <button matSuffix mat-icon-button type="button">
+      <mat-icon>attach_file</mat-icon>
+    </button>
   </mat-form-field>
+
 </mat-card>
 
 <mat-card class="zone zone-config">
