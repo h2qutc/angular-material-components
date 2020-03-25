@@ -26,8 +26,12 @@ const appRoutes: Routes = [
       path: 'colorpicker',
       loadChildren: './demo-colorpicker/demo-colorpicker.module#DemoColorpickerModule'
    },
-   { path: '', redirectTo: '/colorpicker', pathMatch: 'full' },
-   { path: '**', redirectTo: '/colorpicker', pathMatch: 'full' }
+   {
+      path: 'fileinput',
+      loadChildren: './demo-fileinput/demo-fileinput.module#DemoFileInputModule'
+   },
+   { path: '', redirectTo: '/datetimepicker', pathMatch: 'full' },
+   { path: '**', redirectTo: '/datetimepicker', pathMatch: 'full' }
 ]
 
 @NgModule({

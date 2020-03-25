@@ -1,0 +1,10 @@
+<!-- <mat-form-field>
+  <input matInput autocomplete="off" [value]="fileNames"> -->
+<input matInput autocomplete="off" [value]="fileNames">
+
+<button #button matSuffix mat-icon-button (click)="onClick($event)" type="button" [color]="color" [disabled]="disabled">
+  <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
+</button>
+<input type="file" #inputFile (change)="handleFileInput($event.target.files)" size="chars" class="input-file">
+
+<!-- </mat-form-field> -->
