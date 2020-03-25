@@ -1,7 +1,7 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
 import { AutofillMonitor } from '@angular/cdk/text-field';
-import { Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, OnInit, Optional, Self, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, OnInit, Optional, Self, ViewChild, ViewEncapsulation, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -99,8 +99,6 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   @Input()
   get value(): FileOrArrayFile { return this._value; }
   set value(value: FileOrArrayFile) {
-    console.log('setter value');
-    this.writeValue(value);
     this._value = value;
   }
   protected _value: FileOrArrayFile;
@@ -112,7 +110,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
 
   constructor(protected _elementRef: ElementRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     protected _platform: Platform,
-    /** @docs-private */
+    private _cd: ChangeDetectorRef,
     @Optional() @Self() public ngControl: NgControl,
     @Optional() _parentForm: NgForm,
     @Optional() _parentFormGroup: FormGroupDirective,
@@ -146,7 +144,6 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
     if (this.ngControl) {
       this.updateErrorState();
     }
-    this._dirtyCheckNativeValue();
   }
 
   // Implemented as part of ControlValueAccessor.
@@ -183,17 +180,14 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
 
   }
 
-  protected _dirtyCheckNativeValue() {
-    const newValue = this._inputValueRef.nativeElement.value;
-
-    if (this._previousNativeValue !== newValue) {
-      this._previousNativeValue = newValue;
-      this.stateChanges.next();
-    }
+  /** Mark the field as touched */
+  _markAsTouched() {
+    this._onTouched();
+    this._cd.markForCheck();
+    this.stateChanges.next();
   }
 
   protected _isBadInput() {
-    // The `validity` property won't be present on platform-server.
     let validity = (this._inputValueRef.nativeElement as HTMLInputElement).validity;
     return validity && validity.badInput;
   }
@@ -204,7 +198,6 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   }
 
   get shouldLabelFloat(): boolean {
-    console.log('shouldLabelFloat')
     return this.focused || !this.empty;
   }
 
@@ -212,13 +205,13 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
     this._ariaDescribedby = ids.join(' ');
   }
 
-
   openFilePicker(event?: MouseEvent) {
     this._inputFileRef.nativeElement.click();
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
+    this._markAsTouched();
   }
 
   handleFiles(filelist: FileList) {
@@ -234,12 +227,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   }
 
   /** Handles a click on the control's container. */
-  onContainerClick(event: MouseEvent) {
-    console.log('onContainerClick');
-    if (!this.focused) {
-      this.focus();
-    }
-  };
+  onContainerClick(event: MouseEvent) { };
 
   private _resetInputFile() {
     this._inputFileRef.nativeElement.value = "";

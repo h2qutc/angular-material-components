@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 const presetFiles = [new File([], "file 1"), new File([], "file 2")];
 const presetFile = new File([], "file 1");
@@ -17,7 +17,7 @@ export class DemoFileInputComponent implements OnInit {
   multiple: boolean = false;
 
 
-  fileControl = new FormControl(presetFile);
+  fileControl: FormControl;
 
   public options = [
     { value: true, label: 'True' },
@@ -28,11 +28,19 @@ export class DemoFileInputComponent implements OnInit {
 
   model = null;
 
-  constructor() { }
+  files;
+
+  constructor() {
+    this.fileControl = new FormControl(this.files, [Validators.required])
+  }
 
   ngOnInit() {
     this.fileControl.valueChanges.subscribe((files: any) => {
-      console.log('selected files', files);
+      if (!Array.isArray(files)) {
+        this.files = [files];
+      } else {
+        this.files = files;
+      }
     })
   }
 

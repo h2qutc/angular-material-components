@@ -1,10 +1,14 @@
 <mat-card class="zone zone-picker">
   <mat-form-field>
-    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple"
-    [disabled]="disabled">
+    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple">
     </ngx-mat-file-input>
   </mat-form-field>
+</mat-card>
 
+<mat-card class="zone zone-value">
+  <ul>
+    <li *ngFor="let item of files">{{item.name}}</li>
+  </ul>
 </mat-card>
 
 <mat-card class="zone zone-config">
