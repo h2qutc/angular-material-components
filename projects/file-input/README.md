@@ -1,24 +1,37 @@
-# FileInput
+# Angular Material File Input for @angular/material 7.x, 8.x, 9.x
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+[![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
+[![codecov](https://codecov.io/gh/h2qutc/angular-material-components/branch/master/graph/badge.svg)](https://codecov.io/gh/h2qutc/angular-material-components)
+[![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
+[![npm version](https://badge.fury.io/js/%40angular-material-components%2Ffile-input.svg)](https://www.npmjs.com/package/@angular-material-components/file-input)
 
-## Code scaffolding
+## Description
 
-Run `ng generate component component-name --project file-input` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project file-input`.
-> Note: Don't forget to add `--project file-input` or else it will be added to the default project in your `angular.json` file. 
+A Angular Material File Input.
 
-## Build
+[![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SAAY32BP5KPPC&source=url)
 
-Run `ng build file-input` to build the project. The build artifacts will be stored in the `dist/` directory.
+## DEMO
 
-## Publishing
+@see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
 
-After building your library with `ng build file-input`, go to the dist folder `cd dist/file-input` and run `npm publish`.
+## Getting started
+```
+npm install --save  @angular-material-components/file-input
+```
 
-## Running unit tests
+## Setup
 
-Run `ng test file-input` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@NgModule({
+   ...
+   imports: [
+        ...
+        NgxMatFileInputModule
+   ]
+   ...
+})
+export class AppModule { }
+```

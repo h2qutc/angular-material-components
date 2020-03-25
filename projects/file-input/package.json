@@ -1,8 +1,35 @@
 {
-  "name": "file-input",
-  "version": "0.0.1",
+  "name": "@angular-material-components/file-input",
+  "version": "1.0.0",
+  "description": "Angular Material File Input",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/angular-material-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/angular-material-components/issues"
+  },
+  "homepage": "https://github.com/h2qutc/angular-material-components",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular-material",
+    "angular material file input",
+    "angular material file drop",
+    "file input",
+    "file drop",
+    "ngx-mat-file-input",
+    "ngx-material-file-input"
+  ],
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0"
+    "@angular/platform-browser": "0.0.0-NG",
+    "@angular/common": "0.0.0-NG",
+    "@angular/core": "0.0.0-NG",
+    "@angular/forms": "0.0.0-NG",
+    "@angular/material": "0.0.0-PLACEHOLDER",
+    "@angular/cdk": "0.0.0-PLACEHOLDER",
+    "tslib": "0.0.0-TSLIB"
   }
 }
