@@ -1,4 +1,4 @@
-<input autocomplete="off" class="mat-input-element mat-form-field-autofill-control" [attr.id]='id'
+<input #inputValue autocomplete="off" class="mat-input-element mat-form-field-autofill-control" [attr.id]='id'
   [attr.placeholder]='placeholder' [disabled]='disabled' [required]='required' [attr.readonly]='readonly || null'
   [attr.aria-describedby]='_ariaDescribedby || null' [attr.aria-invalid]='errorState'
   [attr.aria-required]='required.toString()' (blur)='_focusChanged(false)' (focus)='_focusChanged(true)'>

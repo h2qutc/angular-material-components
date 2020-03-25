@@ -1,6 +1,7 @@
 <mat-card class="zone zone-picker">
   <mat-form-field>
-    <ngx-mat-file-input [color]="color" (fileChanged)="onFileChanged($event);" placeholder="Choose a file">
+    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple"
+    [disabled]="disabled">
     </ngx-mat-file-input>
   </mat-form-field>
 
@@ -10,6 +11,14 @@
   <div class="config-wrapper">
     <span class="label">disabled (Default: false) </span>
     <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">multiple (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="multiple">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>

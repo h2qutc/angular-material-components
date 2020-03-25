@@ -4,3 +4,4 @@
 
 export * from './lib/file-input.component';
 export * from './lib/file-input.module';
+export * from './lib/file-input-type';

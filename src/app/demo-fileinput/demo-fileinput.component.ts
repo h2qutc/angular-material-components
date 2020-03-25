@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { FormControl } from '@angular/forms';
+
+const presetFiles = [new File([], "file 1"), new File([], "file 2")];
+const presetFile = new File([], "file 1");
 
 @Component({
   selector: 'app-demo-fileinput',
@@ -8,8 +12,12 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class DemoFileInputComponent implements OnInit {
 
-  public color: ThemePalette = 'primary';
-  public disabled: boolean;
+  color: ThemePalette = 'primary';
+  disabled: boolean = false;
+  multiple: boolean = false;
+
+
+  fileControl = new FormControl(presetFile);
 
   public options = [
     { value: true, label: 'True' },
@@ -18,12 +26,14 @@ export class DemoFileInputComponent implements OnInit {
 
   public listColors = ['primary', 'accent', 'warn'];
 
+  model = null;
+
   constructor() { }
 
-  ngOnInit() { }
-
-  onFileChanged(files: File) {
-    console.log('selected files', files);
+  ngOnInit() {
+    this.fileControl.valueChanges.subscribe((files: any) => {
+      console.log('selected files', files);
+    })
   }
 
 }
