@@ -1,10 +1,11 @@
-<!-- <mat-form-field>
-  <input matInput autocomplete="off" [value]="fileNames"> -->
-<input autocomplete="off" class="mat-input-element mat-form-field-autofill-control"
-[attr.id]='id' [attr.placeholder]= 'placeholder' >
-<!-- <button #button matSuffix mat-icon-button (click)="onClick($event)" type="button" [color]="color" [disabled]="disabled">
-  <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
-</button> -->
-<input type="file" #inputFile (change)="handleFileInput($event.target.files)" size="chars" class="input-file">
-
-<!-- </mat-form-field> -->
+<input autocomplete="off" class="mat-input-element mat-form-field-autofill-control" [attr.id]='id'
+  [attr.placeholder]='placeholder' [disabled]='disabled' [required]='required' [attr.readonly]='readonly || null'
+  [attr.aria-describedby]='_ariaDescribedby || null' [attr.aria-invalid]='errorState'
+  [attr.aria-required]='required.toString()' (blur)='_focusChanged(false)' (focus)='_focusChanged(true)'>
+<div class="mat-form-field-suffix">
+  <button #button matSuffix mat-icon-button (click)="openFilePicker($event)" type="button" [disabled]="disabled">
+    <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
+  </button>
+</div>
+<input type="file" #inputFile (change)="handleFiles($event.target.files)" size="chars" class="input-file"
+  [multiple]="multiple">

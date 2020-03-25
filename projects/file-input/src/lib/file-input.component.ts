@@ -1,7 +1,7 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
 import { AutofillMonitor } from '@angular/cdk/text-field';
-import { Component, DoCheck, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, OnInit, Optional, Output, Self, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DoCheck, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output, Self, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -25,22 +25,13 @@ let nextUniqueId = 0;
   styleUrls: ['file-input.component.scss'],
   encapsulation: ViewEncapsulation.None,
   host: {
-    'class': 'ngx-mat-file-input',
-    '[attr.id]': 'id',
-    '[attr.placeholder]': 'placeholder',
-    '[attr.readonly]': 'readonly || null',
-    '[attr.aria-describedby]': '_ariaDescribedby || null',
-    '[attr.aria-invalid]': 'errorState',
-    '[attr.aria-required]': 'required.toString()',
-    '(blur)': '_focusChanged(false)',
-    '(focus)': '_focusChanged(true)',
-    '(input)': '_onInput()'
+    'class': 'ngx-mat-file-input'
   },
   providers: [
     { provide: MatFormFieldControl, useExisting: NgxMatFileInputComponent }
   ]
 })
-export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnInit, MatFormFieldControl<any>,
+export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnInit, MatFormFieldControl<File>,
   OnDestroy, OnInit, DoCheck, CanUpdateErrorState {
 
   @ViewChild('inputFile') private _inputFileRef: ElementRef;
@@ -88,6 +79,11 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   set id(value: string) { this._id = value || this._uid; }
   protected _id: string;
 
+  @Input()
+  get multiple(): boolean { return this._multiple; }
+  set multiple(value: boolean) { this._multiple = value; }
+  protected _multiple = true;
+
   @Input() placeholder: string;
 
   @Input()
@@ -98,8 +94,8 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   @Input() errorStateMatcher: ErrorStateMatcher;
 
   @Input()
-  get value(): string { return this._inputValueAccessor.value; }
-  set value(value: string) {
+  get value(): File { return this._inputValueAccessor.value; }
+  set value(value: File) {
     if (value !== this.value) {
       this._inputValueAccessor.value = value;
       this.stateChanges.next();
@@ -109,7 +105,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   @Input()
   get readonly(): boolean { return this._readonly; }
   set readonly(value: boolean) { this._readonly = coerceBooleanProperty(value); }
-  private _readonly = false;
+  private _readonly = true;
 
   constructor(protected _elementRef: ElementRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     protected _platform: Platform,
@@ -119,8 +115,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
     @Optional() _parentFormGroup: FormGroupDirective,
     _defaultErrorStateMatcher: ErrorStateMatcher,
     @Optional() @Self() @Inject(MAT_INPUT_VALUE_ACCESSOR) inputValueAccessor: any,
-    private _autofillMonitor: AutofillMonitor,
-    ngZone: NgZone) {
+    private _autofillMonitor: AutofillMonitor) {
     super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
     const element = this._elementRef.nativeElement;
 
@@ -152,18 +147,10 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
     }
   }
 
-  ngAfterContentInit() {
-
-  }
-
   ngDoCheck() {
     if (this.ngControl) {
       this.updateErrorState();
     }
-
-    // We need to dirty-check the native element's value, because there are some cases where
-    // we won't be notified when it changes (e.g. the consumer isn't using forms or they're
-    // updating the value using `emitEvent: false`).
     this._dirtyCheckNativeValue();
   }
 
@@ -177,6 +164,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
       this.focused = isFocused;
       this.stateChanges.next();
     }
+
   }
 
   protected _dirtyCheckNativeValue() {
@@ -208,12 +196,15 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   }
 
 
-  onClick = (event: any) => {
+  openFilePicker(event?: MouseEvent) {
     this._inputFileRef.nativeElement.click();
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   }
 
-  handleFileInput(files: FileList) {
+  handleFiles(files: FileList) {
     const selected = files.item(0);
     if (selected != null) {
       this._resetInputFile();
