@@ -52,4 +52,12 @@ export class DemoFileInputComponent implements OnInit {
     })
   }
 
+  onDisabledChanged(value: boolean) {
+    if (!value) {
+      this.fileControl.enable();
+    } else {
+      this.fileControl.disable();
+    }
+  }
+
 }

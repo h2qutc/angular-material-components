@@ -3,7 +3,8 @@
   [attr.aria-describedby]='_ariaDescribedby || null' [attr.aria-invalid]='errorState'
   [attr.aria-required]='required.toString()'>
 <div class="mat-form-field-suffix">
-  <button matSuffix mat-icon-button [color]="color" class="button-browse"  (click)="openFilePicker($event)" type="button" [disabled]="disabled">
+  <button matSuffix mat-icon-button [color]="color" class="button-browse"  (click)="openFilePicker($event)" type="button"
+   [disabled]="disabled">
     <mat-icon *ngIf="!_customIcon" class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
     <ng-content select="[ngxMatFileInputIcon]"></ng-content>
   </button>

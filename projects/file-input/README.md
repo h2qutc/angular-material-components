@@ -50,6 +50,17 @@ export class AppModule { }
 </mat-form-field>
 ```
 
+You can provide a custom icon by using the directive *ngxMatFileInputIcon*
+
+```
+<mat-form-field>
+   <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept"
+   [color]="color">
+      <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+   </ngx-mat-file-input>
+</mat-form-field>
+```
+
 #### List of @Input
 
 | @Input        	| Type     	| Default value 	| Description                                                          	|

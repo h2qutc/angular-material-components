@@ -9,7 +9,7 @@
 
 <mat-card class="zone zone-value">
   <ul>
-    <li *ngFor="let item of files">{{item.name}}</li>
+    <li *ngFor="let item of files">{{item?.name}}</li>
   </ul>
 </mat-card>
 
@@ -20,7 +20,7 @@
 <mat-card class="zone zone-config">
   <div class="config-wrapper">
     <span class="label">disabled (Default: false) </span>
-    <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+    <mat-radio-group aria-label="Select an option" [ngModel]="disabled" (ngModelChange)="onDisabledChanged($event)">
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
