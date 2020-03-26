@@ -1,6 +1,6 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation, Directive, ContentChild } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -9,6 +9,11 @@ import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
 
 let nextUniqueId = 0;
+
+@Directive({
+  selector: '[ngxMatFileInputIcon]'
+})
+export class NgxMatFileInputIcon { }
 
 @Component({
   selector: 'ngx-mat-file-input',
@@ -29,7 +34,10 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements MatF
   @ViewChild('inputFile') private _inputFileRef: ElementRef;
   @ViewChild('inputValue') private _inputValueRef: ElementRef;
 
-  @Input() color: ThemePalette;
+  /** Custom icon set by the consumer. */
+  @ContentChild(NgxMatFileInputIcon) _customIcon: NgxMatFileInputIcon;
+
+  @Input() color: ThemePalette = 'primary';
 
   public fileNames: string = null;
 
