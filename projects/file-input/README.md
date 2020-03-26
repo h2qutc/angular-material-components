@@ -42,18 +42,17 @@ export class AppModule { }
 
 ```
 <mat-form-field>
-    <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
-    <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-    <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
-</mat-form-field>
+    <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept">
+    </ngx-mat-file-input>
+  </mat-form-field>
 ```
 
 #### List of @Input
 
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
-| **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
-| **touchUi**    	   | boolean   | false           | Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather than a popup and elements have more padding to allow for bigger touch targets. 	|
+| **multiple**      	| boolean  	| false          	| If true, the file input allows the user to select more than one file.                	|
+| **accept**    	   | string   | false           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
 
 ## Theming
 - @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)
