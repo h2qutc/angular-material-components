@@ -5,8 +5,8 @@ $sizeButtonPreview: 40px;
   .row {
     display: flex;
     &:first-of-type {
-      height: 210px;
-      margin-bottom: 16px;
+      height: 200px;
+      margin-bottom: 12px;
       .card {
         height: 180px;
       }
@@ -19,6 +19,10 @@ $sizeButtonPreview: 40px;
     .zone {
       display: flex;
 
+      &-canvas{
+        height: 200px;
+      }
+
       &-strip {
         flex-basis: auto;
         margin-left: 10px;
@@ -27,9 +31,10 @@ $sizeButtonPreview: 40px;
       &-inputs {
         display: flex;
         width: 40px;
+        height: 200px;
         flex-direction: column;
         margin-left: 16px;
-        margin-top: 16px;
+        margin-top: 12px;
       }
     }
 
@@ -45,7 +50,11 @@ $sizeButtonPreview: 40px;
       .mat-form-field {
         margin-left: 16px;
         &:first-of-type {
-          width: 180px;
+          width: 170px;
+          .symbol{
+            font-weight: bold;
+            color: rgba(0,0,0,.54);
+          }
         }
 
         &:last-of-type {
