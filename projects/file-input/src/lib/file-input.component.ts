@@ -77,7 +77,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements MatF
   }
   protected _multiple = false;
 
-  @Input() placeholder: string;
+  @Input() placeholder: string = 'Choose a file';
   @Input() separator: string = ',';
 
   @Input()

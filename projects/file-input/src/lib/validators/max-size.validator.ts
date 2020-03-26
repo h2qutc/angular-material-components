@@ -11,7 +11,14 @@ export function MaxSizeValidator(max: number): ValidatorFn {
             throw 'MaxSizeValidator: max of size of file is invalid';
         }
         if (!ctrl.value) return null;
-        if (ctrl.value.size > max) {
+        let files: File[] = ctrl.value;
+        if (!Array.isArray(ctrl.value)) {
+            files = [ctrl.value];
+        }
+        if(!files.length) return null;
+        const add = (a: any, b: any): number => a + b;
+        const sumSize = files.map(x => x.size).reduce(add);
+        if (sumSize > max) {
             return {
                 maxSize: true
             };

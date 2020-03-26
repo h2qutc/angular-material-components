@@ -1,6 +1,6 @@
 <mat-card class="zone zone-picker">
   <mat-form-field>
-    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple" [accept]="accept">
+    <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept">
     </ngx-mat-file-input>
   </mat-form-field>
 </mat-card>
@@ -12,7 +12,7 @@
 </mat-card>
 
 <mat-card class="zone zone-errors">
-  Errors: {{fileControl.errors | json}}
+  Errors (Max size: 16Ko): {{fileControl.errors | json}}
 </mat-card>
 
 <mat-card class="zone zone-config">

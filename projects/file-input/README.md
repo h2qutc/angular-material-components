@@ -35,3 +35,32 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 })
 export class AppModule { }
 ```
+
+## Using the component
+
+### File Input (ngx-mat-file-input)
+
+```
+<mat-form-field>
+    <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
+    <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+    <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+</mat-form-field>
+```
+
+#### List of @Input
+
+| @Input        	| Type     	| Default value 	| Description                                                          	|
+|---------------	|----------	|---------------	|----------------------------------------------------------------------	|
+| **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
+| **touchUi**    	   | boolean   | false           | Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather than a popup and elements have more padding to allow for bigger touch targets. 	|
+
+## Theming
+- @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)
+- Add the Material Design icon font to your index.html
+```
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">
+```
+
+## License
+MIT
