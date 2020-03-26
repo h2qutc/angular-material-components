@@ -1,0 +1,42 @@
+<mat-card class="zone zone-picker">
+  <mat-form-field>
+    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple">
+    </ngx-mat-file-input>
+  </mat-form-field>
+</mat-card>
+
+<mat-card class="zone zone-value">
+  <ul>
+    <li *ngFor="let item of files">{{item.name}}</li>
+  </ul>
+</mat-card>
+
+<mat-card class="zone zone-config">
+  <div class="config-wrapper">
+    <span class="label">disabled (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">multiple (Default: false) </span>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="multiple">
+      <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+        {{option.label}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">color (Default: primary) </span>
+    <mat-form-field>
+      <mat-label>Select color</mat-label>
+      <mat-select [(ngModel)]="color">
+        <mat-option *ngFor="let item of listColors" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-card>

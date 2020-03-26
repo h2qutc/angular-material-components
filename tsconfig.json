@@ -22,23 +22,24 @@
     "paths": {
       "@angular-material-components/*": [
         "dist/@angular-material-components/*"
-        // "projects/*"
       ],
       "@angular-material-components/color-picker": [
         "dist/@angular-material-components/color-picker"
-        // "projects/color-picker"
       ],
       "@angular-material-components/color-picker/*": [
         "dist/@angular-material-components/color-picker/*"
-        // "projects/color-picker/*"
       ],
       "@angular-material-components/datetime-picker": [
         "dist/@angular-material-components/datetime-picker"
-        // "projects/datetime-picker"
       ],
       "@angular-material-components/datetime-picker/*": [
         "dist/@angular-material-components/datetime-picker/*"
-        // "projects/datetime-picker/*"
+      ],
+      "file-input": [
+        "dist/file-input"
+      ],
+      "file-input/*": [
+        "dist/file-input/*"
       ]
     }
   }

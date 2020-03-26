@@ -1,0 +1,11 @@
+<input #inputValue autocomplete="off" class="mat-input-element mat-form-field-autofill-control" [attr.id]='id'
+  [attr.placeholder]='placeholder' [disabled]='disabled' [required]='required' [attr.readonly]='readonly || null'
+  [attr.aria-describedby]='_ariaDescribedby || null' [attr.aria-invalid]='errorState'
+  [attr.aria-required]='required.toString()'>
+<div class="mat-form-field-suffix">
+  <button #button matSuffix mat-icon-button (click)="openFilePicker($event)" type="button" [disabled]="disabled">
+    <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
+  </button>
+</div>
+<input type="file" #inputFile (change)="handleFiles($event.target.files)" size="chars" class="input-file"
+  [multiple]="multiple">
