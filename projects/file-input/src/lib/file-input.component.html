@@ -7,5 +7,5 @@
     <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
   </button>
 </div>
-<input type="file" #inputFile (change)="handleFiles($event.target.files)" size="chars" class="input-file"
-  [multiple]="multiple">
+<input type="file" #inputFile (change)="handleFiles($event.target.files)" class="input-file"
+  [multiple]="multiple" [accept]="accept">

@@ -1,8 +1,7 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
-import { AutofillMonitor } from '@angular/cdk/text-field';
-import { Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, OnInit, Optional, Self, ViewChild, ViewEncapsulation, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { _MatInputMixinBase } from '@angular/material/input';
@@ -10,13 +9,6 @@ import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
 
 let nextUniqueId = 0;
-
-export const NGX_MAT_FILE_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgxMatFileInputComponent),
-  multi: true
-};
-
 
 @Component({
   selector: 'ngx-mat-file-input',
@@ -31,7 +23,7 @@ export const NGX_MAT_FILE_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   ],
   exportAs: 'ngx-mat-file-input'
 })
-export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnInit, MatFormFieldControl<FileOrArrayFile>,
+export class NgxMatFileInputComponent extends _MatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
   OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
 
   @ViewChild('inputFile') private _inputFileRef: ElementRef;
@@ -42,7 +34,6 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   public fileNames: string = null;
 
   protected _uid = `ngx-mat-fileinput-${nextUniqueId++}`;
-  private _inputValueAccessor: { value: any };
   protected _previousNativeValue: any;
   _ariaDescribedby: string;
 
@@ -86,7 +77,7 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   }
   protected _multiple = false;
 
-  @Input() placeholder: string;
+  @Input() placeholder: string = 'Choose a file';
   @Input() separator: string = ',';
 
   @Input()
@@ -108,6 +99,17 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   set readonly(value: boolean) { this._readonly = coerceBooleanProperty(value); }
   private _readonly = true;
 
+  /**
+   * Limiting accepted file types
+   * Example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.
+   */
+  @Input()
+  get accept(): string { return this._accept; }
+  set accept(value: string) {
+    this._accept = value;
+  }
+  private _accept: string;
+
   constructor(protected _elementRef: ElementRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     protected _platform: Platform,
     private _cd: ChangeDetectorRef,
@@ -126,18 +128,12 @@ export class NgxMatFileInputComponent extends _MatInputMixinBase implements OnIn
   }
 
 
-  ngOnInit() {
-
-  }
-
   ngOnChanges() {
     this.stateChanges.next();
   }
 
   ngOnDestroy() {
     this.stateChanges.complete();
-
-
   }
 
   ngDoCheck() {
