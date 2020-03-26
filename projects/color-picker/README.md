@@ -7,7 +7,7 @@
 
 ## Description
 
-A Angular Material Color Picker.
+An Angular Material Color Picker.
 
 [![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SAAY32BP5KPPC&source=url)
 
@@ -44,8 +44,6 @@ export class AppModule { }
 
 ## Using the component
 
-The same API as @angular/material Datepicker (@see [API docs](https://material.angular.io/components/datepicker/api))
-
 ### Color Picker (ngx-mat-color-picker)
 
 ```
@@ -61,7 +59,6 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **disabled**      	| boolean  	| null          	| If true, the picker is readonly and can't be modified                	|
-| **color**    	   | ThemePalette   	| undefined             	| Color palette to use on the datepicker's calendar. 	
 | **touchUi**    	   | boolean   | false           | Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather than a popup and elements have more padding to allow for bigger touch targets. 	|
 
 ## Theming
