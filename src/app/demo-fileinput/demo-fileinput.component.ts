@@ -38,7 +38,7 @@ export class DemoFileInputComponent implements OnInit {
   constructor() {
     this.fileControl = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(16 * 1024)
+      MaxSizeValidator(1 * 1024)
     ])
   }
 
