@@ -1,6 +1,6 @@
 <mat-card class="zone zone-picker">
   <mat-form-field>
-    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple">
+    <ngx-mat-file-input [formControl]="fileControl" placeholder="Choose a file" [multiple]="multiple" [accept]="accept">
     </ngx-mat-file-input>
   </mat-form-field>
 </mat-card>
@@ -9,6 +9,10 @@
   <ul>
     <li *ngFor="let item of files">{{item.name}}</li>
   </ul>
+</mat-card>
+
+<mat-card class="zone zone-errors">
+  Errors: {{fileControl.errors | json}}
 </mat-card>
 
 <mat-card class="zone zone-config">
@@ -26,6 +30,18 @@
       <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
         {{option.label}}</mat-radio-button>
     </mat-radio-group>
+  </div>
+
+  <div class="config-wrapper">
+    <span class="label">accept (Default: null) </span>
+    <mat-form-field>
+      <mat-label>Select accept</mat-label>
+      <mat-select [(ngModel)]="accept">
+        <mat-option *ngFor="let item of listAccepts" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <div class="config-wrapper">

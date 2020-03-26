@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AcceptValidator, MaxSizeValidator } from 'projects/file-input/src';
 
 const presetFiles = [new File([], "file 1"), new File([], "file 2")];
 const presetFile = new File([], "file 1");
@@ -15,7 +16,7 @@ export class DemoFileInputComponent implements OnInit {
   color: ThemePalette = 'primary';
   disabled: boolean = false;
   multiple: boolean = false;
-
+  accept: string;
 
   fileControl: FormControl;
 
@@ -25,13 +26,20 @@ export class DemoFileInputComponent implements OnInit {
   ];
 
   public listColors = ['primary', 'accent', 'warn'];
+  public listAccepts = [
+    null,
+    ".png",
+    "image/*",
+    ".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ];
 
-  model = null;
-
-  files;
+  public files;
 
   constructor() {
-    this.fileControl = new FormControl(this.files, [Validators.required])
+    this.fileControl = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(16 * 1024)
+    ])
   }
 
   ngOnInit() {
