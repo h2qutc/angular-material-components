@@ -107,7 +107,7 @@ The easiest way to ensure this is to import one of the provided date modules:
 | **Date type**         	| Date                       	| Moment                                                                              	|
 | **Supported locales** 	| en-US                      	| [See project for details](https://github.com/moment/moment/tree/develop/src/locale) 	|
 | **Dependencies**      	| None                       	| [Moment.js](https://momentjs.com/)                                                  	|
-| **Import from**       	| @angular-material-components/datetime-picker    	| [@angular-material-components/datetime-picker](https://www.npmjs.com/package/@angular-material-components/datetime-picker)      	|
+| **Import from**       	| @angular-material-components/datetime-picker    	| [@angular-material-components/moment-adapter](https://www.npmjs.com/package/@angular-material-components/moment-adapter)      	|
 
 To use NgxMatMomentModule: 
    ```
