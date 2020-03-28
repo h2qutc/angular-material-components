@@ -62,7 +62,8 @@ export class DemoDatetimeComponent implements OnInit {
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     ...
-  ]})`;
+  ]})
+  export class AppModule { }`;
 public code4 = 'npm install --save  @angular-material-components/moment-adapter';
 public code5 = `@Injectable()
 export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}
