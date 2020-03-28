@@ -1,131 +1,12 @@
 <mat-tab-group>
-  <mat-tab label="Example">
-    <mat-card class="zone zone-value">
-      Selected date: {{dateControl.value?.toLocaleString()}}
-    </mat-card>
-
-    <mat-card class="zone zone-picker">
-      <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
-          [min]="minDate" [max]="maxDate" [disabled]="disabled">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
-          [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
-        </ngx-mat-datetime-picker>
-      </mat-form-field>
-    </mat-card>
-
-    <mat-card class="zone zone-config">
-      <div class="config-wrapper">
-        <span class="label">disabled (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="config-wrapper">
-        <span class="label">showSpinners (Default: true) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-
-      <div class="config-wrapper">
-        <span class="label">showSeconds (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="config-wrapper">
-        <span class="label">disableMinute (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="disableMinute">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="config-wrapper">
-        <span class="label">touchUi (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="config-wrapper">
-        <span class="label">enableMeridian (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="config-wrapper config-wrapper_step">
-        <span class="label">steps </span>
-        <mat-form-field>
-          <mat-label>hour (default: 1)</mat-label>
-          <mat-select [(ngModel)]="stepHour">
-            <mat-option *ngFor="let step of stepHours" [value]="step">
-              {{step}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>minute (default: 1)</mat-label>
-          <mat-select [(ngModel)]="stepMinute">
-            <mat-option *ngFor="let step of stepMinutes" [value]="step">
-              {{step}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>second (default: 1)</mat-label>
-          <mat-select [(ngModel)]="stepSecond">
-            <mat-option *ngFor="let step of stepSeconds" [value]="step">
-              {{step}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="config-wrapper">
-        <span class="label">color (Default: primary) </span>
-        <mat-form-field>
-          <mat-label>Select color</mat-label>
-          <mat-select [(ngModel)]="color">
-            <mat-option *ngFor="let item of listColors" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="config-wrapper">
-        <mat-checkbox (change)="toggleMinDate($event)">
-          Min date (Default: null, Demo: now - 1 day) = {{minDate?.toLocaleString()}}
-        </mat-checkbox>
-      </div>
-
-      <div class="config-wrapper">
-        <mat-checkbox (change)="toggleMaxDate($event)">
-          Max date (Default: null, Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
-        </mat-checkbox>
-      </div>
-
-    </mat-card>
-
-    <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>
-  </mat-tab>
   <mat-tab label="API">
     <h1>API reference for @angular-material-components/datetime-picker</h1>
     <h2>Getting started</h2>
+
+    <a href="https://www.npmjs.com/package/@angular-material-components/datetime-picker" target="_blank">
+      <img src="https://badge.fury.io/js/%40angular-material-components%2Fdatetime-picker.svg">
+    </a>
+
     <pre><code>{{code1}}</code></pre>
 
     <h2>Setup</h2>
@@ -315,24 +196,153 @@
       </tbody>
     </table>
 
-    To use NgxMatMomentModule:
+    To use <strong>NgxMatMomentModule</strong>:
     <pre><code>{{code4}}</code></pre>
 
-    <p>Please note: NgxMatNativeDateModule is based off the functionality available in JavaScript's native Date object. Thus it is not suitable for many locales. One of the biggest shortcomings of the native Date object is the inability to set the parse format.</p>
-    <p>We highly recommend using the <strong>NgxMatMomentModule</strong> or a custom <strong>NgxMatDateAdapter</strong> that works with the formatting/parsing library of your choice.</p>
+    <p>Please note: <strong>NgxMatNativeDateModule</strong> is based off the functionality available in JavaScript's
+      native Date object. Thus it is not suitable for many locales. One of the biggest shortcomings of the native Date
+      object is the inability to set the parse format.</p>
+    <p>We highly recommend using the <strong>NgxMatMomentModule</strong> or a custom <strong>NgxMatDateAdapter</strong>
+      that works with the formatting/parsing library of your choice.</p>
     For example: Creating a custom date adapter
     <pre><code ngxMatHighlight class="language-typescript">{{code5}}</code></pre>
 
     Creating a custom date adapter module
     <pre><code ngxMatHighlight class="language-typescript">{{code6}}</code></pre>
 
-    You can also customize the date format by providing your custom MAT_DATE_FORMATS in your module.
+    You can also customize the date format by providing your custom <strong>MAT_DATE_FORMATS</strong> in your module.
     <pre><code ngxMatHighlight class="language-typescript">{{code7}}</code></pre>
 
     <h2>Theming</h2>
-    <p>@see @angular/material <a href="https://material.angular.io/guide/theming#using-a-pre-built-theme">Using a pre-built theme</a></p>
+    <p>@see @angular/material <a href="https://material.angular.io/guide/theming#using-a-pre-built-theme">Using a
+        pre-built theme</a></p>
     <p>Add the Material Design icon font to your index.html</p>
     <pre><code ngxMatHighlight class="language-css">{{code8}}</code></pre>
 
   </mat-tab>
+  <mat-tab label="Example">
+    <mat-card class="zone zone-value">
+      Selected date: {{dateControl.value?.toLocaleString()}}
+    </mat-card>
+
+    <mat-card class="zone zone-picker">
+      <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+          [min]="minDate" [max]="maxDate" [disabled]="disabled">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+          [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card class="zone zone-config">
+      <div class="config-wrapper">
+        <span class="label">disabled (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">showSpinners (Default: true) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+
+      <div class="config-wrapper">
+        <span class="label">showSeconds (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">disableMinute (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="disableMinute">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">touchUi (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">enableMeridian (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper config-wrapper_step">
+        <span class="label">steps </span>
+        <mat-form-field>
+          <mat-label>hour (default: 1)</mat-label>
+          <mat-select [(ngModel)]="stepHour">
+            <mat-option *ngFor="let step of stepHours" [value]="step">
+              {{step}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>minute (default: 1)</mat-label>
+          <mat-select [(ngModel)]="stepMinute">
+            <mat-option *ngFor="let step of stepMinutes" [value]="step">
+              {{step}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>second (default: 1)</mat-label>
+          <mat-select [(ngModel)]="stepSecond">
+            <mat-option *ngFor="let step of stepSeconds" [value]="step">
+              {{step}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">color (Default: primary) </span>
+        <mat-form-field>
+          <mat-label>Select color</mat-label>
+          <mat-select [(ngModel)]="color">
+            <mat-option *ngFor="let item of listColors" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="config-wrapper">
+        <mat-checkbox (change)="toggleMinDate($event)">
+          Min date (Default: null, Demo: now - 1 day) = {{minDate?.toLocaleString()}}
+        </mat-checkbox>
+      </div>
+
+      <div class="config-wrapper">
+        <mat-checkbox (change)="toggleMaxDate($event)">
+          Max date (Default: null, Demo: now + 2 days) = {{maxDate?.toLocaleString()}}
+        </mat-checkbox>
+      </div>
+
+    </mat-card>
+
+    <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>
+  </mat-tab>
+
 </mat-tab-group>

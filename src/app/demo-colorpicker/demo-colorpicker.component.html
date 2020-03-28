@@ -1,52 +1,16 @@
 <mat-tab-group>
-    <mat-tab label="Example">
-        <mat-card class="zone zone-value">
-            <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
-            <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
-        </mat-card>
-
-        <mat-card class="zone zone-picker">
-            <mat-form-field>
-                <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
-                <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-                <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
-            </mat-form-field>
-        </mat-card>
-
-        <mat-card class="zone zone-config">
-            <div class="config-wrapper">
-                <span class="label">disabled (Default: false) </span>
-                <mat-radio-group aria-label="Select an option" [ngModel]="disabled" (ngModelChange)="onDisabledChanged($event)">
-                    <mat-radio-button class="example-radio-button" *ngFor="let option of options"
-                        [value]="option.value">
-                        {{option.label}}</mat-radio-button>
-                </mat-radio-group>
-            </div>
-
-            <div class="config-wrapper">
-                <span class="label">touchUi (Default: false) </span>
-                <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
-                    <mat-radio-button class="example-radio-button" *ngFor="let option of options"
-                        [value]="option.value">
-                        {{option.label}}</mat-radio-button>
-                </mat-radio-group>
-            </div>
-
-        </mat-card>
-
-        <pre><code ngxMatHighlight class="html">{{code3}}</code></pre>
-
-    </mat-tab>
     <mat-tab label="API">
         <h1>API reference for @angular-material-components/color-picker</h1>
         <h2>Getting started</h2>
+
+        <a href="https://www.npmjs.com/package/@angular-material-components/color-picker" target="_blank">
+            <img src="https://badge.fury.io/js/%40angular-material-components%2Fcolor-picker.svg">
+        </a>
+
         <pre><code>{{code1}}</code></pre>
 
         <h2>Setup</h2>
-        <pre>
-      <code ngxMatHighlight class="language-typescript">{{code2}}
-      </code>
-    </pre>
+        <pre><code ngxMatHighlight class="language-typescript">{{code2}}</code></pre>
 
         <h2>Properties @Input</h2>
         <table class="api-table-properties">
@@ -100,5 +64,44 @@
                 pre-built theme</a></p>
         <p>Add the Material Design icon font to your index.html</p>
         <pre><code ngxMatHighlight class="language-css">{{code5}}</code></pre>
+    </mat-tab>
+    <mat-tab label="Example">
+        <mat-card class="zone zone-value">
+            <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
+            <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+        </mat-card>
+
+        <mat-card class="zone zone-picker">
+            <mat-form-field>
+                <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
+                <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+                <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+            </mat-form-field>
+        </mat-card>
+
+        <mat-card class="zone zone-config">
+            <div class="config-wrapper">
+                <span class="label">disabled (Default: false) </span>
+                <mat-radio-group aria-label="Select an option" [ngModel]="disabled"
+                    (ngModelChange)="onDisabledChanged($event)">
+                    <mat-radio-button class="example-radio-button" *ngFor="let option of options"
+                        [value]="option.value">
+                        {{option.label}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="config-wrapper">
+                <span class="label">touchUi (Default: false) </span>
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+                    <mat-radio-button class="example-radio-button" *ngFor="let option of options"
+                        [value]="option.value">
+                        {{option.label}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+        </mat-card>
+
+        <pre><code ngxMatHighlight class="html">{{code3}}</code></pre>
+
     </mat-tab>
 </mat-tab-group>

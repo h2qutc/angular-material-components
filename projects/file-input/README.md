@@ -66,7 +66,7 @@ You can provide a custom icon by using the directive *ngxMatFileInputIcon*
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **multiple**      	| boolean  	| false          	| If true, the file input allows the user to select more than one file.                	|
-| **accept**    	   | string   | false           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
+| **accept**    	   | string   | null           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
 | **color**      	| ThemePalette  	| null          	| Theme color palette for the component.                	|
 
 ## Theming

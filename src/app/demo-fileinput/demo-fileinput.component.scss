@@ -1,1 +1,13 @@
-@import "../shared/_common";
+@import '../shared/_common';
+.flex-column {
+  flex-direction: column;
+  .title {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .value {
+    display: block;
+  }
+}

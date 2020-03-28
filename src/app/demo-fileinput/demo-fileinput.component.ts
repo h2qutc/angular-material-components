@@ -35,6 +35,32 @@ export class DemoFileInputComponent implements OnInit {
 
   public files;
 
+  code3=`<mat-form-field>
+  <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept" [color]="color">
+    <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
+  </ngx-mat-file-input>
+</mat-form-field>`;
+
+code4=`<mat-form-field>
+  <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept" [color]="color">
+    <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+  </ngx-mat-file-input>
+</mat-form-field>`;
+
+  code1=`npm install --save @angular-material-components/file-input`;
+
+  code2=`import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+
+  @NgModule({
+     ...
+     imports: [
+          ...
+          NgxMatFileInputModule
+     ]
+     ...
+  })
+  export class AppModule { }`;
+
   constructor() {
     this.fileControl = new FormControl(this.files, [
       Validators.required,
