@@ -13,6 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgxMatNativeDateModule } from 'projects/datetime-picker/src/public-api';
 import { NgxMatFileInputModule } from 'projects/file-input/src';
 import { DemoFileInputComponent } from './demo-fileinput.component';
+import { SharedModule } from '../shared';
 
 const routes: Routes = [
   { path: '', component: DemoFileInputComponent }
@@ -35,7 +36,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    SharedModule
   ],
   declarations: [DemoFileInputComponent]
 })

@@ -8,10 +8,10 @@
 
 import { PlatformModule } from '@angular/cdk/platform';
 import { NgModule } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NgxMatDateAdapter } from './date-adapter';
 import { NgxMatNativeDateAdapter } from './native-date-adapter';
 import { NGX_MAT_NATIVE_DATE_FORMATS } from './native-date-formats';
+import { NGX_MAT_DATE_FORMATS } from './date-formats';
 
 
 @NgModule({
@@ -24,6 +24,6 @@ export class NgxNativeDateModule { }
 
 @NgModule({
     imports: [NgxNativeDateModule],
-    providers: [{ provide: MAT_DATE_FORMATS, useValue: NGX_MAT_NATIVE_DATE_FORMATS }],
+    providers: [{ provide: NGX_MAT_DATE_FORMATS, useValue: NGX_MAT_NATIVE_DATE_FORMATS }],
 })
 export class NgxMatNativeDateModule { }

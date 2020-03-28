@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Routes } from '@angular/router';
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from 'projects/color-picker/src/public-api';
 import { DemoColorpickerComponent } from './demo-colorpicker.component';
+import { SharedModule } from '../shared';
 
 const routes: Routes = [
   { path: '', component: DemoColorpickerComponent }
@@ -27,7 +28,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    SharedModule
   ],
   providers: [
     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }

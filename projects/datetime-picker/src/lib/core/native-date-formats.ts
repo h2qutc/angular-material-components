@@ -1,4 +1,4 @@
-import { MatDateFormats } from '@angular/material/core';
+import { NgxMatDateFormats } from './date-formats';
 
 /**
  * @license
@@ -13,7 +13,7 @@ const DEFAULT_DATE_INPUT = {
   hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit"
 }
 
-export const NGX_MAT_NATIVE_DATE_FORMATS: MatDateFormats = {
+export const NGX_MAT_NATIVE_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: DEFAULT_DATE_INPUT,
   },

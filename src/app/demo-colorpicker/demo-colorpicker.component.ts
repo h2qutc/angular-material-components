@@ -22,15 +22,62 @@ export class DemoColorpickerComponent implements OnInit {
 
   public listColors = ['primary', 'accent', 'warn'];
 
-  public codeColorPicker = `\n<mat-form-field>
-  <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">
+  public code3 = `<mat-form-field>
+  <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
   <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-  <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+  <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
 </mat-form-field>`;
+
+
+  public code1 = 'npm install --save @angular-material-components/color-picker';
+
+
+  public code2 = `import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } 
+  from '@angular-material-components/color-picker'
+
+  @NgModule({
+    ...
+    imports: [
+         ...
+         NgxMatColorPickerModule
+    ],
+    providers: [
+     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+    ],
+    ...
+ })
+ export class AppModule { }`;
+
+  public code4 = 
+`export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
+    display: {
+        colorInput: 'hex'
+    }
+}
+
+@NgModule({
+    ...
+    providers: [
+      { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
+    ],
+    ...
+  })
+export class AppModule { }`;
+
+  public code5 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
+
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onDisabledChanged(value: boolean) {
+    if (!value) {
+      this.colorCtr.enable();
+    } else {
+      this.colorCtr.disable();
+    }
   }
 
 }

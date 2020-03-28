@@ -12,13 +12,15 @@ An Angular Material File Input.
 
 ## DEMO
 
+@see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-file-input)
+
 @see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
 
 ![Alt Text](demo_file_input.png)
 
 ## Getting started
 ```
-npm install --save  @angular-material-components/file-input
+npm install --save @angular-material-components/file-input
 ```
 
 ## Setup
@@ -66,7 +68,7 @@ You can provide a custom icon by using the directive *ngxMatFileInputIcon*
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
 | **multiple**      	| boolean  	| false          	| If true, the file input allows the user to select more than one file.                	|
-| **accept**    	   | string   | false           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
+| **accept**    	   | string   | null           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
 | **color**      	| ThemePalette  	| null          	| Theme color palette for the component.                	|
 
 ## Theming

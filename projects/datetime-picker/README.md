@@ -107,7 +107,7 @@ The easiest way to ensure this is to import one of the provided date modules:
 | **Date type**         	| Date                       	| Moment                                                                              	|
 | **Supported locales** 	| en-US                      	| [See project for details](https://github.com/moment/moment/tree/develop/src/locale) 	|
 | **Dependencies**      	| None                       	| [Moment.js](https://momentjs.com/)                                                  	|
-| **Import from**       	| @angular-material-components/datetime-picker    	| [@angular-material-components/datetime-picker](https://www.npmjs.com/package/@angular-material-components/datetime-picker)      	|
+| **Import from**       	| @angular-material-components/datetime-picker    	| [@angular-material-components/moment-adapter](https://www.npmjs.com/package/@angular-material-components/moment-adapter)      	|
 
 To use NgxMatMomentModule: 
    ```
@@ -135,18 +135,18 @@ Creating a custom date adapter module
     {
       provide: NgxMatDateAdapter,
       useClass: CustomDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+      deps: [MAT_DATE_LOCALE, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     }
   ],
 })
 export class CustomDateModule { }
 ```
 
-You can also customize the date format by providing your custom MAT_DATE_FORMATS in your module.
+You can also customize the date format by providing your custom NGX_MAT_DATE_FORMATS in your module.
 
 ```
 // If using Moment
-const CUSTOM_DATE_FORMATS: MatDateFormats = {
+const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: "l, LTS"
   },
@@ -160,7 +160,7 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
 
 //and in the module providers 
 providers: [
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
   ]
 ```
 

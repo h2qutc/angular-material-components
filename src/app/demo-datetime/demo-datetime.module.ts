@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from 'projects/datetime-picker/src/public-api';
 import { DemoDatetimeComponent } from './demo-datetime.component';
+import { SharedModule } from '../shared';
 
 const routes: Routes = [
   { path: '', component: DemoDatetimeComponent }
@@ -36,7 +37,10 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
+    SharedModule
   ],
-  declarations: [DemoDatetimeComponent]
+  declarations: [
+    DemoDatetimeComponent
+  ]
 })
 export class DemoDatetimeModule { }

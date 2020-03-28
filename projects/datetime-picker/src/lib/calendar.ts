@@ -8,14 +8,14 @@
 
 import { ComponentPortal, ComponentType, Portal } from '@angular/cdk/portal';
 import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Inject, Input, OnChanges, OnDestroy, Optional, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarCellCssClasses, MatDatepickerIntl } from '@angular/material/datepicker';
 import { Subject, Subscription } from 'rxjs';
+import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
 import { NgxMatMonthView } from './month-view';
 import { getActiveOffset, isSameMultiYearView, NgxMatMultiYearView, yearsPerPage } from './multi-year-view';
-import { NgxMatYearView } from './year-view';
 import { createMissingDateImplError, formatYearRange } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatYearView } from './year-view';
 
 /**
  * Possible views for the calendar.
@@ -35,7 +35,7 @@ export class NgxMatCalendarHeader<D> {
   constructor(private _intl: MatDatepickerIntl,
     @Inject(forwardRef(() => NgxMatCalendar)) public calendar: NgxMatCalendar<D>,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     changeDetectorRef: ChangeDetectorRef) {
 
     this.calendar.stateChanges.subscribe(() => changeDetectorRef.markForCheck());
@@ -270,7 +270,7 @@ export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, On
 
   constructor(_intl: MatDatepickerIntl,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     private _changeDetectorRef: ChangeDetectorRef) {
 
     if (!this._dateAdapter) {
@@ -278,7 +278,7 @@ export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, On
     }
 
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
     this._intlChanges = _intl.changes.subscribe(() => {
