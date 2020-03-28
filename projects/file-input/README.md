@@ -12,13 +12,15 @@ An Angular Material File Input.
 
 ## DEMO
 
+@see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-file-input)
+
 @see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
 
 ![Alt Text](demo_file_input.png)
 
 ## Getting started
 ```
-npm install --save  @angular-material-components/file-input
+npm install --save @angular-material-components/file-input
 ```
 
 ## Setup
