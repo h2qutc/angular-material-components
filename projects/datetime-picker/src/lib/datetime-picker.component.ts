@@ -156,7 +156,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   set hideTime(value: boolean) {
     this._hideTime = coerceBooleanProperty(value);
   }
-  private _hideTime = false;
+  public _hideTime = false;
 
   /** Whether the datepicker pop-up should be disabled. */
   @Input()
