@@ -9,9 +9,9 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
 import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
 import { createMissingDateImplError } from './utils/date-utils';
 
 /**
@@ -96,14 +96,14 @@ export class NgxMatYearView<D> implements AfterContentInit {
   _selectedMonth: number | null;
 
   constructor(private _changeDetectorRef: ChangeDetectorRef,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir?: Directionality) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('NgxMatDateAdapter');
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
     this._activeDate = this._dateAdapter.today();

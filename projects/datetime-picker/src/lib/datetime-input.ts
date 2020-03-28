@@ -9,13 +9,14 @@
 import { DOWN_ARROW } from '@angular/cdk/keycodes';
 import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, Optional, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
-import { MatDateFormats, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
+import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
 import { NgxMatDatetimePicker } from './datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
-import { NgxMatDateAdapter } from './core/date-adapter';
 
 /** @docs-private */
 export const MAT_DATEPICKER_VALUE_ACCESSOR: any = {
@@ -202,7 +203,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     private _maxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
         const controlValue = this._getValidDateOrNull(this._dateAdapter.deserialize(control.value));
         return (!this.max || !controlValue ||
-            this._dateAdapter.compareDateWithTime(this.max, controlValue,  this._datepicker.showSeconds) >= 0) ?
+            this._dateAdapter.compareDateWithTime(this.max, controlValue, this._datepicker.showSeconds) >= 0) ?
             null : { 'matDatetimePickerMax': { 'max': this.max, 'actual': controlValue } };
     }
 
@@ -224,13 +225,13 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     constructor(
         private _elementRef: ElementRef<HTMLInputElement>,
         @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
-        @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+        @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
         @Optional() private _formField: MatFormField) {
         if (!this._dateAdapter) {
             throw createMissingDateImplError('NgxMatDateAdapter');
         }
         if (!this._dateFormats) {
-            throw createMissingDateImplError('MAT_DATE_FORMATS');
+            throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
         }
 
         // Update the displayed date when the locale changes.
@@ -342,7 +343,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     /** Handles focus events on the input. */
     _onFocus() {
         // Close datetime picker if opened
-        if(this._datepicker && this._datepicker.opened){
+        if (this._datepicker && this._datepicker.opened) {
             this._datepicker.cancel();
         }
     }

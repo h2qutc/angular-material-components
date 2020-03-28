@@ -10,4 +10,5 @@ export * from './lib/timepicker.module';
 export * from './lib/core/date-adapter';
 export * from './lib/core/native-date-adapter';
 export * from './lib/core/native-date-formats';
+export * from './lib/core/date-formats';
 export * from './lib/core/native-date.module';

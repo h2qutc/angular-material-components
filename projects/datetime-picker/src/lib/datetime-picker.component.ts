@@ -381,7 +381,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
    */
   _registerInput(input: NgxMatDatetimeInput<D>): void {
     if (this._datepickerInput) {
-      throw Error('A MatDatepicker can only be associated with a single input.');
+      throw Error('A NgxMatDatepicker can only be associated with a single input.');
     }
     this._datepickerInput = input;
     this._inputSubscription =
@@ -404,7 +404,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       return;
     }
     if (!this._datepickerInput) {
-      throw Error('Attempted to open an MatDatepicker with no associated input.');
+      throw Error('Attempted to open an NgxMatDatepicker with no associated input.');
     }
     if (this._document) {
       this._focusedElementBeforeOpen = this._document.activeElement;

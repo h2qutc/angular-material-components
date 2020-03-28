@@ -9,10 +9,10 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCalendarBody, MatCalendarCell, MatCalendarCellCssClasses } from '@angular/material/datepicker';
-import { createMissingDateImplError } from './utils/date-utils';
 import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
+import { createMissingDateImplError } from './utils/date-utils';
 
 
 const DAYS_PER_WEEK = 7;
@@ -111,14 +111,14 @@ export class NgxMatMonthView<D> implements AfterContentInit {
   _weekdays: { long: string, narrow: string }[];
 
   constructor(private _changeDetectorRef: ChangeDetectorRef,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir?: Directionality) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('NgxMatDateAdapter');
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
     this._activeDate = this._dateAdapter.today();
@@ -247,7 +247,7 @@ export class NgxMatMonthView<D> implements AfterContentInit {
     const daysInMonth = this._dateAdapter.getNumDaysInMonth(this.activeDate);
     const dateNames = this._dateAdapter.getDateNames();
     this._weeks = [[]];
-    for (let i = 0, cell = this._firstWeekOffset; i < daysInMonth; i++ , cell++) {
+    for (let i = 0, cell = this._firstWeekOffset; i < daysInMonth; i++, cell++) {
       if (cell == DAYS_PER_WEEK) {
         this._weeks.push([]);
         cell = 0;

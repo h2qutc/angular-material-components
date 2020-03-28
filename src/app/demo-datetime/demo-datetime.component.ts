@@ -81,7 +81,7 @@ export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}
 export class CustomDateModule { }`;
 
   public code7 = `// If using Moment
-const CUSTOM_DATE_FORMATS: MatDateFormats = {
+const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
     dateInput: "l, LTS"
   },
@@ -95,7 +95,7 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
 
 //and in the module providers 
 providers: [
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
   ]`;
 
   public code8 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';

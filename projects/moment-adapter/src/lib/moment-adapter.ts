@@ -38,15 +38,15 @@ export interface NgxMatMomentDateAdapterOptions {
 }
 
 /** InjectionToken for moment date adapter to configure options. */
-export const MAT_MOMENT_DATE_ADAPTER_OPTIONS = new InjectionToken<NgxMatMomentDateAdapterOptions>(
+export const NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS = new InjectionToken<NgxMatMomentDateAdapterOptions>(
   'MAT_MOMENT_DATE_ADAPTER_OPTIONS', {
   providedIn: 'root',
-  factory: MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY
+  factory: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY
 });
 
 
 /** @docs-private */
-export function MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY(): NgxMatMomentDateAdapterOptions {
+export function NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY(): NgxMatMomentDateAdapterOptions {
   return {
     useUtc: false
   };
