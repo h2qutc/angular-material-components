@@ -60,7 +60,9 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
       [min]="minDate" [max]="maxDate" [disabled]="disabled">
    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-      [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond">
+      [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+      [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian" 
+      [disableMinute]="disableMinute" [hideTime]="hideTime">
    </ngx-mat-datetime-picker>
 </mat-form-field>
 ```
@@ -94,6 +96,7 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 | **stepSecond**    	| number   	| 1             	| The number of seconds to add/substract when clicking second spinners 	|
 | **color**    	   | ThemePalette   	| undefined             	| Color palette to use on the datepicker's calendar. 	|
 | **enableMeridian** | boolean   	| false             	| Whether to display 12H or 24H mode. 	|
+| **hideTime** | boolean   	| false             	| If true, the time is hidden. 	|
 | **touchUi**    	   | boolean   | false           | Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather than a popup and elements have more padding to allow for bigger touch targets. 	|
 
 ## Choosing a date implementation and date format settings

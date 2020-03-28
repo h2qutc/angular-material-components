@@ -23,6 +23,7 @@ export class DemoDatetimeComponent implements OnInit {
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
   public disableMinute = false;
+  public hideTime = false;
 
   public dateControl = new FormControl(null);
 
@@ -40,14 +41,14 @@ export class DemoDatetimeComponent implements OnInit {
   public code1 = 'npm install --save @angular-material-components/datetime-picker';
 
   public code3 = `<mat-form-field>
-    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
-                [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-      [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
-      [touchUi]="touchUi" [color]="color">
-    </ngx-mat-datetime-picker>
-  </mat-form-field>`;
+  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+    [min]="minDate" [max]="maxDate" [disabled]="disabled">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+    [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+    [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+  </ngx-mat-datetime-picker>
+</mat-form-field>`;
 
   public code2 = `import {
            NgxMatDatetimePickerModule, 
@@ -55,15 +56,16 @@ export class DemoDatetimeComponent implements OnInit {
            NgxMatTimepickerModule 
   } from '@angular-material-components/datetime-picker';
   
-  @NgModule({
+@NgModule({
   imports: [
     ...
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     ...
-  ]})
-  export class AppModule { }`;
+  ]
+})
+export class AppModule { }`;
   public code4 = 'npm install --save  @angular-material-components/moment-adapter';
   public code5 = `@Injectable()
 export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}

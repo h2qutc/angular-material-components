@@ -52,7 +52,7 @@ export class AppModule { }
 </mat-form-field>
 ```
 
-You can provide a custom icon by using the directive *ngxMatFileInputIcon*
+#### You can provide a custom icon by using the directive *ngxMatFileInputIcon*
 
 ```
 <mat-form-field>
@@ -63,10 +63,21 @@ You can provide a custom icon by using the directive *ngxMatFileInputIcon*
 </mat-form-field>
 ```
 
+#### You can use with all properties of MatFormField such as appearance variants, hint...
+
+```
+<mat-form-field appearance="outline">
+  <ngx-mat-file-input [formControl]="file3Control">
+  </ngx-mat-file-input>
+  <mat-hint>Hint</mat-hint>
+</mat-form-field>
+```
+
 #### List of @Input
 
 | @Input        	| Type     	| Default value 	| Description                                                          	|
 |---------------	|----------	|---------------	|----------------------------------------------------------------------	|
+| **disabled**      	| boolean  	| null          	| If true, the file input is readonly.                	|
 | **multiple**      	| boolean  	| false          	| If true, the file input allows the user to select more than one file.                	|
 | **accept**    	   | string   | null           | Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG files.) 	|
 | **color**      	| ThemePalette  	| null          	| Theme color palette for the component.                	|

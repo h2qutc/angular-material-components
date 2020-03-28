@@ -146,6 +146,18 @@
 
         <tr>
           <td>
+            <div>hideTime</div>
+          </td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>
+            <p>If true, the time is hidden
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
             <div>touchUi</div>
           </td>
           <td>boolean</td>
@@ -232,7 +244,7 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
           [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
+          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
         </ngx-mat-datetime-picker>
       </mat-form-field>
     </mat-card>
@@ -274,6 +286,14 @@
       <div class="config-wrapper">
         <span class="label">touchUi (Default: false) </span>
         <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi">
+          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+            {{option.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="config-wrapper">
+        <span class="label">hideTime (Default: false) </span>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="hideTime">
           <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
             {{option.label}}</mat-radio-button>
         </mat-radio-group>

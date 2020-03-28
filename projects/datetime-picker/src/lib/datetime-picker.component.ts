@@ -78,6 +78,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
 
   /** Whether or not the selected date is valid (min,max...) */
   get valid(): boolean {
+    if(this.datepicker.hideTime) return this.datepicker.valid;
     return this._timePicker && this._timePicker.valid && this.datepicker.valid;
   }
 
@@ -95,7 +96,6 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   }
 
 }
-
 
 // TODO(mmalerba): We use a component instead of a directive here so the user can use implicit
 // template reference variables (e.g. #d vs #d="matDatepicker"). We can change this to a directive
@@ -150,6 +150,13 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     this._touchUi = coerceBooleanProperty(value);
   }
   private _touchUi = false;
+
+  @Input()
+  get hideTime(): boolean { return this._hideTime; }
+  set hideTime(value: boolean) {
+    this._hideTime = coerceBooleanProperty(value);
+  }
+  private _hideTime = false;
 
   /** Whether the datepicker pop-up should be disabled. */
   @Input()
