@@ -22,4 +22,4 @@ export type NgxMatDateFormats = {
 };
 
 
-export const NGX_MAT_DATE_FORMATS = new InjectionToken<NgxMatDateFormats>('mat-date-formats');
+export const NGX_MAT_DATE_FORMATS = new InjectionToken<NgxMatDateFormats>('ngx-mat-date-formats');

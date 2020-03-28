@@ -135,7 +135,7 @@ Creating a custom date adapter module
     {
       provide: NgxMatDateAdapter,
       useClass: CustomDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+      deps: [MAT_DATE_LOCALE, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     }
   ],
 })
