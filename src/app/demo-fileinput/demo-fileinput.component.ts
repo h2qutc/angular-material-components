@@ -49,9 +49,9 @@ export class DemoFileInputComponent implements OnInit {
   </ngx-mat-file-input>
 </mat-form-field>`;
   code5 = `<mat-form-field appearance="outline">
-<ngx-mat-file-input [formControl]="file3Control">
-</ngx-mat-file-input>
-<mat-hint>Hint</mat-hint>
+  <ngx-mat-file-input [formControl]="file3Control">
+  </ngx-mat-file-input>
+  <mat-hint>Hint</mat-hint>
 </mat-form-field>`;
 
   code1 = `npm install --save @angular-material-components/file-input`;
