@@ -61,10 +61,12 @@ code4=`<mat-form-field>
   })
   export class AppModule { }`;
 
+  maxSize = 16;
+
   constructor() {
     this.fileControl = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(1 * 1024)
+      MaxSizeValidator(this.maxSize * 1024)
     ])
   }
 
