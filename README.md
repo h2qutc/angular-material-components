@@ -22,7 +22,8 @@ If you like this project, support angular-material-components by starring⭐.
 ### Datetime Picker
 
 [![npm version](https://badge.fury.io/js/%40angular-material-components%2Fdatetime-picker.svg)](https://www.npmjs.com/package/@angular-material-components/datetime-picker)
-[@see more detail](projects/datetime-picker/README.md)
+
+[TUTORIAL HERE](https://h2qutc.github.io/angular-material-components/)
 
 ```
 npm install --save  @angular-material-components/datetime-picker
@@ -38,7 +39,7 @@ npm install --save  @angular-material-components/datetime-picker
 
 [![npm version](https://badge.fury.io/js/%40angular-material-components%2Fcolor-picker.svg)](https://www.npmjs.com/package/@angular-material-components/color-picker)
 
-[@see more detail](projects/color-picker/README.md)
+[TUTORIAL HERE](https://h2qutc.github.io/angular-material-components/)
 
 ```
 npm install --save  @angular-material-components/color-picker
@@ -51,7 +52,7 @@ npm install --save  @angular-material-components/color-picker
 
 [![npm version](https://badge.fury.io/js/%40angular-material-components%2Ffile-input.svg)](https://www.npmjs.com/package/@angular-material-components/file-input)
 
-[@see more detail](projects/file-input/README.md)
+[TUTORIAL HERE](https://h2qutc.github.io/angular-material-components/)
 
 ```
 npm install --save  @angular-material-components/file-input
