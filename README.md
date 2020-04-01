@@ -17,7 +17,7 @@ If you like this project, support angular-material-components by starring⭐.
 
 ## DEMO Angular Material Components
 
-@see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
+@see [LIVE DEMO AND DOCUMENTATION](https://h2qutc.github.io/angular-material-components/)
 
 ### Datetime Picker
 
