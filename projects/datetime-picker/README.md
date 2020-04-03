@@ -12,7 +12,7 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 
 ## DEMO
 
-@see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
+@see [LIVE DEMO AND DOCUMENTATION](https://h2qutc.github.io/angular-material-components/)
 
 @see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
