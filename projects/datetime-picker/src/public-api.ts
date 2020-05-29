@@ -2,6 +2,7 @@
  * Public API Surface of ngx-mat-datetime-picker
  */
 
+export * from './lib/calendar';
 export * from './lib/datetime-picker.component';
 export * from './lib/datetime-input';
 export * from './lib/datetime-picker.module';
