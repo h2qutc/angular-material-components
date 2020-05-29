@@ -167,10 +167,11 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     if (this.enableMeridian) {
       if (_hour > LIMIT_TIMES.meridian) {
         _hour = _hour - LIMIT_TIMES.meridian;
-        this.meridian = MERIDIANS.PM;
-      } else {
-        this.meridian = MERIDIANS.AM;
       }
+      if (_hour === 0) {
+          _hour = 12;
+      }
+      this.meridian = this._dateAdapter.getMeridiem(this._model);
     }
 
     this.form.controls['hour'].setValue(formatTwoDigitTimeValue(_hour));
@@ -207,7 +208,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
     let next;
     if (up == null) {
-      next = this[prop] % (max);
+      if(prop !== 'hour' || !this.enableMeridian) {
+        next = this[prop] % (max);
+      }
     } else {
       next = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
       if (prop === 'hour' && this.enableMeridian) {

@@ -281,6 +281,9 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
     return new Date(NaN);
   }
 
+  getMeridiem(date: Date): 'AM' | 'PM' {
+    return date.getHours() < 12 ? 'AM' : 'PM';
+  }
   getHour(date: Date): number {
     return date.getHours();
   }

@@ -2,6 +2,13 @@ import { DateAdapter } from '@angular/material/core';
 
 export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
   /**
+   * Gets the meridiem component of the given date.
+   * @param date The date to extract the meridiem from.
+   * @returns The meridiem component.
+   */
+  abstract getMeridiem(date: D): 'AM' | 'PM';
+
+  /**
  * Gets the hour component of the given date.
  * @param date The date to extract the month from.
  * @returns The hour component.
