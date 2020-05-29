@@ -353,9 +353,15 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       null : { 'matDatetimePickerMax': { 'max': this._maxDate, 'actual': this._selected } };
   }
 
-  /** Selects the given date */
-  select(date: D): void {
-    this._dateAdapter.copyTime(date, this._selected);
+  /**
+   * Selects the given date
+   * @param date date to set
+   * @param copyTime indicates copy time too or leave as it was
+   */
+  select(date: D, copyTime = false): void {
+    if (!copyTime) {
+      this._dateAdapter.copyTime(date, this._selected);
+    }
     this._selected = date;
   }
 
