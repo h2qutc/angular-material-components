@@ -3,6 +3,9 @@
  */
 
 export * from './lib/calendar';
+export * from './lib/month-view';
+export * from './lib/multi-year-view';
+export * from './lib/year-view';
 export * from './lib/datetime-picker.component';
 export * from './lib/datetime-input';
 export * from './lib/datetime-picker.module';
