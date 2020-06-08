@@ -1,6 +1,6 @@
 <form [formGroup]="form">
-  <table class="table">
-    <tbody class="tbody">
+  <table class="ngx-mat-timepicker-table">
+    <tbody class="ngx-mat-timepicker-tbody">
       <tr *ngIf="showSpinners">
         <td>
           <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('hour', true)"
@@ -21,7 +21,7 @@
             <mat-icon>expand_less</mat-icon>
           </button>
         </td>
-        <td *ngIf="enableMeridian" class="spacer"></td>
+        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
         <td *ngIf="enableMeridian"></td>
       </tr>
 
@@ -33,7 +33,7 @@
               (keydown.ArrowDown)="change('hour', false); $event.preventDefault()" (blur)="change('hour')">
           </mat-form-field>
         </td>
-        <td class="spacer">&#58;</td>
+        <td class="ngx-mat-timepicker-spacer">&#58;</td>
         <td>
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
@@ -41,7 +41,7 @@
               (keydown.ArrowDown)="change('minute', false); $event.preventDefault()" (blur)="change('minute')">
           </mat-form-field>
         </td>
-        <td *ngIf="showSeconds" class="spacer">&#58;</td>
+        <td *ngIf="showSeconds" class="ngx-mat-timepicker-spacer">&#58;</td>
         <td *ngIf="showSeconds">
           <mat-form-field>
             <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
@@ -50,8 +50,8 @@
           </mat-form-field>
         </td>
 
-        <td *ngIf="enableMeridian" class="spacer"></td>
-        <td *ngIf="enableMeridian" class="meridian">
+        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
+        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-meridian">
           <button mat-button (click)="toggleMeridian()" mat-stroked-button [color]="color" [disabled]="disabled">
             {{meridian}}
           </button>
@@ -77,7 +77,7 @@
             <mat-icon>expand_more</mat-icon>
           </button>
         </td>
-        <td *ngIf="enableMeridian" class="spacer"></td>
+        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
         <td *ngIf="enableMeridian"></td>
       </tr>
     </tbody>
