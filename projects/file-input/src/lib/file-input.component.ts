@@ -2,13 +2,24 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation, Directive, ContentChild } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
+import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette, CanUpdateErrorStateCtor } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { _MatInputMixinBase } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
 
 let nextUniqueId = 0;
+
+declare class MatInputBase {
+  _defaultErrorStateMatcher: ErrorStateMatcher;
+  _parentForm: NgForm;
+  _parentFormGroup: FormGroupDirective;
+  /** @docs-private */
+  ngControl: NgControl;
+  constructor(_defaultErrorStateMatcher: ErrorStateMatcher, _parentForm: NgForm, _parentFormGroup: FormGroupDirective,
+  /** @docs-private */
+  ngControl: NgControl);
+}
+declare const _MatInputMixinBase: CanUpdateErrorStateCtor & typeof MatInputBase;
 
 @Directive({
   selector: '[ngxMatFileInputIcon]'
