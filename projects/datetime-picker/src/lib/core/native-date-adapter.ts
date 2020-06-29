@@ -161,21 +161,26 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
     return new Date(date.getTime());
   }
 
-  createDate(year: number, month: number, date: number): Date {
+  createDate(year: any, month: any, date: any): Date {
+
+    const sanitaryDate = (isNaN(date)) ? date.value : date;
+    const sanitaryMonth = (isNaN(month)) ? month.value : month;
+    const sanitaryYear = (isNaN(year)) ? year.value : year;
+
     // Check for invalid month and date (except upper bound on date which we have to check after
     // creating the Date).
-    if (month < 0 || month > 11) {
-      throw Error(`Invalid month index "${month}". Month index has to be between 0 and 11.`);
+    if (sanitaryMonth < 0 || sanitaryMonth > 11) {
+      throw Error(`Invalid month index "${sanitaryMonth}". Month index has to be between 0 and 11.`);
     }
 
-    if (date < 1) {
-      throw Error(`Invalid date "${date}". Date has to be greater than 0.`);
+    if ( sanitaryDate < 1) {
+      throw Error(`Invalid date "${sanitaryDate}". Date has to be greater than 0.`);
     }
 
-    let result = this._createDateWithOverflow(year, month, date);
+    const result = this._createDateWithOverflow(sanitaryYear, sanitaryMonth, sanitaryDate);
     // Check that the date wasn't above the upper bound for the month, causing the month to overflow
-    if (result.getMonth() != month) {
-      throw Error(`Invalid date "${date}" for month with index "${month}".`);
+    if (result.getMonth() !== sanitaryMonth) {
+      throw Error(`Invalid date "${sanitaryDate}" for month with index "${sanitaryMonth}".`);
     }
 
     return result;
