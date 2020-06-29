@@ -1,7 +1,8 @@
-import { EventEmitter, Output, Input, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
+import { EventEmitter, Output, Input, OnDestroy, AfterViewInit, NgZone, Directive } from '@angular/core';
 import { Color } from '../../models';
 import { Subject } from 'rxjs';
 
+@Directive()
 export abstract class NgxMatBaseColorCanvas implements OnDestroy, AfterViewInit {
 
 	@Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();

@@ -68,7 +68,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   @ViewChild(NgxMatCalendar, { static: true }) _calendar: NgxMatCalendar<D>;
 
   /** Reference to the internal time picker component. */
-  @ViewChild(NgxMatTimepickerComponent, { static: false }) _timePicker: NgxMatTimepickerComponent<D>;
+  @ViewChild(NgxMatTimepickerComponent) _timePicker: NgxMatTimepickerComponent<D>;
 
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatetimePicker<D>;
