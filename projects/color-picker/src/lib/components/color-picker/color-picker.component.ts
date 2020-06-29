@@ -59,7 +59,7 @@ export class NgxMatColorPickerContentComponent extends _MatDatepickerContentMixi
   implements CanColor {
 
   /** Reference to the internal calendar component. */
-  @ViewChild(NgxMatColorPaletteComponent) _palette: NgxMatColorPaletteComponent;
+  @ViewChild(NgxMatColorPaletteComponent, { static: true }) _palette: NgxMatColorPaletteComponent;
 
   picker: NgxMatColorPickerComponent;
   _isAbove: boolean;

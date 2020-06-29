@@ -31,11 +31,11 @@ export class NgxMatFileInputIcon { }
 export class NgxMatFileInputComponent extends _MatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
   OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
 
-  @ViewChild('inputFile') private _inputFileRef: ElementRef;
-  @ViewChild('inputValue') private _inputValueRef: ElementRef;
+  @ViewChild('inputFile', { static: true }) private _inputFileRef: ElementRef;
+  @ViewChild('inputValue', { static: true }) private _inputValueRef: ElementRef;
 
   /** Custom icon set by the consumer. */
-  @ContentChild(NgxMatFileInputIcon) _customIcon: NgxMatFileInputIcon;
+  @ContentChild(NgxMatFileInputIcon, /* TODO: add static flag */ {}) _customIcon: NgxMatFileInputIcon;
 
   @Input() color: ThemePalette = 'primary';
 

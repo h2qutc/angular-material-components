@@ -65,10 +65,10 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   implements AfterViewInit, CanColor {
 
   /** Reference to the internal calendar component. */
-  @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
+  @ViewChild(NgxMatCalendar, { static: true }) _calendar: NgxMatCalendar<D>;
 
   /** Reference to the internal time picker component. */
-  @ViewChild(NgxMatTimepickerComponent) _timePicker: NgxMatTimepickerComponent<D>;
+  @ViewChild(NgxMatTimepickerComponent, { static: false }) _timePicker: NgxMatTimepickerComponent<D>;
 
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatetimePicker<D>;

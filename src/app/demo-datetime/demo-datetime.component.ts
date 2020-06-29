@@ -9,7 +9,7 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class DemoDatetimeComponent implements OnInit {
 
-  @ViewChild('picker') picker: any;
+  @ViewChild('picker', { static: true }) picker: any;
 
   public disabled = false;
   public showSpinners = true;

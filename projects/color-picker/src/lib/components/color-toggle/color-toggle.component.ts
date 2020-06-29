@@ -37,7 +37,7 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
   }
   private _disabled: boolean;
 
-  @ViewChild('button') _button: MatButton;
+  @ViewChild('button', { static: true }) _button: MatButton;
 
   constructor(private _cd: ChangeDetectorRef) { }
 

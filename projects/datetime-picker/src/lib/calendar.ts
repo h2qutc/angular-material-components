@@ -234,13 +234,13 @@ export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, On
   @Output() readonly _userSelection: EventEmitter<void> = new EventEmitter<void>();
 
   /** Reference to the current month view component. */
-  @ViewChild(NgxMatMonthView) monthView: NgxMatMonthView<D>;
+  @ViewChild(NgxMatMonthView, { static: false }) monthView: NgxMatMonthView<D>;
 
   /** Reference to the current year view component. */
-  @ViewChild(NgxMatYearView) yearView: NgxMatYearView<D>;
+  @ViewChild(NgxMatYearView, { static: false }) yearView: NgxMatYearView<D>;
 
   /** Reference to the current multi-year view component. */
-  @ViewChild(NgxMatMultiYearView) multiYearView: NgxMatMultiYearView<D>;
+  @ViewChild(NgxMatMultiYearView, { static: false }) multiYearView: NgxMatMultiYearView<D>;
 
   /**
    * The current active date. This determines which time period is shown and which date is
