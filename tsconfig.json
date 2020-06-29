@@ -1,47 +1,44 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-      "@angular-material-components/*": [
-        "dist/@angular-material-components/*"
-      ],
-      "@angular-material-components/color-picker": [
-        "dist/@angular-material-components/color-picker"
-      ],
-      "@angular-material-components/color-picker/*": [
-        "dist/@angular-material-components/color-picker/*"
-      ],
-      "@angular-material-components/datetime-picker": [
-        "dist/@angular-material-components/datetime-picker"
-      ],
-      "@angular-material-components/datetime-picker/*": [
-        "dist/@angular-material-components/datetime-picker/*"
-      ],
-      "file-input": [
-        "dist/file-input"
-      ],
-      "file-input/*": [
-        "dist/file-input/*"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./src/tsconfig.spec.json"
+    },
+    {
+      "path": "./e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./projects/datetime-picker/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/datetime-picker/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/moment-adapter/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/moment-adapter/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/color-picker/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/color-picker/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/file-input/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/file-input/tsconfig.spec.json"
     }
-  }
+  ]
 }

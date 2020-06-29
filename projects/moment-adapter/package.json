@@ -13,5 +13,8 @@
     "@angular/common": "0.0.0-NG",
     "@angular/core": "0.0.0-NG",
     "moment": "^2.18.1"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
