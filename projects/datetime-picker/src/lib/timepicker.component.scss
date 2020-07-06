@@ -5,16 +5,16 @@ $sizeButtonMeridian: 36px;
   font-size: 13px;
   form {
     min-width: 90px;
-    .table {
-      .tbody {
+    .ngx-mat-timepicker-table {
+      .ngx-mat-timepicker-tbody {
         tr {
           td {
             text-align: center;
 
-            &.spacer {
+            &.ngx-mat-timepicker-spacer {
               font-weight: bold;
             }
-            &.meridian {
+            &.ngx-mat-timepicker-meridian {
               .mat-button {
                 min-width: 64px;
                 line-height: $sizeButtonMeridian;
