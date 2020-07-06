@@ -31,8 +31,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {Directionality} from '@angular/cdk/bidi';
-import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
 import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxMatCalendarCell, NgxMatCalendarBody } from './calendar-body';
 
 export const yearsPerPage = 24;
 
@@ -104,10 +104,10 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(MatCalendarBody) _matCalendarBody: MatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: MatCalendarCell[][];
+  _years: NgxMatCalendarCell[][];
 
   /** The year that today falls on. */
   _todayYear: number;
@@ -227,7 +227,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
   /** Creates an MatCalendarCell for the given year. */
   private _createCellForYear(year: number) {
     let yearName = this._dateAdapter.getYearName(this._dateAdapter.createDate(year, 0, 1));
-    return new MatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year));
+    return new NgxMatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year));
   }
 
   /** Whether the given year is enabled. */

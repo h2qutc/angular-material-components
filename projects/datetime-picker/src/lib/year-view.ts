@@ -9,10 +9,10 @@
 import { Directionality } from '@angular/cdk/bidi';
 import { DOWN_ARROW, END, ENTER, HOME, LEFT_ARROW, PAGE_DOWN, PAGE_UP, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
 import { NgxMatDateAdapter } from './core/date-adapter';
 import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
 import { createMissingDateImplError } from './utils/date-utils';
+import { NgxMatCalendarCell, NgxMatCalendarBody } from './calendar-body';
 
 /**
  * An internal component used to display a single year in the datepicker.
@@ -78,10 +78,10 @@ export class NgxMatYearView<D> implements AfterContentInit {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(MatCalendarBody) _matCalendarBody: MatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
 
   /** Grid of calendar cells representing the months of the year. */
-  _months: MatCalendarCell[][];
+  _months: NgxMatCalendarCell[][];
 
   /** The label for this year (e.g. "2017"). */
   _yearLabel: string;
@@ -215,7 +215,7 @@ export class NgxMatYearView<D> implements AfterContentInit {
     let ariaLabel = this._dateAdapter.format(
       this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), month, 1),
       this._dateFormats.display.monthYearA11yLabel);
-    return new MatCalendarCell(
+    return new NgxMatCalendarCell(
       month, monthName.toLocaleUpperCase(), ariaLabel, this._shouldEnableMonth(month));
   }
 

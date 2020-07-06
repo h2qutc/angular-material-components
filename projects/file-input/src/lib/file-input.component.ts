@@ -11,13 +11,13 @@ let nextUniqueId = 0;
 
 class NgxMatInputBase {
   constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
-              public _parentForm: NgForm,
-              public _parentFormGroup: FormGroupDirective,
-              /** @docs-private */
-              public ngControl: NgControl) {}
+    public _parentForm: NgForm,
+    public _parentFormGroup: FormGroupDirective,
+    /** @docs-private */
+    public ngControl: NgControl) { }
 }
 const _NgxMatInputMixinBase: CanUpdateErrorStateCtor & typeof NgxMatInputBase =
-    mixinErrorState(NgxMatInputBase);
+  mixinErrorState(NgxMatInputBase);
 
 @Directive({
   selector: '[ngxMatFileInputIcon]'
@@ -40,8 +40,8 @@ export class NgxMatFileInputIcon { }
 export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
   OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
 
-  @ViewChild('inputFile') private _inputFileRef: ElementRef;
-  @ViewChild('inputValue') private _inputValueRef: ElementRef;
+  @ViewChild('inputFile', { static: true }) private _inputFileRef: ElementRef;
+  @ViewChild('inputValue', { static: true }) private _inputValueRef: ElementRef;
 
   /** Custom icon set by the consumer. */
   @ContentChild(NgxMatFileInputIcon) _customIcon: NgxMatFileInputIcon;
