@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatCalendar, NgxMatCalendarHeader } from './calendar';
+import { NgxMatCalendarBody } from './calendar-body';
 import { NgxMatDatetimeInput } from './datetime-input';
 import { NgxMatDatetimeContent, NgxMatDatetimePicker } from './datetime-picker.component';
 import { NgxMatMonthView } from './month-view';
@@ -32,6 +33,7 @@ import { NgxMatYearView } from './year-view';
       NgxMatDatetimeInput,
       NgxMatCalendar,
       NgxMatMonthView,
+      NgxMatCalendarBody,
       NgxMatYearView,
       NgxMatMultiYearView,
       NgxMatCalendarHeader
@@ -42,6 +44,7 @@ import { NgxMatYearView } from './year-view';
       NgxMatDatetimeInput,
       NgxMatCalendar,
       NgxMatMonthView,
+      NgxMatCalendarBody,
       NgxMatYearView,
       NgxMatMultiYearView,
       NgxMatCalendarHeader
