@@ -15,6 +15,7 @@ import { NgxMatMonthView } from './month-view';
 import { NgxMatMultiYearView } from './multi-year-view';
 import { NgxMatTimepickerModule } from './timepicker.module';
 import { NgxMatYearView } from './year-view';
+import { DefaultNgxMatCalendarRangeStrategy, NGX_MAT_DATE_RANGE_SELECTION_STRATEGY } from './date-range-selection-strategy';
 
 @NgModule({
    imports: [
@@ -54,7 +55,11 @@ import { NgxMatYearView } from './year-view';
       NgxMatCalendarHeader
    ],
    providers: [
-      MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER
+      MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+      {
+         provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
+         useClass: DefaultNgxMatCalendarRangeStrategy
+      }
    ]
 })
 export class NgxMatDatetimePickerModule { }
