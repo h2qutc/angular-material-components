@@ -24,12 +24,12 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/platform-browser": "0.0.0-NG",
-    "@angular/common": "0.0.0-NG",
-    "@angular/core": "0.0.0-NG",
-    "@angular/forms": "0.0.0-NG",
-    "@angular/material": "0.0.0-PLACEHOLDER",
-    "@angular/cdk": "0.0.0-PLACEHOLDER",
-    "tslib": "0.0.0-TSLIB"
+    "@angular/platform-browser": "^10.0.2",
+    "@angular/common": "^10.0.2",
+    "@angular/core": "^10.0.2",
+    "@angular/forms": "^10.0.2",
+    "@angular/material": "~10.0.1",
+    "@angular/cdk": "~10.0.1",
+    "tslib": "^2.0.0"
   }
 }
