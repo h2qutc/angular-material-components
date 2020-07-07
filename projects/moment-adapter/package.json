@@ -1,6 +1,6 @@
 {
   "name": "@angular-material-components/moment-adapter",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0",
   "description": "Angular Material Moment Adapter",
   "author": "HO Hong Quan",
   "license": "MIT",
