@@ -19,6 +19,16 @@ An Angular Material File Input.
 ![Alt Text](demo_file_input.png)
 
 ## Getting started
+
+Choose the version corresponding to your Angular version:
+
+ Angular     | @angular-material-components/file-input
+ ----------- | -------------------
+ 10          | 4.x+              
+ 9           | 2.x+              
+ 8           | 2.x+              
+ 7           | 2.x+                 
+
 ```
 npm install --save @angular-material-components/file-input
 ```
