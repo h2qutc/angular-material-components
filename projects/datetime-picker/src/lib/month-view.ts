@@ -42,10 +42,11 @@ import {
 } from './calendar-body';
 import { Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
-import { DateRange, MAT_DATE_RANGE_SELECTION_STRATEGY, MatDateRangeSelectionStrategy } from '@angular/material/datepicker';
+import { DateRange } from '@angular/material/datepicker';
 import { createMissingDateImplError } from './utils/date-utils';
 import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
 import { NgxMatDateAdapter } from './core/date-adapter';
+import { NGX_MAT_DATE_RANGE_SELECTION_STRATEGY, NgxMatDateRangeSelectionStrategy } from './date-range-selection-strategy';
 
 
 const DAYS_PER_WEEK = 7;
@@ -176,13 +177,13 @@ export class NgxMatMonthView<D> implements AfterContentInit, OnDestroy {
     @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir?: Directionality,
-    @Inject(MAT_DATE_RANGE_SELECTION_STRATEGY) @Optional()
-    private _rangeStrategy?: MatDateRangeSelectionStrategy<D>) {
+    @Inject(NGX_MAT_DATE_RANGE_SELECTION_STRATEGY) @Optional()
+    private _rangeStrategy?: NgxMatDateRangeSelectionStrategy<D>) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
     this._activeDate = this._dateAdapter.today();
