@@ -249,6 +249,10 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
     return moment.invalid();
   }
 
+  getMeridiem(date: _moment.Moment): 'AM' | 'PM' {
+    const hours = +date.format('H');
+    return hours < 12 ? 'AM' : 'PM';
+  }
   getHour(date: _moment.Moment): number {
     return date.hours();
   }
