@@ -11,6 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from 'projects/datetime-picker/src/public-api';
+import { NgxMatMomentModule } from 'projects/moment-adapter/src/public-api';
 import { DemoDatetimeComponent } from './demo-datetime.component';
 import { SharedModule } from '../shared';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
       routes,
     ),
     MatDatepickerModule,
+    NgxMatMomentModule,
     MatInputModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
