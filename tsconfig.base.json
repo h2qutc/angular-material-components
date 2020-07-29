@@ -16,7 +16,7 @@
       "node_modules/@types"
     ],
     "lib": ["es5", "es2015", "dom"],
-    "types": ["jasmine"],
+    "types": ["node"],
     "paths": {
       "@angular-material-components/*": [
         "dist/@angular-material-components/*"
