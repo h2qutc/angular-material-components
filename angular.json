@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/angular-material-components",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -279,23 +280,23 @@
   "schematics": {
     "@schematics/angular:module": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:component": {
       "prefix": "ngx-mat",
-      "styleext": "scss",
-      "spec": false
+      "style": "scss",
+      "skipTests": true
     },
     "@schematics/angular:directive": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:pipe": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:service": {
-      "spec": false
+      "skipTests": true
     }
   }
 }
