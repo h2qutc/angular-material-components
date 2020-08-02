@@ -1,6 +1,6 @@
 {
   "name": "@angular-material-components/datetime-picker",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Angular Material Datetime Picker",
   "author": "HO Hong Quan",
   "repository": {
@@ -32,7 +32,6 @@
     "@angular/core": "^10.0.2",
     "@angular/forms": "^10.0.2",
     "@angular/material": "~10.0.1",
-    "@angular/cdk": "~10.0.1",
-    "tslib": "^2.0.0"
+    "@angular/cdk": "~10.0.1"
   }
 }
