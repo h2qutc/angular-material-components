@@ -1,4 +1,4 @@
-# Angular Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x, 9.x
+# Angular Material DatetimePicker, Timepicker for @angular/material 7.x, 8.x, 9.x, 10.x
 
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
@@ -17,6 +17,15 @@ A DatetimePicker like @angular/material [Datepicker](https://material.angular.io
 @see [DEMO stackblitz](https://stackblitz.com/edit/demo-ngx-mat-datetime-picker)
 
 ![Alt Text](demo_datetime_picker.png)
+
+Choose the version corresponding to your Angular version:
+
+ Angular     | @angular-material-components/datetime-picker
+ ----------- | -------------------
+ 10          | 4.x+              
+ 9           | 2.x+              
+ 8           | 2.x+              
+ 7           | 2.x+  
 
 ## Getting started
 
