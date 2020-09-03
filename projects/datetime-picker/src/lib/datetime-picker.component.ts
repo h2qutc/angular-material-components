@@ -128,6 +128,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** The view that the calendar should start in. */
   @Input() startView: 'month' | 'year' | 'multi-year' = 'month';
+  
+   /** Default Color palette to use on the datepicker's calendar. */
+  @Input()
+  get defaultColor(): ThemePalette {
+    return this._defaultColor;
+  }
+  set defaultColor(value: ThemePalette) {
+    this._defaultColor = value;
+  }
+  _defaultColor: ThemePalette = 'primary';
 
   /** Color palette to use on the datepicker's calendar. */
   @Input()
