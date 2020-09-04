@@ -94,7 +94,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       this.disabled ? this.form.disable() : this.form.enable();
     }
 
-    this.disableMinute ? this.form.get('minute').disable() : this.form.get('minute').enable();
+    this.disableMinute || this.disabled ? this.form.get('minute').disable() : this.form.get('minute').enable();
 
   }
 
