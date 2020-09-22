@@ -1,6 +1,6 @@
 {
   "name": "@angular-material-components/datetime-picker",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "Angular Material Datetime Picker",
   "author": "HO Hong Quan",
   "repository": {
@@ -27,11 +27,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/platform-browser": "^10.1.1",
-    "@angular/common": "^10.1.1",
-    "@angular/core": "^10.1.1",
-    "@angular/forms": "^10.1.1",
-    "@angular/material": "~10.2.0",
-    "@angular/cdk": "~10.2.0"
+    "@angular/platform-browser": "^10.1.2",
+    "@angular/common": "^10.1.2",
+    "@angular/core": "^10.1.2",
+    "@angular/forms": "^10.1.2",
+    "@angular/material": "~10.2.2",
+    "@angular/cdk": "~10.2.2"
   }
 }
