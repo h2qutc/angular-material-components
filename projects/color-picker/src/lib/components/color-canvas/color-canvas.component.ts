@@ -61,14 +61,13 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
 
   ngOnInit() {
 
-    const rgbaCtrl$ = merge(this.rCtrl.valueChanges, this.gCtrl.valueChanges,
-      this.bCtrl.valueChanges, this.aCtrl.valueChanges);
-    rgbaCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
-      .subscribe(_ => {
+    for(const ctrl of [this.rCtrl, this.gCtrl, this.bCtrl, this.aCtrl]) {
+      ctrl.valueChanges.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged()).subscribe(x => {
         const color = new Color(Number(this.rCtrl.value),
           Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
         this.emitChange(color);
       });
+    }
 
     const hexCtrl$ = this.hexCtrl.valueChanges;
     hexCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
