@@ -17,7 +17,7 @@
         <td></td>
         <td *ngIf="showSeconds">
           <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('second', true)"
-            [disabled]="disabled">
+            [disabled]="disabled || disableMinute">
             <mat-icon>expand_less</mat-icon>
           </button>
         </td>
@@ -73,7 +73,7 @@
         <td *ngIf="showSeconds"></td>
         <td *ngIf="showSeconds">
           <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('second', false)"
-            [disabled]="disabled">
+            [disabled]="disabled || disableMinute">
             <mat-icon>expand_more</mat-icon>
           </button>
         </td>
