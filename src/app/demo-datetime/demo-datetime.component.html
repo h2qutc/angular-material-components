@@ -222,7 +222,8 @@
     Creating a custom date adapter module
     <pre><code ngxMatHighlight class="language-typescript">{{code6}}</code></pre>
 
-    You can also customize the date format by providing your custom <strong>NGX_MAT_DATE_FORMATS</strong> in your module.
+    You can also customize the date format by providing your custom <strong>NGX_MAT_DATE_FORMATS</strong> in your
+    module.
     <pre><code ngxMatHighlight class="language-typescript">{{code7}}</code></pre>
 
     <h2>Theming</h2>
@@ -245,6 +246,9 @@
         <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
           [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
           [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+          <ng-template>
+            <mat-icon>folder</mat-icon>
+          </ng-template>
         </ngx-mat-datetime-picker>
       </mat-form-field>
     </mat-card>
