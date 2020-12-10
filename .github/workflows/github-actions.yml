@@ -25,9 +25,3 @@ jobs:
         run: npm i
       - name: Build
         run: npm run build:ci
-      - name: Publish generated content to GitHub Pages
-        uses: h2qutc/angular-material-components@v5.0.2-beta
-        with:
-          dir: dist
-          branch: gh-pages
-          token: ${{ secrets.ACCESS_TOKEN }}
