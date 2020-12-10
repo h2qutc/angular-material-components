@@ -2,7 +2,7 @@ name: deploy-demo
 on:
   push:
     branches: 
-      - 'develop_angular11'
+      - 'feature/add_github_actions'
 jobs: 
   build: 
     name: Build and deploy
