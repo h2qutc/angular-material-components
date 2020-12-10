@@ -10,9 +10,9 @@ import { Directionality } from '@angular/cdk/bidi';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
+import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, OnInit, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
@@ -62,19 +62,13 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContent
   inputs: ['color'],
 })
 export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
-  implements OnInit, AfterViewInit, CanColor {
+  implements AfterViewInit, CanColor {
 
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
 
   /** Reference to the internal time picker component. */
   @ViewChild(NgxMatTimepickerComponent) _timePicker: NgxMatTimepickerComponent<D>;
-
-  /**
-   * Container used to put the control inside
-   */
-  @ViewChild('container', { read: ViewContainerRef, static: false })
-  private container: ViewContainerRef;
 
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatetimePicker<D>;
@@ -93,21 +87,23 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
     return this._calendar.currentView == 'month';
   }
 
-  constructor(elementRef: ElementRef, private factoryResolver: ComponentFactoryResolver,) {
-    super(elementRef);
-  }
+  _templateCustomIconPortal: TemplatePortal<any>;
 
-  ngOnInit() {
-    if (this.datepicker._customIcon) {
-      setTimeout(() => {
-        this.container.clear();
-        this.container.createEmbeddedView(this.datepicker._customIcon);
-      })
-    }
+  constructor(elementRef: ElementRef, private cd: ChangeDetectorRef,
+    private _viewContainerRef: ViewContainerRef) {
+    super(elementRef);
   }
 
   ngAfterViewInit() {
     this._calendar.focusActiveCell();
+    if (this.datepicker._customIcon) {
+      this._templateCustomIconPortal = new TemplatePortal(
+        this.datepicker._customIcon,
+        this._viewContainerRef
+      );
+      this.cd.detectChanges();
+    }
+
   }
 
 }
@@ -123,11 +119,8 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatDatetimePicker<D> implements OnDestroy, AfterViewInit, CanColor {
+export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
-  ngAfterViewInit() {
-    console.log('afterviewinit', this._customIcon)
-  }
   private _scrollStrategy: () => ScrollStrategy;
 
   /** An input indicating the type of the custom header component for the calendar, if set. */
