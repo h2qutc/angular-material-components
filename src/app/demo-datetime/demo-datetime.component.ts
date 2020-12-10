@@ -9,7 +9,7 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class DemoDatetimeComponent implements OnInit {
 
-  @ViewChild('picker', {static: true}) picker: any;
+  @ViewChild('picker', { static: true }) picker: any;
 
   public disabled = false;
   public showSpinners = true;
@@ -111,7 +111,6 @@ providers: [
     // this.picker.openedStream.subscribe(() => {
     //   console.log('opened');
     // })
-    
   }
 
   toggleMinDate(evt: any) {
