@@ -128,6 +128,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** The view that the calendar should start in. */
   @Input() startView: 'month' | 'year' | 'multi-year' = 'month';
+  
+   /** Default Color palette to use on the datepicker's calendar. */
+  @Input()
+  get defaultColor(): ThemePalette {
+    return this._defaultColor;
+  }
+  set defaultColor(value: ThemePalette) {
+    this._defaultColor = value;
+  }
+  _defaultColor: ThemePalette = 'primary';
 
   /** Color palette to use on the datepicker's calendar. */
   @Input()
@@ -169,7 +179,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
     if (newValue !== this._disabled) {
       this._disabled = newValue;
-      this._disabledChange.next(newValue);
+      this._stateChanges.next(newValue);
     }
   }
   public _disabled: boolean;
@@ -305,7 +315,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   _datepickerInput: NgxMatDatetimeInput<D>;
 
   /** Emits when the datepicker is disabled. */
-  readonly _disabledChange = new Subject<boolean>();
+  readonly _stateChanges = new Subject<boolean>();
 
   /** Emits new selected date when selected date changes. */
   readonly _selectedChanged = new Subject<D>();
@@ -330,13 +340,13 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   ngOnDestroy() {
     this.close();
-    this._inputSubscription.unsubscribe();
-    this._disabledChange.complete();
 
     if (this._popupRef) {
       this._popupRef.dispose();
       this._popupComponentRef = null;
     }
+    this._inputSubscription.unsubscribe();
+    this._stateChanges.complete();
   }
 
   /** The form control validator for the min date. */

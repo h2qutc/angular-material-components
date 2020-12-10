@@ -18,19 +18,19 @@ const appRoutes: Routes = [
    { path: 'home', component: HomeComponent },
    {
       path: 'datetimepicker',
-      loadChildren: './demo-datetime/demo-datetime.module#DemoDatetimeModule'
+      loadChildren: () => import('./demo-datetime/demo-datetime.module').then(m => m.DemoDatetimeModule)
    },
    {
       path: 'timepicker',
-      loadChildren: './demo-time/demo-time.module#DemoTimeModule'
+      loadChildren: () => import('./demo-time/demo-time.module').then(m => m.DemoTimeModule)
    },
    {
       path: 'colorpicker',
-      loadChildren: './demo-colorpicker/demo-colorpicker.module#DemoColorpickerModule'
+      loadChildren: () => import('./demo-colorpicker/demo-colorpicker.module').then(m => m.DemoColorpickerModule)
    },
    {
       path: 'fileinput',
-      loadChildren: './demo-fileinput/demo-fileinput.module#DemoFileInputModule'
+      loadChildren: () => import('./demo-fileinput/demo-fileinput.module').then(m => m.DemoFileInputModule)
    },
    { path: '', redirectTo: '/datetimepicker', pathMatch: 'full' },
    { path: '**', redirectTo: '/datetimepicker', pathMatch: 'full' }

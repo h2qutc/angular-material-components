@@ -90,12 +90,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.disabled && !changes.disabled.firstChange) {
-      this.disabled ? this.form.disable() : this.form.enable();
+    if (changes.disabled || changes.disableMinute) {
+      this._setDisableStates();
     }
-
-    this.disableMinute ? this.form.get('minute').disable() : this.form.get('minute').enable();
-
   }
 
   ngOnDestroy() {
@@ -225,6 +222,24 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     }
 
     return next;
+  }
+
+  /**
+   * Set disable states
+   */
+  private _setDisableStates() {
+    if (this.disabled) {
+      this.form.disable();
+    }
+    else {
+      this.form.enable();
+      if (this.disableMinute) {
+        this.form.get('minute').disable();
+        if (this.showSeconds) {
+          this.form.get('second').disable();
+        }
+      }
+    }
   }
 
 }

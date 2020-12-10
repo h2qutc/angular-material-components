@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup">
-    <div class="row">
+    <div class="color-canvas-row">
         <div class="zone-canvas">
             <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
                 width="200" height="200"></canvas>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="color-canvas-row">
         <button mat-mini-fab [style.background-color]="color?.rgba || 'transparent'" class="preview"></button>
         <mat-form-field>
             <mat-label>HEX6</mat-label>

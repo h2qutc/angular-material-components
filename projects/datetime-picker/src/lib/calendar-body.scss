@@ -1,0 +1,280 @@
+// @import '../../cdk/a11y/a11y';
+
+/// Emits the mixin's content nested under `$selector-context` if `$selector-context`
+/// is non-empty.
+/// @param selector-context The selector under which to nest the mixin's content.
+@mixin _cdk-optionally-nest-content($selector-context) {
+  @if ($selector-context == '') {
+    @content;
+  }
+  @else {
+    #{$selector-context} {
+      @content;
+    }
+  }
+}
+
+/// Applies styles for users in high contrast mode. Note that this only applies
+/// to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
+/// attribute, however Chrome handles high contrast differently.
+///
+/// @param target Which kind of high contrast setting to target. Defaults to `active`, can be
+///    `white-on-black` or `black-on-white`.
+/// @param encapsulation Whether to emit styles for view encapsulation. Values are:
+///     * `on` - works for `Emulated`, `Native`, and `ShadowDom`
+///     * `off` - works for `None`
+///     * `any` - works for all encapsulation modes by emitting the CSS twice (default).
+@mixin cdk-high-contrast($target: active, $encapsulation: 'any') {
+  @if ($target != 'active' and $target != 'black-on-white' and $target != 'white-on-black') {
+    @error 'Unknown cdk-high-contrast value "#{$target}" provided. ' +
+           'Allowed values are "active", "black-on-white", and "white-on-black"';
+  }
+
+  @if ($encapsulation != 'on' and $encapsulation != 'off' and $encapsulation != 'any') {
+    @error 'Unknown cdk-high-contrast encapsulation "#{$encapsulation}" provided. ' +
+           'Allowed values are "on", "off", and "any"';
+  }
+
+  // If the selector context has multiple parts, such as `.section, .region`, just doing
+  // `.cdk-high-contrast-xxx #{&}` will only apply the parent selector to the first part of the
+  // context. We address this by nesting the selector context under .cdk-high-contrast.
+  @at-root {
+    $selector-context: #{&};
+
+    @if ($encapsulation != 'on') {
+      .cdk-high-contrast-#{$target} {
+        @include _cdk-optionally-nest-content($selector-context) {
+          @content;
+        }
+      }
+    }
+
+    @if ($encapsulation != 'off') {
+      .cdk-high-contrast-#{$target} :host {
+        @include _cdk-optionally-nest-content($selector-context) {
+          @content;
+        }
+      }
+    }
+  }
+}
+
+$mat-calendar-body-label-padding-start: 5% !default;
+// We don't want the label to jump around when we switch between month and year views, so we use
+// the same amount of padding regardless of the number of columns. We align the header label with
+// the one third mark of the first cell, this was chosen somewhat arbitrarily to make it look
+// roughly like the mock. Half way is too far since the cell text is center aligned.
+$mat-calendar-body-label-side-padding: 33% / 7 !default;
+$mat-calendar-body-cell-min-size: 32px !default;
+$mat-calendar-body-cell-content-margin: 5% !default;
+$mat-calendar-body-cell-content-border-width: 1px !default;
+$mat-calendar-body-cell-radius: 999px !default;
+$mat-calendar-body-preview-cell-border: dashed 1px;
+
+$mat-calendar-body-min-size: 7 * $mat-calendar-body-cell-min-size !default;
+$mat-calendar-body-cell-content-size: 100% - $mat-calendar-body-cell-content-margin * 2 !default;
+
+$mat-calendar-range-end-body-cell-size:
+    $mat-calendar-body-cell-content-size + $mat-calendar-body-cell-content-margin !default;
+
+.mat-calendar-body {
+  min-width: $mat-calendar-body-min-size;
+}
+
+.mat-calendar-body-label {
+  height: 0;
+  line-height: 0;
+  text-align: left;
+  padding-left: $mat-calendar-body-label-side-padding;
+  padding-right: $mat-calendar-body-label-side-padding;
+}
+
+.mat-calendar-body-cell {
+  position: relative;
+  height: 0;
+  line-height: 0;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+}
+
+// We use ::before to apply a background to the body cell, because we need to apply a border
+// radius to the start/end which means that part of the element will be cut off, making hovering
+// through all the cells look glitchy. We can't do it on the cell itself, because it's the one
+// that has the event listener and it can't be on the cell content, because it always has a
+// border radius. Note that this and the selectors below can be much simpler if we were to use
+// two separate elements for the main and comparison ranges, like we're doing for the preview
+// range. We don't follow the simpler approach, because the range colors usually have some
+// kind of opacity, which means that they'll start mixing when they're layered on top of each
+// other, making the calendar look messy.
+.mat-calendar-body-cell::before,
+.mat-calendar-body-cell::after,
+.mat-calendar-body-cell-preview {
+  content: '';
+  position: absolute;
+  top: $mat-calendar-body-cell-content-margin;
+  left: 0;
+  z-index: 0;
+  box-sizing: border-box;
+
+  // We want the range background to be slightly shorter than the cell so
+  // that there's a gap when the range goes across multiple rows.
+  height: $mat-calendar-body-cell-content-size;
+  width: 100%;
+}
+
+.mat-calendar-body-range-start:not(.mat-calendar-body-in-comparison-range)::before,
+.mat-calendar-body-range-start::after,
+.mat-calendar-body-comparison-start:not(.mat-calendar-body-comparison-bridge-start)::before,
+.mat-calendar-body-comparison-start::after,
+.mat-calendar-body-preview-start .mat-calendar-body-cell-preview {
+  // Since the range background isn't a perfect circle, we need to size
+  // and offset the start so that it aligns with the main circle.
+  left: $mat-calendar-body-cell-content-margin;
+  width: $mat-calendar-range-end-body-cell-size;
+  border-top-left-radius: $mat-calendar-body-cell-radius;
+  border-bottom-left-radius: $mat-calendar-body-cell-radius;
+
+  [dir='rtl'] & {
+    left: 0;
+    border-radius: 0;
+    border-top-right-radius: $mat-calendar-body-cell-radius;
+    border-bottom-right-radius: $mat-calendar-body-cell-radius;
+  }
+}
+
+@mixin _mat-calendar-body-range-right-radius {
+  // Since the range background isn't a perfect circle, we need to
+  // resize the end so that it aligns with the main circle.
+  width: $mat-calendar-range-end-body-cell-size;
+  border-top-right-radius: $mat-calendar-body-cell-radius;
+  border-bottom-right-radius: $mat-calendar-body-cell-radius;
+}
+
+.mat-calendar-body-range-end:not(.mat-calendar-body-in-comparison-range)::before,
+.mat-calendar-body-range-end::after,
+.mat-calendar-body-comparison-end:not(.mat-calendar-body-comparison-bridge-end)::before,
+.mat-calendar-body-comparison-end::after,
+.mat-calendar-body-preview-end .mat-calendar-body-cell-preview {
+  @include _mat-calendar-body-range-right-radius;
+
+  [dir='rtl'] & {
+    left: $mat-calendar-body-cell-content-margin;
+    border-radius: 0;
+    border-top-left-radius: $mat-calendar-body-cell-radius;
+    border-bottom-left-radius: $mat-calendar-body-cell-radius;
+  }
+}
+
+// Styles necessary to make RTL work.
+[dir='rtl'] {
+  .mat-calendar-body-comparison-bridge-start.mat-calendar-body-range-end::after,
+  .mat-calendar-body-comparison-bridge-end.mat-calendar-body-range-start::after {
+    @include _mat-calendar-body-range-right-radius;
+  }
+}
+
+// Prevents the extra overlap range indication from showing up when it's not supposed to.
+.mat-calendar-body-comparison-start.mat-calendar-body-range-end::after,
+.mat-calendar-body-comparison-end.mat-calendar-body-range-start::after {
+  // Note that the RTL selector here is redundant, but we need to keep it in order to
+  // raise the specificity since it can be overridden by some of the styles from above.
+  &, [dir='rtl'] & {
+    width: $mat-calendar-body-cell-content-size;
+  }
+}
+
+.mat-calendar-body-in-preview .mat-calendar-body-cell-preview {
+  border-top: $mat-calendar-body-preview-cell-border;
+  border-bottom: $mat-calendar-body-preview-cell-border;
+}
+
+.mat-calendar-body-preview-start .mat-calendar-body-cell-preview {
+  border-left: $mat-calendar-body-preview-cell-border;
+
+  [dir='rtl'] & {
+    border-left: 0;
+    border-right: $mat-calendar-body-preview-cell-border;
+  }
+}
+
+.mat-calendar-body-preview-end .mat-calendar-body-cell-preview {
+  border-right: $mat-calendar-body-preview-cell-border;
+
+  [dir='rtl'] & {
+    border-right: 0;
+    border-left: $mat-calendar-body-preview-cell-border;
+  }
+}
+
+.mat-calendar-body-disabled {
+  cursor: default;
+}
+
+.mat-calendar-body-cell-content {
+  top: $mat-calendar-body-cell-content-margin;
+  left: $mat-calendar-body-cell-content-margin;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: $mat-calendar-body-cell-content-size;
+  height: $mat-calendar-body-cell-content-size;
+
+  // Prevents text being off-center on Android.
+  line-height: 1;
+
+  border-width: $mat-calendar-body-cell-content-border-width;
+  border-style: solid;
+
+  // Choosing a value clearly larger than the height ensures we get the correct capsule shape.
+  border-radius: $mat-calendar-body-cell-radius;
+
+  // Increase specificity because focus indicator styles are part of the `mat-core` mixin and can
+  // potentially overwrite the absolute position of the container.
+  &.mat-focus-indicator {
+    position: absolute;
+  }
+
+  @include cdk-high-contrast(active, off) {
+    border: none;
+  }
+}
+
+@include cdk-high-contrast(active, off) {
+  .mat-datepicker-popup:not(:empty),
+  .mat-calendar-body-selected {
+    outline: solid 1px;
+  }
+
+  .mat-calendar-body-today {
+    outline: dotted 1px;
+  }
+
+  .cdk-keyboard-focused .mat-calendar-body-active,
+  .cdk-program-focused .mat-calendar-body-active {
+    & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+      outline: dotted 2px;
+    }
+  }
+}
+
+[dir='rtl'] {
+  .mat-calendar-body-label {
+    text-align: right;
+  }
+}
+
+// Disable the hover styles on non-hover devices. Since this is more of a progressive
+// enhancement and not all desktop browsers support this kind of media query, we can't
+// use something like `@media (hover)`.
+@media (hover: none) {
+  .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
+    & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+      background-color: transparent;
+    }
+  }
+}
