@@ -25,3 +25,9 @@ jobs:
         run: npm i
       - name: Build
         run: npm run build:ci
+      - name: Publish generated content to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
