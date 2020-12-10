@@ -1,0 +1,20 @@
+name: deploy-demo
+on:
+  push:
+    branches: 
+      - 'develop_angular11'
+jobs: 
+  build: 
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Use Node 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install dependencies
+        run: npm i
+      - name: Build
+        run: npm run build:ci
