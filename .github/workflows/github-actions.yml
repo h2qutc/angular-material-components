@@ -2,7 +2,7 @@ name: deploy-demo
 on:
   push:
     branches:
-      - 'feature/add_github_actions'
+      - 'develop_angular11'
     paths-ignore:
       - 'docs/**'
   pull_request:
