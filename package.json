@@ -33,7 +33,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "codecov": "codecov"
+    "codecov": "codecov",
+    "build:ci":"ng build --prod --output-path docs --base-href 'https://h2qutc.github.io/angular-material-components/'"
   },
   "private": false,
   "dependencies": {
