@@ -47,6 +47,11 @@ export class DemoDatetimeComponent implements OnInit {
   <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
     [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
     [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+    <!-- Custom icon or text of Apply icon -->
+    <ng-template>
+      <!-- <mat-icon>star</mat-icon> -->
+      <span>OK</span>
+    </ng-template>
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
@@ -101,6 +106,22 @@ providers: [
   ]`;
 
   public code8 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
+
+
+  public code9 = `<mat-form-field>
+  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
+    [min]="minDate" [max]="maxDate" [disabled]="disabled">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+    [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+    [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+    <!-- Custom icon or text of Apply icon -->
+    <ng-template>
+      <!-- <mat-icon>star</mat-icon> -->
+      <span>OK</span>
+    </ng-template>
+  </ngx-mat-datetime-picker>
+</mat-form-field>`;
 
   constructor() { }
 
