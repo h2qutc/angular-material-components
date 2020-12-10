@@ -18,6 +18,7 @@ inputs:
     required: true
 runs:
   using: node12
+  main: lib/index.js
 branding:
   icon: activity
   color: orange
