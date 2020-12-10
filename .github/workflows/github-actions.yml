@@ -43,7 +43,7 @@ jobs:
         with:
           name: deploy_docs
       - name: Deploy to Github Pages
-        uses: h2qutc/angular-material-components
+        uses: h2qutc/angular-material-components@releases
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
