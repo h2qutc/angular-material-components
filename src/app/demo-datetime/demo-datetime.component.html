@@ -222,8 +222,12 @@
     Creating a custom date adapter module
     <pre><code ngxMatHighlight class="language-typescript">{{code6}}</code></pre>
 
-    You can also customize the date format by providing your custom <strong>NGX_MAT_DATE_FORMATS</strong> in your module.
+    You can also customize the date format by providing your custom <strong>NGX_MAT_DATE_FORMATS</strong> in your
+    module.
     <pre><code ngxMatHighlight class="language-typescript">{{code7}}</code></pre>
+
+    <h2>Custom icon or text for Apply button</h2>
+    <pre><code ngxMatHighlight class="language-html">{{code9}}</code></pre>
 
     <h2>Theming</h2>
     <p>@see @angular/material <a href="https://material.angular.io/guide/theming#using-a-pre-built-theme">Using a
@@ -363,6 +367,26 @@
     </mat-card>
 
     <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>
+
+    <h2>Custom icon or text for Apply button</h2>
+    <pre><code ngxMatHighlight class="language-html">{{code9}}</code></pre>
+
+    <mat-card class="zone zone-picker">
+      <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date" [formControl]="dateControl"
+          [min]="minDate" [max]="maxDate" [disabled]="disabled">
+        <mat-datepicker-toggle matSuffix [for]="pickerCustomIcon"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerCustomIcon [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+          [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+          <ng-template>
+            <!-- <mat-icon>star</mat-icon> -->
+            <span>OK</span>
+          </ng-template>
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </mat-card>
+
   </mat-tab>
 
 </mat-tab-group>
