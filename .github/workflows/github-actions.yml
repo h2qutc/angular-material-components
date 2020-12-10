@@ -17,10 +17,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Use Node 10.x
+      - name: Use Node 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
       - name: Install dependencies
         run: npm i
       - name: Build
