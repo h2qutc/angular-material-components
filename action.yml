@@ -17,7 +17,7 @@ inputs:
     description: The personal access token that authorize repo access
     required: true
 runs:
-  using: node10
+  using: node12
   main: lib/index.js
 branding:
   icon: activity
