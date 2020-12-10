@@ -249,10 +249,6 @@
         <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
           [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
           [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
-          <ng-template>
-            <!-- <mat-icon>star</mat-icon> -->
-            <span>OK</span>
-          </ng-template>
         </ngx-mat-datetime-picker>
       </mat-form-field>
     </mat-card>
@@ -371,6 +367,26 @@
     </mat-card>
 
     <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>
+
+    <h2>Custom icon or text for Apply button</h2>
+    <pre><code ngxMatHighlight class="language-html">{{code9}}</code></pre>
+
+    <mat-card class="zone zone-picker">
+      <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date" [formControl]="dateControl"
+          [min]="minDate" [max]="maxDate" [disabled]="disabled">
+        <mat-datepicker-toggle matSuffix [for]="pickerCustomIcon"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #pickerCustomIcon [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
+          [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+          [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+          <ng-template>
+            <!-- <mat-icon>star</mat-icon> -->
+            <span>OK</span>
+          </ng-template>
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </mat-card>
+
   </mat-tab>
 
 </mat-tab-group>
