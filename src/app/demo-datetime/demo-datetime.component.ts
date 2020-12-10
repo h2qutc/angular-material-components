@@ -108,8 +108,6 @@ providers: [
     // this.picker.closedStream.subscribe(() => {
     //   console.log('closed');
     // })
-
-
     // this.picker.openedStream.subscribe(() => {
     //   console.log('opened');
     // })
