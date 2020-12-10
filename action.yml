@@ -16,6 +16,9 @@ inputs:
   token:
     description: The personal access token that authorize repo access
     required: true
+runs:
+  using: node12
+  main: index.js
 branding:
   icon: activity
   color: orange
