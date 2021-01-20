@@ -73,6 +73,7 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
     const hexCtrl$ = this.hexCtrl.valueChanges;
     hexCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
       .subscribe(hex => {
+        if (!this.hexCtrl.valid) { return; }
         const obj = stringInputToObject(hex);
         if (obj != null) {
           const color = new Color(obj.r, obj.g, obj.b, obj.a);
