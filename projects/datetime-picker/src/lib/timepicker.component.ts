@@ -165,7 +165,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     const _second = this._dateAdapter.getSecond(this._model);
 
     if (this.enableMeridian) {
-      if (_hour > LIMIT_TIMES.meridian) {
+      if (_hour === LIMIT_TIMES.meridian) {
+        this.meridian = MERIDIANS.PM
+      } else if (_hour > LIMIT_TIMES.meridian) {
         _hour = _hour - LIMIT_TIMES.meridian;
         this.meridian = MERIDIANS.PM;
       } else {
