@@ -22,11 +22,12 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/file-input
  ----------- | -------------------
- 11          | 5.x+              
- 10          | 4.x+              
- 9           | 2.x+              
- 8           | 2.x+              
- 7           | 2.x+  
+ 12          | 6.x+
+ 11          | 5.x+
+ 10          | 4.x+
+ 9           | 2.x+
+ 8           | 2.x+
+ 7           | 2.x+
 
 ## Getting started
 ```
