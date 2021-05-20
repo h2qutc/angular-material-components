@@ -1,5 +1,5 @@
-// @use '~@angular/cdk' as cdk;
-@import '../../cdk/a11y/a11y';
+@use '~@angular/cdk' as cdk;
+//@import '../../cdk/a11y/a11y';
 
 /// Emits the mixin's content nested under `$selector-context` if `$selector-context`
 /// is non-empty.
