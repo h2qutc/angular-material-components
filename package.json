@@ -38,7 +38,6 @@
   },
   "private": false,
   "dependencies": {
-    "@angular-material-components/moment-adapter": "^4.0.0",
     "@angular/animations": "~11.2.2",
     "@angular/cdk": "~11.2.2",
     "@angular/common": "~11.2.2",
