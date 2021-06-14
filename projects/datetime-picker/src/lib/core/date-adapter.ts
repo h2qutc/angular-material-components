@@ -27,21 +27,21 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
   * @param date The date to extract the month from.
   * @param value The value to set.
   */
-  abstract setHour(date: D, value: number): void;
+  abstract setHour(date: D, value: number): D;
 
   /**
   * Set the second component of the given date.
   * @param date The date to extract the month from.
   * @param value The value to set.
   */
-  abstract setMinute(date: D, value: number): void;
+  abstract setMinute(date: D, value: number): D;
 
   /**
    * Set the second component of the given date.
    * @param date The date to extract the month from.
    * @param value The value to set.
    */
-  abstract setSecond(date: D, value: number): void;
+  abstract setSecond(date: D, value: number): D;
 
   /**
    * Check if two date have same time
@@ -57,13 +57,14 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
 
   /**
    * Copy time from a date to a another date
-   * @param toDate 
-   * @param fromDate 
+   * @param toDate
+   * @param fromDate
    */
-  copyTime(toDate: D, fromDate: D) {
-    this.setHour(toDate, this.getHour(fromDate));
-    this.setMinute(toDate, this.getMinute(fromDate));
-    this.setSecond(toDate, this.getSecond(fromDate));
+  copyTime(toDate: D, fromDate: D): D {
+    toDate = this.setHour(toDate, this.getHour(fromDate));
+    toDate = this.setMinute(toDate, this.getMinute(fromDate));
+    toDate = this.setSecond(toDate, this.getSecond(fromDate));
+    return toDate;
   }
 
   /**
@@ -87,13 +88,14 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
    * Set time by using default values
    * @param defaultTime List default values [hour, minute, second]
    */
-  setTimeByDefaultValues(date: D, defaultTime: number[]) {
+  setTimeByDefaultValues(date: D, defaultTime: number[]): D {
     if (!Array.isArray(defaultTime)) {
       throw Error('@Input DefaultTime should be an array');
     }
-    this.setHour(date, defaultTime[0] || 0);
-    this.setMinute(date, defaultTime[1] || 0);
-    this.setSecond(date, defaultTime[2] || 0);
+    date = this.setHour(date, defaultTime[0] || 0);
+    date = this.setMinute(date, defaultTime[1] || 0);
+    date = this.setSecond(date, defaultTime[2] || 0);
+    return date;
   }
 
 }

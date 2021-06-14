@@ -258,14 +258,14 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
   getSecond(date: _moment.Moment): number {
     return date.seconds();
   }
-  setHour(date: _moment.Moment, value: number): void {
-    date.hours(value);
+  setHour(date: _moment.Moment, value: number): _moment.Moment {
+    return date.hours(value);
   }
-  setMinute(date: _moment.Moment, value: number): void {
-    date.minutes(value)
+  setMinute(date: _moment.Moment, value: number): _moment.Moment {
+    return date.minutes(value)
   }
-  setSecond(date: _moment.Moment, value: number): void {
-    date.seconds(value);
+  setSecond(date: _moment.Moment, value: number): _moment.Moment {
+    return date.seconds(value);
   }
 
   /** Creates a Moment instance while respecting the current UTC settings. */

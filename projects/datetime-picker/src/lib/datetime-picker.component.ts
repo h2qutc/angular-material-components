@@ -380,8 +380,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Selects the given date */
   select(date: D): void {
-    this._dateAdapter.copyTime(date, this._selected);
-    this._selected = date;
+    this._selected = this._dateAdapter.copyTime(date, this._selected);
   }
 
   /** Emits the selected year in multiyear view */
@@ -428,7 +427,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     if (this._selected == null) {
       this._selected = this._dateAdapter.today();
       if (this.defaultTime != null) {
-        this._dateAdapter.setTimeByDefaultValues(this._selected, this.defaultTime);
+        this._selected = this._dateAdapter.setTimeByDefaultValues(this._selected, this.defaultTime);
       }
     }
 
