@@ -304,7 +304,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     return minValidators == null && maxValidators == null;
   }
 
-  get _dateFilter(): (date: D | null) => boolean {
+  get _dateFilter(): (date: D) => boolean {
     return this.datepickerInput && this.datepickerInput._dateFilter;
   }
 
