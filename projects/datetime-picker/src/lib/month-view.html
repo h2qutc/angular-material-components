@@ -5,14 +5,21 @@
     </tr>
     <tr><th class="mat-calendar-table-header-divider" colspan="7" aria-hidden="true"></th></tr>
   </thead>
-  <tbody mat-calendar-body
+  <tbody ngx-mat-calendar-body
          [label]="_monthLabel"
          [rows]="_weeks"
          [todayValue]="_todayDate!"
-         [selectedValue]="_selectedDate!"
+         [startValue]="_rangeStart!"
+         [endValue]="_rangeEnd!"
+         [comparisonStart]="_comparisonRangeStart"
+         [comparisonEnd]="_comparisonRangeEnd"
+         [previewStart]="_previewStart"
+         [previewEnd]="_previewEnd"
+         [isRange]="_isRange"
          [labelMinRequiredCells]="3"
          [activeCell]="_dateAdapter.getDate(activeDate) - 1"
          (selectedValueChange)="_dateSelected($event)"
+         (previewChange)="_previewChanged($event)"
          (keydown)="_handleCalendarBodyKeydown($event)">
   </tbody>
 </table>

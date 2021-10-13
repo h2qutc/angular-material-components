@@ -291,14 +291,17 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
     return date.getSeconds()
   }
 
-  setHour(date: Date, value: number): void {
+  setHour(date: Date, value: number): Date {
     date.setHours(value);
+    return date;
   }
-  setMinute(date: Date, value: number): void {
+  setMinute(date: Date, value: number): Date {
     date.setMinutes(value);
+    return date;
   }
-  setSecond(date: Date, value: number): void {
+  setSecond(date: Date, value: number): Date {
     date.setSeconds(value);
+    return date;
   }
 
   /** Creates a date but allows the month and date to overflow. */
@@ -345,9 +348,11 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
    * @returns A Date object with its UTC representation based on the passed in date info
    */
   private _format(dtf: Intl.DateTimeFormat, date: Date) {
-    const d = new Date(Date.UTC(
-      date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(),
-      date.getMinutes(), date.getSeconds(), date.getMilliseconds()));
+    // Passing the year to the constructor causes year numbers <100 to be converted to 19xx.
+    // To work around this we use `setUTCFullYear` and `setUTCHours` instead.
+    const d = new Date();
+    d.setUTCFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setUTCHours(date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
     return dtf.format(d);
   }
 }

@@ -11,14 +11,12 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es5", "es2015", "dom"],
+    "types": ["node"],
     "paths": {
       "@angular-material-components/*": [
         "dist/@angular-material-components/*"

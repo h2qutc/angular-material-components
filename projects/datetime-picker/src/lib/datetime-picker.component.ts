@@ -10,20 +10,20 @@ import { Directionality } from '@angular/cdk/bidi';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
+import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NgxMatDateAdapter } from './core/date-adapter';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './calendar';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import { NgxMatDatetimeInput } from './datetime-input';
-import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 import { NgxMatTimepickerComponent } from './timepicker.component';
-import { ValidationErrors } from '@angular/forms';
+import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -78,7 +78,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
 
   /** Whether or not the selected date is valid (min,max...) */
   get valid(): boolean {
-    if(this.datepicker.hideTime) return this.datepicker.valid;
+    if (this.datepicker.hideTime) return this.datepicker.valid;
     return this._timePicker && this._timePicker.valid && this.datepicker.valid;
   }
 
@@ -87,12 +87,23 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
     return this._calendar.currentView == 'month';
   }
 
-  constructor(elementRef: ElementRef) {
+  _templateCustomIconPortal: TemplatePortal<any>;
+
+  constructor(elementRef: ElementRef, private cd: ChangeDetectorRef,
+    private _viewContainerRef: ViewContainerRef) {
     super(elementRef);
   }
 
   ngAfterViewInit() {
     this._calendar.focusActiveCell();
+    if (this.datepicker._customIcon) {
+      this._templateCustomIconPortal = new TemplatePortal(
+        this.datepicker._customIcon,
+        this._viewContainerRef
+      );
+      this.cd.detectChanges();
+    }
+
   }
 
 }
@@ -109,10 +120,14 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   encapsulation: ViewEncapsulation.None,
 })
 export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
+
   private _scrollStrategy: () => ScrollStrategy;
 
   /** An input indicating the type of the custom header component for the calendar, if set. */
   @Input() calendarHeaderComponent: ComponentType<any>;
+
+  /** Custom icon set by the consumer. */
+  @ContentChild(TemplateRef) _customIcon: TemplateRef<any>;
 
   /** The date to open the calendar to initially. */
   @Input()
@@ -128,6 +143,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** The view that the calendar should start in. */
   @Input() startView: 'month' | 'year' | 'multi-year' = 'month';
+
+  /** Default Color palette to use on the datepicker's calendar. */
+  @Input()
+  get defaultColor(): ThemePalette {
+    return this._defaultColor;
+  }
+  set defaultColor(value: ThemePalette) {
+    this._defaultColor = value;
+  }
+  _defaultColor: ThemePalette = 'primary';
 
   /** Color palette to use on the datepicker's calendar. */
   @Input()
@@ -169,7 +194,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
     if (newValue !== this._disabled) {
       this._disabled = newValue;
-      this._disabledChange.next(newValue);
+      this._stateChanges.next(newValue);
     }
   }
   public _disabled: boolean;
@@ -305,7 +330,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   _datepickerInput: NgxMatDatetimeInput<D>;
 
   /** Emits when the datepicker is disabled. */
-  readonly _disabledChange = new Subject<boolean>();
+  readonly _stateChanges = new Subject<boolean>();
 
   /** Emits new selected date when selected date changes. */
   readonly _selectedChanged = new Subject<D>();
@@ -330,13 +355,13 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   ngOnDestroy() {
     this.close();
-    this._inputSubscription.unsubscribe();
-    this._disabledChange.complete();
 
     if (this._popupRef) {
       this._popupRef.dispose();
       this._popupComponentRef = null;
     }
+    this._inputSubscription.unsubscribe();
+    this._stateChanges.complete();
   }
 
   /** The form control validator for the min date. */
@@ -355,8 +380,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Selects the given date */
   select(date: D): void {
-    this._dateAdapter.copyTime(date, this._selected);
-    this._selected = date;
+    this._selected = this._dateAdapter.copyTime(date, this._selected);
   }
 
   /** Emits the selected year in multiyear view */
@@ -403,7 +427,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     if (this._selected == null) {
       this._selected = this._dateAdapter.today();
       if (this.defaultTime != null) {
-        this._dateAdapter.setTimeByDefaultValues(this._selected, this.defaultTime);
+        this._selected = this._dateAdapter.setTimeByDefaultValues(this._selected, this.defaultTime);
       }
     }
 

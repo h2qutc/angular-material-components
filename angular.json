@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/angular-material-components",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,8 +30,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -43,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -57,7 +56,10 @@
                 }
               ]
             }
-          }
+          },
+          "allowedCommonJsDependencies": [
+            "highlight.js"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -142,7 +144,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/datetime-picker/tsconfig.lib.json",
             "project": "projects/datetime-picker/ng-package.json"
@@ -177,7 +179,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/moment-adapter/tsconfig.lib.json",
             "project": "projects/moment-adapter/ng-package.json"
@@ -212,7 +214,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/color-picker/tsconfig.lib.json",
             "project": "projects/color-picker/ng-package.json"
@@ -247,7 +249,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/file-input/tsconfig.lib.json",
             "project": "projects/file-input/ng-package.json"
@@ -280,23 +282,23 @@
   "schematics": {
     "@schematics/angular:module": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:component": {
       "prefix": "ngx-mat",
-      "styleext": "scss",
-      "spec": false
+      "style": "scss",
+      "skipTests": true
     },
     "@schematics/angular:directive": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:pipe": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:service": {
-      "spec": false
+      "skipTests": true
     }
   }
 }

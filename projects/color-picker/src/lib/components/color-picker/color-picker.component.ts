@@ -113,6 +113,16 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   get opened(): boolean { return this._opened; }
   set opened(value: boolean) { value ? this.open() : this.close(); }
   private _opened = false;
+  
+  /** Default Color palette to use on the datepicker's calendar. */
+  @Input()
+  get defaultColor(): ThemePalette {
+    return this._defaultColor;
+  }
+  set defaultColor(value: ThemePalette) {
+    this._defaultColor = value;
+  }
+  _defaultColor: ThemePalette = 'primary';
 
   /** Color palette to use on the datepicker's calendar. */
   @Input()
