@@ -30,6 +30,8 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() disabled = false;
   @Input() showSpinners = true;
   @Input() stepHour: number = DEFAULT_STEP;
+  @Input() minHour: number;
+  @Input() maxHour: number;
   @Input() stepMinute: number = DEFAULT_STEP;
   @Input() stepSecond: number = DEFAULT_STEP;
   @Input() showSeconds = false;
@@ -81,6 +83,14 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
         minute: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_MINUTE)]],
         second: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_SECOND)]]
       });
+
+    if(this.minHour !== undefined && this.minHour !== null && !Number.isNaN(this.minHour)) {
+      LIMIT_TIMES.minHour = this.minHour;
+    }
+
+    if(this.maxHour !== undefined && this.maxHour !== null && !Number.isNaN(this.maxHour)) {
+      LIMIT_TIMES.maxHour = this.maxHour;
+    }
   }
 
   ngOnInit() {
@@ -139,7 +149,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /**
    * Format input
-   * @param input 
+   * @param input
    */
   public formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(NUMERIC_REGEX, '');
@@ -193,7 +203,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /**
    * Get next value by property
-   * @param prop 
+   * @param prop
    * @param up
    */
   private _getNextValueByProp(prop: string, up?: boolean): number {

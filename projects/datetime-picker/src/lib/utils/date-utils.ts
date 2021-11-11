@@ -1,4 +1,4 @@
-export const LIMIT_TIMES = {
+export let LIMIT_TIMES = {
     minHour: 0,
     maxHour: 24,
     minMinute: 0,

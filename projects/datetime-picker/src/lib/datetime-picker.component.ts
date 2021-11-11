@@ -273,6 +273,16 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     return this._datepickerInput && this._datepickerInput.max;
   }
 
+  /** The minimum selectable hour. */
+  get _minHour(): D | null {
+    return this._datepickerInput && this._datepickerInput.minHour;
+  }
+
+  /** The maximum selectable hour. */
+  get _maxHour(): D | null {
+    return this._datepickerInput && this._datepickerInput.maxHour;
+  }
+
   get valid(): boolean {
     const minValidators = this._minValidator();
     const maxValidators = this._maxValidator();

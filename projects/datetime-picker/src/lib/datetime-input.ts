@@ -139,6 +139,22 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
     private _max: D | null;
 
+    /** The minimum valid hour. */
+    @Input()
+    get minHour(): D | null { return this._min; }
+    set minHour(value: D | null) {
+      this._minHour = value;
+    }
+    private _minHour: D | null;
+
+    /** The maximum valid date. */
+    @Input()
+    get maxHour(): D | null { return this._maxHour; }
+    set maxHour(value: D | null) {
+      this._maxHour = this._getValidDateOrNull(this._dateAdapter.deserialize(value));
+    }
+    private _maxHour: D | null;
+
     /** Whether the datepicker-input is disabled. */
     @Input()
     get disabled(): boolean { return !!this._disabled; }
