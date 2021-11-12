@@ -20,6 +20,7 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/color-picker
  ----------- | -------------------
+ 13          | 7.x+
  12          | 6.x+
  11          | 5.x+
  10          | 4.x+
