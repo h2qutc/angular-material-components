@@ -35,7 +35,10 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -60,10 +63,7 @@
                 }
               ]
             }
-          },
-          "allowedCommonJsDependencies": [
-            "highlight.js"
-          ]
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

@@ -5,7 +5,7 @@ import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } 
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
+import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
 import { matDatepickerAnimations } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { merge, Subject, Subscription } from 'rxjs';
@@ -31,11 +31,12 @@ export const NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
   useFactory: NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY,
 };
 
-class NgxMatColorPickerContentBase {
-  constructor(public _elementRef: ElementRef) { }
-}
-const _MatDatepickerContentMixinBase: CanColorCtor & typeof NgxMatColorPickerContentBase =
-  mixinColor(NgxMatColorPickerContentBase);
+const _MatColorpickerContentBase = mixinColor(
+  class {
+    constructor(public _elementRef: ElementRef) { }
+  },
+);
+
 
 @Component({
   selector: 'ngx-mat-color-picker-content',
@@ -55,7 +56,7 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof NgxMatColorPickerCon
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['color']
 })
-export class NgxMatColorPickerContentComponent extends _MatDatepickerContentMixinBase
+export class NgxMatColorPickerContentComponent extends _MatColorpickerContentBase
   implements CanColor {
 
   /** Reference to the internal calendar component. */
@@ -113,7 +114,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   get opened(): boolean { return this._opened; }
   set opened(value: boolean) { value ? this.open() : this.close(); }
   private _opened = false;
-  
+
   /** Default Color palette to use on the datepicker's calendar. */
   @Input()
   get defaultColor(): ThemePalette {
