@@ -14,7 +14,7 @@ import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/por
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
+import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { merge, Observable, Subject, Subscription } from 'rxjs';
@@ -33,8 +33,7 @@ let datepickerUid = 0;
 class MatDatepickerContentBase {
   constructor(public _elementRef: ElementRef) { }
 }
-const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContentBase =
-  mixinColor(MatDatepickerContentBase);
+const _MatDatepickerContentMixinBase: typeof MatDatepickerContentBase = mixinColor(MatDatepickerContentBase);
 
 /**
  * Component used as the content for the datepicker dialog and popup. We use this instead of using
@@ -61,8 +60,7 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContent
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['color'],
 })
-export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
-  implements AfterViewInit, CanColor {
+export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase implements AfterViewInit, CanColor {
 
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
@@ -89,10 +87,12 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
 
   _templateCustomIconPortal: TemplatePortal<any>;
 
-  constructor(elementRef: ElementRef, private cd: ChangeDetectorRef,
-    private _viewContainerRef: ViewContainerRef) {
+  constructor(elementRef: ElementRef, private cd: ChangeDetectorRef, private _viewContainerRef: ViewContainerRef) {
     super(elementRef);
   }
+
+  color: ThemePalette;
+  defaultColor: ThemePalette;
 
   ngAfterViewInit() {
     this._calendar.focusActiveCell();

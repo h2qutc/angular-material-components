@@ -2,7 +2,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation, Directive, ContentChild } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette, CanUpdateErrorStateCtor, mixinErrorState } from '@angular/material/core';
+import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette, mixinErrorState } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
@@ -16,8 +16,7 @@ class NgxMatInputBase {
     /** @docs-private */
     public ngControl: NgControl) { }
 }
-const _NgxMatInputMixinBase: CanUpdateErrorStateCtor & typeof NgxMatInputBase =
-  mixinErrorState(NgxMatInputBase);
+const _NgxMatInputMixinBase: typeof NgxMatInputBase = mixinErrorState(NgxMatInputBase);
 
 @Directive({
   selector: '[ngxMatFileInputIcon]'
@@ -37,8 +36,7 @@ export class NgxMatFileInputIcon { }
   ],
   exportAs: 'ngx-mat-file-input'
 })
-export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
-  OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
+export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>, OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
 
   @ViewChild('inputFile', { static: true }) private _inputFileRef: ElementRef;
   @ViewChild('inputValue', { static: true }) private _inputValueRef: ElementRef;
@@ -143,6 +141,12 @@ export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements M
     }
 
   }
+
+  updateErrorState(): void {
+    this.ngControl.viewToModelUpdate(this._value);
+  }
+
+  userAriaDescribedBy?: string;
 
 
   ngOnChanges() {
