@@ -155,12 +155,12 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/cdk@~12.0.0", "@angular/cdk@12.0.6":
-  "integrity" "sha512-GroS6U9u2GhZmm26XQ/YjKEtJvawI0p25eANi7mPg0pDvvi18Q+inJHE5TvCP8Xnw4Vd27oWv8k7OSm/UQOrAA=="
-  "resolved" "https://registry.npmjs.org/@angular/cdk/-/cdk-12.0.6.tgz"
-  "version" "12.0.6"
+"@angular/cdk@~13.3.9", "@angular/cdk@12.0.6":
+  "integrity" "sha512-XCuCbeuxWFyo3EYrgEYx7eHzwl76vaWcxtWXl00ka8d+WAOtMQ6Tf1D98ybYT5uwF9889fFpXAPw98mVnlo3MA=="
+  "resolved" "https://registry.npmjs.org/@angular/cdk/-/cdk-13.3.9.tgz"
+  "version" "13.3.9"
   dependencies:
-    "tslib" "^2.1.0"
+    "tslib" "^2.3.0"
   optionalDependencies:
     "parse5" "^5.0.0"
 
@@ -189,7 +189,7 @@
     "symbol-observable" "4.0.0"
     "uuid" "8.3.2"
 
-"@angular/common@^12.0.0 || ^13.0.0-0", "@angular/common@>=8.0.0", "@angular/common@~13.3.11", "@angular/common@13.3.11":
+"@angular/common@^12.0.0 || ^13.0.0-0", "@angular/common@^13.0.0 || ^14.0.0-0", "@angular/common@>=8.0.0", "@angular/common@~13.3.11", "@angular/common@13.3.11":
   "integrity" "sha512-gPMwDYIAag1izXm2tRQ6EOIx9FVEUqLdr+qYtRVoQtoBmfkoTSLGcpeBXqqlPVxVPbA6Li1WZZT5wxLLlLAN+Q=="
   "resolved" "https://registry.npmjs.org/@angular/common/-/common-13.3.11.tgz"
   "version" "13.3.11"
@@ -224,7 +224,7 @@
   "resolved" "https://registry.npmjs.org/@angular/compiler/-/compiler-9.0.0.tgz"
   "version" "9.0.0"
 
-"@angular/core@^12.0.0 || ^13.0.0-0", "@angular/core@>=8.0.0", "@angular/core@~13.3.11", "@angular/core@13.3.11":
+"@angular/core@^12.0.0 || ^13.0.0-0", "@angular/core@^13.0.0 || ^14.0.0-0", "@angular/core@>=8.0.0", "@angular/core@~13.3.11", "@angular/core@13.3.11":
   "integrity" "sha512-9BmE2CxyV0g+AkBeuc8IwjSOiJ8Y+kptXnqD/J8EAFT3B0/fLGVnjFdZC6Sev9L0SNZb6qdzebpfIOLqbUjReQ=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-13.3.11.tgz"
   "version" "13.3.11"
