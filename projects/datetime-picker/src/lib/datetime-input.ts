@@ -121,6 +121,9 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     }
     private _value: D | null;
 
+    @Input()
+    emitSelectedValueOnCancel = false;
+
     /** The minimum valid date. */
     @Input()
     get min(): D | null { return this._min; }
@@ -344,7 +347,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     _onFocus() {
         // Close datetime picker if opened
         if (this._datepicker && this._datepicker.opened) {
-            this._datepicker.cancel();
+            this._datepicker.cancel(this.emitSelectedValueOnCancel);
         }
     }
 

@@ -377,9 +377,13 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   }
 
   /** Cancel and close */
-  public cancel(): void {
-    this._selected = this._rawValue;
-    this.close();
+  public cancel(emitSelectedValueOnCancel: boolean): void {
+    if (emitSelectedValueOnCancel) {
+      this.ok();
+    } else {
+      this._selected = this._rawValue;
+      this.close();
+    }
   }
 
   /**
