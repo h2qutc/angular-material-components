@@ -97,18 +97,6 @@
               "src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -127,15 +115,6 @@
             "production": {
               "devServerTarget": "angular-material-components:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -160,18 +139,6 @@
             "tsConfig": "projects/datetime-picker/tsconfig.spec.json",
             "karmaConfig": "projects/datetime-picker/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/datetime-picker/tsconfig.lib.json",
-              "projects/datetime-picker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -194,18 +161,6 @@
             "main": "projects/moment-adapter/src/test.ts",
             "tsConfig": "projects/moment-adapter/tsconfig.spec.json",
             "karmaConfig": "projects/moment-adapter/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/moment-adapter/tsconfig.lib.json",
-              "projects/moment-adapter/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -231,18 +186,6 @@
             "tsConfig": "projects/color-picker/tsconfig.spec.json",
             "karmaConfig": "projects/color-picker/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/color-picker/tsconfig.lib.json",
-              "projects/color-picker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -265,18 +208,6 @@
             "main": "projects/file-input/src/test.ts",
             "tsConfig": "projects/file-input/tsconfig.spec.json",
             "karmaConfig": "projects/file-input/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/file-input/tsconfig.lib.json",
-              "projects/file-input/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
