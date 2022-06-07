@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
@@ -25,7 +25,7 @@ export class DemoDatetimeComponent implements OnInit {
   public disableMinute = false;
   public hideTime = false;
 
-  public dateControl = new FormControl(null);
+  public dateControl = new UntypedFormControl(null);
 
   public options = [
     { value: true, label: 'True' },

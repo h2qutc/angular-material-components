@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
@@ -44,18 +44,18 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
 
   _resetBaseColor = true;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   rgba: string;
 
   constructor(protected zone: NgZone) {
     super(zone, 'color-block');
-    this.formGroup = new FormGroup({
-      r: new FormControl(null, [Validators.required]),
-      g: new FormControl(null, [Validators.required]),
-      b: new FormControl(null, [Validators.required]),
-      a: new FormControl(null, [Validators.required]),
-      hex: new FormControl(null, [Validators.required, Validators.pattern(matchers.hex6)]),
+    this.formGroup = new UntypedFormGroup({
+      r: new UntypedFormControl(null, [Validators.required]),
+      g: new UntypedFormControl(null, [Validators.required]),
+      b: new UntypedFormControl(null, [Validators.required]),
+      a: new UntypedFormControl(null, [Validators.required]),
+      hex: new UntypedFormControl(null, [Validators.required, Validators.pattern(matchers.hex6)]),
     });
   }
 

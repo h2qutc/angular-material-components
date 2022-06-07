@@ -1,8 +1,13 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation, Directive, ContentChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette, mixinErrorState } from '@angular/material/core';
+import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import {
+  CanUpdateErrorState,
+  ErrorStateMatcher,
+  ThemePalette,
+  mixinErrorState
+} from "@angular/material/core";
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
@@ -10,11 +15,14 @@ import { FileOrArrayFile } from './file-input-type';
 let nextUniqueId = 0;
 
 class NgxMatInputBase {
-  constructor(public _defaultErrorStateMatcher: ErrorStateMatcher,
+  public stateChanges: Subject<void> = new Subject<void>();
+  constructor(
+    public _defaultErrorStateMatcher: ErrorStateMatcher,
     public _parentForm: NgForm,
     public _parentFormGroup: FormGroupDirective,
     /** @docs-private */
-    public ngControl: NgControl) { }
+    public ngControl: NgControl
+  ) {}
 }
 const _NgxMatInputMixinBase: typeof NgxMatInputBase = mixinErrorState(NgxMatInputBase);
 

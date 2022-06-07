@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Color } from 'projects/color-picker/src/public-api';
 
@@ -14,7 +14,7 @@ export class DemoColorpickerComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public touchUi = false;
 
-  colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);
+  colorCtr: AbstractControl = new UntypedFormControl(new Color(255, 243, 0), [Validators.required]);
 
   public options = [
     { value: true, label: 'True' },

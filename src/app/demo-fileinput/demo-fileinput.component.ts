@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { AcceptValidator, MaxSizeValidator } from '../../../projects/file-input/src';
 
 const presetFiles = [new File([], "file 1"), new File([], "file 2")];
@@ -18,9 +18,9 @@ export class DemoFileInputComponent implements OnInit {
   multiple: boolean = false;
   accept: string;
 
-  fileControl: FormControl;
-  file2Control: FormControl;
-  file3Control: FormControl;
+  fileControl: UntypedFormControl;
+  file2Control: UntypedFormControl;
+  file3Control: UntypedFormControl;
 
   public options = [
     { value: true, label: 'True' },
@@ -74,14 +74,14 @@ export class DemoFileInputComponent implements OnInit {
   nbFiles = 0;
 
   constructor() {
-    this.fileControl = new FormControl(this.files, [
+    this.fileControl = new UntypedFormControl(this.files, [
       Validators.required,
       MaxSizeValidator(this.maxSize * 1024)
     ])
 
-    this.file2Control = new FormControl(this.files);
+    this.file2Control = new UntypedFormControl(this.files);
 
-    this.file3Control = new FormControl(this.files);
+    this.file3Control = new UntypedFormControl(this.files);
   }
 
   ngOnInit() {
