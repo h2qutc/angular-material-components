@@ -59,10 +59,7 @@
                 }
               ]
             }
-          },
-          "allowedCommonJsDependencies": [
-            "highlight.js"
-          ]
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -175,8 +172,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/color-picker/tsconfig.lib.json",
-            "project": "projects/color-picker/ng-package.json",
-            "preserveSymlinks": true
+            "project": "projects/color-picker/ng-package.json"
           }
         },
         "test": {
