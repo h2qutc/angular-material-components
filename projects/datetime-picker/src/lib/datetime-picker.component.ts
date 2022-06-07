@@ -17,7 +17,7 @@ import { ValidationErrors } from '@angular/forms';
 import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { merge, Subject, Subscription } from 'rxjs';
+import { merge, Observable, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './calendar';
 import { NgxMatDateAdapter } from './core/date-adapter';
@@ -362,6 +362,10 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     }
     this._inputSubscription.unsubscribe();
     this._stateChanges.complete();
+  }
+
+  get stateChanges(): Observable<boolean> {
+    return this._stateChanges.asObservable()
   }
 
   /** The form control validator for the min date. */

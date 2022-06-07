@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -217,7 +220,8 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/color-picker/tsconfig.lib.json",
-            "project": "projects/color-picker/ng-package.json"
+            "project": "projects/color-picker/ng-package.json",
+            "preserveSymlinks": true
           }
         },
         "test": {
