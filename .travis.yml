@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-- '16'
+- '10'
 
 env:
 - NG_CLI_ANALYTICS=false
