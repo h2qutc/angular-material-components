@@ -1,6 +1,6 @@
 {
   "name": "@angular-material-components/color-picker",
-  "version": "7.0.1",
+  "version": "14.0.0",
   "description": "Angular Material Color Picker",
   "author": "HO Hong Quan",
   "repository": {
@@ -14,8 +14,7 @@
   "keywords": [
     "angular",
     "angular2",
-    "angular 12",
-    "angular 13",
+    "angular 14",
     "angular-material",
     "angular material color picker",
     "color-picker",
@@ -26,11 +25,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/platform-browser": "^13.0.1",
-    "@angular/common": "^13.0.1",
-    "@angular/core": "^13.0.1",
-    "@angular/forms": "^13.0.1",
-    "@angular/material": "^13.0.1",
-    "@angular/cdk": "^13.0.1"
+    "@angular/platform-browser": "^14.0.2",
+    "@angular/common": "^14.0.2",
+    "@angular/core": "^14.0.2",
+    "@angular/forms": "^14.0.2",
+    "@angular/material": "^14.0.2",
+    "@angular/cdk": "^14.0.2"
   }
 }
