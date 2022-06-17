@@ -14,7 +14,7 @@ export class DemoColorpickerComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public touchUi = false;
 
-  colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);
+  colorCtr: AbstractControl = new FormControl<Color>(new Color(255, 243, 0), [Validators.required]);
 
   public options = [
     { value: true, label: 'True' },

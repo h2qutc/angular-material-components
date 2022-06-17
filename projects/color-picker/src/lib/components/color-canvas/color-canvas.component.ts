@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
-import { Color } from '../../models';
+import { Color, ColorFormGroup } from '../../models';
 import { NgxMatBaseColorCanvas } from './base-color-canvas';
 
 const RADIUS_NOB = 5;
@@ -22,35 +22,35 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
 
   private _baseColor: Color;
 
-  get rCtrl(): AbstractControl {
+  get rCtrl() {
     return this.formGroup.get('r');
   }
 
-  get gCtrl(): AbstractControl {
+  get gCtrl() {
     return this.formGroup.get('g');
   }
 
-  get bCtrl(): AbstractControl {
+  get bCtrl() {
     return this.formGroup.get('b');
   }
 
-  get aCtrl(): AbstractControl {
+  get aCtrl() {
     return this.formGroup.get('a');
   }
 
-  get hexCtrl(): AbstractControl {
+  get hexCtrl() {
     return this.formGroup.get('hex');
   }
 
   _resetBaseColor = true;
 
-  formGroup: FormGroup;
+  formGroup: FormGroup<ColorFormGroup>;
 
   rgba: string;
 
   constructor(protected zone: NgZone) {
     super(zone, 'color-block');
-    this.formGroup = new FormGroup({
+    this.formGroup = new FormGroup<ColorFormGroup>({
       r: new FormControl(null, [Validators.required]),
       g: new FormControl(null, [Validators.required]),
       b: new FormControl(null, [Validators.required]),

@@ -18,48 +18,44 @@ import { NgxMatTimepickerModule } from './timepicker.module';
 import { NgxMatYearView } from './year-view';
 
 @NgModule({
-   imports: [
-      CommonModule,
-      MatDatepickerModule,
-      MatDialogModule,
-      PortalModule,
-      FormsModule,
-      MatIconModule,
-      MatButtonModule,
-      MatInputModule,
-      NgxMatTimepickerModule
-   ],
-   exports: [
-      NgxMatDatetimePicker,
-      NgxMatDatetimeInput,
-      NgxMatCalendar,
-      NgxMatMonthView,
-      NgxMatCalendarBody,
-      NgxMatYearView,
-      NgxMatMultiYearView,
-      NgxMatCalendarHeader
-   ],
-   declarations: [
-      NgxMatDatetimePicker,
-      NgxMatDatetimeContent,
-      NgxMatDatetimeInput,
-      NgxMatCalendar,
-      NgxMatMonthView,
-      NgxMatCalendarBody,
-      NgxMatYearView,
-      NgxMatMultiYearView,
-      NgxMatCalendarHeader
-   ],
-   entryComponents: [
-      NgxMatDatetimeContent,
-      NgxMatCalendarHeader
-   ],
-   providers: [
-      MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
-      {
-         provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
-         useClass: DefaultNgxMatCalendarRangeStrategy
-      }
-   ]
+    imports: [
+        CommonModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        PortalModule,
+        FormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        NgxMatTimepickerModule
+    ],
+    exports: [
+        NgxMatDatetimePicker,
+        NgxMatDatetimeInput,
+        NgxMatCalendar,
+        NgxMatMonthView,
+        NgxMatCalendarBody,
+        NgxMatYearView,
+        NgxMatMultiYearView,
+        NgxMatCalendarHeader
+    ],
+    declarations: [
+        NgxMatDatetimePicker,
+        NgxMatDatetimeContent,
+        NgxMatDatetimeInput,
+        NgxMatCalendar,
+        NgxMatMonthView,
+        NgxMatCalendarBody,
+        NgxMatYearView,
+        NgxMatMultiYearView,
+        NgxMatCalendarHeader
+    ],
+    providers: [
+        MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+        {
+            provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
+            useClass: DefaultNgxMatCalendarRangeStrategy
+        }
+    ]
 })
 export class NgxMatDatetimePickerModule { }

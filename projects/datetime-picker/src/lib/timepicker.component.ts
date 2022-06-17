@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, Validators, FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/date-adapter';
 import { createMissingDateImplError, DEFAULT_STEP, formatTwoDigitTimeValue, LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND } from './utils/date-utils';
+import { TimepickerFormGroup } from './timepicker-form-group';
 
 @Component({
   selector: 'ngx-mat-timepicker',
@@ -25,7 +26,7 @@ import { createMissingDateImplError, DEFAULT_STEP, formatTwoDigitTimeValue, LIMI
 })
 export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnInit, OnChanges {
 
-  public form: FormGroup;
+  public form: FormGroup<TimepickerFormGroup>;
 
   @Input() disabled = false;
   @Input() showSpinners = true;
@@ -71,16 +72,15 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   public pattern = PATTERN_INPUT_HOUR;
 
   constructor(@Optional() public _dateAdapter: NgxMatDateAdapter<D>,
-    private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
+    private cd: ChangeDetectorRef) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('NgxMatDateAdapter');
     }
-    this.form = this.formBuilder.group(
-      {
-        hour: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)]],
-        minute: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_MINUTE)]],
-        second: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_SECOND)]]
-      });
+    this.form = new FormGroup<TimepickerFormGroup>({
+      hour: new FormControl({ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)]),
+      minute: new FormControl({ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_MINUTE)]),
+      second: new FormControl({ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_SECOND)]),
+    });
   }
 
   ngOnInit() {

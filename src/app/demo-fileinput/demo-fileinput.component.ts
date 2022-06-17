@@ -6,6 +6,8 @@ import { AcceptValidator, MaxSizeValidator } from '../../../projects/file-input/
 const presetFiles = [new File([], "file 1"), new File([], "file 2")];
 const presetFile = new File([], "file 1");
 
+export type FileOrArrayFile = File | Array<File> | File[];
+
 @Component({
   selector: 'app-demo-fileinput',
   templateUrl: './demo-fileinput.component.html',
@@ -18,9 +20,9 @@ export class DemoFileInputComponent implements OnInit {
   multiple: boolean = false;
   accept: string;
 
-  fileControl: FormControl;
-  file2Control: FormControl;
-  file3Control: FormControl;
+  fileControl: FormControl<FileOrArrayFile>;
+  file2Control: FormControl<FileOrArrayFile>;
+  file3Control: FormControl<FileOrArrayFile>;
 
   public options = [
     { value: true, label: 'True' },
@@ -74,14 +76,14 @@ export class DemoFileInputComponent implements OnInit {
   nbFiles = 0;
 
   constructor() {
-    this.fileControl = new FormControl(this.files, [
+    this.fileControl = new FormControl<FileOrArrayFile>(this.files, [
       Validators.required,
       MaxSizeValidator(this.maxSize * 1024)
     ])
 
-    this.file2Control = new FormControl(this.files);
+    this.file2Control = new FormControl<FileOrArrayFile>(this.files);
 
-    this.file3Control = new FormControl(this.files);
+    this.file3Control = new FormControl<FileOrArrayFile>(this.files);
   }
 
   ngOnInit() {

@@ -11,6 +11,7 @@ let nextUniqueId = 0;
 
 const _NgxMatInputMixinBase = mixinErrorState(
   class {
+    readonly stateChanges: Subject<void> = new Subject<void>();
     constructor(
       public _defaultErrorStateMatcher: ErrorStateMatcher,
       public _parentForm: NgForm,
