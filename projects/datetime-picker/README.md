@@ -33,6 +33,16 @@ Choose the version corresponding to your Angular version:
  7           | 2.x+
 
 ## Getting started
+
+Choose the version corresponding to your Angular version:
+
+ Angular     | @angular-material-components/datetime-picker
+ ----------- | -------------------
+ 10          | 4.x+              
+ 9           | 2.x+              
+ 8           | 2.x+              
+ 7           | 2.x+                 
+
 ```
 npm install --save  @angular-material-components/datetime-picker
 ```
