@@ -33,7 +33,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "codecov": "codecov"
+    "codecov": "codecov",
+    "build-lib": "ng build --configuration production datetime-picker",
+    "npm-pack": "cd dist/datetime-picker && npm pack",
+    "package": "npm run build-lib && npm run npm-pack",
+    "publishLib": "cp -f README.md dist/datetime-picker && cp -f README.md projects/datetime-picker && cd dist/datetime-picker && npm publish",
+    "XUX": "npm version minor && cd projects/datetime-picker && npm version minor",
+    "XXU": "npm version patch && cd projects/datetime-picker && npm version patch",
+    "BPP": "npm run package && npm run publishLib #BUILD PACKAGE n PUBLISH",
   },
   "private": false,
   "dependencies": {
