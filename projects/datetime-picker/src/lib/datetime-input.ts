@@ -148,7 +148,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
 
         if (this._disabled !== newValue) {
             this._disabled = newValue;
-            this._disabledChange.emit(newValue);
+            this.stateChanges.emit(undefined);
         }
 
         // We need to null check the `blur` method, because it's undefined during SSR.
@@ -173,7 +173,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
     _valueChange = new EventEmitter<D | null>();
 
     /** Emits when the disabled state has changed */
-    _disabledChange = new EventEmitter<boolean>();
+    stateChanges = new EventEmitter<void>();
 
     _onTouched = () => { };
 
@@ -244,7 +244,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         this._datepickerSubscription.unsubscribe();
         this._localeSubscription.unsubscribe();
         this._valueChange.complete();
-        this._disabledChange.complete();
+        this.stateChanges.complete();
     }
 
     /** @docs-private */

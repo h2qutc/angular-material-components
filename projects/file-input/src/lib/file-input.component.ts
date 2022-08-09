@@ -1,14 +1,28 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Component, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation, Directive, ContentChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormGroupDirective, NgControl, NgForm, ValidatorFn, Validators } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, ThemePalette } from '@angular/material/core';
+import { ChangeDetectorRef, Component, ContentChild, Directive, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { _MatInputMixinBase } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
 
 let nextUniqueId = 0;
+
+const _NgxMatInputMixinBase = mixinErrorState(
+  class {
+
+    readonly stateChanges = new Subject<void>();
+
+    constructor(
+      public _defaultErrorStateMatcher: ErrorStateMatcher,
+      public _parentForm: NgForm,
+      public _parentFormGroup: FormGroupDirective,
+      /** @docs-private */
+      public ngControl: NgControl,
+    ) { }
+  },
+);
 
 @Directive({
   selector: '[ngxMatFileInputIcon]'
@@ -28,11 +42,11 @@ export class NgxMatFileInputIcon { }
   ],
   exportAs: 'ngx-mat-file-input'
 })
-export class NgxMatFileInputComponent extends _MatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
+export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
   OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
 
-  @ViewChild('inputFile') private _inputFileRef: ElementRef;
-  @ViewChild('inputValue') private _inputValueRef: ElementRef;
+  @ViewChild('inputFile', { static: true }) private _inputFileRef: ElementRef;
+  @ViewChild('inputValue', { static: true }) private _inputValueRef: ElementRef;
 
   /** Custom icon set by the consumer. */
   @ContentChild(NgxMatFileInputIcon) _customIcon: NgxMatFileInputIcon;

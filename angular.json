@@ -30,7 +30,15 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "es5BrowserSupport": true
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -43,9 +51,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -92,18 +98,6 @@
               "src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -123,15 +117,6 @@
               "devServerTarget": "angular-material-components:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -142,7 +127,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/datetime-picker/tsconfig.lib.json",
             "project": "projects/datetime-picker/ng-package.json"
@@ -155,18 +140,6 @@
             "tsConfig": "projects/datetime-picker/tsconfig.spec.json",
             "karmaConfig": "projects/datetime-picker/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/datetime-picker/tsconfig.lib.json",
-              "projects/datetime-picker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -177,7 +150,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/moment-adapter/tsconfig.lib.json",
             "project": "projects/moment-adapter/ng-package.json"
@@ -190,18 +163,6 @@
             "tsConfig": "projects/moment-adapter/tsconfig.spec.json",
             "karmaConfig": "projects/moment-adapter/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/moment-adapter/tsconfig.lib.json",
-              "projects/moment-adapter/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -212,7 +173,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/color-picker/tsconfig.lib.json",
             "project": "projects/color-picker/ng-package.json"
@@ -225,18 +186,6 @@
             "tsConfig": "projects/color-picker/tsconfig.spec.json",
             "karmaConfig": "projects/color-picker/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/color-picker/tsconfig.lib.json",
-              "projects/color-picker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -247,7 +196,7 @@
       "prefix": "NgxMat",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/file-input/tsconfig.lib.json",
             "project": "projects/file-input/ng-package.json"
@@ -260,18 +209,6 @@
             "tsConfig": "projects/file-input/tsconfig.spec.json",
             "karmaConfig": "projects/file-input/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/file-input/tsconfig.lib.json",
-              "projects/file-input/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
@@ -279,24 +216,26 @@
   "defaultProject": "angular-material-components",
   "schematics": {
     "@schematics/angular:module": {
-      "prefix": "ngx-mat",
-      "spec": false
+      "prefix": "ngx-mat"
     },
     "@schematics/angular:component": {
       "prefix": "ngx-mat",
-      "styleext": "scss",
-      "spec": false
+      "style": "scss",
+      "skipTests": true
     },
     "@schematics/angular:directive": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:pipe": {
       "prefix": "ngx-mat",
-      "spec": false
+      "skipTests": true
     },
     "@schematics/angular:service": {
-      "spec": false
+      "skipTests": true
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

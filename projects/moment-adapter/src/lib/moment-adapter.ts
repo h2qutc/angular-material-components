@@ -270,7 +270,7 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
 
   /** Creates a Moment instance while respecting the current UTC settings. */
   private _createMoment(
-    date: MomentInput,
+    date?: MomentInput,
     format?: MomentFormatSpecification,
     locale?: string,
   ): Moment {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AcceptValidator, MaxSizeValidator } from 'projects/file-input/src';
+import { AcceptValidator, MaxSizeValidator } from '../../../projects/file-input/src';
 
 const presetFiles = [new File([], "file 1"), new File([], "file 2")];
 const presetFile = new File([], "file 1");

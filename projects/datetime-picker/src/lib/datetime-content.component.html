@@ -16,7 +16,8 @@
     <div class="actions">
         <button mat-button (click)="datepicker.ok()" mat-stroked-button [color]="datepicker._color" cdkFocusInitial
             [disabled]="!valid">
-            <mat-icon>done</mat-icon>
+            <mat-icon *ngIf="!datepicker._customIcon">done</mat-icon>
+            <ng-template [cdkPortalOutlet]="_templateCustomIconPortal"></ng-template>
         </button>
     </div>
 </ng-container>
