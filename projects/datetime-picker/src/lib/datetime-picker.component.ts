@@ -164,6 +164,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     this._color = value;
   }
   _color: ThemePalette;
+  _isDateSelected: boolean = true;
 
   /**
    * Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather
@@ -301,7 +302,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   get valid(): boolean {
     const minValidators = this._minValidator();
     const maxValidators = this._maxValidator();
-    return minValidators == null && maxValidators == null;
+    return minValidators == null && maxValidators == null && this._isDateSelected;
   }
 
   get _dateFilter(): (date: D | null) => boolean {
@@ -382,6 +383,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   select(date: D): void {
     this._dateAdapter.copyTime(date, this._selected);
     this._selected = date;
+    this._dateAdapter.copyTime;
   }
 
   /** Emits the selected year in multiyear view */
@@ -391,6 +393,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** Emits selected month in year view */
   _selectMonth(normalizedMonth: D): void {
+    this._isDateSelected = false;
     this.monthSelected.emit(normalizedMonth);
   }
 
