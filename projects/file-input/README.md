@@ -1,4 +1,4 @@
-# Angular Material File Input for @angular/material 7.x, 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x
+# Angular Material File Input for @angular/material 7.x, 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x
 
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
@@ -22,6 +22,7 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/file-input
  ----------- | -------------------
+ 15          | 9.x+
  14          | 8.x+
  13          | 7.x+
  12          | 6.x+
