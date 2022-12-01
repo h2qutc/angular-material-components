@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
 import { matDatepickerAnimations } from '@angular/material/datepicker';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { Color } from '../../models';
