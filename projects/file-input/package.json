@@ -1,6 +1,6 @@
 {
   "name": "@angular-material-components/file-input",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "Angular Material File Input",
   "author": "HO Hong Quan",
   "repository": {
@@ -17,6 +17,7 @@
     "angular 12",
     "angular 13",
     "angular 14",
+    "angular 15",
     "angular-material",
     "angular material file input",
     "angular material file drop",
@@ -27,11 +28,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/platform-browser": "^14.0.1",
-    "@angular/common": "^14.0.1",
-    "@angular/core": "^14.0.1",
-    "@angular/forms": "^14.0.1",
-    "@angular/material": "^14.0.1",
-    "@angular/cdk": "^14.0.1"
+    "@angular/platform-browser": "^15.0.1",
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@angular/forms": "^15.0.1",
+    "@angular/material": "^15.0.1",
+    "@angular/cdk": "^15.0.1"
   }
 }
