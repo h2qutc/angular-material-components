@@ -41,7 +41,7 @@ export class Color {
     public toRgbString(): string {
         return (this.a === 1) ?
             "rgb(" + Math.round(this.r) + ", " + Math.round(this.g) + ", " + Math.round(this.b) + ")" :
-            "rgba(" + Math.round(this.r) + ", " + Math.round(this.g) + ", " + Math.round(this.b) + ", " + this.roundA + ")";
+            "rgba(" + Math.round(this.r) + ", " + Math.round(this.g) + ", " + Math.round(this.b) + ", " + this.a + ")";
     }
 
     public toHex8(allow4Char): string {
