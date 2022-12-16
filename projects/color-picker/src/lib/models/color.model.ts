@@ -53,14 +53,10 @@ export class Color {
     }
 
     public toString(format: ColorInputFormat): string {
-        let formatSet = !!format;
-
         let formattedString;
         let hasAlpha = this.a < 1 && this.a >= 0;
-        let needsAlphaFormat = !formatSet && hasAlpha && (format === "hex" || format === "hex6"
-            || format === "hex3" || format === "hex4" || format === "hex8");
 
-        if (needsAlphaFormat) {
+        if (hasAlpha) {
             return this.toRgbString();
         }
         if (format === "rgb") {
