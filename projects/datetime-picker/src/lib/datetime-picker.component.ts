@@ -10,31 +10,31 @@ import { Directionality } from '@angular/cdk/bidi';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
+import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { CanColor, CanColorCtor, mixinColor, ThemePalette } from '@angular/material/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
+import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
 import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NgxMatDateAdapter } from './core/date-adapter';
 import { merge, Subject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './calendar';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import { NgxMatDatetimeInput } from './datetime-input';
-import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 import { NgxMatTimepickerComponent } from './timepicker.component';
-import { ValidationErrors } from '@angular/forms';
+import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
 
 // Boilerplate for applying mixins to MatDatepickerContent.
 /** @docs-private */
-class MatDatepickerContentBase {
-  constructor(public _elementRef: ElementRef) { }
-}
-const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContentBase =
-  mixinColor(MatDatepickerContentBase);
+const _MatDatetimepickerContentBase = mixinColor(
+  class {
+    constructor(public _elementRef: ElementRef) { }
+  },
+);
 
 /**
  * Component used as the content for the datepicker dialog and popup. We use this instead of using
@@ -61,7 +61,7 @@ const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContent
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['color'],
 })
-export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
+export class NgxMatDatetimeContent<D> extends _MatDatetimepickerContentBase
   implements AfterViewInit, CanColor {
 
   /** Reference to the internal calendar component. */
@@ -78,7 +78,7 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
 
   /** Whether or not the selected date is valid (min,max...) */
   get valid(): boolean {
-    if(this.datepicker.hideTime) return this.datepicker.valid;
+    if (this.datepicker.hideTime) return this.datepicker.valid;
     return this._timePicker && this._timePicker.valid && this.datepicker.valid;
   }
 
@@ -87,12 +87,23 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
     return this._calendar.currentView == 'month';
   }
 
-  constructor(elementRef: ElementRef) {
+  _templateCustomIconPortal: TemplatePortal<any>;
+
+  constructor(elementRef: ElementRef, private cd: ChangeDetectorRef,
+    private _viewContainerRef: ViewContainerRef) {
     super(elementRef);
   }
 
   ngAfterViewInit() {
     this._calendar.focusActiveCell();
+    if (this.datepicker._customIcon) {
+      this._templateCustomIconPortal = new TemplatePortal(
+        this.datepicker._customIcon,
+        this._viewContainerRef
+      );
+      this.cd.detectChanges();
+    }
+
   }
 
 }
@@ -109,17 +120,21 @@ export class NgxMatDatetimeContent<D> extends _MatDatepickerContentMixinBase
   encapsulation: ViewEncapsulation.None,
 })
 export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
+
   private _scrollStrategy: () => ScrollStrategy;
 
   /** An input indicating the type of the custom header component for the calendar, if set. */
   @Input() calendarHeaderComponent: ComponentType<any>;
+
+  /** Custom icon set by the consumer. */
+  @ContentChild(TemplateRef) _customIcon: TemplateRef<any>;
 
   /** The date to open the calendar to initially. */
   @Input()
   get startAt(): D | null {
     // If an explicit startAt is set we start there, otherwise we start at whatever the currently
     // selected value is.
-    return this._startAt || (this._datepickerInput ? this._datepickerInput.value : null);
+    return this._startAt || (this.datepickerInput ? this.datepickerInput.value : null);
   }
   set startAt(value: D | null) {
     this._startAt = this._getValidDateOrNull(this._dateAdapter.deserialize(value));
@@ -129,11 +144,21 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** The view that the calendar should start in. */
   @Input() startView: 'month' | 'year' | 'multi-year' = 'month';
 
+  /** Default Color palette to use on the datepicker's calendar. */
+  @Input()
+  get defaultColor(): ThemePalette {
+    return this._defaultColor;
+  }
+  set defaultColor(value: ThemePalette) {
+    this._defaultColor = value;
+  }
+  _defaultColor: ThemePalette = 'primary';
+
   /** Color palette to use on the datepicker's calendar. */
   @Input()
   get color(): ThemePalette {
     return this._color ||
-      (this._datepickerInput ? this._datepickerInput._getThemePalette() : 'primary');
+      (this.datepickerInput ? this.datepickerInput._getThemePalette() : 'primary');
   }
   set color(value: ThemePalette) {
     this._color = value;
@@ -162,15 +187,15 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** Whether the datepicker pop-up should be disabled. */
   @Input()
   get disabled(): boolean {
-    return this._disabled === undefined && this._datepickerInput ?
-      this._datepickerInput.disabled : !!this._disabled;
+    return this._disabled === undefined && this.datepickerInput ?
+      this.datepickerInput.disabled : !!this._disabled;
   }
   set disabled(value: boolean) {
     const newValue = coerceBooleanProperty(value);
 
     if (newValue !== this._disabled) {
       this._disabled = newValue;
-      this._disabledChange.next(newValue);
+      this.stateChanges.next(newValue);
     }
   }
   public _disabled: boolean;
@@ -266,12 +291,12 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   /** The minimum selectable date. */
   get _minDate(): D | null {
-    return this._datepickerInput && this._datepickerInput.min;
+    return this.datepickerInput && this.datepickerInput.min;
   }
 
   /** The maximum selectable date. */
   get _maxDate(): D | null {
-    return this._datepickerInput && this._datepickerInput.max;
+    return this.datepickerInput && this.datepickerInput.max;
   }
 
   get valid(): boolean {
@@ -281,7 +306,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   }
 
   get _dateFilter(): (date: D | null) => boolean {
-    return this._datepickerInput && this._datepickerInput._dateFilter;
+    return this.datepickerInput && this.datepickerInput._dateFilter;
   }
 
   /** A reference to the overlay when the calendar is opened as a popup. */
@@ -303,10 +328,10 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   private _inputSubscription = Subscription.EMPTY;
 
   /** The input element this datepicker is associated with. */
-  _datepickerInput: NgxMatDatetimeInput<D>;
+  datepickerInput: NgxMatDatetimeInput<D>;
 
   /** Emits when the datepicker is disabled. */
-  readonly _disabledChange = new Subject<boolean>();
+  readonly stateChanges = new Subject<boolean>();
 
   /** Emits new selected date when selected date changes. */
   readonly _selectedChanged = new Subject<D>();
@@ -331,13 +356,13 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
 
   ngOnDestroy() {
     this.close();
-    this._inputSubscription.unsubscribe();
-    this._disabledChange.complete();
 
     if (this._popupRef) {
       this._popupRef.dispose();
       this._popupComponentRef = null;
     }
+    this._inputSubscription.unsubscribe();
+    this.stateChanges.complete();
   }
 
   /** The form control validator for the min date. */
@@ -358,7 +383,9 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   select(date: D): void {
     this._dateAdapter.copyTime(date, this._selected);
     this._selected = date;
+    this._dateAdapter.copyTime;
     this._isDateSelected = true;
+
   }
 
   /** Emits the selected year in multiyear view */
@@ -390,12 +417,12 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
    * @param input The datepicker input to register with this datepicker.
    */
   _registerInput(input: NgxMatDatetimeInput<D>): void {
-    if (this._datepickerInput) {
+    if (this.datepickerInput) {
       throw Error('A NgxMatDatepicker can only be associated with a single input.');
     }
-    this._datepickerInput = input;
+    this.datepickerInput = input;
     this._inputSubscription =
-      this._datepickerInput._valueChange.subscribe((value: D | null) => this._selected = value);
+      this.datepickerInput._valueChange.subscribe((value: D | null) => this._selected = value);
   }
 
   /** Open the calendar. */
@@ -413,7 +440,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     if (this._opened || this.disabled) {
       return;
     }
-    if (!this._datepickerInput) {
+    if (!this.datepickerInput) {
       throw Error('Attempted to open an NgxMatDatepicker with no associated input.');
     }
     if (this._document) {
@@ -530,7 +557,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
       this._popupRef.keydownEvents().pipe(filter(event => {
         // Closing on alt + up is only valid when there's an input associated with the datepicker.
         return event.keyCode === ESCAPE ||
-          (this._datepickerInput && event.altKey && event.keyCode === UP_ARROW);
+          (this.datepickerInput && event.altKey && event.keyCode === UP_ARROW);
       }))
     ).subscribe(event => {
       if (event) {
@@ -545,7 +572,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   /** Create the popup PositionStrategy. */
   private _createPopupPositionStrategy(): PositionStrategy {
     return this._overlay.position()
-      .flexibleConnectedTo(this._datepickerInput.getConnectedOverlayOrigin())
+      .flexibleConnectedTo(this.datepickerInput.getConnectedOverlayOrigin())
       .withTransformOriginOn('.mat-datepicker-content')
       .withFlexibleDimensions(false)
       .withViewportMargin(8)

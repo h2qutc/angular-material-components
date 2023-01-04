@@ -3,6 +3,8 @@
  */
 
 export * from './lib/calendar';
+export * from './lib/calendar-body';
+export * from './lib/date-range-selection-strategy';
 export * from './lib/month-view';
 export * from './lib/multi-year-view';
 export * from './lib/year-view';

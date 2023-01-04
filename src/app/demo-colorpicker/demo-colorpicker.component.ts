@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { Color } from 'projects/color-picker/src/public-api';
 
 @Component({
   selector: 'ngx-mat-demo-colorpicker',
@@ -13,7 +14,7 @@ export class DemoColorpickerComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public touchUi = false;
 
-  colorCtr: AbstractControl = new FormControl(null, [Validators.required]);
+  colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);
 
   public options = [
     { value: true, label: 'True' },
@@ -27,6 +28,10 @@ export class DemoColorpickerComponent implements OnInit {
   <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
   <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
 </mat-form-field>`;
+
+public code6 = `
+import { Color } from '@angular-material-components/color-picker';
+colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);`
 
 
   public code1 = 'npm install --save @angular-material-components/color-picker';
