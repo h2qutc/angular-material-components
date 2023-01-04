@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/@angular-material-components/datetime-picker",
+  "dest": "../../dist/datetime-picker",
   "lib": {
     "entryFile": "src/public-api.ts"
   }
