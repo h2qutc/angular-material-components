@@ -2,10 +2,10 @@ import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatDatepickerModule, MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/datepicker';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { NgxMatCalendar, NgxMatCalendarHeader } from './calendar';
 import { NgxMatCalendarBody } from './calendar-body';
@@ -48,10 +48,6 @@ import { NgxMatYearView } from './year-view';
       NgxMatCalendarBody,
       NgxMatYearView,
       NgxMatMultiYearView,
-      NgxMatCalendarHeader
-   ],
-   entryComponents: [
-      NgxMatDatetimeContent,
       NgxMatCalendarHeader
    ],
    providers: [
