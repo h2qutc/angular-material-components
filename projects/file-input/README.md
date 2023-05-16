@@ -22,6 +22,7 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/file-input
  ----------- | -------------------
+ 16          | 10.x+
  15          | 9.x+
  14          | 8.x+
  13          | 7.x+
