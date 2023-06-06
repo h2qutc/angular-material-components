@@ -13,7 +13,7 @@
             [enableMeridian]="datepicker._enableMeridian" [disableMinute]="datepicker._disableMinute">
         </ngx-mat-timepicker>
     </div>
-    <div class="actions">
+    <div class="actions" *ngIf="!datepicker._hideApply">
         <button mat-button (click)="datepicker.ok()" mat-stroked-button [color]="datepicker._color" cdkFocusInitial
             [disabled]="!valid">
             <mat-icon *ngIf="!datepicker._customIcon">done</mat-icon>

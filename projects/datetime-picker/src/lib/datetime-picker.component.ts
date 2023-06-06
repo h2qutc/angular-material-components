@@ -176,6 +176,30 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   }
   private _touchUi = false;
 
+  /** If true, writes date - which was selected in popup - on input */
+  @Input()
+  get selectBeforeClose(): boolean { return this._selectBeforeClose; }
+  set selectBeforeClose(value: boolean) {
+    this._selectBeforeClose = coerceBooleanProperty(value);
+  }
+  public _selectBeforeClose = false;
+
+  /** If both this and hideTime are true, popup will be closed after date was selected */
+  @Input()
+  get closeAfterSelect(): boolean { return this._closeAfterSelect; }
+  set closeAfterSelect(value: boolean) {
+    this._closeAfterSelect = coerceBooleanProperty(value);
+  }
+  public _closeAfterSelect = false;
+
+  /** If set to true, apply button will be hidden */
+  @Input()
+  get hideApply(): boolean { return this.hideApply; }
+  set hideApply(value: boolean) {
+    this._hideApply = coerceBooleanProperty(value);
+  }
+  public _hideApply = false;
+
   @Input()
   get hideTime(): boolean { return this._hideTime; }
   set hideTime(value: boolean) {
@@ -382,6 +406,8 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
   select(date: D): void {
     this._dateAdapter.copyTime(date, this._selected);
     this._selected = date;
+    if (this._hideTime && this._closeAfterSelect)
+      this.ok();
   }
 
   /** Emits the selected year in multiyear view */
@@ -532,6 +558,14 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
     }
   }
 
+  /** decides whether ignore selected date or save it */
+  private saveOrCancel() {
+    if (this._selectBeforeClose)
+      this.ok();
+    else
+      this.cancel()
+  }
+
   /** Create the popup. */
   private _createPopup(): void {
     const overlayConfig = new OverlayConfig({
@@ -559,7 +593,7 @@ export class NgxMatDatetimePicker<D> implements OnDestroy, CanColor {
         event.preventDefault();
       }
 
-      (this._hasBackdrop && event) ? this.cancel() : this.close();
+      (this._hasBackdrop && event) ? this.saveOrCancel() : this.close();
 
     });
   }
