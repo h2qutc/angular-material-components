@@ -115,7 +115,7 @@ export class NgxMatDatetimeInput<D> implements ControlValueAccessor, OnDestroy, 
         this._value = value;
         this._formatValue(value);
 
-        if (!this._dateAdapter.sameDate(oldDate, value)) {
+        if (!this._dateAdapter.sameDate(oldDate, value) || !this._dateAdapter.isSameTime(oldDate, value)) {
             this._valueChange.emit(value);
         }
     }
