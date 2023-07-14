@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMatHighlightDirective } from './NgxMatHighlightDirective';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
 
 
 @NgModule({

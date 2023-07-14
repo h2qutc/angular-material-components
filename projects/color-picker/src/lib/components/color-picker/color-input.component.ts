@@ -3,12 +3,12 @@ import { DOWN_ARROW } from '@angular/cdk/keycodes';
 import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, Optional, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
-import { MAT_LEGACY_INPUT_VALUE_ACCESSOR as MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/legacy-input';
+import { MatFormField } from '@angular/material/form-field';
+import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { createMissingDateImplError } from '../../helpers';
 import { Color } from '../../models';
-import { ColorAdapter, MatColorFormats, MAT_COLOR_FORMATS } from '../../services';
+import { ColorAdapter, MAT_COLOR_FORMATS, MatColorFormats } from '../../services';
 import { NgxMatColorPickerComponent } from './color-picker.component';
 
 export class NgxMatColorPickerInputEvent {

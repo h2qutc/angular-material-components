@@ -5,10 +5,10 @@ import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } 
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
+import { CanColor, ThemePalette, mixinColor } from '@angular/material/core';
 import { matDatepickerAnimations } from '@angular/material/datepicker';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
-import { merge, Subject, Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject, Subscription, merge } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { Color } from '../../models';
 import { ColorAdapter } from '../../services';

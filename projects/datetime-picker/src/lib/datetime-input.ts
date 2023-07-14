@@ -10,11 +10,11 @@ import { DOWN_ARROW } from '@angular/cdk/keycodes';
 import { Directive, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, Optional, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatLegacyFormField as MatFormField } from '@angular/material/legacy-form-field';
-import { MAT_LEGACY_INPUT_VALUE_ACCESSOR as MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/legacy-input';
+import { MatFormField } from '@angular/material/form-field';
+import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { NgxMatDateAdapter } from './core/date-adapter';
-import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from './core/date-formats';
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
 import { NgxMatDatetimePicker } from './datetime-picker.component';
 import { createMissingDateImplError } from './utils/date-utils';
 

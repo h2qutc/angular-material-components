@@ -14,16 +14,16 @@ import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/por
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ContentChild, ElementRef, EventEmitter, Inject, Input, NgZone, OnDestroy, Optional, Output, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { CanColor, mixinColor, ThemePalette } from '@angular/material/core';
-import { MatCalendarCellCssClasses, matDatepickerAnimations, MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
-import { merge, Subject, Subscription } from 'rxjs';
+import { CanColor, ThemePalette, mixinColor } from '@angular/material/core';
+import { MAT_DATEPICKER_SCROLL_STRATEGY, MatCalendarCellCssClasses, matDatepickerAnimations } from '@angular/material/datepicker';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subject, Subscription, merge } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar } from './calendar';
 import { NgxMatDateAdapter } from './core/date-adapter';
 import { NgxMatDatetimeInput } from './datetime-input';
 import { NgxMatTimepickerComponent } from './timepicker.component';
-import { createMissingDateImplError, DEFAULT_STEP } from './utils/date-utils';
+import { DEFAULT_STEP, createMissingDateImplError } from './utils/date-utils';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
