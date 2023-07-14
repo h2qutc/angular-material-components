@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {Platform} from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
@@ -25,54 +17,50 @@ import {
 import {take} from 'rxjs/operators';
 
 /** Extra CSS classes that can be associated with a calendar cell. */
-export type MatCalendarCellCssClasses = string | string[] | Set<string> | {[key: string]: any};
+export type NgxMatCalendarCellCssClasses = string | string[] | Set<string> | {[key: string]: any};
 
 /** Function that can generate the extra classes that should be added to a calendar cell. */
-export type MatCalendarCellClassFunction<D> = (
+export type NgxMatCalendarCellClassFunction<D> = (
   date: D,
   view: 'month' | 'year' | 'multi-year',
-) => MatCalendarCellCssClasses;
+) => NgxMatCalendarCellCssClasses;
 
 /**
  * An internal class that represents the data corresponding to a single calendar cell.
  * @docs-private
  */
-export class MatCalendarCell<D = any> {
+export class NgxMatCalendarCell<D = any> {
   constructor(
     public value: number,
     public displayValue: string,
     public ariaLabel: string,
     public enabled: boolean,
-    public cssClasses: MatCalendarCellCssClasses = {},
+    public cssClasses: NgxMatCalendarCellCssClasses = {},
     public compareValue = value,
     public rawValue?: D,
   ) {}
 }
 
 /** Event emitted when a date inside the calendar is triggered as a result of a user action. */
-export interface MatCalendarUserEvent<D> {
+export interface NgxMatCalendarUserEvent<D> {
   value: D;
   event: Event;
 }
 
 let calendarBodyId = 1;
 
-/**
- * An internal component used to display calendar data in a table.
- * @docs-private
- */
 @Component({
-  selector: '[mat-calendar-body]',
+  selector: '[ngx-mat-calendar-body]',
   templateUrl: 'calendar-body.html',
-  styleUrls: ['calendar-body.css'],
+  styleUrls: ['calendar-body.scss'],
   host: {
-    'class': 'mat-calendar-body',
+    'class': 'ngx-mat-calendar-body',
   },
   exportAs: 'matCalendarBody',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterViewChecked {
+export class NgxMatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterViewChecked {
   private _platform = inject(Platform);
 
   /**
@@ -90,7 +78,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
   @Input() label: string;
 
   /** The cells to display in the table. */
-  @Input() rows: MatCalendarCell[][];
+  @Input() rows: NgxMatCalendarCell[][];
 
   /** The value in the table that corresponds to today. */
   @Input() todayValue: number;
@@ -145,20 +133,20 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
   @Input() endDateAccessibleName: string | null;
 
   /** Emits when a new value is selected. */
-  @Output() readonly selectedValueChange = new EventEmitter<MatCalendarUserEvent<number>>();
+  @Output() readonly selectedValueChange = new EventEmitter<NgxMatCalendarUserEvent<number>>();
 
   /** Emits when the preview has changed as a result of a user action. */
   @Output() readonly previewChange = new EventEmitter<
-    MatCalendarUserEvent<MatCalendarCell | null>
+    NgxMatCalendarUserEvent<NgxMatCalendarCell | null>
   >();
 
-  @Output() readonly activeDateChange = new EventEmitter<MatCalendarUserEvent<number>>();
+  @Output() readonly activeDateChange = new EventEmitter<NgxMatCalendarUserEvent<number>>();
 
   /** Emits the date at the possible start of a drag event. */
-  @Output() readonly dragStarted = new EventEmitter<MatCalendarUserEvent<D>>();
+  @Output() readonly dragStarted = new EventEmitter<NgxMatCalendarUserEvent<D>>();
 
   /** Emits the date at the conclusion of a drag, or null if mouse was not released on a date. */
-  @Output() readonly dragEnded = new EventEmitter<MatCalendarUserEvent<D | null>>();
+  @Output() readonly dragEnded = new EventEmitter<NgxMatCalendarUserEvent<D | null>>();
 
   /** The number of blank cells to put at the beginning for the first row. */
   _firstRowOffset: number;
@@ -190,7 +178,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
   }
 
   /** Called when a cell is clicked. */
-  _cellClicked(cell: MatCalendarCell, event: MouseEvent): void {
+  _cellClicked(cell: NgxMatCalendarCell, event: MouseEvent): void {
     // Ignore "clicks" that are actually canceled drags (eg the user dragged
     // off and then went back to this cell to undo).
     if (this._didDragSinceMouseDown) {
@@ -202,7 +190,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
     }
   }
 
-  _emitActiveDateChange(cell: MatCalendarCell, event: FocusEvent): void {
+  _emitActiveDateChange(cell: NgxMatCalendarCell, event: FocusEvent): void {
     if (cell.enabled) {
       this.activeDateChange.emit({value: cell.value, event});
     }
@@ -258,28 +246,6 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
     return cellNumber == this.activeCell;
   }
 
-  /**
-   * Focuses the active cell after the microtask queue is empty.
-   *
-   * Adding a 0ms setTimeout seems to fix Voiceover losing focus when pressing PageUp/PageDown
-   * (issue #24330).
-   *
-   * Determined a 0ms by gradually increasing duration from 0 and testing two use cases with screen
-   * reader enabled:
-   *
-   * 1. Pressing PageUp/PageDown repeatedly with pausing between each key press.
-   * 2. Pressing and holding the PageDown key with repeated keys enabled.
-   *
-   * Test 1 worked roughly 95-99% of the time with 0ms and got a little bit better as the duration
-   * increased. Test 2 got slightly better until the duration was long enough to interfere with
-   * repeated keys. If the repeated key speed was faster than the timeout duration, then pressing
-   * and holding pagedown caused the entire page to scroll.
-   *
-   * Since repeated key speed can verify across machines, determined that any duration could
-   * potentially interfere with repeated keys. 0ms would be best because it almost entirely
-   * eliminates the focus being lost in Voiceover (#24330) without causing unintended side effects.
-   * Adding delay also complicates writing tests.
-   */
   _focusActiveCell(movePreview = true) {
     this._ngZone.runOutsideAngular(() => {
       this._ngZone.onStable.pipe(take(1)).subscribe(() => {
@@ -331,7 +297,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
       return false;
     }
 
-    let previousCell: MatCalendarCell | undefined = this.rows[rowIndex][colIndex - 1];
+    let previousCell: NgxMatCalendarCell | undefined = this.rows[rowIndex][colIndex - 1];
 
     if (!previousCell) {
       const previousRow = this.rows[rowIndex - 1];
@@ -347,7 +313,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
       return false;
     }
 
-    let nextCell: MatCalendarCell | undefined = this.rows[rowIndex][colIndex + 1];
+    let nextCell: NgxMatCalendarCell | undefined = this.rows[rowIndex][colIndex + 1];
 
     if (!nextCell) {
       const nextRow = this.rows[rowIndex + 1];
@@ -367,16 +333,6 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
     return isInRange(value, this.comparisonStart, this.comparisonEnd, this.isRange);
   }
 
-  /**
-   * Gets whether a value is the same as the start and end of the comparison range.
-   * For context, the functions that we use to determine whether something is the start/end of
-   * a range don't allow for the start and end to be on the same day, because we'd have to use
-   * much more specific CSS selectors to style them correctly in all scenarios. This is fine for
-   * the regular range, because when it happens, the selected styles take over and still show where
-   * the range would've been, however we don't have these selected styles for a comparison range.
-   * This function is used to apply a class that serves the same purpose as the one for selected
-   * dates, but it only applies in the context of a comparison range.
-   */
   _isComparisonIdentical(value: number) {
     // Note that we don't need to null check the start/end
     // here, because the `value` will always be defined.
@@ -537,7 +493,7 @@ export class MatCalendarBody<D = any> implements OnChanges, OnDestroy, AfterView
   };
 
   /** Finds the MatCalendarCell that corresponds to a DOM node. */
-  private _getCellFromElement(element: HTMLElement): MatCalendarCell | null {
+  private _getCellFromElement(element: HTMLElement): NgxMatCalendarCell | null {
     const cell = getCellElement(element);
 
     if (cell) {

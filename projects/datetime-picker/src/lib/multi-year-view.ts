@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {
   DOWN_ARROW,
   END,
@@ -34,15 +26,15 @@ import {
 import {DateAdapter} from '@angular/material/core';
 import {Directionality} from '@angular/cdk/bidi';
 import {
-  MatCalendarBody,
-  MatCalendarCell,
-  MatCalendarUserEvent,
-  MatCalendarCellClassFunction,
+  NgxMatCalendarBody,
+  NgxMatCalendarCell,
+  NgxMatCalendarUserEvent,
+  NgxMatCalendarCellClassFunction,
 } from './calendar-body';
 import {createMissingDateImplError} from './datepicker-errors';
 import {Subscription} from 'rxjs';
 import {startWith} from 'rxjs/operators';
-import {DateRange} from './date-selection-model';
+import {NgxDateRange} from './date-selection-model';
 
 export const yearsPerPage = 24;
 
@@ -53,13 +45,13 @@ export const yearsPerRow = 4;
  * @docs-private
  */
 @Component({
-  selector: 'mat-multi-year-view',
+  selector: 'ngx-mat-multi-year-view',
   templateUrl: 'multi-year-view.html',
-  exportAs: 'matMultiYearView',
+  exportAs: 'ngxMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
+export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
@@ -93,11 +85,11 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   /** The currently selected date. */
   @Input()
-  get selected(): DateRange<D> | D | null {
+  get selected(): NgxDateRange<D> | D | null {
     return this._selected;
   }
-  set selected(value: DateRange<D> | D | null) {
-    if (value instanceof DateRange) {
+  set selected(value: NgxDateRange<D> | D | null) {
+    if (value instanceof NgxDateRange) {
       this._selected = value;
     } else {
       this._selected = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
@@ -105,7 +97,7 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
     this._setSelectedYear(value);
   }
-  private _selected: DateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null;
 
   /** The minimum selectable date. */
   @Input()
@@ -131,7 +123,7 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
   @Input() dateFilter: (date: D) => boolean;
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  @Input() dateClass: MatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
 
   /** Emits when a new year is selected. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -143,10 +135,10 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(MatCalendarBody) _matCalendarBody: MatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: MatCalendarCell[][];
+  _years: NgxMatCalendarCell[][];
 
   /** The year that today falls on. */
   _todayYear: number;
@@ -159,8 +151,8 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
     @Optional() public _dateAdapter: DateAdapter<D>,
     @Optional() private _dir?: Directionality,
   ) {
-    if (!this._dateAdapter && (typeof ngDevMode === 'undefined' || ngDevMode)) {
-      throw createMissingDateImplError('DateAdapter');
+    if (!this._dateAdapter) {
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
 
     this._activeDate = this._dateAdapter.today();
@@ -202,7 +194,7 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Handles when a new year is selected. */
-  _yearSelected(event: MatCalendarUserEvent<number>) {
+  _yearSelected(event: NgxMatCalendarUserEvent<number>) {
     const year = event.value;
     const selectedYear = this._dateAdapter.createDate(year, 0, 1);
     const selectedDate = this._getDateFromYear(year);
@@ -221,7 +213,7 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
    * parent's value asynchronously via the `activeDateChange` event. The child component receives an
    * updated value asynchronously via the `activeCell` Input.
    */
-  _updateActiveDate(event: MatCalendarUserEvent<number>) {
+  _updateActiveDate(event: NgxMatCalendarUserEvent<number>) {
     const year = event.value;
     const oldActiveDate = this._activeDate;
 
@@ -344,7 +336,7 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
     const yearName = this._dateAdapter.getYearName(date);
     const cellClasses = this.dateClass ? this.dateClass(date, 'multi-year') : undefined;
 
-    return new MatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year), cellClasses);
+    return new NgxMatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year), cellClasses);
   }
 
   /** Whether the given year is enabled. */
@@ -386,10 +378,10 @@ export class MatMultiYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Sets the currently-highlighted year based on a model value. */
-  private _setSelectedYear(value: DateRange<D> | D | null) {
+  private _setSelectedYear(value: NgxDateRange<D> | D | null) {
     this._selectedYear = null;
 
-    if (value instanceof DateRange) {
+    if (value instanceof NgxDateRange) {
       const displayValue = value.start || value.end;
 
       if (displayValue) {

@@ -24,19 +24,19 @@ import {
 } from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
-import {MatDatepickerIntl} from './datepicker-intl';
-import {MatDatepickerControl, MatDatepickerPanel} from './datepicker-base';
+import {NgxMatDatepickerIntl} from './datepicker-intl';
+import {NgxMatDatepickerControl, NgxMatDatepickerPanel} from './datepicker-base';
 
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
-  selector: '[matDatepickerToggleIcon]',
+  selector: '[ngxMatDatepickerToggleIcon]',
 })
 export class MatDatepickerToggleIcon {}
 
 @Component({
-  selector: 'mat-datepicker-toggle',
+  selector: 'ngx-mat-datepicker-toggle',
   templateUrl: 'datepicker-toggle.html',
-  styleUrls: ['datepicker-toggle.css'],
+  styleUrls: ['datepicker-toggle.scss'],
   host: {
     'class': 'mat-datepicker-toggle',
     '[attr.tabindex]': 'null',
@@ -50,15 +50,15 @@ export class MatDatepickerToggleIcon {}
     // it so that the input doesn't get focused automatically by the form field (See #21836).
     '(click)': '_open($event)',
   },
-  exportAs: 'matDatepickerToggle',
+  exportAs: 'ngxMatDatepickerToggle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MatDatepickerToggle<D> implements AfterContentInit, OnChanges, OnDestroy {
+export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, OnDestroy {
   private _stateChanges = Subscription.EMPTY;
 
   /** Datepicker instance that the button will toggle. */
-  @Input('for') datepicker: MatDatepickerPanel<MatDatepickerControl<any>, D>;
+  @Input('for') datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<any>, D>;
 
   /** Tabindex for the toggle. */
   @Input() tabIndex: number | null;
@@ -90,7 +90,7 @@ export class MatDatepickerToggle<D> implements AfterContentInit, OnChanges, OnDe
   @ViewChild('button') _button: MatButton;
 
   constructor(
-    public _intl: MatDatepickerIntl,
+    public _intl: NgxMatDatepickerIntl,
     private _changeDetectorRef: ChangeDetectorRef,
     @Attribute('tabindex') defaultTabIndex: string,
   ) {

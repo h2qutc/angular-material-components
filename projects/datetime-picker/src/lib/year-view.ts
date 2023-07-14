@@ -6,6 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
+import { Directionality } from '@angular/cdk/bidi';
 import {
   DOWN_ARROW,
   END,
@@ -15,8 +16,8 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW,
   SPACE,
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
@@ -26,37 +27,36 @@ import {
   EventEmitter,
   Inject,
   Input,
+  OnDestroy,
   Optional,
   Output,
   ViewChild,
   ViewEncapsulation,
-  OnDestroy,
 } from '@angular/core';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
-import {Directionality} from '@angular/cdk/bidi';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import {
-  MatCalendarBody,
-  MatCalendarCell,
-  MatCalendarUserEvent,
-  MatCalendarCellClassFunction,
+  NgxMatCalendarBody,
+  NgxMatCalendarCell,
+  NgxMatCalendarCellClassFunction,
+  NgxMatCalendarUserEvent,
 } from './calendar-body';
-import {createMissingDateImplError} from './datepicker-errors';
-import {Subscription} from 'rxjs';
-import {startWith} from 'rxjs/operators';
-import {DateRange} from './date-selection-model';
+import { NgxDateRange } from './date-selection-model';
+import { createMissingDateImplError } from './datepicker-errors';
 
 /**
  * An internal component used to display a single year in the datepicker.
  * @docs-private
  */
 @Component({
-  selector: 'mat-year-view',
+  selector: 'ngx-mat-year-view',
   templateUrl: 'year-view.html',
-  exportAs: 'matYearView',
+  exportAs: 'ngxMatYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MatYearView<D> implements AfterContentInit, OnDestroy {
+export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
@@ -81,11 +81,11 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
 
   /** The currently selected date. */
   @Input()
-  get selected(): DateRange<D> | D | null {
+  get selected(): NgxDateRange<D> | D | null {
     return this._selected;
   }
-  set selected(value: DateRange<D> | D | null) {
-    if (value instanceof DateRange) {
+  set selected(value: NgxDateRange<D> | D | null) {
+    if (value instanceof NgxDateRange) {
       this._selected = value;
     } else {
       this._selected = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
@@ -93,7 +93,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
 
     this._setSelectedMonth(value);
   }
-  private _selected: DateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null;
 
   /** The minimum selectable date. */
   @Input()
@@ -119,7 +119,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
   @Input() dateFilter: (date: D) => boolean;
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  @Input() dateClass: MatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
 
   /** Emits when a new month is selected. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -131,10 +131,10 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(MatCalendarBody) _matCalendarBody: MatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
 
   /** Grid of calendar cells representing the months of the year. */
-  _months: MatCalendarCell[][];
+  _months: NgxMatCalendarCell[][];
 
   /** The label for this year (e.g. "2017"). */
   _yearLabel: string;
@@ -154,13 +154,11 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
     @Optional() public _dateAdapter: DateAdapter<D>,
     @Optional() private _dir?: Directionality,
   ) {
-    if (typeof ngDevMode === 'undefined' || ngDevMode) {
-      if (!this._dateAdapter) {
-        throw createMissingDateImplError('DateAdapter');
-      }
-      if (!this._dateFormats) {
-        throw createMissingDateImplError('MAT_DATE_FORMATS');
-      }
+    if (!this._dateAdapter) {
+      throw createMissingDateImplError('DateAdapter');
+    }
+    if (!this._dateFormats) {
+      throw createMissingDateImplError('MAT_DATE_FORMATS');
     }
 
     this._activeDate = this._dateAdapter.today();
@@ -177,7 +175,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Handles when a new month is selected. */
-  _monthSelected(event: MatCalendarUserEvent<number>) {
+  _monthSelected(event: NgxMatCalendarUserEvent<number>) {
     const month = event.value;
 
     const selectedMonth = this._dateAdapter.createDate(
@@ -201,7 +199,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
    * parent's value asynchronously via the `activeDateChange` event. The child component receives an
    * updated value asynchronously via the `activeCell` Input.
    */
-  _updateActiveDate(event: MatCalendarUserEvent<number>) {
+  _updateActiveDate(event: NgxMatCalendarUserEvent<number>) {
     const month = event.value;
     const oldActiveDate = this._activeDate;
 
@@ -284,7 +282,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
   _handleCalendarBodyKeyup(event: KeyboardEvent): void {
     if (event.keyCode === SPACE || event.keyCode === ENTER) {
       if (this._selectionKeyPressed) {
-        this._monthSelected({value: this._dateAdapter.getMonth(this._activeDate), event});
+        this._monthSelected({ value: this._dateAdapter.getMonth(this._activeDate), event });
       }
 
       this._selectionKeyPressed = false;
@@ -353,7 +351,7 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
     const ariaLabel = this._dateAdapter.format(date, this._dateFormats.display.monthYearA11yLabel);
     const cellClasses = this.dateClass ? this.dateClass(date, 'year') : undefined;
 
-    return new MatCalendarCell(
+    return new NgxMatCalendarCell(
       month,
       monthName.toLocaleUpperCase(),
       ariaLabel,
@@ -431,8 +429,8 @@ export class MatYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Sets the currently-selected month based on a model value. */
-  private _setSelectedMonth(value: DateRange<D> | D | null) {
-    if (value instanceof DateRange) {
+  private _setSelectedMonth(value: NgxDateRange<D> | D | null) {
+    if (value instanceof NgxDateRange) {
       this._selectedMonth =
         this._getMonthInCurrentYear(value.start) || this._getMonthInCurrentYear(value.end);
     } else {

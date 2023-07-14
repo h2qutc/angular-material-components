@@ -1,36 +1,28 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-import {A11yModule} from '@angular/cdk/a11y';
-import {OverlayModule} from '@angular/cdk/overlay';
-import {PortalModule} from '@angular/cdk/portal';
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {CdkScrollableModule} from '@angular/cdk/scrolling';
-import {MatCommonModule} from '@angular/material/core';
-import {MatCalendar, MatCalendarHeader} from './calendar';
-import {MatCalendarBody} from './calendar-body';
-import {MatDatepicker} from './datepicker';
+import { A11yModule } from '@angular/cdk/a11y';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
+import { CdkScrollableModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCommonModule } from '@angular/material/core';
+import { NgxMatCalendar, NgxMatCalendarHeader } from './calendar';
+import { NgxMatCalendarBody } from './calendar-body';
+import { NgxMatDateRangeInput } from './date-range-input';
+import { NgxMatEndDate, NgxMatStartDate } from './date-range-input-parts';
+import { NgxMatDateRangePicker } from './date-range-picker';
+import { NgxMatDatetimepicker } from './datepicker';
+import { NgxMatDatepickerActions, NgxMatDatepickerApply, NgxMatDatepickerCancel } from './datepicker-actions';
 import {
-  MatDatepickerContent,
-  MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  NgxMatDatepickerContent,
 } from './datepicker-base';
-import {MatDatepickerInput} from './datepicker-input';
-import {MatDatepickerIntl} from './datepicker-intl';
-import {MatDatepickerToggle, MatDatepickerToggleIcon} from './datepicker-toggle';
-import {MatMonthView} from './month-view';
-import {MatMultiYearView} from './multi-year-view';
-import {MatYearView} from './year-view';
-import {MatDateRangeInput} from './date-range-input';
-import {MatStartDate, MatEndDate} from './date-range-input-parts';
-import {MatDateRangePicker} from './date-range-picker';
-import {MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel} from './datepicker-actions';
+import { NgxMatDatepickerInput } from './datepicker-input';
+import { NgxMatDatepickerIntl } from './datepicker-intl';
+import { MatDatepickerToggleIcon, NgxMatDatepickerToggle } from './datepicker-toggle';
+import { NgxMatMonthView } from './month-view';
+import { NgxMatMultiYearView } from './multi-year-view';
+import { NgxMatYearView } from './year-view';
 
 @NgModule({
   imports: [
@@ -43,45 +35,45 @@ import {MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel} from './d
   ],
   exports: [
     CdkScrollableModule,
-    MatCalendar,
-    MatCalendarBody,
-    MatDatepicker,
-    MatDatepickerContent,
-    MatDatepickerInput,
-    MatDatepickerToggle,
+    NgxMatCalendar,
+    NgxMatCalendarBody,
+    NgxMatDatetimepicker,
+    NgxMatDatepickerContent,
+    NgxMatDatepickerInput,
+    NgxMatDatepickerToggle,
     MatDatepickerToggleIcon,
-    MatMonthView,
-    MatYearView,
-    MatMultiYearView,
-    MatCalendarHeader,
-    MatDateRangeInput,
-    MatStartDate,
-    MatEndDate,
-    MatDateRangePicker,
-    MatDatepickerActions,
-    MatDatepickerCancel,
-    MatDatepickerApply,
+    NgxMatMonthView,
+    NgxMatYearView,
+    NgxMatMultiYearView,
+    NgxMatCalendarHeader,
+    NgxMatDateRangeInput,
+    NgxMatStartDate,
+    NgxMatEndDate,
+    NgxMatDateRangePicker,
+    NgxMatDatepickerActions,
+    NgxMatDatepickerCancel,
+    NgxMatDatepickerApply,
   ],
   declarations: [
-    MatCalendar,
-    MatCalendarBody,
-    MatDatepicker,
-    MatDatepickerContent,
-    MatDatepickerInput,
-    MatDatepickerToggle,
+    NgxMatCalendar,
+    NgxMatCalendarBody,
+    NgxMatDatetimepicker,
+    NgxMatDatepickerContent,
+    NgxMatDatepickerInput,
+    NgxMatDatepickerToggle,
     MatDatepickerToggleIcon,
-    MatMonthView,
-    MatYearView,
-    MatMultiYearView,
-    MatCalendarHeader,
-    MatDateRangeInput,
-    MatStartDate,
-    MatEndDate,
-    MatDateRangePicker,
-    MatDatepickerActions,
-    MatDatepickerCancel,
-    MatDatepickerApply,
+    NgxMatMonthView,
+    NgxMatYearView,
+    NgxMatMultiYearView,
+    NgxMatCalendarHeader,
+    NgxMatDateRangeInput,
+    NgxMatStartDate,
+    NgxMatEndDate,
+    NgxMatDateRangePicker,
+    NgxMatDatepickerActions,
+    NgxMatDatepickerCancel,
+    NgxMatDatepickerApply,
   ],
-  providers: [MatDatepickerIntl, MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER],
+  providers: [NgxMatDatepickerIntl, NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER],
 })
-export class MatDatepickerModule {}
+export class NgxMatDatepickerModule { }

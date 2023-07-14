@@ -6,19 +6,20 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {BooleanInput, coerceBooleanProperty} from '@angular/cdk/coercion';
-import {DOWN_ARROW, hasModifierKey, ModifierKey} from '@angular/cdk/keycodes';
+import { ListKeyManagerModifierKey } from '@angular/cdk/a11y';
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { DOWN_ARROW, hasModifierKey } from '@angular/cdk/keycodes';
 import {
+  AfterViewInit,
   Directive,
   ElementRef,
   EventEmitter,
   Inject,
   Input,
+  OnChanges,
   OnDestroy,
   Optional,
   Output,
-  AfterViewInit,
-  OnChanges,
   SimpleChanges,
 } from '@angular/core';
 import {
@@ -28,27 +29,27 @@ import {
   Validator,
   ValidatorFn,
 } from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats, ThemePalette} from '@angular/material/core';
-import {Subscription, Subject} from 'rxjs';
-import {createMissingDateImplError} from './datepicker-errors';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, ThemePalette } from '@angular/material/core';
+import { Subject, Subscription } from 'rxjs';
 import {
-  ExtractDateTypeFromSelection,
-  MatDateSelectionModel,
-  DateSelectionModelChange,
+  NgxDateSelectionModelChange,
+  NgxExtractDateTypeFromSelection,
+  NgxMatDateSelectionModel,
 } from './date-selection-model';
+import { createMissingDateImplError } from './datepicker-errors';
 
 /**
  * An event used for datepicker input and change events. We don't always have access to a native
  * input or change event because the event may have been triggered by the user clicking on the
  * calendar popup. For consistency, we always use MatDatepickerInputEvent instead.
  */
-export class MatDatepickerInputEvent<D, S = unknown> {
+export class NgxMatDatepickerInputEvent<D, S = unknown> {
   /** The new value for the target datepicker input. */
   value: D | null;
 
   constructor(
     /** Reference to the datepicker input component that emitted the event. */
-    public target: MatDatepickerInputBase<S, D>,
+    public target: NgxMatDatepickerInputBase<S, D>,
     /** Reference to the native input element associated with the datepicker input. */
     public targetElement: HTMLElement,
   ) {
@@ -57,13 +58,13 @@ export class MatDatepickerInputEvent<D, S = unknown> {
 }
 
 /** Function that can be used to filter out dates from a calendar. */
-export type DateFilterFn<D> = (date: D | null) => boolean;
+export type NgxDateFilterFn<D> = (date: D | null) => boolean;
 
 /**
  * Partial representation of `MatFormField` that is used for backwards-compatibility
  * between the legacy and non-legacy variants.
  */
-export interface _MatFormFieldPartial {
+export interface _NgxMatFormFieldPartial {
   getConnectedOverlayOrigin(): ElementRef;
   getLabelId(): string | null;
   color: ThemePalette;
@@ -75,9 +76,8 @@ export interface _MatFormFieldPartial {
 
 /** Base class for datepicker inputs. */
 @Directive()
-export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection<S>>
-  implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy, Validator
-{
+export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSelection<S>>
+  implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy, Validator {
   /** Whether the component has been initialized. */
   private _isInitialized: boolean;
 
@@ -89,7 +89,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   set value(value: any) {
     this._assignValueProgrammatically(value);
   }
-  protected _model: MatDateSelectionModel<S, D> | undefined;
+  protected _model: NgxMatDateSelectionModel<S, D> | undefined;
 
   /** Whether the datepicker-input is disabled. */
   @Input()
@@ -119,22 +119,22 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   private _disabled: boolean;
 
   /** Emits when a `change` event is fired on this `<input>`. */
-  @Output() readonly dateChange: EventEmitter<MatDatepickerInputEvent<D, S>> = new EventEmitter<
-    MatDatepickerInputEvent<D, S>
+  @Output() readonly dateChange: EventEmitter<NgxMatDatepickerInputEvent<D, S>> = new EventEmitter<
+    NgxMatDatepickerInputEvent<D, S>
   >();
 
   /** Emits when an `input` event is fired on this `<input>`. */
-  @Output() readonly dateInput: EventEmitter<MatDatepickerInputEvent<D, S>> = new EventEmitter<
-    MatDatepickerInputEvent<D, S>
+  @Output() readonly dateInput: EventEmitter<NgxMatDatepickerInputEvent<D, S>> = new EventEmitter<
+    NgxMatDatepickerInputEvent<D, S>
   >();
 
   /** Emits when the internal state has changed */
   readonly stateChanges = new Subject<void>();
 
-  _onTouched = () => {};
-  _validatorOnChange = () => {};
+  _onTouched = () => { };
+  _validatorOnChange = () => { };
 
-  private _cvaOnChange: (value: any) => void = () => {};
+  private _cvaOnChange: (value: any) => void = () => { };
   private _valueChangesSubscription = Subscription.EMPTY;
   private _localeSubscription = Subscription.EMPTY;
 
@@ -149,7 +149,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   private _parseValidator: ValidatorFn = (): ValidationErrors | null => {
     return this._lastValueValid
       ? null
-      : {'matDatepickerParse': {'text': this._elementRef.nativeElement.value}};
+      : { 'matDatepickerParse': { 'text': this._elementRef.nativeElement.value } };
   };
 
   /** The form control validator for the date filter. */
@@ -159,7 +159,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
     );
     return !controlValue || this._matchesFilter(controlValue)
       ? null
-      : {'matDatepickerFilter': true};
+      : { 'matDatepickerFilter': true };
   };
 
   /** The form control validator for the min date. */
@@ -170,7 +170,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
     const min = this._getMinDate();
     return !min || !controlValue || this._dateAdapter.compareDate(min, controlValue) <= 0
       ? null
-      : {'matDatepickerMin': {'min': min, 'actual': controlValue}};
+      : { 'matDatepickerMin': { 'min': min, 'actual': controlValue } };
   };
 
   /** The form control validator for the max date. */
@@ -181,7 +181,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
     const max = this._getMaxDate();
     return !max || !controlValue || this._dateAdapter.compareDate(max, controlValue) >= 0
       ? null
-      : {'matDatepickerMax': {'max': max, 'actual': controlValue}};
+      : { 'matDatepickerMax': { 'max': max, 'actual': controlValue } };
   };
 
   /** Gets the base validator functions. */
@@ -196,10 +196,10 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   abstract _getMaxDate(): D | null;
 
   /** Gets the date filter function. Used for validation. */
-  protected abstract _getDateFilter(): DateFilterFn<D> | undefined;
+  protected abstract _getDateFilter(): NgxDateFilterFn<D> | undefined;
 
   /** Registers a date selection model with the input. */
-  _registerModel(model: MatDateSelectionModel<S, D>): void {
+  _registerModel(model: NgxMatDateSelectionModel<S, D>): void {
     this._model = model;
     this._valueChangesSubscription.unsubscribe();
 
@@ -214,8 +214,8 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
         this._cvaOnChange(value);
         this._onTouched();
         this._formatValue(value);
-        this.dateInput.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
-        this.dateChange.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
+        this.dateInput.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
+        this.dateChange.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
       }
     });
   }
@@ -233,7 +233,7 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   protected abstract _validator: ValidatorFn | null;
 
   /** Predicate that determines whether the input should handle a particular change event. */
-  protected abstract _shouldHandleChangeEvent(event: DateSelectionModelChange<S>): boolean;
+  protected abstract _shouldHandleChangeEvent(event: NgxDateSelectionModelChange<S>): boolean;
 
   /** Whether the last value set on the input was valid. */
   protected _lastValueValid = false;
@@ -243,13 +243,11 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
     @Optional() public _dateAdapter: DateAdapter<D>,
     @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
   ) {
-    if (typeof ngDevMode === 'undefined' || ngDevMode) {
-      if (!this._dateAdapter) {
-        throw createMissingDateImplError('DateAdapter');
-      }
-      if (!this._dateFormats) {
-        throw createMissingDateImplError('MAT_DATE_FORMATS');
-      }
+    if (!this._dateAdapter) {
+      throw createMissingDateImplError('DateAdapter');
+    }
+    if (!this._dateFormats) {
+      throw createMissingDateImplError('MAT_DATE_FORMATS');
     }
 
     // Update the displayed date when the locale changes.
@@ -305,11 +303,11 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
   }
 
   _onKeydown(event: KeyboardEvent) {
-    const ctrlShiftMetaModifiers: ModifierKey[] = ['ctrlKey', 'shiftKey', 'metaKey'];
+    const ctrlShiftMetaModifiers: ListKeyManagerModifierKey[] = ['ctrlKey', 'shiftKey', 'metaKey'];
     const isAltDownArrow =
       hasModifierKey(event, 'altKey') &&
       event.keyCode === DOWN_ARROW &&
-      ctrlShiftMetaModifiers.every((modifier: ModifierKey) => !hasModifierKey(event, modifier));
+      ctrlShiftMetaModifiers.every((modifier: ListKeyManagerModifierKey) => !hasModifierKey(event, modifier));
 
     if (isAltDownArrow && !this._elementRef.nativeElement.readOnly) {
       this._openPopup();
@@ -342,12 +340,12 @@ export abstract class MatDatepickerInputBase<S, D = ExtractDateTypeFromSelection
 
     if (hasChanged) {
       this._assignValue(date);
-      this.dateInput.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
+      this.dateInput.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
     }
   }
 
   _onChange() {
-    this.dateChange.emit(new MatDatepickerInputEvent(this, this._elementRef.nativeElement));
+    this.dateChange.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
   }
 
   /** Handles blur events on the input. */
@@ -418,7 +416,7 @@ export function dateInputsHaveChanged(
   const keys = Object.keys(changes);
 
   for (let key of keys) {
-    const {previousValue, currentValue} = changes[key];
+    const { previousValue, currentValue } = changes[key];
 
     if (adapter.isDateInstance(previousValue) && adapter.isDateInstance(currentValue)) {
       if (!adapter.sameDate(previousValue, currentValue)) {

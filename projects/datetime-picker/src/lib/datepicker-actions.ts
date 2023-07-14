@@ -18,15 +18,15 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {TemplatePortal} from '@angular/cdk/portal';
-import {MatDatepickerBase, MatDatepickerControl} from './datepicker-base';
+import {NgxMatDatepickerBase, NgxMatDatepickerControl} from './datepicker-base';
 
 /** Button that will close the datepicker and assign the current selection to the data model. */
 @Directive({
-  selector: '[matDatepickerApply], [matDateRangePickerApply]',
+  selector: '[ngxMatDatepickerApply], [ngxMatDateRangePickerApply]',
   host: {'(click)': '_applySelection()'},
 })
-export class MatDatepickerApply {
-  constructor(private _datepicker: MatDatepickerBase<MatDatepickerControl<any>, unknown>) {}
+export class NgxMatDatepickerApply {
+  constructor(private _datepicker: NgxMatDatepickerBase<NgxMatDatepickerControl<any>, unknown>) {}
 
   _applySelection() {
     this._datepicker._applyPendingSelection();
@@ -36,11 +36,11 @@ export class MatDatepickerApply {
 
 /** Button that will close the datepicker and discard the current selection. */
 @Directive({
-  selector: '[matDatepickerCancel], [matDateRangePickerCancel]',
+  selector: '[ngxMatDatepickerCancel], [ngxMatDateRangePickerCancel]',
   host: {'(click)': '_datepicker.close()'},
 })
-export class MatDatepickerCancel {
-  constructor(public _datepicker: MatDatepickerBase<MatDatepickerControl<any>, unknown>) {}
+export class NgxMatDatepickerCancel {
+  constructor(public _datepicker: NgxMatDatepickerBase<NgxMatDatepickerControl<any>, unknown>) {}
 }
 
 /**
@@ -48,8 +48,8 @@ export class MatDatepickerCancel {
  * to the bottom of a datepicker or date range picker.
  */
 @Component({
-  selector: 'mat-datepicker-actions, mat-date-range-picker-actions',
-  styleUrls: ['datepicker-actions.css'],
+  selector: 'ngx-mat-datepicker-actions, ngx-mat-date-range-picker-actions',
+  styleUrls: ['datepicker-actions.scss'],
   template: `
     <ng-template>
       <div class="mat-datepicker-actions">
@@ -60,12 +60,12 @@ export class MatDatepickerCancel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MatDatepickerActions implements AfterViewInit, OnDestroy {
+export class NgxMatDatepickerActions implements AfterViewInit, OnDestroy {
   @ViewChild(TemplateRef) _template: TemplateRef<unknown>;
   private _portal: TemplatePortal;
 
   constructor(
-    private _datepicker: MatDatepickerBase<MatDatepickerControl<any>, unknown>,
+    private _datepicker: NgxMatDatepickerBase<NgxMatDatepickerControl<any>, unknown>,
     private _viewContainerRef: ViewContainerRef,
   ) {}
 

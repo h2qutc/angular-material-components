@@ -7,15 +7,15 @@
  */
 
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {MatDatepickerBase, MatDatepickerContent, MatDatepickerControl} from './datepicker-base';
-import {MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER, DateRange} from './date-selection-model';
-import {MAT_CALENDAR_RANGE_STRATEGY_PROVIDER} from './date-range-selection-strategy';
+import {NgxMatDatepickerBase, NgxMatDatepickerContent, NgxMatDatepickerControl} from './datepicker-base';
+import {NGX_MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER, NgxDateRange} from './date-selection-model';
+import {NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER} from './date-range-selection-strategy';
 
 /**
  * Input that can be associated with a date range picker.
  * @docs-private
  */
-export interface MatDateRangePickerInput<D> extends MatDatepickerControl<D> {
+export interface NgxMatDateRangePickerInput<D> extends NgxMatDatepickerControl<D> {
   _getEndDateAccessibleName(): string | null;
   _getStartDateAccessibleName(): string | null;
   comparisonStart: D | null;
@@ -27,23 +27,23 @@ export interface MatDateRangePickerInput<D> extends MatDatepickerControl<D> {
 // directive if angular adds support for `exportAs: '$implicit'` on directives.
 /** Component responsible for managing the date range picker popup/dialog. */
 @Component({
-  selector: 'mat-date-range-picker',
+  selector: 'ngx-mat-date-range-picker',
   template: '',
-  exportAs: 'matDateRangePicker',
+  exportAs: 'ngxMatDateRangePicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [
-    MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER,
-    MAT_CALENDAR_RANGE_STRATEGY_PROVIDER,
-    {provide: MatDatepickerBase, useExisting: MatDateRangePicker},
+    NGX_MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER,
+    NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER,
+    {provide: NgxMatDatepickerBase, useExisting: NgxMatDateRangePicker},
   ],
 })
-export class MatDateRangePicker<D> extends MatDatepickerBase<
-  MatDateRangePickerInput<D>,
-  DateRange<D>,
+export class NgxMatDateRangePicker<D> extends NgxMatDatepickerBase<
+  NgxMatDateRangePickerInput<D>,
+  NgxDateRange<D>,
   D
 > {
-  protected override _forwardContentValues(instance: MatDatepickerContent<DateRange<D>, D>) {
+  protected override _forwardContentValues(instance: NgxMatDatepickerContent<NgxDateRange<D>, D>) {
     super._forwardContentValues(instance);
 
     const input = this.datepickerInput;
