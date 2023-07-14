@@ -1,8 +1,8 @@
-<table class="mat-calendar-table" role="presentation">
-  <thead class="mat-calendar-table-header">
+<table class="mat-calendar-table" role="grid">
+  <thead aria-hidden="true" class="mat-calendar-table-header">
     <tr><th class="mat-calendar-table-header-divider" colspan="4"></th></tr>
   </thead>
-  <tbody ngx-mat-calendar-body
+  <tbody mat-calendar-body
          [label]="_yearLabel"
          [rows]="_months"
          [todayValue]="_todayMonth!"
@@ -13,6 +13,8 @@
          [cellAspectRatio]="4 / 7"
          [activeCell]="_dateAdapter.getMonth(activeDate)"
          (selectedValueChange)="_monthSelected($event)"
+         (activeDateChange)="_updateActiveDate($event)"
+         (keyup)="_handleCalendarBodyKeyup($event)"
          (keydown)="_handleCalendarBodyKeydown($event)">
   </tbody>
 </table>
