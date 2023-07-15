@@ -63,7 +63,7 @@ export class NgxMatDatepickerInput<D>
 
   /** The datepicker that this input is associated with. */
   @Input()
-  set matDatepicker(datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, D | null, D>) {
+  set ngxMatDatetimePicker(datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, D | null, D>) {
     if (datepicker) {
       this._datepicker = datepicker;
       this._closedSubscription = datepicker.closedStream.subscribe(() => this._onTouched());

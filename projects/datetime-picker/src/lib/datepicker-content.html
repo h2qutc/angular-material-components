@@ -6,7 +6,7 @@
   class="mat-datepicker-content-container"
   [class.mat-datepicker-content-container-with-custom-header]="datepicker.calendarHeaderComponent"
   [class.mat-datepicker-content-container-with-actions]="_actionsPortal">
-  <mat-calendar
+  <ngx-mat-calendar
     [id]="datepicker.id"
     [ngClass]="datepicker.panelClass"
     [startAt]="datepicker.startAt"
@@ -26,7 +26,7 @@
     (monthSelected)="datepicker._selectMonth($event)"
     (viewChanged)="datepicker._viewChanged($event)"
     (_userSelection)="_handleUserSelection($event)"
-    (_userDragDrop)="_handleUserDragDrop($event)"></mat-calendar>
+    (_userDragDrop)="_handleUserDragDrop($event)"></ngx-mat-calendar>
 
   <ng-template [cdkPortalOutlet]="_actionsPortal"></ng-template>
 
