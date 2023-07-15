@@ -18,11 +18,11 @@ import {
   ViewEncapsulation,
   forwardRef,
 } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { Subject, Subscription } from 'rxjs';
 import { NgxMatCalendarCellClassFunction, NgxMatCalendarUserEvent } from './calendar-body';
 import { NgxMatDateAdapter } from './core/date-adapter';
-import { NgxDateRange, NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from './date-selection-model';
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
+import { NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER, NgxDateRange } from './date-selection-model';
 import { createMissingDateImplError } from './datepicker-errors';
 import { NgxMatDatepickerIntl } from './datepicker-intl';
 import { NgxMatMonthView } from './month-view';
@@ -55,7 +55,7 @@ export class NgxMatCalendarHeader<D> {
     private _intl: NgxMatDatepickerIntl,
     @Inject(forwardRef(() => NgxMatCalendar)) public calendar: NgxMatCalendar<D>,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     changeDetectorRef: ChangeDetectorRef,
   ) {
     this.calendar.stateChanges.subscribe(() => changeDetectorRef.markForCheck());
@@ -386,16 +386,16 @@ export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, On
 
   constructor(
     _intl: NgxMatDatepickerIntl,
-    @Optional() private _dateAdapter: DateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
     private _changeDetectorRef: ChangeDetectorRef,
   ) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
 
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
 

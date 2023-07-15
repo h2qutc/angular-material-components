@@ -1,7 +1,25 @@
 @use 'sass:math';
 @use '@angular/cdk';
 
-@use '../core/style/button-common';
+@mixin user-select($value) {
+  -webkit-user-select: $value;
+  user-select: $value;
+}
+
+@mixin reset {
+  @include user-select(none);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+
+  // The `outline: none` from above works on all browsers, however Firefox also
+  // adds a special `focus-inner` which we have to disable explicitly. See:
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Firefox
+  &::-moz-focus-inner {
+    border: 0;
+  }
+}
 
 $calendar-body-label-padding-start: 5% !default;
 // We don't want the label to jump around when we switch between month and year views, so we use
@@ -45,7 +63,7 @@ $calendar-range-end-body-cell-size:
 }
 
 .mat-calendar-body-cell {
-  @include button-common.reset();
+  @include reset();
   position: absolute;
   top: 0;
   left: 0;

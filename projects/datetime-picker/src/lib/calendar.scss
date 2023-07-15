@@ -1,7 +1,14 @@
 @use '@angular/cdk';
 
-@use '../core/style/layout-common';
-@use '../core/focus-indicators/private';
+@mixin fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+$default-border-width: 3px;
 
 $calendar-padding: 8px !default;
 $calendar-header-divider-width: 1px !default;
@@ -75,7 +82,7 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
   position: relative;
 
   &::after {
-    @include layout-common.fill;
+    @include fill;
     content: '';
     margin: $calendar-prev-next-icon-margin;
     border: 0 solid currentColor;
@@ -127,7 +134,7 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
 // For the calendar element, default inset/offset values are necessary to ensure that
 // the focus indicator is sufficiently contrastive and renders appropriately.
 .mat-calendar-body-cell-content::before {
-  $border-width: var(--mat-focus-indicator-border-width, #{private.$default-border-width});
+  $border-width: var(--mat-focus-indicator-border-width, #{$default-border-width});
   $offset: calc(#{$border-width} + 3px);
   margin: calc(#{$offset} * -1);
 }

@@ -1,16 +1,25 @@
 @use 'sass:math';
 @use '@angular/cdk';
 
-@use '../core/style/variables';
-@use '../core/style/vendor-prefixes';
+// @use '../core/style/variables';
+// @use '../core/style/vendor-prefixes';
+
+$swift-ease-out-duration: 400ms !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
 
 $date-range-input-separator-spacing: 4px;
 $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spacing});
 
-@mixin _placeholder-transition($property) {
-  transition: #{$property} variables.$swift-ease-out-duration
-    math.div(variables.$swift-ease-out-duration, 3)
-    variables.$swift-ease-out-timing-function;
+@mixin placeholder-transition($property) {
+  transition: #{$property} $swift-ease-out-duration
+    math.div($swift-ease-out-duration, 3)
+    $swift-ease-out-timing-function;
+}
+
+@mixin user-select($value) {
+  -webkit-user-select: $value;
+  user-select: $value;
 }
 
 // Host of the date range input.
@@ -27,7 +36,7 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
 
 // Text shown between the two inputs.
 .mat-date-range-input-separator {
-  @include _placeholder-transition(opacity);
+  @include placeholder-transition(opacity);
   margin: 0 $date-range-input-separator-spacing;
 
   ._mat-animation-noopable & {
@@ -38,7 +47,7 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
 .mat-date-range-input-separator-hidden {
   // Disable text selection, because the user can click
   // through the main label when the input is disabled.
-  @include vendor-prefixes.user-select(none);
+  @include user-select(none);
 
   // Use opacity to hide the text, because `color: transparent` will be shown in high contrast mode.
   opacity: 0;
@@ -86,16 +95,16 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
     box-shadow: none;
   }
 
-  @include vendor-prefixes.input-placeholder {
-    @include _placeholder-transition(color);
+  @include input-placeholder {
+    @include placeholder-transition(color);
   }
 
   .mat-form-field-hide-placeholder &,
   .mat-date-range-input-hide-placeholders & {
-    @include vendor-prefixes.input-placeholder {
+    @include input-placeholder {
       // Disable text selection, because the user can click
       // through the main label when the input is disabled.
-      @include vendor-prefixes.user-select(none);
+      @include user-select(none);
 
       // Needs to be !important, because the placeholder will end up inheriting the
       // input color in IE, if the consumer overrides it with a higher specificity.
@@ -112,7 +121,7 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
   }
 
   ._mat-animation-noopable & {
-    @include vendor-prefixes.input-placeholder {
+    @include input-placeholder {
       transition: none;
     }
   }
@@ -127,7 +136,7 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
 // to stretch and the input with it.
 .mat-date-range-input-mirror {
   // Disable user selection so users don't accidentally copy the text via ctrl + A.
-  @include vendor-prefixes.user-select(none);
+  @include user-select(none);
 
   // Hide the element so it doesn't get read out by screen
   // readers and it doesn't show up behind the input.

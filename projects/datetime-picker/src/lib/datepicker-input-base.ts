@@ -29,8 +29,10 @@ import {
   Validator,
   ValidatorFn,
 } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, ThemePalette } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { Subject, Subscription } from 'rxjs';
+import { NgxMatDateAdapter } from './core/date-adapter';
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
 import {
   NgxDateSelectionModelChange,
   NgxExtractDateTypeFromSelection,
@@ -240,14 +242,14 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
 
   constructor(
     protected _elementRef: ElementRef<HTMLInputElement>,
-    @Optional() public _dateAdapter: DateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
   ) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('MAT_DATE_FORMATS');
+      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
     }
 
     // Update the displayed date when the locale changes.
@@ -411,7 +413,7 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
  */
 export function dateInputsHaveChanged(
   changes: SimpleChanges,
-  adapter: DateAdapter<unknown>,
+  adapter: NgxMatDateAdapter<unknown>,
 ): boolean {
   const keys = Object.keys(changes);
 

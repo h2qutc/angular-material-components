@@ -1,3 +1,4 @@
+import { Directionality } from '@angular/cdk/bidi';
 import {
   DOWN_ARROW,
   END,
@@ -7,8 +8,8 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW,
   SPACE,
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
@@ -17,24 +18,23 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   Optional,
   Output,
   ViewChild,
   ViewEncapsulation,
-  OnDestroy,
 } from '@angular/core';
-import {DateAdapter} from '@angular/material/core';
-import {Directionality} from '@angular/cdk/bidi';
+import { Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import {
   NgxMatCalendarBody,
   NgxMatCalendarCell,
-  NgxMatCalendarUserEvent,
   NgxMatCalendarCellClassFunction,
+  NgxMatCalendarUserEvent,
 } from './calendar-body';
-import {createMissingDateImplError} from './datepicker-errors';
-import {Subscription} from 'rxjs';
-import {startWith} from 'rxjs/operators';
-import {NgxDateRange} from './date-selection-model';
+import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxDateRange } from './date-selection-model';
+import { createMissingDateImplError } from './datepicker-errors';
 
 export const yearsPerPage = 24;
 
@@ -148,7 +148,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    @Optional() public _dateAdapter: DateAdapter<D>,
+    @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir?: Directionality,
   ) {
     if (!this._dateAdapter) {
@@ -251,8 +251,8 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
         this.activeDate = this._dateAdapter.addCalendarYears(
           this._activeDate,
           yearsPerPage -
-            getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate) -
-            1,
+          getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate) -
+          1,
         );
         break;
       case PAGE_UP:
@@ -292,7 +292,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   _handleCalendarBodyKeyup(event: KeyboardEvent): void {
     if (event.keyCode === SPACE || event.keyCode === ENTER) {
       if (this._selectionKeyPressed) {
-        this._yearSelected({value: this._dateAdapter.getYear(this._activeDate), event});
+        this._yearSelected({ value: this._dateAdapter.getYear(this._activeDate), event });
       }
 
       this._selectionKeyPressed = false;
@@ -394,7 +394,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 }
 
 export function isSameMultiYearView<D>(
-  dateAdapter: DateAdapter<D>,
+  dateAdapter: NgxMatDateAdapter<D>,
   date1: D,
   date2: D,
   minDate: D | null,
@@ -415,7 +415,7 @@ export function isSameMultiYearView<D>(
  * "startingYear" will render when paged into view.
  */
 export function getActiveOffset<D>(
-  dateAdapter: DateAdapter<D>,
+  dateAdapter: NgxMatDateAdapter<D>,
   activeDate: D,
   minDate: D | null,
   maxDate: D | null,
@@ -429,7 +429,7 @@ export function getActiveOffset<D>(
  * or the minimum year would be at the beginning of a page.
  */
 function getStartingYear<D>(
-  dateAdapter: DateAdapter<D>,
+  dateAdapter: NgxMatDateAdapter<D>,
   minDate: D | null,
   maxDate: D | null,
 ): number {

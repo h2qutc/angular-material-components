@@ -46,11 +46,12 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { CanColor, DateAdapter, ThemePalette, mixinColor } from '@angular/material/core';
+import { CanColor, ThemePalette, mixinColor } from '@angular/material/core';
 import { Observable, Subject, Subscription, merge } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar, NgxMatCalendarView } from './calendar';
 import { NgxMatCalendarCellClassFunction, NgxMatCalendarUserEvent } from './calendar-body';
+import { NgxMatDateAdapter } from './core/date-adapter';
 import {
   NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
   NgxMatDateRangeSelectionStrategy,
@@ -175,7 +176,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
     private _globalModel: NgxMatDateSelectionModel<S, D>,
-    private _dateAdapter: DateAdapter<D>,
+    private _dateAdapter: NgxMatDateAdapter<D>,
     @Optional()
     @Inject(NGX_MAT_DATE_RANGE_SELECTION_STRATEGY)
     private _rangeSelectionStrategy: NgxMatDateRangeSelectionStrategy<D>,
@@ -564,12 +565,12 @@ export abstract class NgxMatDatepickerBase<
     private _ngZone: NgZone,
     private _viewContainerRef: ViewContainerRef,
     @Inject(NGX_MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
-    @Optional() private _dateAdapter: DateAdapter<D>,
+    @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir: Directionality,
     private _model: NgxMatDateSelectionModel<S, D>,
   ) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('DateAdapter');
+      throw createMissingDateImplError('NgxMatDateAdapter');
     }
 
     this._scrollStrategy = scrollStrategy;

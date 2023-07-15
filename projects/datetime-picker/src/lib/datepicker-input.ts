@@ -6,15 +6,17 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Directive, ElementRef, forwardRef, Inject, Input, OnDestroy, Optional} from '@angular/core';
-import {NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidatorFn, Validators} from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats, ThemePalette} from '@angular/material/core';
-import {MAT_FORM_FIELD} from '@angular/material/form-field';
-import {MAT_INPUT_VALUE_ACCESSOR} from '@angular/material/input';
-import {Subscription} from 'rxjs';
-import {NgxMatDatepickerInputBase, NgxDateFilterFn, _NgxMatFormFieldPartial} from './datepicker-input-base';
-import {NgxMatDatepickerControl, NgxMatDatepickerPanel} from './datepicker-base';
-import {NgxDateSelectionModelChange} from './date-selection-model';
+import { Directive, ElementRef, forwardRef, Inject, Input, OnDestroy, Optional } from '@angular/core';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidatorFn, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS, MatDateFormats, ThemePalette } from '@angular/material/core';
+import { MAT_FORM_FIELD } from '@angular/material/form-field';
+import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
+import { Subscription } from 'rxjs';
+import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxDateSelectionModelChange } from './date-selection-model';
+import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
+import { _NgxMatFormFieldPartial, NgxDateFilterFn, NgxMatDatepickerInputBase } from './datepicker-input-base';
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
 
 /** @docs-private */
 export const NGX_MAT_DATEPICKER_VALUE_ACCESSOR: any = {
@@ -36,7 +38,7 @@ export const NGX_MAT_DATEPICKER_VALIDATORS: any = {
   providers: [
     NGX_MAT_DATEPICKER_VALUE_ACCESSOR,
     NGX_MAT_DATEPICKER_VALIDATORS,
-    {provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatDatepickerInput},
+    { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatDatepickerInput },
   ],
   host: {
     'class': 'mat-datepicker-input',
@@ -57,8 +59,7 @@ export const NGX_MAT_DATEPICKER_VALIDATORS: any = {
 })
 export class NgxMatDatepickerInput<D>
   extends NgxMatDatepickerInputBase<D | null, D>
-  implements NgxMatDatepickerControl<D | null>, OnDestroy
-{
+  implements NgxMatDatepickerControl<D | null>, OnDestroy {
   private _closedSubscription = Subscription.EMPTY;
 
   /** The datepicker that this input is associated with. */
@@ -122,8 +123,8 @@ export class NgxMatDatepickerInput<D>
 
   constructor(
     elementRef: ElementRef<HTMLInputElement>,
-    @Optional() dateAdapter: DateAdapter<D>,
-    @Optional() @Inject(MAT_DATE_FORMATS) dateFormats: MatDateFormats,
+    @Optional() dateAdapter: NgxMatDateAdapter<D>,
+    @Optional() @Inject(NGX_MAT_DATE_FORMATS) dateFormats: NgxMatDateFormats,
     @Optional() @Inject(MAT_FORM_FIELD) private _formField?: _NgxMatFormFieldPartial,
   ) {
     super(elementRef, dateAdapter, dateFormats);
