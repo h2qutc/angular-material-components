@@ -170,9 +170,9 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
       this._dateAdapter.deserialize(control.value),
     );
     const min = this._getMinDate();
-    return !min || !controlValue || this._dateAdapter.compareDate(min, controlValue) <= 0
+    return !min || !controlValue || this._dateAdapter.compareDateWithTime(min, controlValue) <= 0
       ? null
-      : { 'matDatepickerMin': { 'min': min, 'actual': controlValue } };
+      : { 'matDatetimePickerMin': { 'min': min, 'actual': controlValue } };
   };
 
   /** The form control validator for the max date. */
@@ -181,9 +181,9 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
       this._dateAdapter.deserialize(control.value),
     );
     const max = this._getMaxDate();
-    return !max || !controlValue || this._dateAdapter.compareDate(max, controlValue) >= 0
+    return !max || !controlValue || this._dateAdapter.compareDateWithTime(max, controlValue) >= 0
       ? null
-      : { 'matDatepickerMax': { 'max': max, 'actual': controlValue } };
+      : { 'matDatetimePickerMax': { 'max': max, 'actual': controlValue } };
   };
 
   /** Gets the base validator functions. */

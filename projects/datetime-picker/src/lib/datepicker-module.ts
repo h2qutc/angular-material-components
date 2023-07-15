@@ -23,6 +23,8 @@ import { MatDatepickerToggleIcon, NgxMatDatepickerToggle } from './datepicker-to
 import { NgxMatMonthView } from './month-view';
 import { NgxMatMultiYearView } from './multi-year-view';
 import { NgxMatYearView } from './year-view';
+import { NgxMatTimepickerModule } from './timepicker.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -32,6 +34,9 @@ import { NgxMatYearView } from './year-view';
     A11yModule,
     PortalModule,
     MatCommonModule,
+    NgxMatTimepickerModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CdkScrollableModule,

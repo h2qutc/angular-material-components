@@ -1,12 +1,13 @@
 <h2>See <a [routerLink]="['/datetimepicker']">API Datetime-picker</a> for more details</h2>
 
-<mat-card class="zone zone-value">Selected date: {{date?.toLocaleString()}}</mat-card>
-
 <mat-card class="zone zone-picker">
-  <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
-    [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
-    [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
-  </ngx-mat-timepicker>
+  <mat-card-header>Selected date: {{date?.toLocaleString()}}</mat-card-header>
+  <mat-card-content>
+    <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
+      [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
+      [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
+    </ngx-mat-timepicker>
+  </mat-card-content>
 </mat-card>
 
 <mat-card class="zone zone-config">

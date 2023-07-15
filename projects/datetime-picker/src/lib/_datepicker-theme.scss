@@ -196,6 +196,10 @@ $calendar-weekday-table-font-size: 11px !default;
     font-family: typography-utils.font-family($config);
   }
 
+  .ngx-mat-timepicker{
+    font-family: typography-utils.font-family($config);
+  }
+
   .mat-calendar-body {
     font-size: $calendar-body-font-size;
   }

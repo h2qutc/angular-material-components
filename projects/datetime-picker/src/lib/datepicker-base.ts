@@ -172,6 +172,13 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   /** Id of the label for the `role="dialog"` element. */
   _dialogLabelId: string | null;
 
+  get isViewMonth(): boolean {
+    if (!this._calendar || this._calendar.currentView == null) return true;
+    return this._calendar.currentView == 'month';
+  }
+
+  _modelTime: D | null;
+
   constructor(
     elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
@@ -204,7 +211,27 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     this._animationDone.complete();
   }
 
+  onTimeChanged(selectedDateWithTime: D | null) {
+    console.log('onTimeChanged', selectedDateWithTime);
+    const userEvent: NgxMatCalendarUserEvent<D | null> = {
+      value: selectedDateWithTime,
+      event: null
+    };
+
+    this._updateUserSelectionWithCalendarUserEvent(userEvent);
+  }
+
   _handleUserSelection(event: NgxMatCalendarUserEvent<D | null>) {
+    console.log('_handleUserSelection', event)
+    this._updateUserSelectionWithCalendarUserEvent(event);
+
+    // Delegate closing the overlay to the actions.
+    if ((!this._model || this._model.isComplete()) && !this._actionsPortal) {
+      this.datepicker.close();
+    }
+  }
+
+  private _updateUserSelectionWithCalendarUserEvent(event: NgxMatCalendarUserEvent<D | null>) {
     const selection = this._model.selection;
     const value = event.value;
     const isRange = selection instanceof NgxDateRange;
@@ -227,11 +254,6 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     ) {
       this._model.add(value);
     }
-
-    // Delegate closing the overlay to the actions.
-    if ((!this._model || this._model.isComplete()) && !this._actionsPortal) {
-      this.datepicker.close();
-    }
   }
 
   _handleUserDragDrop(event: NgxMatCalendarUserEvent<NgxDateRange<D>>) {
@@ -252,6 +274,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   }
 
   _getSelected() {
+    this._modelTime = this._model.selection as unknown as D;
     return this._model.selection as unknown as D | NgxDateRange<D> | null;
   }
 
