@@ -50,10 +50,6 @@ import { NgxMatYearView } from './year-view';
       NgxMatMultiYearView,
       NgxMatCalendarHeader
    ],
-   entryComponents: [
-      NgxMatDatetimeContent,
-      NgxMatCalendarHeader
-   ],
    providers: [
       MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
       {
