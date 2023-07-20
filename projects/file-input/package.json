@@ -32,7 +32,7 @@
     "@angular/common": "^16.1.6",
     "@angular/core": "^16.1.6",
     "@angular/forms": "^16.1.6",
-    "@angular/material": "^16.1.6",
-    "@angular/cdk": "^16.1.6"
+    "@angular/material": "^16.1.5",
+    "@angular/cdk": "^16.1.5"
   }
 }

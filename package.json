@@ -29,7 +29,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --configuration=production",
     "build:datetime-picker": "ng build NgxMatDatetimePicker",
     "build:moment-adapter": "ng build NgxMatMomentAdapter",
     "build:color-picker": "ng build NgxMatColorPicker",
@@ -47,12 +47,12 @@
   "private": false,
   "dependencies": {
     "@angular/animations": "~16.1.6",
-    "@angular/cdk": "~15.0.1",
+    "@angular/cdk": "~16.1.5",
     "@angular/common": "~16.1.6",
     "@angular/compiler": "~16.1.6",
     "@angular/core": "~16.1.6",
     "@angular/forms": "~16.1.6",
-    "@angular/material": "~15.0.1",
+    "@angular/material": "~16.1.5",
     "@angular/platform-browser": "~16.1.6",
     "@angular/platform-browser-dynamic": "~16.1.6",
     "@angular/router": "~16.1.6",
