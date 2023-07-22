@@ -468,6 +468,11 @@ export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, On
 
   /** Handles date selection in the month view. */
   _dateSelected(event: NgxMatCalendarUserEvent<D | null>): void {
+
+    if (event.value && this.selected) {
+      this._dateAdapter.copyTime(event.value as D, this.selected as D);
+    }
+
     const date = event.value;
 
     if (

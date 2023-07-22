@@ -110,13 +110,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   writeValue(val: D): void {
     if (val != null) {
       this._model = val;
-    } else {
-      this._model = this._dateAdapter.today();
-      if (this.defaultTime != null) {
-        this._dateAdapter.setTimeByDefaultValues(this._model, this.defaultTime);
-      }
+      this._updateHourMinuteSecond();
     }
-    this._updateHourMinuteSecond();
+
   }
 
   /** Registers a callback function that is called when the control's value changes in the UI. */
@@ -176,9 +172,14 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       }
     }
 
-    this.form.controls['hour'].setValue(formatTwoDigitTimeValue(_hour));
-    this.form.controls['minute'].setValue(formatTwoDigitTimeValue(_minute));
-    this.form.controls['second'].setValue(formatTwoDigitTimeValue(_second));
+    this.form.patchValue({
+      hour: formatTwoDigitTimeValue(_hour),
+      minute: formatTwoDigitTimeValue(_minute),
+      second: formatTwoDigitTimeValue(_second)
+    }, {
+      emitEvent: false
+    })
+
   }
 
   /** Update model */
@@ -193,10 +194,12 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       }
     }
 
-    this._dateAdapter.setHour(this._model, _hour);
-    this._dateAdapter.setMinute(this._model, this.minute);
-    this._dateAdapter.setSecond(this._model, this.second);
-    this._onChange(this._model);
+    const clonedModel = this._dateAdapter.clone(this._model);
+
+    this._dateAdapter.setHour(clonedModel, _hour);
+    this._dateAdapter.setMinute(clonedModel, this.minute);
+    this._dateAdapter.setSecond(clonedModel, this.second);
+    this._onChange(clonedModel);
   }
 
   /**

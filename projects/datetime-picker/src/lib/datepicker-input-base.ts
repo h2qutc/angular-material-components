@@ -322,7 +322,12 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
     let date = this._dateAdapter.parse(value, this._dateFormats.parse.dateInput);
     this._lastValueValid = this._isValidValue(date);
     date = this._dateAdapter.getValidDateOrNull(date);
-    const hasChanged = !this._dateAdapter.sameDate(date, this.value);
+
+    const isSameTime = this._dateAdapter.isSameTime(date, this.value);
+    const isSameDate = this._dateAdapter.sameDate(date, this.value);
+    const isSame = isSameDate && isSameTime;
+
+    const hasChanged = !isSame;
 
     // We need to fire the CVA change event for all
     // nulls, otherwise the validators won't run.

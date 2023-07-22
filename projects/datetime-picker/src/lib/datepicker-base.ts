@@ -212,7 +212,6 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   }
 
   onTimeChanged(selectedDateWithTime: D | null) {
-    console.log('onTimeChanged', selectedDateWithTime);
     const userEvent: NgxMatCalendarUserEvent<D | null> = {
       value: selectedDateWithTime,
       event: null
@@ -222,12 +221,13 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   }
 
   _handleUserSelection(event: NgxMatCalendarUserEvent<D | null>) {
-    console.log('_handleUserSelection', event)
     this._updateUserSelectionWithCalendarUserEvent(event);
 
     // Delegate closing the overlay to the actions.
-    if ((!this._model || this._model.isComplete()) && !this._actionsPortal) {
-      this.datepicker.close();
+    if (this.datepicker.hideTime) {
+      if ((!this._model || this._model.isComplete()) && !this._actionsPortal) {
+        this.datepicker.close();
+      }
     }
   }
 
@@ -248,12 +248,18 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
         event.event,
       );
       this._model.updateSelection(newSelection as unknown as S, this);
-    } else if (
-      value &&
-      (isRange || !this._dateAdapter.sameDate(value, selection as unknown as D))
-    ) {
-      this._model.add(value);
+    } else {
+      const isSameTime = this._dateAdapter.isSameTime(selection as unknown as D, value);
+      const isSameDate = this._dateAdapter.sameDate(value, selection as unknown as D);
+      const isSame = isSameDate && isSameTime;
+
+      if (value &&
+        (isRange || !isSame)
+      ) {
+        this._model.add(value);
+      }
     }
+
   }
 
   _handleUserDragDrop(event: NgxMatCalendarUserEvent<NgxDateRange<D>>) {

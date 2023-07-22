@@ -1,5 +1,6 @@
 @use 'sass:math';
 @use '@angular/cdk';
+@import './vendor-prefixes';
 
 // @use '../core/style/variables';
 // @use '../core/style/vendor-prefixes';
@@ -12,14 +13,7 @@ $date-range-input-separator-spacing: 4px;
 $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spacing});
 
 @mixin placeholder-transition($property) {
-  transition: #{$property} $swift-ease-out-duration
-    math.div($swift-ease-out-duration, 3)
-    $swift-ease-out-timing-function;
-}
-
-@mixin user-select($value) {
-  -webkit-user-select: $value;
-  user-select: $value;
+  transition: #{$property} $swift-ease-out-duration math.div($swift-ease-out-duration, 3) $swift-ease-out-timing-function;
 }
 
 // Host of the date range input.
@@ -95,9 +89,6 @@ $date-range-input-part-max-width: calc(50% - #{$date-range-input-separator-spaci
     box-shadow: none;
   }
 
-  @include input-placeholder {
-    @include placeholder-transition(color);
-  }
 
   .mat-form-field-hide-placeholder &,
   .mat-date-range-input-hide-placeholders & {
