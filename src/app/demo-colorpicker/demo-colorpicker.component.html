@@ -67,8 +67,10 @@
     </mat-tab>
     <mat-tab label="Example">
         <mat-card class="zone zone-value">
-            <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
-            <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+            <mat-card-content>
+                <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
+                <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+            </mat-card-content>
         </mat-card>
 
         <mat-card class="zone zone-picker">

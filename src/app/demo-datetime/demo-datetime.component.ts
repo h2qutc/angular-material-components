@@ -25,7 +25,7 @@ export class DemoDatetimeComponent implements OnInit {
   public disableMinute = false;
   public hideTime = false;
 
-  public dateControl = new FormControl(null);
+  public dateControl = new FormControl(new Date());
 
   public options = [
     { value: true, label: 'True' },

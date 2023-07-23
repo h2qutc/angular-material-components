@@ -1,4 +1,5 @@
 .mat-form-field-appearance-outline {
+
   .mat-form-field-prefix,
   .mat-form-field-suffix {
     .ngx-mat-file-input--default-icon {
@@ -7,7 +8,8 @@
   }
 }
 
-.mat-form-field:not(.mat-form-field-appearance-outline) {
+.mat-mdc-form-field:not(.mat-form-field-appearance-outline) {
+
   .mat-form-field-prefix,
   .mat-form-field-suffix {
     .ngx-mat-file-input--default-icon {
@@ -25,9 +27,8 @@
 .ngx-mat-file-input {
   display: flex;
   line-height: 18px;
-  height: 18px;
   align-items: center;
-  
+
   .input-file {
     display: block;
     visibility: hidden;
