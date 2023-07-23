@@ -1,6 +1,6 @@
 {
   "name": "angular-material-components",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "description": "Angular Material Datetime Picker",
   "author": "HO Hong Quan",
   "repository": {
@@ -18,6 +18,7 @@
     "angular 13",
     "angular 14",
     "angular 15",
+    "angular 16",
     "angular-material",
     "angular material datetime picker",
     "angular material time picker",
