@@ -11,14 +11,14 @@ $non-touch-calendar-height: 354px;
 // chosen to minimize extra whitespace at larger sizes, while still ensuring we won't need
 // scrollbars at smaller sizes.
 $touch-landscape-width: 64vh;
-$touch-landscape-height: 80vh;
+$touch-landscape-height: 90vh;
 $touch-portrait-width: 80vw;
 $touch-portrait-height: 100vw;
 $touch-portrait-height-with-actions: 115vw;
 $touch-min-width: 250px;
 $touch-min-height: 312px;
 $touch-max-width: 750px;
-$touch-max-height: 788px;
+$touch-max-height: 815px;
 
 
 .mat-datepicker-content {
@@ -89,7 +89,7 @@ $touch-max-height: 788px;
 
 .mat-datepicker-content-touch {
   display: block;
-  max-height: 80vh;
+  max-height: 90vh;
 
   // Allows for the screen reader close button to be seen in touch UI mode.
   position: relative;
@@ -114,13 +114,29 @@ $touch-max-height: 788px;
   .mat-datepicker-content-touch .mat-datepicker-content-container {
     width: $touch-landscape-width;
     height: $touch-landscape-height;
+
+    &.mat-datepicker-content-container-with-time {
+      height: auto;
+    }
   }
 }
 
 @media all and (orientation: portrait) {
-  .mat-datepicker-content-touch .mat-datepicker-content-container {
-    width: $touch-portrait-width;
-    height: $touch-portrait-height;
+  .mat-datepicker-content-touch {
+    max-height: 100vh;
+    .mat-datepicker-content-container {
+      width: $touch-portrait-width;
+      height: $touch-portrait-height;
+
+      &.mat-datepicker-content-container-with-time {
+        height: auto;
+        max-height: 870px;
+
+        &.mat-datepicker-content-container-with-actions{
+          max-height: none !important;
+        }
+      }
+    }
   }
 
   // The content needs to be a bit taller when actions have

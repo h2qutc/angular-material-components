@@ -118,6 +118,7 @@ const _NgxMatDatepickerContentBase = mixinColor(
     '(@transformPanel.start)': '_handleAnimationEvent($event)',
     '(@transformPanel.done)': '_handleAnimationEvent($event)',
     '[class.mat-datepicker-content-touch]': 'datepicker.touchUi',
+    '[class.mat-datepicker-content-touch-with-time]': '!datepicker.hideTime',
   },
   animations: [ngxMatDatepickerAnimations.transformPanel, ngxMatDatepickerAnimations.fadeInCalendar],
   exportAs: 'ngxMatDatepickerContent',
