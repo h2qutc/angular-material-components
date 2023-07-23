@@ -1,6 +1,6 @@
 
 
-import {BooleanInput, coerceBooleanProperty} from '@angular/cdk/coercion';
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   AfterContentInit,
   Attribute,
@@ -13,19 +13,19 @@ import {
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  ViewEncapsulation,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
-import {NgxMatDatepickerIntl} from './datepicker-intl';
-import {NgxMatDatepickerControl, NgxMatDatepickerPanel} from './datepicker-base';
+import { MatButton } from '@angular/material/button';
+import { Observable, Subscription, merge, of as observableOf } from 'rxjs';
+import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
+import { NgxMatDatepickerIntl } from './datepicker-intl';
 
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
   selector: '[ngxMatDatepickerToggleIcon]',
 })
-export class MatDatepickerToggleIcon {}
+export class MatDatepickerToggleIcon { }
 
 @Component({
   selector: 'ngx-mat-datepicker-toggle',

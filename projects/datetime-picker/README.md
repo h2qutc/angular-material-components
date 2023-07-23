@@ -23,7 +23,7 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/datetime-picker
  ----------- | -------------------
- 15          | 9.x+ (legacy import), 15.x+
+ 15          | 15.x+ OR 9.x+ for legacy import
  14          | 8.x+
  13          | 7.x+
  12          | 6.x+
