@@ -20,7 +20,8 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/color-picker
  ----------- | -------------------
- 15          | 9.x+
+ 16          | 16.x+
+ 15          | 15.x+
  14          | 8.x+
  13          | 7.x+
  12          | 6.x+
@@ -31,14 +32,6 @@ Choose the version corresponding to your Angular version:
  7           | 2.x+
 
 ## Getting started
-Choose the version corresponding to your Angular version:
-
- Angular     | @angular-material-components/color-picker
- ----------- | -------------------
- 10          | 4.x+              
- 9           | 2.x+              
- 8           | 2.x+              
- 7           | 2.x+                 
 
 ```
 npm install --save  @angular-material-components/color-picker

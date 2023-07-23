@@ -50,9 +50,6 @@ import { ColorAdapter } from './services';
     NgxMatColorPickerInput,
     NgxMatColorPickerComponent
   ],
-  entryComponents: [
-    NgxMatColorPickerContentComponent
-  ],
   providers: [
     ColorAdapter,
     NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER

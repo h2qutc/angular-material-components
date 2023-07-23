@@ -3,7 +3,7 @@ import {
   OnInit, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { Subscription, merge, of } from 'rxjs';
+import { Observable, Subscription, merge, of } from 'rxjs';
 import { NgxMatColorPickerComponent } from '../color-picker/color-picker.component';
 
 @Component({
@@ -12,8 +12,6 @@ import { NgxMatColorPickerComponent } from '../color-picker/color-picker.compone
   styleUrls: ['./color-toggle.component.scss'],
   host: {
     'class': 'ngx-mat-color-toggle',
-    // Always set the tabindex to -1 so that it doesn't overlap with any custom tabindex the
-    // consumer may have provided, while still being able to receive focus.
     '[attr.tabindex]': '-1',
     '[class.ngx-mat-color-toggle-active]': 'picker && picker.opened',
     '[class.mat-accent]': 'picker && picker.color === "accent"',
@@ -69,8 +67,8 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
   }
 
   private _watchStateChanges() {
-    const disabled$ = this.picker ? this.picker._disabledChange : of();
-    const inputDisabled$ = this.picker && this.picker._pickerInput ?
+    const disabled$: Observable<any> = this.picker ? this.picker._disabledChange : of();
+    const inputDisabled$: Observable<any> = this.picker && this.picker._pickerInput ?
       this.picker._pickerInput._disabledChange : of();
 
     const pickerToggled$ = this.picker ?

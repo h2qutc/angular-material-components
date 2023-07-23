@@ -1,4 +1,4 @@
-# Angular Material Extra Components (DatetimePicker, TimePicker, ColorPicker, FileInput ...) for @angular/material 7.x, 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x
+# Angular Material Extra Components (DatetimePicker, TimePicker, ColorPicker, FileInput ...) for @angular/material 7.x, 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x, 16.x
 
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
@@ -23,10 +23,16 @@ Choose the version corresponding to your Angular version:
 
  Angular     | @angular-material-components/xxx (xxx is name of package(datetime-picker, color-picker, file-input))
  ----------- | -------------------
- 10          | 4.x+              
- 9           | 2.x+              
- 8           | 2.x+              
- 7           | 2.x+                 
+ 16          | 16.x+
+ 15          | 15.x+
+ 14          | 8.x+
+ 13          | 7.x+
+ 12          | 6.x+
+ 11          | 5.x+
+ 10          | 4.x+
+ 9           | 2.x+
+ 8           | 2.x+
+ 7           | 2.x+
 
 
 ### Datetime Picker
