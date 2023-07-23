@@ -1,10 +1,4 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
+
 
 import { FactoryProvider, Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
 import { Observable, Subject } from 'rxjs';

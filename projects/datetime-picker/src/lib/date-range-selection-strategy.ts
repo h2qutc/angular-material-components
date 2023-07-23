@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import { FactoryProvider, Injectable, InjectionToken, Optional, SkipSelf } from '@angular/core';
 import { NgxMatDateAdapter } from './core/date-adapter';
 import { NgxDateRange } from './date-selection-model';

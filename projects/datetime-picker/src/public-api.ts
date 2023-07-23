@@ -16,4 +16,12 @@ export * from './lib/multi-year-view';
 export * from './lib/timepicker.component';
 export * from './lib/timepicker.module';
 export * from './lib/year-view';
-
+export * from './lib/date-range-input';
+export * from './lib/date-range-input-parts';
+export * from './lib/datepicker-actions';
+export * from './lib/datepicker-input';
+export * from './lib/datepicker-toggle';
+export * from './lib/datepicker-base';
+export * from './lib/date-range-picker';
+export * from './lib/datepicker-input';
+export * from './lib/datepicker';

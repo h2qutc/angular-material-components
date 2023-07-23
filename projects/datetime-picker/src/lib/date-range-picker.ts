@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NgxMatDatepickerBase, NgxMatDatepickerContent, NgxMatDatepickerControl} from './datepicker-base';
 import {NGX_MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER, NgxDateRange} from './date-selection-model';

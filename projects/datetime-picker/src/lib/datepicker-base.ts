@@ -429,7 +429,7 @@ export abstract class NgxMatDatepickerBase<
       this.stateChanges.next(undefined);
     }
   }
-  private _disabled: boolean;
+  public _disabled: boolean;
 
   /** Preferred position of the datepicker in the X axis. */
   @Input()
