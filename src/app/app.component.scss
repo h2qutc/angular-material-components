@@ -1,14 +1,33 @@
 .app-content {
   padding: 20px;
 }
-.sidebar-item.active {
-  background-color: #3f51b5;
-  color: white;
-}
 
+:host {
+  ::ng-deep mat-sidenav-container {
+    mat-sidenav {
+      .mat-mdc-nav-list {
+        padding: 0;
 
-.sidenav{
-  .mat-list-base{
-    padding-top: 0;
+        .sidebar-item {
+          .mdc-list-item__content {
+            .mdc-list-item__primary-text {
+              display: flex;
+              align-items: center;
+              column-gap: 8px;
+            }
+          }
+
+          &.active {
+            background-color: rgba(63,81,181,.15);
+
+            .mdc-list-item__content {
+              .mdc-list-item__primary-text {
+                color: #3f51b5;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

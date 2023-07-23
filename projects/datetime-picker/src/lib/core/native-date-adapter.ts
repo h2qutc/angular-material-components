@@ -1,10 +1,4 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
+
 
 import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, Optional } from '@angular/core';
@@ -345,9 +339,11 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
    * @returns A Date object with its UTC representation based on the passed in date info
    */
   private _format(dtf: Intl.DateTimeFormat, date: Date) {
-    const d = new Date(Date.UTC(
-      date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(),
-      date.getMinutes(), date.getSeconds(), date.getMilliseconds()));
+    // Passing the year to the constructor causes year numbers <100 to be converted to 19xx.
+    // To work around this we use `setUTCFullYear` and `setUTCHours` instead.
+    const d = new Date();
+    d.setUTCFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setUTCHours(date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
     return dtf.format(d);
   }
 }

@@ -9,7 +9,7 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class DemoDatetimeComponent implements OnInit {
 
-  @ViewChild('picker') picker: any;
+  @ViewChild('picker', { static: true }) picker: any;
 
   public disabled = false;
   public showSpinners = true;
@@ -25,7 +25,7 @@ export class DemoDatetimeComponent implements OnInit {
   public disableMinute = false;
   public hideTime = false;
 
-  public dateControl = new FormControl(null);
+  public dateControl = new FormControl(new Date());
 
   public options = [
     { value: true, label: 'True' },
@@ -43,10 +43,10 @@ export class DemoDatetimeComponent implements OnInit {
   public code3 = `<mat-form-field>
   <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
     [min]="minDate" [max]="maxDate" [disabled]="disabled">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour"
-    [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
-    [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+  <ngx-mat-datepicker-toggle matSuffix [for]="picker"></ngx-mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+    [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+    [color]="color" [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
@@ -102,9 +102,30 @@ providers: [
 
   public code8 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
 
+
+  public code9 = `<mat-form-field>
+  <input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date"
+    [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
+  <ngx-mat-datepicker-toggle matSuffix [for]="pickerCustomIcon"></ngx-mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #pickerCustomIcon [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+    [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+    [color]="color" [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+    <ngx-mat-datepicker-actions>
+      <button mat-button ngxMatDatepickerCancel>Cancel</button>
+      <button mat-raised-button color="primary" ngxMatDatepickerApply>Apply</button>
+    </ngx-mat-datepicker-actions>
+  </ngx-mat-datetime-picker>
+</mat-form-field>`;
+
   constructor() { }
 
   ngOnInit() {
+    // this.picker.closedStream.subscribe(() => {
+    //   console.log('closed');
+    // })
+    // this.picker.openedStream.subscribe(() => {
+    //   console.log('opened');
+    // })
   }
 
   toggleMinDate(evt: any) {

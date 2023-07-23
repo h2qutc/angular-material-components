@@ -1,11 +1,4 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
+import { Directionality } from '@angular/cdk/bidi';
 import {
   DOWN_ARROW,
   END,
@@ -15,8 +8,8 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW,
   SPACE,
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
@@ -25,14 +18,23 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   Optional,
   Output,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {Directionality} from '@angular/cdk/bidi';
-import { MatCalendarBody, MatCalendarCell } from '@angular/material/datepicker';
+import { Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+import {
+  NgxMatCalendarBody,
+  NgxMatCalendarCell,
+  NgxMatCalendarCellClassFunction,
+  NgxMatCalendarUserEvent,
+} from './calendar-body';
 import { NgxMatDateAdapter } from './core/date-adapter';
+import { NgxDateRange } from './date-selection-model';
+import { createMissingDateImplError } from './datepicker-errors';
 
 export const yearsPerPage = 24;
 
@@ -47,20 +49,35 @@ export const yearsPerRow = 4;
   templateUrl: 'multi-year-view.html',
   exportAs: 'ngxMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatMultiYearView<D> implements AfterContentInit {
+export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
+  private _rerenderSubscription = Subscription.EMPTY;
+
+  /** Flag used to filter out space/enter keyup events that originated outside of the view. */
+  private _selectionKeyPressed: boolean;
+
   /** The date to display in this multi-year view (everything other than the year is ignored). */
   @Input()
-  get activeDate(): D { return this._activeDate; }
+  get activeDate(): D {
+    return this._activeDate;
+  }
   set activeDate(value: D) {
     let oldActiveDate = this._activeDate;
     const validDate =
-        this._getValidDateOrNull(this._dateAdapter.deserialize(value)) || this._dateAdapter.today();
+      this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) ||
+      this._dateAdapter.today();
     this._activeDate = this._dateAdapter.clampDate(validDate, this.minDate, this.maxDate);
 
-    if (!isSameMultiYearView(
-      this._dateAdapter, oldActiveDate, this._activeDate, this.minDate, this.maxDate)) {
+    if (
+      !isSameMultiYearView(
+        this._dateAdapter,
+        oldActiveDate,
+        this._activeDate,
+        this.minDate,
+        this.maxDate,
+      )
+    ) {
       this._init();
     }
   }
@@ -68,31 +85,45 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
 
   /** The currently selected date. */
   @Input()
-  get selected(): D | null { return this._selected; }
-  set selected(value: D | null) {
-    this._selected = this._getValidDateOrNull(this._dateAdapter.deserialize(value));
-    this._selectedYear = this._selected && this._dateAdapter.getYear(this._selected);
+  get selected(): NgxDateRange<D> | D | null {
+    return this._selected;
   }
-  private _selected: D | null;
+  set selected(value: NgxDateRange<D> | D | null) {
+    if (value instanceof NgxDateRange) {
+      this._selected = value;
+    } else {
+      this._selected = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+    }
+
+    this._setSelectedYear(value);
+  }
+  private _selected: NgxDateRange<D> | D | null;
 
   /** The minimum selectable date. */
   @Input()
-  get minDate(): D | null { return this._minDate; }
+  get minDate(): D | null {
+    return this._minDate;
+  }
   set minDate(value: D | null) {
-    this._minDate = this._getValidDateOrNull(this._dateAdapter.deserialize(value));
+    this._minDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
   }
   private _minDate: D | null;
 
   /** The maximum selectable date. */
   @Input()
-  get maxDate(): D | null { return this._maxDate; }
+  get maxDate(): D | null {
+    return this._maxDate;
+  }
   set maxDate(value: D | null) {
-    this._maxDate = this._getValidDateOrNull(this._dateAdapter.deserialize(value));
+    this._maxDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
   }
   private _maxDate: D | null;
 
   /** A function used to filter which dates are selectable. */
   @Input() dateFilter: (date: D) => boolean;
+
+  /** Function that can be used to add custom CSS classes to date cells. */
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
 
   /** Emits when a new year is selected. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -104,10 +135,10 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(MatCalendarBody) _matCalendarBody: MatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: MatCalendarCell[][];
+  _years: NgxMatCalendarCell[][];
 
   /** The year that today falls on. */
   _todayYear: number;
@@ -115,15 +146,26 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
   /** The year of the selected date. Null if the selected date is null. */
   _selectedYear: number | null;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef,
-              @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
-              @Optional() private _dir?: Directionality) {
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef,
+    @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
+    @Optional() private _dir?: Directionality,
+  ) {
+    if (!this._dateAdapter) {
+      throw createMissingDateImplError('NgxMatDateAdapter');
+    }
 
     this._activeDate = this._dateAdapter.today();
   }
 
   ngAfterContentInit() {
-    this._init();
+    this._rerenderSubscription = this._dateAdapter.localeChanges
+      .pipe(startWith(null))
+      .subscribe(() => this._init());
+  }
+
+  ngOnDestroy() {
+    this._rerenderSubscription.unsubscribe();
   }
 
   /** Initializes this multi-year view. */
@@ -137,8 +179,8 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
     // The offset from the active year to the "slot" for the starting year is the
     // *actual* first rendered year in the multi-year view.
     const activeYear = this._dateAdapter.getYear(this._activeDate);
-    const minYearOfPage = activeYear - getActiveOffset(
-      this._dateAdapter, this.activeDate, this.minDate, this.maxDate);
+    const minYearOfPage =
+      activeYear - getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate);
 
     this._years = [];
     for (let i = 0, row: number[] = []; i < yearsPerPage; i++) {
@@ -152,13 +194,33 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
   }
 
   /** Handles when a new year is selected. */
-  _yearSelected(year: number) {
-    this.yearSelected.emit(this._dateAdapter.createDate(year, 0, 1));
-    let month = this._dateAdapter.getMonth(this.activeDate);
-    let daysInMonth =
-        this._dateAdapter.getNumDaysInMonth(this._dateAdapter.createDate(year, month, 1));
-    this.selectedChange.emit(this._dateAdapter.createDate(year, month,
-        Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth)));
+  _yearSelected(event: NgxMatCalendarUserEvent<number>) {
+    const year = event.value;
+    const selectedYear = this._dateAdapter.createDate(year, 0, 1);
+    const selectedDate = this._getDateFromYear(year);
+
+    this.yearSelected.emit(selectedYear);
+    this.selectedChange.emit(selectedDate);
+  }
+
+  /**
+   * Takes the index of a calendar body cell wrapped in in an event as argument. For the date that
+   * corresponds to the given cell, set `activeDate` to that date and fire `activeDateChange` with
+   * that date.
+   *
+   * This function is used to match each component's model of the active date with the calendar
+   * body cell that was focused. It updates its value of `activeDate` synchronously and updates the
+   * parent's value asynchronously via the `activeDateChange` event. The child component receives an
+   * updated value asynchronously via the `activeCell` Input.
+   */
+  _updateActiveDate(event: NgxMatCalendarUserEvent<number>) {
+    const year = event.value;
+    const oldActiveDate = this._activeDate;
+
+    this.activeDate = this._getDateFromYear(year);
+    if (this._dateAdapter.compareDate(oldActiveDate, this.activeDate)) {
+      this.activeDateChange.emit(this.activeDate);
+    }
   }
 
   /** Handles keydown events on the calendar body when calendar is in multi-year view. */
@@ -180,27 +242,38 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
         this.activeDate = this._dateAdapter.addCalendarYears(this._activeDate, yearsPerRow);
         break;
       case HOME:
-        this.activeDate = this._dateAdapter.addCalendarYears(this._activeDate,
-          -getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate));
+        this.activeDate = this._dateAdapter.addCalendarYears(
+          this._activeDate,
+          -getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate),
+        );
         break;
       case END:
-        this.activeDate = this._dateAdapter.addCalendarYears(this._activeDate,
-          yearsPerPage - getActiveOffset(
-            this._dateAdapter, this.activeDate, this.minDate, this.maxDate) - 1);
+        this.activeDate = this._dateAdapter.addCalendarYears(
+          this._activeDate,
+          yearsPerPage -
+          getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate) -
+          1,
+        );
         break;
       case PAGE_UP:
-        this.activeDate =
-            this._dateAdapter.addCalendarYears(
-                this._activeDate, event.altKey ? -yearsPerPage * 10 : -yearsPerPage);
+        this.activeDate = this._dateAdapter.addCalendarYears(
+          this._activeDate,
+          event.altKey ? -yearsPerPage * 10 : -yearsPerPage,
+        );
         break;
       case PAGE_DOWN:
-        this.activeDate =
-            this._dateAdapter.addCalendarYears(
-                this._activeDate, event.altKey ? yearsPerPage * 10 : yearsPerPage);
+        this.activeDate = this._dateAdapter.addCalendarYears(
+          this._activeDate,
+          event.altKey ? yearsPerPage * 10 : yearsPerPage,
+        );
         break;
       case ENTER:
       case SPACE:
-        this._yearSelected(this._dateAdapter.getYear(this._activeDate));
+        // Note that we only prevent the default action here while the selection happens in
+        // `keyup` below. We can't do the selection here, because it can cause the calendar to
+        // reopen if focus is restored immediately. We also can't call `preventDefault` on `keyup`
+        // because it's too late (see #23305).
+        this._selectionKeyPressed = true;
         break;
       default:
         // Don't prevent default or focus active cell on keys that we don't explicitly handle.
@@ -210,9 +283,20 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
       this.activeDateChange.emit(this.activeDate);
     }
 
-    this._focusActiveCell();
+    this._focusActiveCellAfterViewChecked();
     // Prevent unexpected default actions such as form submission.
     event.preventDefault();
+  }
+
+  /** Handles keyup events on the calendar body when calendar is in multi-year view. */
+  _handleCalendarBodyKeyup(event: KeyboardEvent): void {
+    if (event.keyCode === SPACE || event.keyCode === ENTER) {
+      if (this._selectionKeyPressed) {
+        this._yearSelected({ value: this._dateAdapter.getYear(this._activeDate), event });
+      }
+
+      this._selectionKeyPressed = false;
+    }
   }
 
   _getActiveCell(): number {
@@ -224,18 +308,46 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
     this._matCalendarBody._focusActiveCell();
   }
 
+  /** Focuses the active cell after change detection has run and the microtask queue is empty. */
+  _focusActiveCellAfterViewChecked() {
+    this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
+  }
+
+  /**
+   * Takes a year and returns a new date on the same day and month as the currently active date
+   *  The returned date will have the same year as the argument date.
+   */
+  private _getDateFromYear(year: number) {
+    const activeMonth = this._dateAdapter.getMonth(this.activeDate);
+    const daysInMonth = this._dateAdapter.getNumDaysInMonth(
+      this._dateAdapter.createDate(year, activeMonth, 1),
+    );
+    const normalizedDate = this._dateAdapter.createDate(
+      year,
+      activeMonth,
+      Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth),
+    );
+    return normalizedDate;
+  }
+
   /** Creates an MatCalendarCell for the given year. */
   private _createCellForYear(year: number) {
-    let yearName = this._dateAdapter.getYearName(this._dateAdapter.createDate(year, 0, 1));
-    return new MatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year));
+    const date = this._dateAdapter.createDate(year, 0, 1);
+    const yearName = this._dateAdapter.getYearName(date);
+    const cellClasses = this.dateClass ? this.dateClass(date, 'multi-year') : undefined;
+
+    return new NgxMatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year), cellClasses);
   }
 
   /** Whether the given year is enabled. */
   private _shouldEnableYear(year: number) {
     // disable if the year is greater than maxDate lower than minDate
-    if (year === undefined || year === null ||
-        (this.maxDate && year > this._dateAdapter.getYear(this.maxDate)) ||
-        (this.minDate && year < this._dateAdapter.getYear(this.minDate))) {
+    if (
+      year === undefined ||
+      year === null ||
+      (this.maxDate && year > this._dateAdapter.getYear(this.maxDate)) ||
+      (this.minDate && year < this._dateAdapter.getYear(this.minDate))
+    ) {
       return false;
     }
 
@@ -247,8 +359,11 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
     const firstOfYear = this._dateAdapter.createDate(year, 0, 1);
 
     // If any date in the year is enabled count the year as enabled.
-    for (let date = firstOfYear; this._dateAdapter.getYear(date) == year;
-      date = this._dateAdapter.addCalendarDays(date, 1)) {
+    for (
+      let date = firstOfYear;
+      this._dateAdapter.getYear(date) == year;
+      date = this._dateAdapter.addCalendarDays(date, 1)
+    ) {
       if (this.dateFilter(date)) {
         return true;
       }
@@ -257,27 +372,41 @@ export class NgxMatMultiYearView<D> implements AfterContentInit {
     return false;
   }
 
-  /**
-   * @param obj The object to check.
-   * @returns The given object if it is both a date instance and valid, otherwise null.
-   */
-  private _getValidDateOrNull(obj: any): D | null {
-    return (this._dateAdapter.isDateInstance(obj) && this._dateAdapter.isValid(obj)) ? obj : null;
-  }
-
   /** Determines whether the user has the RTL layout direction. */
   private _isRtl() {
     return this._dir && this._dir.value === 'rtl';
   }
+
+  /** Sets the currently-highlighted year based on a model value. */
+  private _setSelectedYear(value: NgxDateRange<D> | D | null) {
+    this._selectedYear = null;
+
+    if (value instanceof NgxDateRange) {
+      const displayValue = value.start || value.end;
+
+      if (displayValue) {
+        this._selectedYear = this._dateAdapter.getYear(displayValue);
+      }
+    } else if (value) {
+      this._selectedYear = this._dateAdapter.getYear(value);
+    }
+  }
 }
 
 export function isSameMultiYearView<D>(
-  dateAdapter: NgxMatDateAdapter<D>, date1: D, date2: D, minDate: D | null, maxDate: D | null): boolean {
+  dateAdapter: NgxMatDateAdapter<D>,
+  date1: D,
+  date2: D,
+  minDate: D | null,
+  maxDate: D | null,
+): boolean {
   const year1 = dateAdapter.getYear(date1);
   const year2 = dateAdapter.getYear(date2);
   const startingYear = getStartingYear(dateAdapter, minDate, maxDate);
-  return Math.floor((year1 - startingYear) / yearsPerPage) ===
-          Math.floor((year2 - startingYear) / yearsPerPage);
+  return (
+    Math.floor((year1 - startingYear) / yearsPerPage) ===
+    Math.floor((year2 - startingYear) / yearsPerPage)
+  );
 }
 
 /**
@@ -286,10 +415,13 @@ export function isSameMultiYearView<D>(
  * "startingYear" will render when paged into view.
  */
 export function getActiveOffset<D>(
-  dateAdapter: NgxMatDateAdapter<D>, activeDate: D, minDate: D | null, maxDate: D | null): number {
+  dateAdapter: NgxMatDateAdapter<D>,
+  activeDate: D,
+  minDate: D | null,
+  maxDate: D | null,
+): number {
   const activeYear = dateAdapter.getYear(activeDate);
-  return euclideanModulo((activeYear - getStartingYear(dateAdapter, minDate, maxDate)),
-    yearsPerPage);
+  return euclideanModulo(activeYear - getStartingYear(dateAdapter, minDate, maxDate), yearsPerPage);
 }
 
 /**
@@ -297,7 +429,10 @@ export function getActiveOffset<D>(
  * or the minimum year would be at the beginning of a page.
  */
 function getStartingYear<D>(
-  dateAdapter: NgxMatDateAdapter<D>, minDate: D | null, maxDate: D | null): number {
+  dateAdapter: NgxMatDateAdapter<D>,
+  minDate: D | null,
+  maxDate: D | null,
+): number {
   let startingYear = 0;
   if (maxDate) {
     const maxYear = dateAdapter.getYear(maxDate);
@@ -309,6 +444,6 @@ function getStartingYear<D>(
 }
 
 /** Gets remainder that is non-negative, even if first number is negative */
-function euclideanModulo (a: number, b: number): number {
-  return (a % b + b) % b;
+function euclideanModulo(a: number, b: number): number {
+  return ((a % b) + b) % b;
 }

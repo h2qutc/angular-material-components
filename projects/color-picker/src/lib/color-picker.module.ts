@@ -9,14 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import {
+  NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
   NgxMatColorCanvasComponent,
   NgxMatColorCollectionComponent,
   NgxMatColorPaletteComponent,
   NgxMatColorPickerComponent,
+  NgxMatColorPickerContentComponent,
   NgxMatColorPickerInput, NgxMatColorSliderComponent,
-  NgxMatColorToggleComponent,
-  NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
-  NgxMatColorPickerContentComponent
+  NgxMatColorToggleComponent
 } from './components';
 import { NumericColorInputDirective } from './directives';
 import { ColorAdapter } from './services';

@@ -7,17 +7,20 @@
     "declaration": false,
     "module": "esnext",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2018",
+      "es5",
+      "es2015",
       "dom"
+    ],
+    "types": [
+      "node"
     ],
     "paths": {
       "@angular-material-components/*": [
@@ -41,6 +44,7 @@
       "file-input/*": [
         "dist/file-input/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }

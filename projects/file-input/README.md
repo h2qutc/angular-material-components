@@ -1,4 +1,4 @@
-# Angular Material File Input for @angular/material 7.x, 8.x, 9.x
+# Angular Material File Input for @angular/material 7.x, 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x
 
 [![Build Status](https://travis-ci.com/h2qutc/angular-material-components.svg?branch=master)](https://travis-ci.com/h2qutc/angular-material-components)
 [![License](https://img.shields.io/npm/l/angular-material-components.svg)](https://www.npmjs.com/package/angular-material-components)
@@ -8,7 +8,7 @@
 
 An Angular Material File Input.
 
-[![button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SAAY32BP5KPPC&source=url)
+<a href="https://www.buymeacoffee.com/h2qutc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## DEMO
 
@@ -17,6 +17,20 @@ An Angular Material File Input.
 @see [LIVE DEMO](https://h2qutc.github.io/angular-material-components/)
 
 ![Alt Text](demo_file_input.png)
+
+Choose the version corresponding to your Angular version:
+
+ Angular     | @angular-material-components/file-input
+ ----------- | -------------------
+ 15          | 9.x+
+ 14          | 8.x+
+ 13          | 7.x+
+ 12          | 6.x+
+ 11          | 5.x+
+ 10          | 4.x+
+ 9           | 2.x+
+ 8           | 2.x+
+ 7           | 2.x+
 
 ## Getting started
 

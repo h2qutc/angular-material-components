@@ -8,7 +8,7 @@ import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
 import { Subscription } from 'rxjs';
 import { createMissingDateImplError } from '../../helpers';
 import { Color } from '../../models';
-import { ColorAdapter, MatColorFormats, MAT_COLOR_FORMATS } from '../../services';
+import { ColorAdapter, MAT_COLOR_FORMATS, MatColorFormats } from '../../services';
 import { NgxMatColorPickerComponent } from './color-picker.component';
 
 export class NgxMatColorPickerInputEvent {

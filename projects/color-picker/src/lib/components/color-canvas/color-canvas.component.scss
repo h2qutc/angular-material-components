@@ -1,12 +1,13 @@
-
 $sizeButtonPreview: 40px;
 
 .ngx-mat-color-canvas {
-  .row {
+  .color-canvas-row {
     display: flex;
+
     &:first-of-type {
-      height: 200px;
+      height: 235px;
       margin-bottom: 12px;
+
       .card {
         height: 180px;
       }
@@ -19,9 +20,10 @@ $sizeButtonPreview: 40px;
     .zone {
       display: flex;
 
-      &-canvas{
-        height: 200px;
-        .zone-block{
+      &-canvas {
+        height: 235px;
+
+        .zone-block {
           border: 1px solid rgba(0, 0, 0, 0.12);
         }
       }
@@ -33,8 +35,8 @@ $sizeButtonPreview: 40px;
 
       &-inputs {
         display: flex;
-        width: 40px;
-        height: 200px;
+        width: 60px;
+        height: 235px;
         flex-direction: column;
         margin-left: 16px;
         margin-top: 12px;
@@ -43,33 +45,46 @@ $sizeButtonPreview: 40px;
 
     &:nth-of-type(2) {
       display: flex;
+
       .preview {
         min-width: $sizeButtonPreview;
         min-height: $sizeButtonPreview;
         height: $sizeButtonPreview;
         width: $sizeButtonPreview;
+        margin-top: 12px;
       }
 
-      .mat-form-field {
+      .mat-mdc-form-field {
         margin-left: 16px;
+
         &:first-of-type {
           width: 170px;
-          .symbol{
+
+          .symbol {
             font-weight: bold;
-            color: rgba(0,0,0,.54);
+            color: rgba(0, 0, 0, .54);
           }
         }
 
         &:last-of-type {
-          width: 40px;
+          width: 60px;
+
+          .mat-mdc-text-field-wrapper {
+            padding: 0 8px;
+          }
         }
       }
     }
   }
 
-  .mat-form-field {
+  .mat-mdc-form-field {
     &-label {
       font-weight: bold;
     }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: transparent;
+    }
+
   }
 }

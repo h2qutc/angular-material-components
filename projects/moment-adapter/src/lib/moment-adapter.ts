@@ -1,10 +1,4 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
+
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -270,7 +264,7 @@ export class NgxMatMomentAdapter extends NgxMatDateAdapter<Moment> {
 
   /** Creates a Moment instance while respecting the current UTC settings. */
   private _createMoment(
-    date: MomentInput,
+    date?: MomentInput,
     format?: MomentFormatSpecification,
     locale?: string,
   ): Moment {

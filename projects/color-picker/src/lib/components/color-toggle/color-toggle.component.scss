@@ -1,4 +1,4 @@
-.mat-form-field-appearance-legacy {
+.mat-form-field-appearance {
     .mat-form-field-prefix,
     .mat-form-field-suffix {
       .ngx-mat-color-toggle-default-icon {
@@ -7,7 +7,7 @@
     }
   }
   
-  .mat-form-field:not(.mat-form-field-appearance-legacy) {
+  .mat-form-field:not(.mat-form-field-appearance) {
     .mat-form-field-prefix,
     .mat-form-field-suffix {
       .ngx-mat-color-toggle-default-icon {

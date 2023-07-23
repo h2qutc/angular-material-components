@@ -67,16 +67,20 @@
     </mat-tab>
     <mat-tab label="Example">
         <mat-card class="zone zone-value">
-            <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
-            <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+            <mat-card-content>
+                <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
+                <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+            </mat-card-content>
         </mat-card>
 
         <mat-card class="zone zone-picker">
-            <mat-form-field>
-                <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
-                <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-                <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
-            </mat-form-field>
+            <mat-card-content>
+                <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
+                    <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+                </mat-form-field>
+            </mat-card-content>
         </mat-card>
 
         <mat-card class="zone zone-config">
@@ -101,6 +105,7 @@
 
         </mat-card>
 
+        <pre><code ngxMatHighlight class="language-typescript">{{code6}}</code></pre>
         <pre><code ngxMatHighlight class="html">{{code3}}</code></pre>
 
     </mat-tab>
