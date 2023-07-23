@@ -81,4 +81,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [NgxMatDatepickerIntl, NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER],
 })
-export class NgxMatDatepickerModule { }
+export class NgxMatDatetimePickerModule { }
