@@ -2,12 +2,12 @@ name: deploy-demo
 on:
   push:
     branches:
-      - 'develop_angular11'
+      - 'master'
     paths-ignore:
       - 'docs/**'
   pull_request:
     branches:
-      - 'develop_angular11'
+      - 'master'
     paths-ignore:
       - 'docs/**'
 jobs:
