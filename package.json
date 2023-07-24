@@ -34,7 +34,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build -c=production",
     "build:datetime-picker": "ng build NgxMatDatetimePicker",
     "build:moment-adapter": "ng build NgxMatMomentAdapter",
     "build:color-picker": "ng build NgxMatColorPicker",
@@ -47,7 +47,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "codecov": "codecov",
-    "build:ci": "ng build --prod --output-path docs --base-href 'https://h2qutc.github.io/angular-material-components/'"
+    "build:ci": "ng build -c=production --output-path docs --base-href 'https://h2qutc.github.io/angular-material-components/'"
   },
   "private": false,
   "dependencies": {
