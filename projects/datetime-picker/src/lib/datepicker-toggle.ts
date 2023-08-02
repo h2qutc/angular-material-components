@@ -25,7 +25,7 @@ import { NgxMatDatepickerIntl } from './datepicker-intl';
 @Directive({
   selector: '[ngxMatDatepickerToggleIcon]',
 })
-export class MatDatepickerToggleIcon { }
+export class NgxMatDatepickerToggleIcon { }
 
 @Component({
   selector: 'ngx-mat-datepicker-toggle',
@@ -78,7 +78,7 @@ export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, O
   @Input() disableRipple: boolean;
 
   /** Custom icon set by the consumer. */
-  @ContentChild(MatDatepickerToggleIcon) _customIcon: MatDatepickerToggleIcon;
+  @ContentChild(NgxMatDatepickerToggleIcon) _customIcon: NgxMatDatepickerToggleIcon;
 
   /** Underlying button element. */
   @ViewChild('button') _button: MatButton;

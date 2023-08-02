@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -36,6 +37,7 @@ const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatIconModule,
     SharedModule
   ],
   providers: [

@@ -23,7 +23,8 @@ export class DemoTimeComponent implements OnInit {
               [showSpinners]="showSpinners"
               [stepHour]="stepHour" [stepMinute]="stepMinute" 
               [stepSecond]="stepSecond" 
-              [showSeconds]="showSeconds">
+              [showSeconds]="showSeconds"
+              [color]="color">
   </ngx-mat-timepicker>`;
 
 

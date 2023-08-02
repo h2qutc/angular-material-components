@@ -117,6 +117,18 @@ providers: [
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
+public code10 = `<mat-form-field>
+<input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date"
+  [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
+<ngx-mat-datepicker-toggle matSuffix [for]="pickerCustomIcon">
+  <mat-icon ngxMatDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+</ngx-mat-datepicker-toggle>
+<ngx-mat-datetime-picker #pickerCustomIcon [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+  [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+  [color]="color" [enableMeridian]="enableMeridian" [disableMinute]="disableMinute" [hideTime]="hideTime">
+</ngx-mat-datetime-picker>
+</mat-form-field>`;
+
   constructor() { }
 
   ngOnInit() {
