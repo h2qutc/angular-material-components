@@ -7,17 +7,17 @@
         </div>
 
         <div class="zone-inputs">
-            <mat-form-field>
+            <mat-form-field [color]="theme">
                 <mat-label>R</mat-label>
                 <input matInput formControlName="r" ngxMatNumericColorInput autocomplete="off">
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field [color]="theme">
                 <mat-label>G</mat-label>
                 <input matInput formControlName="g" ngxMatNumericColorInput autocomplete="off">
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field [color]="theme">
                 <mat-label>B</mat-label>
                 <input matInput formControlName="b" ngxMatNumericColorInput autocomplete="off">
             </mat-form-field>
@@ -26,12 +26,12 @@
 
     <div class="color-canvas-row">
         <button mat-mini-fab [style.background-color]="color?.rgba || 'transparent'" class="preview"></button>
-        <mat-form-field>
+        <mat-form-field [color]="theme">
             <mat-label>HEX6</mat-label>
             <mat-label matPrefix class="symbol">#&nbsp;</mat-label>
             <input matInput formControlName="hex" autocomplete="off">
         </mat-form-field>
-        <mat-form-field class="input-opacity">
+        <mat-form-field class="input-opacity" [color]="theme">
             <mat-label>A</mat-label>
             <input matInput formControlName="a" type="number" min="0" max="1" step="0.1" autocomplete="off">
         </mat-form-field>

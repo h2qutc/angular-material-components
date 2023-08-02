@@ -1,10 +1,15 @@
 import {
-  AfterContentInit, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy,
+  AfterContentInit, ChangeDetectorRef, Component, ContentChild, Directive, Input, OnChanges, OnDestroy,
   OnInit, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { Subscription, merge, of } from 'rxjs';
 import { NgxMatColorPickerComponent } from '../color-picker/color-picker.component';
+
+@Directive({
+  selector: '[ngxMatColorpickerToggleIcon]',
+})
+export class NgxMatColorpickerToggleIcon { }
 
 @Component({
   selector: 'ngx-mat-color-toggle',
@@ -39,6 +44,12 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
     this._disabled = value;
   }
   private _disabled: boolean;
+
+  /** Whether ripples on the toggle should be disabled. */
+  @Input() disableRipple: boolean;
+
+  /** Custom icon set by the consumer. */
+  @ContentChild(NgxMatColorpickerToggleIcon) _customIcon: NgxMatColorpickerToggleIcon;
 
   @ViewChild('button') _button: MatButton;
 

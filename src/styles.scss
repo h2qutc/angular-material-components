@@ -1,7 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+@include mat.core();
+
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~highlight.js/styles/github.css';
+
 
 body {
   margin: 0;
 }
+
+pre {
+  background: rgba(0, 0, 0, 0.01);
+  border: 0.5px solid rgba(0, 155, 119, 0.03);
+  border-radius: 5px;
+  display: block;
+  overflow-x: auto;
+  padding: 20px;
+  white-space: pre-wrap;
+  font-family: Roboto Mono, monospace;
+
+  code {
+    font-size: 100%;
+  }
+}
+
+$ngxMat-palette: (
+  50: #009B77,
+  100: #009B77,
+  200: #009B77,
+  300: #009B77,
+  400: #009B77,
+  500: #009B77,
+  600: #009B77,
+  700: #009B77,
+  800: #009B77,
+  900: #009B77,
+  contrast: (50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$ngxMat-primary: mat.define-palette($ngxMat-palette, 500);
+$ngxMat-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+
+$ngxMat-theme: mat.define-light-theme((color: (primary: $ngxMat-primary,
+        accent: $ngxMat-accent,
+      ),
+      typography: mat.define-typography-config(),
+      density: 0,
+    ));
+
+@include mat.all-component-themes($ngxMat-theme);

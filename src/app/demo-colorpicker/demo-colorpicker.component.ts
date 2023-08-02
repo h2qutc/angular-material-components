@@ -14,7 +14,7 @@ export class DemoColorpickerComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public touchUi = false;
 
-  colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);
+  colorCtr: AbstractControl = new FormControl(new Color(0, 255, 255), [Validators.required]);
 
   public options = [
     { value: true, label: 'True' },
@@ -29,7 +29,7 @@ export class DemoColorpickerComponent implements OnInit {
   <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
 </mat-form-field>`;
 
-public code6 = `
+  public code6 = `
 import { Color } from '@angular-material-components/color-picker';
 colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);`
 
@@ -53,8 +53,8 @@ colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.
  })
  export class AppModule { }`;
 
-  public code4 = 
-`export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
+  public code4 =
+    `export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     display: {
         colorInput: 'hex'
     }
@@ -71,6 +71,13 @@ export class AppModule { }`;
 
   public code5 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
 
+  public code7 = `<mat-form-field>
+  <input matInput [ngxMatColorPicker]="pickerCustomIcon" [formControl]="colorCtr" [disabled]="disabled">
+  <ngx-mat-color-toggle matSuffix [for]="pickerCustomIcon">
+    <mat-icon ngxMatColorpickerToggleIcon>keyboard_arrow_down</mat-icon>
+  </ngx-mat-color-toggle>
+  <ngx-mat-color-picker #pickerCustomIcon [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+</mat-form-field>`;
 
   constructor() { }
 
