@@ -13,6 +13,8 @@ Feel free to open the [issues](https://github.com/h2qutc/angular-material-compon
 
 If you like this project, support angular-material-components by starring⭐.
 
+And thank you so much for your coffee ❤️ 
+
 <a href="https://www.buymeacoffee.com/h2qutc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## DEMO Angular Material Components
@@ -21,12 +23,18 @@ If you like this project, support angular-material-components by starring⭐.
 
 Choose the version corresponding to your Angular version:
 
- Angular     | @angular-material-components/xxx (xxx is name of package(datetime-picker, color-picker, file-input))
+ Angular     | @angular-material-components/datetime-picker
  ----------- | -------------------
- 10          | 4.x+              
- 9           | 2.x+              
- 8           | 2.x+              
- 7           | 2.x+                 
+ 16          | 16.x+
+ 15          | 15.x+ OR 9.x+ for legacy import
+ 14          | 8.x+
+ 13          | 7.x+
+ 12          | 6.x+
+ 11          | 5.x+
+ 10          | 4.x+
+ 9           | 2.x+
+ 8           | 2.x+
+ 7           | 2.x+
 
 
 ### Datetime Picker

@@ -1,5 +1,10 @@
-<mat-tab-group>
+<mat-tab-group [mat-stretch-tabs]="false">
   <mat-tab label="API">
+    <p>Thank you so much for your coffee ❤️ </p>
+    <a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
+      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+        style="height: 35px !important;width: 150px !important;">
+    </a>
     <h1>API reference for @angular-material-components/file-input</h1>
     <h2>Getting started</h2>
 
@@ -7,7 +12,7 @@
       <img src="https://badge.fury.io/js/%40angular-material-components%2Ffile-input.svg">
     </a>
 
-    <pre><code>{{code1}}</code></pre>
+    <pre><code ngxMatHighlight>{{code1}}</code></pre>
 
     <h2>Setup</h2>
     <pre><code ngxMatHighlight class="language-typescript">{{code2}}</code></pre>
@@ -81,69 +86,77 @@
   </mat-tab>
   <mat-tab label="Example">
     <mat-card class="zone zone-picker">
-      <mat-form-field>
-        <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept" [color]="color">
-          <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
-        </ngx-mat-file-input>
-      </mat-form-field>
+      <mat-card-content>
+        <mat-form-field>
+          <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept" [color]="color">
+            <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </mat-card-content>
     </mat-card>
 
     <mat-card class="zone zone-value flex-column">
 
-      <div class="title">Selected file(s):</div>
-      <div class="value">
-        <ul>
-          <li *ngFor="let item of files">{{item?.name}}</li>
-        </ul>
-      </div>
+      <mat-card-content>
+        <div class="title">Selected file(s):</div>
+        <div class="value">
+          <ul>
+            <li *ngFor="let item of files">{{item?.name}}</li>
+          </ul>
+        </div>
+      </mat-card-content>
     </mat-card>
 
     <mat-card class="zone zone-errors flex-column">
-      <div class="title">Errors (Max size: {{maxSize}}Ko)</div>
-      <div class="value">{{fileControl.errors | json}}</div>
+      <mat-card-content>
+        <div class="title">Errors (Max size: {{maxSize}}Ko)</div>
+        <div class="value">{{fileControl.errors | json}}</div>
+      </mat-card-content>
     </mat-card>
 
     <mat-card class="zone zone-config">
-      <div class="config-wrapper">
-        <span class="label">disabled (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [ngModel]="disabled" (ngModelChange)="onDisabledChanged($event)">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
+      <mat-card-content>
+        <div class="config-wrapper">
+          <span class="label">disabled (Default: false) </span>
+          <mat-radio-group aria-label="Select an option" [ngModel]="disabled"
+            (ngModelChange)="onDisabledChanged($event)">
+            <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+              {{option.label}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-      <div class="config-wrapper">
-        <span class="label">multiple (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="multiple">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
-        </mat-radio-group>
-      </div>
+        <div class="config-wrapper">
+          <span class="label">multiple (Default: false) </span>
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="multiple">
+            <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
+              {{option.label}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-      <div class="config-wrapper">
-        <span class="label">accept (Default: null) </span>
-        <mat-form-field>
-          <mat-label>Select accept</mat-label>
-          <mat-select [(ngModel)]="accept">
-            <mat-option *ngFor="let item of listAccepts" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+        <div class="config-wrapper">
+          <span class="label">accept (Default: null) </span>
+          <mat-form-field>
+            <mat-label>Select accept</mat-label>
+            <mat-select [(ngModel)]="accept">
+              <mat-option *ngFor="let item of listAccepts" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-      <div class="config-wrapper">
-        <span class="label">color (Default: primary) </span>
-        <mat-form-field>
-          <mat-label>Select color</mat-label>
-          <mat-select [(ngModel)]="color">
-            <mat-option *ngFor="let item of listColors" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
+        <div class="config-wrapper">
+          <span class="label">color (Default: primary) </span>
+          <mat-form-field>
+            <mat-label>Select color</mat-label>
+            <mat-select [(ngModel)]="color">
+              <mat-option *ngFor="let item of listColors" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
     </mat-card>
 
     <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>

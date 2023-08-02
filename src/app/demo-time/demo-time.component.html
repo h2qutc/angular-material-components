@@ -1,12 +1,20 @@
+<p>Thank you so much for your coffee ❤️ </p>
+<a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+        style="height: 35px !important;width: 150px !important;">
+</a>
+
 <h2>See <a [routerLink]="['/datetimepicker']">API Datetime-picker</a> for more details</h2>
 
 <mat-card class="zone zone-picker">
-  <mat-card-header>Selected date: {{date?.toLocaleString()}}</mat-card-header>
   <mat-card-content>
     <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
       [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
       [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
     </ngx-mat-timepicker>
+
+    <h4>Selected date: {{date?.toLocaleString()}}</h4>
+
   </mat-card-content>
 </mat-card>
 

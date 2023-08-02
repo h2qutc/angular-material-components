@@ -1,7 +1,7 @@
-import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 /**
- * 
+ * Validator for input file accept
  * @param accept Allowable type of file
  */
 export function AcceptValidator(accept: string): ValidatorFn {

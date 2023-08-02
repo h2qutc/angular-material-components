@@ -1,21 +1,20 @@
 <mat-toolbar color="primary" class="header">
-  <span class="title">{{nameApp}}</span>
+
   <button mat-button class="app-menu-button" (click)="sidenav.toggle()">
     <i class="material-icons">menu</i>
   </button>
-  <a mat-button href="https://github.com/h2qutc/angular-material-components">
-    <img src="./assets/GitHub-Mark-Light-32px.png" />
-  </a>
+  <span class="title">{{nameApp}}</span>
 
-  <a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-      style="height: 35px !important;width: 150px !important;">
-  </a>
+  <ng-container *ngIf="!isHandset">
+    <a mat-button href="https://github.com/h2qutc/angular-material-components">
+      <img src="./assets/GitHub-Mark-Light-32px.png" />
+    </a>
+  </ng-container>
 
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav">
-  <mat-sidenav #sidenav mode="side" opened [fixedInViewport]="false" [fixedBottomGap]="0">
+  <mat-sidenav #sidenav [mode]="sidenavMode" [opened]="sidenavOpened" [disableClose]="!isHandset" [fixedInViewport]="false" [fixedBottomGap]="0">
     <mat-nav-list>
       <a mat-list-item routerLink="/home" routerLinkActive="active" class="sidebar-item">
         <mat-icon>home</mat-icon>
