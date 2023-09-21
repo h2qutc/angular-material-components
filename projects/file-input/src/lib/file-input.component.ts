@@ -1,6 +1,21 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectorRef, Component, ContentChild, Directive, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  Directive,
+  DoCheck,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  Optional,
+  Self,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -223,6 +238,7 @@ export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements M
     this._ariaDescribedby = ids.join(' ');
   }
 
+  @HostListener('click', ['$event'])
   openFilePicker(event?: MouseEvent) {
     this._inputFileRef.nativeElement.click();
     if (event) {
