@@ -18,22 +18,6 @@ import {
 import { SharedModule } from '../shared';
 import { DemoDatetimeComponent } from './demo-datetime.component';
 
-import {NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentAdapter, NgxMatMomentModule, NgxMomentDateModule} from '@angular-material-components/moment-adapter';
-import { NGX_MAT_DATE_FORMATS, NgxMatDateAdapter, NgxMatDateFormats } from '@angular-material-components/datetime-picker';
-import { NgxMatLuxonDateModule } from 'projects/luxon-adapter/src';
-
-const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
-  parse: {
-    dateInput: 'DD.MM.YYYY HH:mm',
-  },
-  display: {
-    dateInput: 'DD.MM.YYYY HH:mm',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  }
-};
-
 const routes: Routes = [
   { path: '', component: DemoDatetimeComponent }
 ]
@@ -45,14 +29,12 @@ const routes: Routes = [
       routes,
     ),
     MatInputModule,
-    //NgxMatMomentModule,
-   NgxMatLuxonDateModule,
-    //NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    NgxMatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule,
@@ -62,10 +44,9 @@ const routes: Routes = [
   ],
   declarations: [
     DemoDatetimeComponent
+  ],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
   ]
-
-
-
-
 })
 export class DemoDatetimeModule { }

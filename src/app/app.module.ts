@@ -66,14 +66,8 @@ export class AppRoutingModule { }
       MatToolbarModule,
       MatIconModule,
       MatListModule,
-      MatCardModule,
-      NgxMatMomentModule,
-      NgxMatDatetimePickerModule,
+      MatCardModule
    ],
-   providers: [
-
-    {provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter},
-  ],
    bootstrap: [
       AppComponent
    ]
