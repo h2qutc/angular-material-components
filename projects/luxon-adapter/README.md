@@ -1,21 +1,21 @@
-# NgxMatMomentAdapter
+# NgxMatLuxonAdapter
 
 ## Description 
-Moment Adapter for [@angular-material-components/datetime-picker](https://www.npmjs.com/package/@angular-material-components/datetime-picker)
+Luxon Adapter for [@angular-material-components-awm/datetime-picker](https://www.npmjs.com/package/@angular-material-components/datetime-picker)
 
 ## Getting started
 ```
-npm install --save  @angular-material-components/moment-adapter
+npm install --save  @angular-material-components-awm/luxon-adapter
 ```
 
 ## Setup
 
 ```
-import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { NgxMatMomentModule } from '@angular-material-components-awm/luxon-adapter';
 @NgModule({
    ...
    imports: [
-      NgxMatMomentModule,
+      NgxMatLuxonModule,
       NgxMatDatetimePickerModule,
    ],
    ...
