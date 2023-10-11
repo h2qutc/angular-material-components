@@ -6,18 +6,26 @@ import { NgxMatDateAdapter } from './date-adapter';
 import { NgxMatNativeDateAdapter } from './native-date-adapter';
 import { NGX_MAT_NATIVE_DATE_FORMATS } from './native-date-formats';
 import { NGX_MAT_DATE_FORMATS } from './date-formats';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_LUXON_DATE_ADAPTER_OPTIONS, NgxMatLuxonDateAdapter } from './luxon-adapter';
+import { MAT_LUXON_DATE_FORMATS } from './luxon-formats';
 
 
 @NgModule({
     imports: [PlatformModule],
     providers: [
-        { provide: NgxMatDateAdapter, useClass: NgxMatNativeDateAdapter },
+
+    {
+      provide: NgxMatDateAdapter,
+      useClass: NgxMatLuxonDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_LUXON_DATE_ADAPTER_OPTIONS],
+    },
     ],
 })
 export class NgxNativeDateModule { }
 
 @NgModule({
     imports: [NgxNativeDateModule],
-    providers: [{ provide: NGX_MAT_DATE_FORMATS, useValue: NGX_MAT_NATIVE_DATE_FORMATS }],
+    providers: [{ provide: NGX_MAT_DATE_FORMATS, useValue: MAT_LUXON_DATE_FORMATS }],
 })
 export class NgxMatNativeDateModule { }

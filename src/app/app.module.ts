@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home';
+import { NgxMatDateAdapter, NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentAdapter, NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 
 const appRoutes: Routes = [
    { path: 'home', component: HomeComponent },
@@ -64,8 +66,14 @@ export class AppRoutingModule { }
       MatToolbarModule,
       MatIconModule,
       MatListModule,
-      MatCardModule
+      MatCardModule,
+      NgxMatMomentModule,
+      NgxMatDatetimePickerModule,
    ],
+   providers: [
+
+    {provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter},
+  ],
    bootstrap: [
       AppComponent
    ]

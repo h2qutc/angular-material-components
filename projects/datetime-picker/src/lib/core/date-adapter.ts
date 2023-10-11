@@ -27,21 +27,21 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
   * @param date The date to extract the month from.
   * @param value The value to set.
   */
-  abstract setHour(date: D, value: number): void;
+  abstract setHour(date: D, value: number): void|D;
 
   /**
   * Set the second component of the given date.
   * @param date The date to extract the month from.
   * @param value The value to set.
   */
-  abstract setMinute(date: D, value: number): void;
+  abstract setMinute(date: D, value: number): void|D;
 
   /**
    * Set the second component of the given date.
    * @param date The date to extract the month from.
    * @param value The value to set.
    */
-  abstract setSecond(date: D, value: number): void;
+  abstract setSecond(date: D, value: number): void|D;
 
   /**
    * Check if two date have same time
@@ -57,8 +57,8 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
 
   /**
    * Copy time from a date to a another date
-   * @param toDate 
-   * @param fromDate 
+   * @param toDate
+   * @param fromDate
    */
   copyTime(toDate: D, fromDate: D) {
     this.setHour(toDate, this.getHour(fromDate));
