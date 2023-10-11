@@ -1,16 +1,16 @@
 {
-  "name": "@angular-material-components/datetime-picker",
+  "name": "@angular-material-components-awm/datetime-picker",
   "version": "16.0.1",
   "description": "Angular Material Datetime Picker",
-  "author": "HO Hong Quan",
+  "author": "HO Hong Quan/AWM",
   "repository": {
     "type": "git",
-    "url": "https://github.com/h2qutc/angular-material-components.git"
+    "url": "https://github.com/furozen/angular-material-components.git"
   },
   "bugs": {
-    "url": "https://github.com/h2qutc/angular-material-components/issues"
+    "url": "https://github.com/furozen/angular-material-components/issues"
   },
-  "homepage": "https://github.com/h2qutc/angular-material-components",
+  "homepage": "https://github.com/furozen/angular-material-components",
   "keywords": [
     "angular",
     "angular2",

@@ -135,7 +135,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /**
    * Format input
-   * @param input 
+   * @param input
    */
   public formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(NUMERIC_REGEX, '');
@@ -195,18 +195,27 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     }
 
     if (this._model) {
-      const clonedModel = this._dateAdapter.clone(this._model);
+      let clonedModel = this._dateAdapter.clone(this._model);
 
-      this._dateAdapter.setHour(clonedModel, _hour);
-      this._dateAdapter.setMinute(clonedModel, this.minute);
-      this._dateAdapter.setSecond(clonedModel, this.second);
+      let value = this._dateAdapter.setHour(clonedModel, _hour);
+      if (value) {
+        clonedModel = value;
+      }
+      value = this._dateAdapter.setMinute(clonedModel, this.minute);
+      if (value) {
+        clonedModel=value;
+      }
+      value = this._dateAdapter.setSecond(clonedModel, this.second);
+      if (value) {
+        clonedModel=value;
+      }
       this._onChange(clonedModel);
     }
   }
 
   /**
    * Get next value by property
-   * @param prop 
+   * @param prop
    * @param up
    */
   private _getNextValueByProp(prop: string, up?: boolean): number {
