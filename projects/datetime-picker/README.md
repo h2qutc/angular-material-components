@@ -43,7 +43,7 @@ npm install --save  @angular-material-components/datetime-picker
 ## Setup
 Basically the same way the @angular/material Datepicker is configured and imported.
 
-```
+```typescript
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 @NgModule({
    ...
@@ -71,7 +71,7 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 
 ### Datetime Picker (ngx-mat-datetime-picker)
 
-```
+```html
 <mat-form-field>
    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
       [min]="minDate" [max]="maxDate" [disabled]="disabled">
@@ -86,7 +86,7 @@ The same API as @angular/material Datepicker (@see [API docs](https://material.a
 
 ### Timepicker (ngx-mat-timepicker)
 
-```
+```html
 <ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
 <ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
@@ -142,14 +142,14 @@ For example:
 
 Creating a custom date adapter:
 
-```
+```typescript
 @Injectable()
 export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}
 // D can be Date, Moment or customized type
 ```
 
 Creating a custom date adapter module
-```
+```typescript
 @NgModule({
   providers: [
     {
@@ -164,7 +164,7 @@ export class CustomDateModule { }
 
 You can also customize the date format by providing your custom NGX_MAT_DATE_FORMATS in your module.
 
-```
+```typescript
 // If using Moment
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -183,11 +183,20 @@ providers: [
     { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
   ]
 ```
+in case you want to use a country locale you can use the code below
+
+```typescript
+ constructor (
+    private adapter: NgxMatDateAdapter<Date>
+  ) {
+    this.adapter.setLocale("el-GR");
+  }
+```
 
 ## Theming
 - @see @angular/material [Using a pre-built theme](https://material.angular.io/guide/theming#using-a-pre-built-theme)
 - Add the Material Design icon font to your index.html
-```
+```html
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">
 ```
 
