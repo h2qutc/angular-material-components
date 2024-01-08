@@ -1,0 +1,65 @@
+{
+  "name": "@angular-material-components/datetime-picker",
+  "version": "16.0.1",
+  "description": "Angular Material Datetime Picker",
+  "author": "HO Hong Quan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h2qutc/angular-material-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h2qutc/angular-material-components/issues"
+  },
+  "homepage": "https://github.com/h2qutc/angular-material-components",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular 12",
+    "angular 13",
+    "angular 14",
+    "angular 15",
+    "angular 16",
+    "angular-material",
+    "angular material datetime picker",
+    "angular material time picker",
+    "datetime-picker",
+    "datepicker",
+    "timepicker",
+    "ngx-mat",
+    "ngx-mat-datetime-picker",
+    "ngx-material-datetime-picker",
+    "ngx-mat-timepicker"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/forms": "^16.0.0",
+    "@angular/material": "^16.0.0",
+    "@angular/cdk": "^16.0.0"
+  },
+  "module": "fesm2015/angular-material-components-datetime-picker.mjs",
+  "es2020": "fesm2020/angular-material-components-datetime-picker.mjs",
+  "esm2020": "esm2020/angular-material-components-datetime-picker.mjs",
+  "fesm2020": "fesm2020/angular-material-components-datetime-picker.mjs",
+  "fesm2015": "fesm2015/angular-material-components-datetime-picker.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/angular-material-components-datetime-picker.mjs",
+      "es2020": "./fesm2020/angular-material-components-datetime-picker.mjs",
+      "es2015": "./fesm2015/angular-material-components-datetime-picker.mjs",
+      "node": "./fesm2015/angular-material-components-datetime-picker.mjs",
+      "default": "./fesm2020/angular-material-components-datetime-picker.mjs"
+    }
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
