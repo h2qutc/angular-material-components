@@ -297,7 +297,8 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
 
   /** Creates a date but allows the month and date to overflow. */
   private _createDateWithOverflow(year: number, month: number, date: number) {
-    const result = new Date(year, month, date);
+    const now = new Date();
+    const result = new Date(year, month, date, now.getHours(), now.getMinutes(), now.getSeconds());
 
     // We need to correct for the fact that JS native Date treats years in range [0, 99] as
     // abbreviations for 19xx.
