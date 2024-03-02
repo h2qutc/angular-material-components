@@ -15,9 +15,10 @@
 
   <ng-container *ngIf="isViewMonth">
     <div *ngIf="!datepicker._hideTime" class="time-container" [class.disable-seconds]="!datepicker._showSeconds">
-      <ngx-mat-timepicker [showSpinners]="datepicker._showSpinners" [showSeconds]="datepicker._showSeconds"
+      <ngx-mat-timepicker [selected]="_modelTime" [defaultTime]="datepicker.defaultTime"
+        [showSpinners]="datepicker._showSpinners" [showSeconds]="datepicker._showSeconds"
         [disabled]="datepicker._disabled || !_modelTime" [stepHour]="datepicker._stepHour"
-        [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond" [(ngModel)]="_modelTime"
+        [stepMinute]="datepicker._stepMinute" [stepSecond]="datepicker._stepSecond" [ngModel]="_modelTime"
         [color]="datepicker._color" [enableMeridian]="datepicker._enableMeridian"
         [disableMinute]="datepicker._disableMinute" (ngModelChange)="onTimeChanged($event)">
       </ngx-mat-timepicker>

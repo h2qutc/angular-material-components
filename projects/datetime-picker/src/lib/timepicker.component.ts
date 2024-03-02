@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators, FormControl} from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -28,7 +28,11 @@ import {
 })
 export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnInit, OnChanges {
 
-  public form: FormGroup;
+  public form: FormGroup<{
+    hour: FormControl<string>;
+    minute: FormControl<string>;
+    second: FormControl<string>;
+  }>;
 
   @Input() disabled = false;
   @Input() showSpinners = true;
@@ -40,22 +44,24 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() enableMeridian = false;
   @Input() defaultTime: number[];
   @Input() color: ThemePalette = 'primary';
+  // Get previous selected value
+  @Input() selected: D;
 
   public meridian: string = MERIDIANS.AM;
 
   /** Hour */
   private get hour() {
-    let val = Number(this.form.controls['hour'].value);
+    let val = Number(this.form.getRawValue().hour);
     return isNaN(val) ? 0 : val;
   };
 
   private get minute() {
-    let val = Number(this.form.controls['minute'].value);
+    let val = Number(this.form.getRawValue().minute);
     return isNaN(val) ? 0 : val;
   };
 
   private get second() {
-    let val = Number(this.form.controls['second'].value);
+    let val = Number(this.form.getRawValue().second);
     return isNaN(val) ? 0 : val;
   };
 
@@ -78,6 +84,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     if (!this._dateAdapter) {
       throw createMissingDateImplError('NgxMatDateAdapter');
     }
+
     this.form = this.formBuilder.group(
       {
         hour: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)]],
@@ -87,9 +94,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   }
 
   ngOnInit() {
-    this.form.valueChanges.pipe(takeUntil(this._destroyed), debounceTime(400)).subscribe(val => {
-      this._updateModel();
-    })
+    this._model = this.selected;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -109,10 +114,9 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
    */
   writeValue(val: D): void {
     if (val != null) {
-      this._model = val;
-      this._updateHourMinuteSecond();
+      this._model = this._updateHourMinuteSecond(val);
+      this._updateModel(this._model);
     }
-
   }
 
   /** Registers a callback function that is called when the control's value changes in the UI. */
@@ -151,14 +155,38 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   public change(prop: string, up?: boolean) {
     const next = this._getNextValueByProp(prop, up);
     this.form.controls[prop].setValue(formatTwoDigitTimeValue(next), { onlySelf: false, emitEvent: false });
-    this._updateModel();
+    this._updateModel(this._model);
   }
 
-  /** Update controls of form by model */
-  private _updateHourMinuteSecond() {
-    let _hour = this._dateAdapter.getHour(this._model);
-    const _minute = this._dateAdapter.getMinute(this._model);
-    const _second = this._dateAdapter.getSecond(this._model);
+  /**
+   * Update controls of form by model
+   *
+   * @param emitEvent emit form changed event
+   * @private
+   */
+  private _updateHourMinuteSecond(value: D): D {
+    let _hour:  number;
+    let _minute:  number;
+    let _second:  number;
+    const _toady = this._dateAdapter.today();
+
+    // No previous date selected
+    if ( !this._model && !this.defaultTime ) {
+      // Set now as time value
+      _hour = this._dateAdapter.getHour(_toady);
+      _minute = this._dateAdapter.getMinute(_toady);
+      _second = this._dateAdapter.getSecond(_toady);
+    } else if ( !this._model && this.defaultTime ) {
+      // Set provided default time values (or now as before)
+      _hour = this.defaultTime[0] ?? this._dateAdapter.getHour(_toady);
+      _minute = this.defaultTime[1] ?? this._dateAdapter.getMinute(_toady);
+      _second = this.defaultTime[2] ?? this._dateAdapter.getSecond(_toady);
+    } else {
+      // Set previous time value
+      _hour = this._dateAdapter.getHour(value);
+      _minute = this._dateAdapter.getMinute(value);
+      _second = this._dateAdapter.getSecond(value);
+    }
 
     if (this.enableMeridian) {
       if (_hour >= LIMIT_TIMES.meridian) {
@@ -176,14 +204,18 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       hour: formatTwoDigitTimeValue(_hour),
       minute: formatTwoDigitTimeValue(_minute),
       second: formatTwoDigitTimeValue(_second)
-    }, {
-      emitEvent: false
-    })
+    });
 
+    const clonedModel = this._dateAdapter.clone(value);
+    this._dateAdapter.setHour(clonedModel, _hour);
+    this._dateAdapter.setMinute(clonedModel, _minute);
+    this._dateAdapter.setSecond(clonedModel, _second);
+
+    return clonedModel;
   }
 
   /** Update model */
-  private _updateModel() {
+  private _updateModel(value: D): void {
     let _hour = this.hour;
 
     if (this.enableMeridian) {
@@ -194,12 +226,13 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       }
     }
 
-    if (this._model) {
-      const clonedModel = this._dateAdapter.clone(this._model);
+    if (value) {
+      const clonedModel = this._dateAdapter.clone(value);
 
       this._dateAdapter.setHour(clonedModel, _hour);
       this._dateAdapter.setMinute(clonedModel, this.minute);
       this._dateAdapter.setSecond(clonedModel, this.second);
+      this._model = clonedModel;
       this._onChange(clonedModel);
     }
   }
