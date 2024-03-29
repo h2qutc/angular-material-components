@@ -1,6 +1,5 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
-import { ESCAPE, UP_ARROW } from "@angular/cdk/keycodes";
 import {
   Overlay,
   OverlayConfig,
@@ -19,17 +18,14 @@ import {
   HostBinding,
   Inject,
   InjectionToken,
-  input,
   Input,
   NgZone,
   OnDestroy,
   Optional,
   Output,
-  signal,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
-  WritableSignal,
 } from "@angular/core";
 import { CanColor, ThemePalette, mixinColor } from "@angular/material/core";
 import { matDatepickerAnimations } from "@angular/material/datepicker";
@@ -101,7 +97,10 @@ export class NgxMatColorPickerContentComponent
   }
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatColorPaletteComponent)
-  color = input<ThemePalette | null>(null);
+  @Input({
+    required: true,
+  })
+  color: ThemePalette;
   _palette: NgxMatColorPaletteComponent | null = null;
 
   picker: NgxMatColorPickerComponent | null = null;
@@ -196,7 +195,7 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
 
   _pickerInput: NgxMatColorPickerInputDirective | null = null;
   /** A reference to the overlay when the picker is opened as a popup. */
-  _popupRef: WritableSignal<OverlayRef | null> = signal(null);
+  _popupRef: OverlayRef | null = null;
 
   /** A reference to the dialog when the picker is opened as a dialog. */
   private _dialogRef: MatDialogRef<NgxMatColorPickerContentComponent> | null =
@@ -238,9 +237,8 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
     this.close();
     this._inputSubscription.unsubscribe();
     this._disabledChange.complete();
-    const popupRef = this._popupRef();
-    if (popupRef) {
-      popupRef.dispose();
+    if (this._popupRef) {
+      this._popupRef.dispose();
       this._popupComponentRef = null;
     }
   }
@@ -317,17 +315,17 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
       );
     }
 
-    if (!this._popupRef()) {
+    if (!this._popupRef) {
       this._createPopup();
     }
-    const overlayRef = this._popupRef();
+    const overlayRef = this._popupRef;
     if (!overlayRef) {
       throw Error(
         "Open as Popup. Popup creation failed. This is likely caused by a previous error.",
       );
     }
     if (!overlayRef.hasAttached()) {
-      this._popupComponentRef = this._popupRef.attach(this._portal);
+      this._popupComponentRef = overlayRef.attach(this._portal);
       this._popupComponentRef.instance.picker = this;
       this._setColor();
 
@@ -336,7 +334,7 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
         .asObservable()
         .pipe(take(1))
         .subscribe(() => {
-          this._popupRef.updatePosition();
+          overlayRef.updatePosition();
         });
     }
   }
@@ -351,23 +349,28 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
       scrollStrategy: this._scrollStrategy(),
       panelClass: "mat-colorpicker-popup",
     });
-
-    this._popupRef = this._overlay.create(overlayConfig);
-    this._popupRef.overlayElement.setAttribute("role", "dialog");
+    const newOverlay = this._overlay.create(overlayConfig);
+    newOverlay.overlayElement.setAttribute("role", "dialog");
+    this._popupRef = newOverlay;
 
     merge(
       this._popupRef.backdropClick(),
       this._popupRef.detachments(),
-      this._popupRef.keydownEvents().pipe(
-        filter((event) => {
-          // Closing on alt + up is only valid when there's an input associated with the datepicker.
-          return (
-            event.keyCode === ESCAPE ||
-            (this._pickerInput && event.altKey && event.keyCode === UP_ARROW)
-          );
-        }),
-      ),
+      this._popupRef
+        .keydownEvents()
+        .pipe(filter((event: KeyboardEvent) => event instanceof KeyboardEvent)),
     ).subscribe((event) => {
+      if (event instanceof KeyboardEvent) {
+        if (
+          event.key === "Escape" ||
+          (this._pickerInput && event.altKey && event.key === "ArrowUp")
+        ) {
+          event.preventDefault();
+          this.close();
+        } else {
+          return;
+        }
+      }
       if (event) {
         event.preventDefault();
       }
@@ -403,14 +406,15 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
 
     if (
       this._focusedElementBeforeOpen &&
-      typeof this._focusedElementBeforeOpen.focus === "function"
+      typeof (this._focusedElementBeforeOpen as HTMLElement).focus ===
+        "function"
     ) {
       // Because IE moves focus asynchronously, we can't count on it being restored before we've
       // marked the datepicker as closed. If the event fires out of sequence and the element that
       // we're refocusing opens the datepicker on focus, the user could be stuck with not being
       // able to close the calendar at all. We work around it by making the logic, that marks
       // the datepicker as closed, async as well.
-      this._focusedElementBeforeOpen.focus();
+      (this._focusedElementBeforeOpen as HTMLElement).focus();
       setTimeout(completeClose);
     } else {
       completeClose();
@@ -430,6 +434,11 @@ export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
 
   /** Create the popup PositionStrategy. */
   private _createPopupPositionStrategy(): PositionStrategy {
+    if (!this._pickerInput) {
+      throw Error(
+        "Could not create popup position strategy. No input associated with the color picker.",
+      );
+    }
     return this._overlay
       .position()
       .flexibleConnectedTo(this._pickerInput.getConnectedOverlayOrigin())
