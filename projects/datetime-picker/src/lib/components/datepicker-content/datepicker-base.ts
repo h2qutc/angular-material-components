@@ -411,7 +411,7 @@ export abstract class NgxMatDatepickerBase<
   >
   implements NgxMatDatepickerPanel<C, S, D>, OnDestroy, OnChanges
 {
-  private _scrollStrategy: () => ScrollStrategy;
+  private readonly _scrollStrategy: () => ScrollStrategy;
   private _inputStateChanges = Subscription.EMPTY;
   private _document = inject(DOCUMENT);
 
@@ -690,7 +690,7 @@ export abstract class NgxMatDatepickerBase<
     private _overlay: Overlay,
     private _ngZone: NgZone,
     private _viewContainerRef: ViewContainerRef,
-    @Inject(NGX_MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
+    @Inject(NGX_MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: ScrollStrategy,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir: Directionality,
     private _model: NgxMatDateSelectionModel<S, D>,
@@ -878,6 +878,11 @@ export abstract class NgxMatDatepickerBase<
 
   /** Forwards relevant values from the datepicker to the datepicker content inside the overlay. */
   protected _forwardContentValues(instance: NgxMatDatepickerContent<S, D>) {
+    if (!this.datepickerInput) {
+      throw Error(
+        "Could not forward content values to the datepicker instance because the datepicker input is missing.",
+      );
+    }
     instance.datepicker = this;
     instance.color = this.color;
     instance._dialogLabelId = this.datepickerInput.getOverlayLabelId();

@@ -5,10 +5,11 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostBinding,
+  HostListener,
   Inject,
   Input,
   OnDestroy,
-  OnInit,
   Optional,
   Output,
 } from "@angular/core";
@@ -62,26 +63,31 @@ export const MAT_COLOR_PICKER_VALIDATORS = {
 };
 
 @Directive({
-  selector: "input[ngxMatColorPicker]",
+  selector: "ngx-mat-input[ngxMatColorPicker]",
   providers: [
     MAT_COLOR_PICKER_VALUE_ACCESSOR,
     MAT_COLOR_PICKER_VALIDATORS,
     { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatColorPickerInput },
   ],
-  host: {
-    "[attr.aria-haspopup]": '_picker ? "dialog" : null',
-    "[attr.aria-owns]": "(_picker?.opened && _picker.id) || null",
-    "[disabled]": "disabled",
-    "(input)": "_onInput($event.target.value)",
-    "(change)": "_onChange()",
-    "(blur)": "_onBlur()",
-    "(keydown)": "_onKeydown($event)",
-  },
   exportAs: "ngxMatColorPickerInput",
 })
-export class NgxMatColorPickerInput
-  implements ControlValueAccessor, OnInit, OnDestroy, Validator
+export class NgxMatColorPickerInputDirective
+  implements ControlValueAccessor, OnDestroy, Validator
 {
+  @HostBinding("attr.aria-haspopup") get ariaHasPopup() {
+    return this._picker ? "dialog" : null;
+  }
+  @HostBinding("attr.aria-owns") get ariaOwns() {
+    return (this._picker?.opened && this._picker.id) || null;
+  }
+
+  @HostListener("input", ["$event.target.value"]) hostInput = (value: string) =>
+    this._onInput(value);
+  @HostListener("change") hostChange = () => this._onChange();
+  @HostListener("blur") hostBlur = () => this._onBlur();
+  @HostListener("keydown", ["$event"]) hostKeyDown = (event: KeyboardEvent) =>
+    this._onKeydown(event);
+
   @Input()
   set ngxMatColorPicker(value: NgxMatColorPickerComponent) {
     if (!value) {
@@ -109,6 +115,7 @@ export class NgxMatColorPickerInput
   _picker: NgxMatColorPickerComponent | null = null;
 
   /** Whether the color picker-input is disabled. */
+  private _disabled = false;
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -130,7 +137,6 @@ export class NgxMatColorPickerInput
       element.blur();
     }
   }
-  private _disabled: boolean = false;
 
   /** The value of the input. */
   @Input()

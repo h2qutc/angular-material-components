@@ -16,12 +16,13 @@ import {
   ComponentRef,
   ElementRef,
   EventEmitter,
+  HostBinding,
   Inject,
   InjectionToken,
+  input,
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   Optional,
   Output,
   signal,
@@ -38,7 +39,7 @@ import { filter, take } from "rxjs/operators";
 import { Color } from "../../models";
 import { ColorAdapter } from "../../services";
 import { NgxMatColorPaletteComponent } from "../color-palette/color-palette.component";
-import { NgxMatColorPickerInput } from "./color-input.component";
+import { NgxMatColorPickerInputDirective } from "./color-input.directive";
 
 /** Injection token that determines the scroll handling while the calendar is open. */
 export const NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY = new InjectionToken<
@@ -67,11 +68,6 @@ const _MatColorpickerContentBase = mixinColor(
   selector: "ngx-mat-color-picker-content",
   templateUrl: "./color-picker-content.component.html",
   styleUrls: ["color-picker-content.component.scss"],
-  host: {
-    class: "ngx-mat-colorpicker-content",
-    "[@transformPanel]": '"enter"',
-    "[class.ngx-mat-colorpicker-content-touch]": "picker.touchUi",
-  },
   animations: [
     matDatepickerAnimations.transformPanel,
     matDatepickerAnimations.fadeInCalendar,
@@ -79,14 +75,33 @@ const _MatColorpickerContentBase = mixinColor(
   exportAs: "ngxMatColorPickerContent",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ["color"],
 })
 export class NgxMatColorPickerContentComponent
   extends _MatColorpickerContentBase
   implements CanColor
 {
+  @HostBinding("class.ngx-mat-colorpicker-content")
+  get hostClass() {
+    return true;
+  }
+
+  @HostBinding("@transformPanel")
+  get transformPanel() {
+    return "enter";
+  }
+
+  @HostBinding("class.ngx-mat-colorpicker-content-touch")
+  get touchUiClass() {
+    if (!this.picker) {
+      throw Error(
+        "No picker instance associated with the color picker content.",
+      );
+    }
+    return this.picker.touchUi;
+  }
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatColorPaletteComponent)
+  color = input<ThemePalette | null>(null);
   _palette: NgxMatColorPaletteComponent | null = null;
 
   picker: NgxMatColorPickerComponent | null = null;
@@ -104,7 +119,7 @@ export class NgxMatColorPickerContentComponent
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
+export class NgxMatColorPickerComponent implements OnDestroy, CanColor {
   private readonly _scrollStrategy: () => ScrollStrategy;
 
   /** Emits when the datepicker has been opened. */
@@ -179,7 +194,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
   }
   private _validSelected: Color | null = null;
 
-  _pickerInput: NgxMatColorPickerInput | null = null;
+  _pickerInput: NgxMatColorPickerInputDirective | null = null;
   /** A reference to the overlay when the picker is opened as a popup. */
   _popupRef: WritableSignal<OverlayRef | null> = signal(null);
 
@@ -246,7 +261,7 @@ export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
    * Register an input with this datepicker.
    * @param input The datepicker input to register with this datepicker.
    */
-  registerInput(input: NgxMatColorPickerInput): void {
+  registerInput(input: NgxMatColorPickerInputDirective): void {
     if (this._pickerInput) {
       throw Error("A ColorPicker can only be associated with a single input.");
     }
