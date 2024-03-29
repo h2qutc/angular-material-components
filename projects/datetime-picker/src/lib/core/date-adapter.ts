@@ -72,6 +72,7 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
    * Compares two dates.
    * @param first The first date to compare.
    * @param second The second date to compare.
+   * @param showSeconds Whether to compare the seconds component.
    * @returns 0 if the dates are equal, a number less than 0 if the first date is earlier,
    *     a number greater than 0 if the first date is later.
    */
@@ -88,6 +89,7 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
 
   /**
    * Set time by using default values
+   * @param date Date
    * @param defaultTime List default values [hour, minute, second]
    */
   setTimeByDefaultValues(date: D, defaultTime: number[]) {

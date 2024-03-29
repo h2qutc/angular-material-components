@@ -1,30 +1,37 @@
-import { A11yModule } from '@angular/cdk/a11y';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PortalModule } from '@angular/cdk/portal';
-import { CdkScrollableModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCommonModule } from '@angular/material/core';
-import { NgxMatCalendar, NgxMatCalendarHeader } from './calendar';
-import { NgxMatCalendarBody } from './calendar-body';
-import { NgxMatDateRangeInput } from './date-range-input';
-import { NgxMatEndDate, NgxMatStartDate } from './date-range-input-parts';
-import { NgxMatDateRangePicker } from './date-range-picker';
-import { NgxMatDatetimepicker } from './datepicker';
-import { NgxMatDatepickerActions, NgxMatDatepickerApply, NgxMatDatepickerCancel } from './datepicker-actions';
+import { A11yModule } from "@angular/cdk/a11y";
+import { OverlayModule } from "@angular/cdk/overlay";
+import { PortalModule } from "@angular/cdk/portal";
+import { CdkScrollableModule } from "@angular/cdk/scrolling";
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCommonModule } from "@angular/material/core";
+import { NgxMatCalendar, NgxMatCalendarHeader } from "./calendar";
+import { NgxMatCalendarBodyComponent } from "./calendar-body/calendar-body.component";
+import { NgxMatDateRangeInput } from "./date-range-input";
+import { NgxMatEndDate, NgxMatStartDate } from "./date-range-input-parts";
+import { NgxMatDateRangePicker } from "./date-range-picker";
+import { NgxMatDatetimepicker } from "./datepicker";
+import {
+  NgxMatDatepickerActions,
+  NgxMatDatepickerApply,
+  NgxMatDatepickerCancel,
+} from "./datepicker-actions";
 import {
   NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
   NgxMatDatepickerContent,
-} from './datepicker-base';
-import { NgxMatDatepickerInput } from './datepicker-input';
-import { NgxMatDatepickerIntl } from './datepicker-intl';
-import { NgxMatDatepickerToggleIcon, NgxMatDatepickerToggle } from './datepicker-toggle';
-import { NgxMatMonthView } from './month-view';
-import { NgxMatMultiYearView } from './multi-year-view';
-import { NgxMatYearView } from './year-view';
-import { NgxMatTimepickerModule } from './timepicker.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+} from "./datepicker-base";
+import { NgxMatDatepickerInput } from "./datepicker-input";
+import { NgxMatDatepickerIntl } from "./datepicker-intl";
+import {
+  NgxMatDatepickerToggleIcon,
+  NgxMatDatepickerToggle,
+} from "./datepicker-toggle";
+import { NgxMatMonthView } from "./month-view";
+import { NgxMatMultiYearView } from "./multi-year-view";
+import { NgxMatYearView } from "./year-view";
+import { NgxMatTimepickerModule } from "./timepicker.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -36,12 +43,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatCommonModule,
     NgxMatTimepickerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     CdkScrollableModule,
     NgxMatCalendar,
-    NgxMatCalendarBody,
+    NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContent,
     NgxMatDatepickerInput,
@@ -61,7 +68,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     NgxMatCalendar,
-    NgxMatCalendarBody,
+    NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContent,
     NgxMatDatepickerInput,
@@ -79,6 +86,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxMatDatepickerCancel,
     NgxMatDatepickerApply,
   ],
-  providers: [NgxMatDatepickerIntl, NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER],
+  providers: [
+    NgxMatDatepickerIntl,
+    NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  ],
 })
-export class NgxMatDatetimePickerModule { }
+export class NgxMatDatetimePickerModule {}

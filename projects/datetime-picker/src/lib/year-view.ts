@@ -29,11 +29,11 @@ import { MAT_DATE_FORMATS, MatDateFormats } from "@angular/material/core";
 import { Subscription } from "rxjs";
 import { startWith } from "rxjs/operators";
 import {
-  NgxMatCalendarBody,
+  NgxMatCalendarBodyComponent,
   NgxMatCalendarCell,
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body";
+} from "./calendar-body/calendar-body.component";
 import { NgxMatDateAdapter } from "./core/date-adapter";
 import { NgxDateRange } from "./date-selection-model";
 import { createMissingDateImplError } from "./datepicker-errors";
@@ -139,8 +139,8 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody | null =
-    null;
+  @ViewChild(NgxMatCalendarBodyComponent)
+  _matCalendarBody: NgxMatCalendarBodyComponent | null = null;
 
   /** Grid of calendar cells representing the months of the year. */
   _months: NgxMatCalendarCell[][] | null = null;

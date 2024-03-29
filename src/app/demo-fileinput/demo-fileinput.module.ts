@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -16,16 +16,12 @@ import { NgxMatFileInputModule } from '../../../projects/file-input/src';
 import { SharedModule } from '../shared';
 import { DemoFileInputComponent } from './demo-fileinput.component';
 
-const routes: Routes = [
-  { path: '', component: DemoFileInputComponent }
-]
+const routes: Routes = [{ path: "", component: DemoFileInputComponent }];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(
-      routes,
-    ),
+    RouterModule.forChild(routes),
     MatDatepickerModule,
     MatInputModule,
     FormsModule,
@@ -38,8 +34,9 @@ const routes: Routes = [
     MatIconModule,
     MatCardModule,
     NgxMatFileInputModule,
-    SharedModule
+    SharedModule,
+    NgOptimizedImage,
   ],
-  declarations: [DemoFileInputComponent]
+  declarations: [DemoFileInputComponent],
 })
-export class DemoFileInputModule { }
+export class DemoFileInputModule {}

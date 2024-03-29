@@ -118,7 +118,7 @@
       "root": "projects/datetime-picker",
       "sourceRoot": "projects/datetime-picker/src",
       "projectType": "library",
-      "prefix": "NgxMat",
+      "prefix": "ngx-mat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -150,7 +150,7 @@
       "root": "projects/moment-adapter",
       "sourceRoot": "projects/moment-adapter/src",
       "projectType": "library",
-      "prefix": "NgxMat",
+      "prefix": "ngx-mat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -182,7 +182,7 @@
       "root": "projects/color-picker",
       "sourceRoot": "projects/color-picker/src",
       "projectType": "library",
-      "prefix": "NgxMat",
+      "prefix": "ngx-mat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -214,7 +214,7 @@
       "root": "projects/file-input",
       "sourceRoot": "projects/file-input/src",
       "projectType": "library",
-      "prefix": "NgxMat",
+      "prefix": "ngx-mat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

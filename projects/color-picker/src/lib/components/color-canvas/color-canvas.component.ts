@@ -106,7 +106,7 @@ export class NgxMatColorCanvasComponent
     );
     rgbaCtrl$
       .pipe(takeUntil(this._destroyed), debounceTime(400))
-      .subscribe((_) => {
+      .subscribe(() => {
         if (!this.rCtrl) {
           console.error("Could not update color, rCtrl not found");
           return;

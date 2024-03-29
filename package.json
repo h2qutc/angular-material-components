@@ -81,6 +81,8 @@
     "@angular/compiler-cli": "~17.3.2",
     "@angular/language-service": "~17.3.2",
     "@types/jasmine": "^5.1.4",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "7.4.0",
     "@typescript-eslint/parser": "7.4.0",
     "commit-and-tag-version": "^12.2.0",

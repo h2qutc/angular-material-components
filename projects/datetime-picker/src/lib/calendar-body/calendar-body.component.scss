@@ -1,5 +1,5 @@
-@use 'sass:math';
-@use '@angular/cdk';
+@use "sass:math";
+@use "../../../../../node_modules/@angular/cdk/index";
 
 @mixin user-select($value) {
   -webkit-user-select: $value;
@@ -36,8 +36,8 @@ $calendar-body-preview-cell-border: dashed 1px;
 $calendar-body-min-size: 7 * $calendar-body-cell-min-size !default;
 $calendar-body-cell-content-size: 100% - $calendar-body-cell-content-margin * 2 !default;
 
-$calendar-range-end-body-cell-size:
-    $calendar-body-cell-content-size + $calendar-body-cell-content-margin !default;
+$calendar-range-end-body-cell-size: $calendar-body-cell-content-size +
+  $calendar-body-cell-content-margin !default;
 
 .mat-calendar-body {
   min-width: $calendar-body-min-size;
@@ -88,7 +88,7 @@ $calendar-range-end-body-cell-size:
 .mat-calendar-body-cell::before,
 .mat-calendar-body-cell::after,
 .mat-calendar-body-cell-preview {
-  content: '';
+  content: "";
   position: absolute;
   top: $calendar-body-cell-content-margin;
   left: 0;
@@ -102,9 +102,13 @@ $calendar-range-end-body-cell-size:
   width: 100%;
 }
 
-.mat-calendar-body-range-start:not(.mat-calendar-body-in-comparison-range)::before,
+.mat-calendar-body-range-start:not(
+    .mat-calendar-body-in-comparison-range
+  )::before,
 .mat-calendar-body-range-start::after,
-.mat-calendar-body-comparison-start:not(.mat-calendar-body-comparison-bridge-start)::before,
+.mat-calendar-body-comparison-start:not(
+    .mat-calendar-body-comparison-bridge-start
+  )::before,
 .mat-calendar-body-comparison-start::after,
 .mat-calendar-body-preview-start .mat-calendar-body-cell-preview {
   // Since the range background isn't a perfect circle, we need to size
@@ -114,11 +118,9 @@ $calendar-range-end-body-cell-size:
   border-top-left-radius: $calendar-body-cell-radius;
   border-bottom-left-radius: $calendar-body-cell-radius;
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     left: 0;
-    border-radius: 0;
-    border-top-right-radius: $calendar-body-cell-radius;
-    border-bottom-right-radius: $calendar-body-cell-radius;
+    border-radius: 0 $calendar-body-cell-radius $calendar-body-cell-radius 0;
   }
 }
 
@@ -130,23 +132,25 @@ $calendar-range-end-body-cell-size:
   border-bottom-right-radius: $calendar-body-cell-radius;
 }
 
-.mat-calendar-body-range-end:not(.mat-calendar-body-in-comparison-range)::before,
+.mat-calendar-body-range-end:not(
+    .mat-calendar-body-in-comparison-range
+  )::before,
 .mat-calendar-body-range-end::after,
-.mat-calendar-body-comparison-end:not(.mat-calendar-body-comparison-bridge-end)::before,
+.mat-calendar-body-comparison-end:not(
+    .mat-calendar-body-comparison-bridge-end
+  )::before,
 .mat-calendar-body-comparison-end::after,
 .mat-calendar-body-preview-end .mat-calendar-body-cell-preview {
   @include _range-right-radius;
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     left: $calendar-body-cell-content-margin;
-    border-radius: 0;
-    border-top-left-radius: $calendar-body-cell-radius;
-    border-bottom-left-radius: $calendar-body-cell-radius;
+    border-radius: $calendar-body-cell-radius 0 0 $calendar-body-cell-radius;
   }
 }
 
 // Styles necessary to make RTL work.
-[dir='rtl'] {
+[dir="rtl"] {
   .mat-calendar-body-comparison-bridge-start.mat-calendar-body-range-end::after,
   .mat-calendar-body-comparison-bridge-end.mat-calendar-body-range-start::after {
     @include _range-right-radius;
@@ -158,7 +162,8 @@ $calendar-range-end-body-cell-size:
 .mat-calendar-body-comparison-end.mat-calendar-body-range-start::after {
   // Note that the RTL selector here is redundant, but we need to keep it in order to
   // raise the specificity since it can be overridden by some of the styles from above.
-  &, [dir='rtl'] & {
+  &,
+  [dir="rtl"] & {
     width: $calendar-body-cell-content-size;
   }
 }
@@ -171,7 +176,7 @@ $calendar-range-end-body-cell-size:
 .mat-calendar-body-preview-start .mat-calendar-body-cell-preview {
   border-left: $calendar-body-preview-cell-border;
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     border-left: 0;
     border-right: $calendar-body-preview-cell-border;
   }
@@ -180,7 +185,7 @@ $calendar-range-end-body-cell-size:
 .mat-calendar-body-preview-end .mat-calendar-body-cell-preview {
   border-right: $calendar-body-preview-cell-border;
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     border-right: 0;
     border-left: $calendar-body-preview-cell-border;
   }
@@ -235,7 +240,8 @@ $calendar-range-end-body-cell-size:
   $comparison-range-border: dashed 1px;
 
   .mat-datepicker-popup:not(:empty),
-  .mat-calendar-body-cell:not(.mat-calendar-body-in-range) .mat-calendar-body-selected {
+  .mat-calendar-body-cell:not(.mat-calendar-body-in-range)
+    .mat-calendar-body-selected {
     outline: solid 1px;
   }
 
@@ -260,7 +266,7 @@ $calendar-range-end-body-cell-size:
   .mat-calendar-body-range-start::before {
     border-left: $main-range-border;
 
-    [dir='rtl'] & {
+    [dir="rtl"] & {
       border-left: 0;
       border-right: $main-range-border;
     }
@@ -269,7 +275,7 @@ $calendar-range-end-body-cell-size:
   .mat-calendar-body-range-end::before {
     border-right: $main-range-border;
 
-    [dir='rtl'] & {
+    [dir="rtl"] & {
       border-right: 0;
       border-left: $main-range-border;
     }
@@ -283,7 +289,7 @@ $calendar-range-end-body-cell-size:
   .mat-calendar-body-comparison-start::before {
     border-left: $comparison-range-border;
 
-    [dir='rtl'] & {
+    [dir="rtl"] & {
       border-left: 0;
       border-right: $comparison-range-border;
     }
@@ -292,14 +298,14 @@ $calendar-range-end-body-cell-size:
   .mat-calendar-body-comparison-end::before {
     border-right: $comparison-range-border;
 
-    [dir='rtl'] & {
+    [dir="rtl"] & {
       border-right: 0;
       border-left: $comparison-range-border;
     }
   }
 }
 
-[dir='rtl'] {
+[dir="rtl"] {
   .mat-calendar-body-label {
     text-align: right;
   }

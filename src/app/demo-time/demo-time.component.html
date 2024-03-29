@@ -1,65 +1,109 @@
-<p>Thank you so much for your coffee ❤️ </p>
+<p>Thank you so much for your coffee ❤️</p>
 <a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-        style="height: 35px !important;width: 150px !important;">
+  <img
+    ngSrc="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+    alt="Buy Me A Coffee"
+    height="35px"
+    width="150px"
+    style="height: 35px !important; width: 150px !important"
+  />
 </a>
 
-<h2>See <a [routerLink]="['/datetimepicker']">API Datetime-picker</a> for more details</h2>
+<h2>
+  See <a [routerLink]="['/datetimepicker']">API Datetime-picker</a> for more
+  details
+</h2>
 
 <mat-card class="zone zone-picker">
   <mat-card-content>
-    <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" [showSpinners]="showSpinners" [stepHour]="stepHour"
-      [stepMinute]="stepMinute" [stepSecond]="stepSecond" [showSeconds]="showSeconds" [color]="color"
-      [enableMeridian]="enableMeridian" [disableMinute]="disableMinute">
+    <ngx-mat-timepicker
+      [(ngModel)]="date"
+      [disabled]="disabled"
+      [showSpinners]="showSpinners"
+      [stepHour]="stepHour"
+      [stepMinute]="stepMinute"
+      [stepSecond]="stepSecond"
+      [showSeconds]="showSeconds"
+      [color]="color"
+      [enableMeridian]="enableMeridian"
+      [disableMinute]="disableMinute"
+    >
     </ngx-mat-timepicker>
 
-    <h4>Selected date: {{date?.toLocaleString()}}</h4>
-
+    <h4>Selected date: {{ date?.toLocaleString() }}</h4>
   </mat-card-content>
 </mat-card>
 
 <mat-card class="zone zone-config">
-
   <mat-card-content>
     <div class="config-wrapper">
       <span class="label">disabled (Default: false) </span>
       <mat-radio-group aria-label="Select an option" [(ngModel)]="disabled">
-        <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-          {{option.label}}</mat-radio-button>
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
     <div class="config-wrapper">
       <span class="label">showSpinners (Default: true) </span>
       <mat-radio-group aria-label="Select an option" [(ngModel)]="showSpinners">
-        <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-          {{option.label}}</mat-radio-button>
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}</mat-radio-button
+        >
       </mat-radio-group>
     </div>
-
 
     <div class="config-wrapper">
       <span class="label">showSeconds (Default: false) </span>
       <mat-radio-group aria-label="Select an option" [(ngModel)]="showSeconds">
-        <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-          {{option.label}}</mat-radio-button>
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
-
     <div class="config-wrapper">
       <span class="label">disableMinute (Default: false) </span>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="disableMinute">
-        <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-          {{option.label}}</mat-radio-button>
+      <mat-radio-group
+        aria-label="Select an option"
+        [(ngModel)]="disableMinute"
+      >
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
     <div class="config-wrapper">
       <span class="label">enableMeridian (Default: false) </span>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="enableMeridian">
-        <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-          {{option.label}}</mat-radio-button>
+      <mat-radio-group
+        aria-label="Select an option"
+        [(ngModel)]="enableMeridian"
+      >
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
@@ -69,7 +113,7 @@
         <mat-label>hour (default: 1)</mat-label>
         <mat-select [(ngModel)]="stepHour">
           <mat-option *ngFor="let step of stepHours" [value]="step">
-            {{step}}
+            {{ step }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -77,7 +121,7 @@
         <mat-label>minute (default: 1)</mat-label>
         <mat-select [(ngModel)]="stepMinute">
           <mat-option *ngFor="let step of stepMinutes" [value]="step">
-            {{step}}
+            {{ step }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -86,7 +130,7 @@
         <mat-label>second (default: 1)</mat-label>
         <mat-select [(ngModel)]="stepSecond">
           <mat-option *ngFor="let step of stepSeconds" [value]="step">
-            {{step}}
+            {{ step }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -98,7 +142,7 @@
         <mat-label>Select color</mat-label>
         <mat-select [(ngModel)]="color">
           <mat-option *ngFor="let item of listColors" [value]="item">
-            {{item}}
+            {{ item }}
           </mat-option>
         </mat-select>
       </mat-form-field>

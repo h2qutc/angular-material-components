@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,16 +18,12 @@ import {
 import { SharedModule } from '../shared';
 import { DemoDatetimeComponent } from './demo-datetime.component';
 
-const routes: Routes = [
-  { path: '', component: DemoDatetimeComponent }
-]
+const routes: Routes = [{ path: "", component: DemoDatetimeComponent }];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(
-      routes,
-    ),
+    RouterModule.forChild(routes),
     MatInputModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
@@ -40,13 +36,15 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
-    SharedModule
+    SharedModule,
+    NgOptimizedImage,
   ],
-  declarations: [
-    DemoDatetimeComponent
-  ],
+  declarations: [DemoDatetimeComponent],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
-  ]
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: "fill" },
+    },
+  ],
 })
-export class DemoDatetimeModule { }
+export class DemoDatetimeModule {}

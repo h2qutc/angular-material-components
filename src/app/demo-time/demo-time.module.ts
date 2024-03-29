@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,16 +18,12 @@ import {
 import { SharedModule } from '../shared';
 import { DemoTimeComponent } from './demo-time.component';
 
-const routes: Routes = [
-  { path: '', component: DemoTimeComponent }
-]
+const routes: Routes = [{ path: "", component: DemoTimeComponent }];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(
-      routes,
-    ),
+    RouterModule.forChild(routes),
     MatDatepickerModule,
     MatInputModule,
     NgxMatDatetimePickerModule,
@@ -41,8 +37,9 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
-    SharedModule
+    SharedModule,
+    NgOptimizedImage,
   ],
-  declarations: [DemoTimeComponent]
+  declarations: [DemoTimeComponent],
 })
-export class DemoTimeModule { }
+export class DemoTimeModule {}
