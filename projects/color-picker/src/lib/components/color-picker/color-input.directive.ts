@@ -42,8 +42,8 @@ export class NgxMatColorPickerInputEvent {
 
   constructor(
     /** Reference to the color picker input component that emitted the event. */
-    public target: NgxMatColorPickerInput,
-    /** Reference to the native input element associated with the colorpicker input. */
+    public target: NgxMatColorPickerInputDirective,
+    /** Reference to the native input element associated with the color picker input. */
     public targetElement: HTMLElement,
   ) {
     this.value = this.target.value;
@@ -52,22 +52,25 @@ export class NgxMatColorPickerInputEvent {
 
 export const MAT_COLOR_PICKER_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgxMatColorPickerInput),
+  useExisting: forwardRef(() => NgxMatColorPickerInputDirective),
   multi: true,
 };
 
 export const MAT_COLOR_PICKER_VALIDATORS = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => NgxMatColorPickerInput),
+  useExisting: forwardRef(() => NgxMatColorPickerInputDirective),
   multi: true,
 };
 
 @Directive({
-  selector: "ngx-mat-input[ngxMatColorPicker]",
+  selector: "input[ngxMatColorPicker]",
   providers: [
     MAT_COLOR_PICKER_VALUE_ACCESSOR,
     MAT_COLOR_PICKER_VALIDATORS,
-    { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatColorPickerInput },
+    {
+      provide: MAT_INPUT_VALUE_ACCESSOR,
+      useExisting: NgxMatColorPickerInputDirective,
+    },
   ],
   exportAs: "ngxMatColorPickerInput",
 })
@@ -78,7 +81,7 @@ export class NgxMatColorPickerInputDirective
     return this._picker ? "dialog" : null;
   }
   @HostBinding("attr.aria-owns") get ariaOwns() {
-    return (this._picker?.opened && this._picker.id) || null;
+    return this._picker?.opened || null;
   }
 
   @HostListener("input", ["$event.target.value"]) hostInput = (value: string) =>

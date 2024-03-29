@@ -127,7 +127,7 @@ export class NgxMatSingleDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Checks whether the current selection is valid. */
-  protected isValid(): boolean {
+  public isValid(): boolean {
     return this.selection != null && this._isValidDateInstance(this.selection);
   }
 
@@ -140,7 +140,7 @@ export class NgxMatSingleDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Clones the selection model. */
-  clone() {
+  clone(): NgxMatDateSelectionModel<D | null, D> {
     const clone = new NgxMatSingleDateSelectionModel<D>(this._adapter);
     clone.updateSelection(this.selection, this);
     return clone;
@@ -181,7 +181,7 @@ export class NgxMatRangeDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Checks whether the current selection is valid. */
-  protected isValid(): boolean {
+  public isValid(): boolean {
     const { start, end } = this.selection;
 
     // Empty ranges are valid.
@@ -214,7 +214,7 @@ export class NgxMatRangeDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Clones the selection model. */
-  clone() {
+  clone(): NgxMatDateSelectionModel<NgxDateRange<D>, D> {
     const clone = new NgxMatRangeDateSelectionModel<D>(this._adapter);
     clone.updateSelection(this.selection, this);
     return clone;
