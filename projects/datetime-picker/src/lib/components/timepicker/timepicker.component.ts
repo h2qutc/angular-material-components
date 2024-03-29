@@ -4,6 +4,7 @@ import {
   forwardRef,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Optional,
   SimpleChanges,
@@ -50,7 +51,7 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class NgxMatTimepickerComponent<D>
-  implements ControlValueAccessor, OnInit, OnChanges
+  implements ControlValueAccessor, OnInit, OnChanges, OnDestroy
 {
   public form: FormGroup;
 
@@ -62,36 +63,36 @@ export class NgxMatTimepickerComponent<D>
   @Input() showSeconds = false;
   @Input() disableMinute = false;
   @Input() enableMeridian = false;
-  @Input() defaultTime: number[];
+  @Input() defaultTime: number[] | null = null;
   @Input() color: ThemePalette = "primary";
 
   public meridian: string = MERIDIANS.AM;
 
   /** Hour */
   private get hour() {
-    let val = Number(this.form.controls["hour"].value);
+    const val = Number(this.form.controls["hour"].value);
     return isNaN(val) ? 0 : val;
   }
 
   private get minute() {
-    let val = Number(this.form.controls["minute"].value);
+    const val = Number(this.form.controls["minute"].value);
     return isNaN(val) ? 0 : val;
   }
 
   private get second() {
-    let val = Number(this.form.controls["second"].value);
+    const val = Number(this.form.controls["second"].value);
     return isNaN(val) ? 0 : val;
   }
 
-  /** Whether or not the form is valid */
+  /** Whether the form is valid */
   public get valid(): boolean {
     return this.form.valid;
   }
 
-  private _onChange: any = () => {};
-  private _onTouched: any = () => {};
-  private _disabled: boolean;
-  private _model: D;
+  private _onChange: (_: unknown) => unknown = () => {};
+  private _onTouched = () => {};
+  private _disabled: boolean = false;
+  private _model: D | null = null;
 
   private _destroyed: Subject<void> = new Subject<void>();
 
@@ -124,7 +125,7 @@ export class NgxMatTimepickerComponent<D>
   ngOnInit() {
     this.form.valueChanges
       .pipe(takeUntil(this._destroyed), debounceTime(400))
-      .subscribe((val) => {
+      .subscribe(() => {
         this._updateModel();
       });
   }
@@ -142,7 +143,7 @@ export class NgxMatTimepickerComponent<D>
 
   /**
    * Writes a new value to the element.
-   * @param obj
+   * @param val
    */
   writeValue(val: D): void {
     if (val != null) {
@@ -152,14 +153,14 @@ export class NgxMatTimepickerComponent<D>
   }
 
   /** Registers a callback function that is called when the control's value changes in the UI. */
-  registerOnChange(fn: (_: any) => {}): void {
+  registerOnChange(fn: () => void): void {
     this._onChange = fn;
   }
 
   /**
    * Set the function to be called when the control receives a touch event.
    */
-  registerOnTouched(fn: () => {}): void {
+  registerOnTouched(fn: () => unknown): void {
     this._onTouched = fn;
   }
 
@@ -185,7 +186,7 @@ export class NgxMatTimepickerComponent<D>
   }
 
   /** Change property of time */
-  public change(prop: string, up?: boolean) {
+  public change(prop: "hour" | "minute" | "second", up?: boolean) {
     const next = this._getNextValueByProp(prop, up);
     this.form.controls[prop].setValue(formatTwoDigitTimeValue(next), {
       onlySelf: false,
@@ -196,6 +197,11 @@ export class NgxMatTimepickerComponent<D>
 
   /** Update controls of form by model */
   private _updateHourMinuteSecond() {
+    if (!this._model) {
+      throw new Error(
+        "Could not update hour, minute and second. Model is null",
+      );
+    }
     let _hour = this._dateAdapter.getHour(this._model);
     const _minute = this._dateAdapter.getMinute(this._model);
     const _second = this._dateAdapter.getSecond(this._model);
@@ -254,8 +260,18 @@ export class NgxMatTimepickerComponent<D>
    * @param prop
    * @param up
    */
-  private _getNextValueByProp(prop: string, up?: boolean): number {
+  private _getNextValueByProp(
+    prop: "hour" | "minute" | "second",
+    up?: boolean,
+  ): number {
     const keyProp = prop[0].toUpperCase() + prop.slice(1);
+    // Check if keyProp is "Hour", "Minute" or "Second"
+    if (keyProp !== "Hour" && keyProp !== "Minute" && keyProp !== "Second") {
+      throw new Error(
+        "Could not get next value by property. Property ´names must be 'hour', 'minute' or 'second'",
+      );
+    }
+
     const min = LIMIT_TIMES[`min${keyProp}`];
     let max = LIMIT_TIMES[`max${keyProp}`];
 

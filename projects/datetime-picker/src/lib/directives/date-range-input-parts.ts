@@ -78,7 +78,7 @@ abstract class NgxMatDateRangeInputPartBase<D>
    * Form control bound to this input part.
    * @docs-private
    */
-  ngControl: NgControl;
+  ngControl: NgControl | null = null;
 
   /** @docs-private */
   abstract updateErrorState(): void;

@@ -55,7 +55,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
-  private _selectionKeyPressed: boolean;
+  private _selectionKeyPressed: boolean = false;
 
   /** The date to display in this multi-year view (everything other than the year is ignored). */
   @Input()
@@ -104,7 +104,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
     this._setSelectedYear(value);
   }
-  private _selected: NgxDateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null = null;
 
   /** The minimum selectable date. */
   @Input()
@@ -116,7 +116,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
       this._dateAdapter.deserialize(value),
     );
   }
-  private _minDate: D | null;
+  private _minDate: D | null = null;
 
   /** The maximum selectable date. */
   @Input()
@@ -128,13 +128,13 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
       this._dateAdapter.deserialize(value),
     );
   }
-  private _maxDate: D | null;
+  private _maxDate: D | null = null;
 
   /** A function used to filter which dates are selectable. */
-  @Input() dateFilter: (date: D) => boolean;
+  @Input() dateFilter: ((date: D) => boolean) | null = null;
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D> | null = null;
 
   /** Emits when a new year is selected. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -147,16 +147,16 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   /** The body of calendar table */
   @ViewChild(NgxMatCalendarBodyComponent)
-  _matCalendarBody: NgxMatCalendarBodyComponent;
+  _matCalendarBody: NgxMatCalendarBodyComponent | null = null;
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: NgxMatCalendarCell[][];
+  _years: NgxMatCalendarCell[][] | null = null;
 
   /** The year that today falls on. */
-  _todayYear: number;
+  _todayYear: number | null = null;
 
   /** The year of the selected date. Null if the selected date is null. */
-  _selectedYear: number | null;
+  _selectedYear: number | null = null;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -353,11 +353,19 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   /** Focuses the active cell after the microtask queue is empty. */
   _focusActiveCell() {
+    if (!this._matCalendarBody) {
+      throw Error("Could not focus active cell as calendar body is missing.");
+    }
     this._matCalendarBody._focusActiveCell();
   }
 
   /** Focuses the active cell after change detection has run and the microtask queue is empty. */
   _focusActiveCellAfterViewChecked() {
+    if (!this._matCalendarBody) {
+      throw Error(
+        "Could not focus active cell after the view has been checked as calendar body is missing.",
+      );
+    }
     this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
   }
 
@@ -370,12 +378,11 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
     const daysInMonth = this._dateAdapter.getNumDaysInMonth(
       this._dateAdapter.createDate(year, activeMonth, 1),
     );
-    const normalizedDate = this._dateAdapter.createDate(
+    return this._dateAdapter.createDate(
       year,
       activeMonth,
       Math.min(this._dateAdapter.getDate(this.activeDate), daysInMonth),
     );
-    return normalizedDate;
   }
 
   /** Creates an MatCalendarCell for the given year. */

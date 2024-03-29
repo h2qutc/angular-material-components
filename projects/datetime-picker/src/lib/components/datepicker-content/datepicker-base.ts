@@ -323,7 +323,10 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
    * necessary if the portal is assigned during initialization, but it may be required if it's
    * added at a later point.
    */
-  _assignActions(portal: TemplatePortal<any> | null, forceRerender: boolean) {
+  _assignActions(
+    portal: TemplatePortal<unknown> | null,
+    forceRerender: boolean,
+  ) {
     // If we have actions, clone the model so that we have the ability to cancel the selection,
     // otherwise update the global model directly. Note that we want to assign this as soon as
     // possible, but `_actionsPortal` isn't available in the constructor so we do it in `ngOnInit`.
@@ -343,7 +346,7 @@ export interface NgxMatDatepickerControl<D> {
   min: D | null;
   max: D | null;
   disabled: boolean;
-  dateFilter: NgxDateFilterFn<D>;
+  dateFilter: NgxDateFilterFn<D | null> | null;
   getConnectedOverlayOrigin(): ElementRef;
   getOverlayLabelId(): string | null;
   stateChanges: Observable<void>;
@@ -391,7 +394,7 @@ export abstract class NgxMatDatepickerBase<
   private _document = inject(DOCUMENT);
 
   /** An input indicating the type of the custom header component for the calendar, if set. */
-  @Input() calendarHeaderComponent: ComponentType<any>;
+  @Input() calendarHeaderComponent: ComponentType<unknown> | null = null;
 
   /** The date to open the calendar to initially. */
   @Input()
@@ -408,7 +411,7 @@ export abstract class NgxMatDatepickerBase<
       this._dateAdapter.deserialize(value),
     );
   }
-  private _startAt: D | null;
+  private _startAt: D | null = null;
 
   /** The view that the calendar should start in. */
   @Input() startView: "month" | "year" | "multi-year" = "month";
@@ -465,7 +468,7 @@ export abstract class NgxMatDatepickerBase<
       this.stateChanges.next(undefined);
     }
   }
-  public _disabled: boolean;
+  public _disabled: boolean = false;
 
   /** Preferred position of the datepicker in the X axis. */
   @Input()
@@ -632,7 +635,10 @@ export abstract class NgxMatDatepickerBase<
     return this.datepickerInput && this.datepickerInput.max;
   }
 
-  _getDateFilter(): NgxDateFilterFn<D> {
+  _getDateFilter(): NgxDateFilterFn<D> | null {
+    if (!this.datepickerInput.dateFilter) {
+      return null;
+    }
     return this.datepickerInput && this.datepickerInput.dateFilter;
   }
 

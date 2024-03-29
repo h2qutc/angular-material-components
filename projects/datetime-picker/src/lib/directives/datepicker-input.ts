@@ -13,11 +13,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
-import {
-  MAT_DATE_FORMATS,
-  MatDateFormats,
-  ThemePalette,
-} from "@angular/material/core";
+import { ThemePalette } from "@angular/material/core";
 import { MAT_FORM_FIELD } from "@angular/material/form-field";
 import { MAT_INPUT_VALUE_ACCESSOR } from "@angular/material/input";
 import { Subscription } from "rxjs";
@@ -35,14 +31,14 @@ import {
 import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "../core/date-formats";
 
 /** @docs-private */
-export const NGX_MAT_DATEPICKER_VALUE_ACCESSOR: any = {
+export const NGX_MAT_DATEPICKER_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => NgxMatDatepickerInput),
   multi: true,
 };
 
 /** @docs-private */
-export const NGX_MAT_DATEPICKER_VALIDATORS: any = {
+export const NGX_MAT_DATEPICKER_VALIDATORS = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => NgxMatDatepickerInput),
   multi: true,
@@ -92,7 +88,11 @@ export class NgxMatDatepickerInput<D>
       this._registerModel(datepicker.registerInput(this));
     }
   }
-  _datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, D | null, D>;
+  _datepicker: NgxMatDatepickerPanel<
+    NgxMatDatepickerControl<D>,
+    D | null,
+    D
+  > | null = null;
 
   /** The minimum valid date. */
   @Input()
@@ -109,7 +109,7 @@ export class NgxMatDatepickerInput<D>
       this._validatorOnChange();
     }
   }
-  private _min: D | null;
+  private _min: D | null = null;
 
   /** The maximum valid date. */
   @Input()
@@ -126,7 +126,7 @@ export class NgxMatDatepickerInput<D>
       this._validatorOnChange();
     }
   }
-  private _max: D | null;
+  private _max: D | null = null;
 
   /** Function that can be used to filter out dates within the datepicker. */
   @Input("matDatepickerFilter")
@@ -141,7 +141,7 @@ export class NgxMatDatepickerInput<D>
       this._validatorOnChange();
     }
   }
-  private _dateFilter: NgxDateFilterFn<D | null>;
+  private _dateFilter: NgxDateFilterFn<D | null> | null = null;
 
   /** The combined form control validator for this input. */
   protected _validator: ValidatorFn | null;

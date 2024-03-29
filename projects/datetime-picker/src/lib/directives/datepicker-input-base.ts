@@ -215,7 +215,7 @@ export abstract class NgxMatDatepickerInputBase<
   abstract _getMaxDate(): D | null;
 
   /** Gets the date filter function. Used for validation. */
-  protected abstract _getDateFilter(): NgxDateFilterFn<D> | undefined;
+  protected abstract _getDateFilter(): NgxDateFilterFn<D> | null;
 
   /** Registers a date selection model with the input. */
   _registerModel(model: NgxMatDateSelectionModel<S, D>): void {

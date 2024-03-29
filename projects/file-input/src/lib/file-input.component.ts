@@ -13,7 +13,6 @@ import {
   Optional,
   Self,
   ViewChild,
-  ViewEncapsulation,
 } from "@angular/core";
 import {
   ControlValueAccessor,
@@ -89,7 +88,6 @@ export class NgxMatFileInputComponent
   public fileNames: string | null = null;
 
   protected _uid = `ngx-mat-fileinput-${nextUniqueId++}`;
-  protected _previousNativeValue: any;
   _ariaDescribedby: string | null = null;
 
   readonly stateChanges: Subject<void> = new Subject<void>();
@@ -197,8 +195,6 @@ export class NgxMatFileInputComponent
   ) {
     super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
 
-    this.id = this.id;
-
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -224,7 +220,7 @@ export class NgxMatFileInputComponent
   }
 
   // Implemented as part of ControlValueAccessor.
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this._onChange = fn;
   }
 
@@ -259,7 +255,7 @@ export class NgxMatFileInputComponent
   }
 
   protected _isBadInput() {
-    let validity = (this._inputValueRef.nativeElement as HTMLInputElement)
+    const validity = (this._inputValueRef.nativeElement as HTMLInputElement)
       .validity;
     return validity && validity.badInput;
   }
@@ -289,7 +285,11 @@ export class NgxMatFileInputComponent
     this._markAsTouched();
   }
 
-  handleFiles(fileList: FileList) {
+  handleFiles($event: Event) {
+    const fileList = ($event.target as HTMLInputElement).files;
+    if (fileList === null) {
+      throw new Error("File list is null");
+    }
     if (fileList.length > 0) {
       const files: Array<File> = [];
       for (let i = 0; i < fileList.length; i++) {
@@ -307,7 +307,7 @@ export class NgxMatFileInputComponent
   }
 
   /** Handles a click on the control's container. */
-  onContainerClick(event: MouseEvent) {}
+  onContainerClick() {}
 
   private _resetInputFile() {
     this._inputFileRef.nativeElement.value = "";

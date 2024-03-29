@@ -68,7 +68,7 @@ export class NgxMatMonthView<D>
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
-  private _selectionKeyPressed: boolean;
+  private _selectionKeyPressed: boolean = false;
 
   /**
    * The date to display in this month view (everything other than the month and year is ignored).
@@ -110,7 +110,7 @@ export class NgxMatMonthView<D>
 
     this._setRanges(this._selected);
   }
-  private _selected: NgxDateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null = null;
 
   /** The minimum selectable date. */
   @Input()
@@ -122,7 +122,7 @@ export class NgxMatMonthView<D>
       this._dateAdapter.deserialize(value),
     );
   }
-  private _minDate: D | null;
+  private _minDate: D | null = null;
 
   /** The maximum selectable date. */
   @Input()
@@ -134,25 +134,25 @@ export class NgxMatMonthView<D>
       this._dateAdapter.deserialize(value),
     );
   }
-  private _maxDate: D | null;
+  private _maxDate: D | null = null;
 
   /** Function used to filter which dates are selectable. */
-  @Input() dateFilter: (date: D) => boolean;
+  @Input() dateFilter: ((date: D) => boolean) | null = null;
 
   /** Function that can be used to add custom CSS classes to dates. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D> | null = null;
 
   /** Start of the comparison range. */
-  @Input() comparisonStart: D | null;
+  @Input() comparisonStart: D | null = null;
 
   /** End of the comparison range. */
-  @Input() comparisonEnd: D | null;
+  @Input() comparisonEnd: D | null = null;
 
   /** ARIA Accessible name of the `<input matStartDate/>` */
-  @Input() startDateAccessibleName: string | null;
+  @Input() startDateAccessibleName: string | null = null;
 
   /** ARIA Accessible name of the `<input matEndDate/>` */
-  @Input() endDateAccessibleName: string | null;
+  @Input() endDateAccessibleName: string | null = null;
 
   /** Origin of active drag, or null when dragging is not active. */
   @Input() activeDrag: NgxMatCalendarUserEvent<D> | null = null;
@@ -184,43 +184,43 @@ export class NgxMatMonthView<D>
 
   /** The body of calendar table */
   @ViewChild(NgxMatCalendarBodyComponent)
-  _matCalendarBody: NgxMatCalendarBodyComponent;
+  _matCalendarBody: NgxMatCalendarBodyComponent | null = null;
 
   /** The label for this month (e.g. "January 2017"). */
-  _monthLabel: string;
+  _monthLabel: string | null = null;
 
   /** Grid of calendar cells representing the dates of the month. */
-  _weeks: NgxMatCalendarCell[][];
+  _weeks: NgxMatCalendarCell[][] | null = null;
 
   /** The number of blank cells in the first row before the 1st of the month. */
-  _firstWeekOffset: number;
+  _firstWeekOffset: number | null = null;
 
   /** Start value of the currently-shown date range. */
-  _rangeStart: number | null;
+  _rangeStart: number | null = null;
 
   /** End value of the currently-shown date range. */
-  _rangeEnd: number | null;
+  _rangeEnd: number | null = null;
 
   /** Start value of the currently-shown comparison date range. */
-  _comparisonRangeStart: number | null;
+  _comparisonRangeStart: number | null = null;
 
   /** End value of the currently-shown comparison date range. */
-  _comparisonRangeEnd: number | null;
+  _comparisonRangeEnd: number | null = null;
 
   /** Start of the preview range. */
-  _previewStart: number | null;
+  _previewStart: number | null = null;
 
   /** End of the preview range. */
-  _previewEnd: number | null;
+  _previewEnd: number | null = null;
 
   /** Whether the user is currently selecting a range of dates. */
-  _isRange: boolean;
+  _isRange: boolean = false;
 
   /** The date of the month that today falls on. Null if today is in another month. */
-  _todayDate: number | null;
+  _todayDate: number | null = null;
 
   /** The names of the weekdays. */
-  _weekdays: { long: string; narrow: string }[];
+  _weekdays: { long: string; narrow: string }[] | null = null;
 
   constructor(
     readonly _changeDetectorRef: ChangeDetectorRef,
