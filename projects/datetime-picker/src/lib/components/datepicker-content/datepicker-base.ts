@@ -57,26 +57,26 @@ import {
 import { CanColor, ThemePalette, mixinColor } from "@angular/material/core";
 import { Observable, Subject, Subscription, merge } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { NgxMatCalendar, NgxMatCalendarView } from "./calendar";
+import { NgxMatCalendar, NgxMatCalendarView } from "../calendar/calendar";
 import {
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body/calendar-body.component";
-import { NgxMatDateAdapter } from "./core/date-adapter";
+} from "../calendar-body/calendar-body.component";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
 import {
   NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
   NgxMatDateRangeSelectionStrategy,
-} from "./date-range-selection-strategy";
+} from "../../utils/date-range-selection-strategy";
 import {
   NgxDateRange,
   NgxExtractDateTypeFromSelection,
   NgxMatDateSelectionModel,
-} from "./date-selection-model";
-import { ngxMatDatepickerAnimations } from "./datepicker-animations";
-import { createMissingDateImplError } from "./datepicker-errors";
-import { NgxDateFilterFn } from "./datepicker-input-base";
-import { NgxMatDatepickerIntl } from "./datepicker-intl";
-import { DEFAULT_STEP } from "./utils/date-utils";
+} from "../../utils/date-selection-model";
+import { ngxMatDatepickerAnimations } from "../../utils/datepicker-animations";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
+import { NgxDateFilterFn } from "../../directives/datepicker-input-base";
+import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
+import { DEFAULT_STEP } from "../../utils/date-utils";
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;

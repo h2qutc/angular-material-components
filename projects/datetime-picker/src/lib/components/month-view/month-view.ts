@@ -36,15 +36,18 @@ import {
   NgxMatCalendarCell,
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body/calendar-body.component";
-import { NgxMatDateAdapter } from "./core/date-adapter";
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "./core/date-formats";
+} from "../calendar-body/calendar-body.component";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
+import {
+  NGX_MAT_DATE_FORMATS,
+  NgxMatDateFormats,
+} from "../../core/date-formats";
 import {
   NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
   NgxMatDateRangeSelectionStrategy,
-} from "./date-range-selection-strategy";
-import { NgxDateRange } from "./date-selection-model";
-import { createMissingDateImplError } from "./datepicker-errors";
+} from "../../utils/date-range-selection-strategy";
+import { NgxDateRange } from "../../utils/date-selection-model";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
 
 const DAYS_PER_WEEK = 7;
 

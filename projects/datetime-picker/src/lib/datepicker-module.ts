@@ -6,30 +6,36 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCommonModule } from "@angular/material/core";
-import { NgxMatCalendar, NgxMatCalendarHeader } from "./calendar";
-import { NgxMatCalendarBodyComponent } from "./calendar-body/calendar-body.component";
-import { NgxMatDateRangeInput } from "./date-range-input";
-import { NgxMatEndDate, NgxMatStartDate } from "./date-range-input-parts";
-import { NgxMatDateRangePicker } from "./date-range-picker";
-import { NgxMatDatetimepicker } from "./datepicker";
+import {
+  NgxMatCalendar,
+  NgxMatCalendarHeader,
+} from "./components/calendar/calendar";
+import { NgxMatCalendarBodyComponent } from "./components/calendar-body/calendar-body.component";
+import { NgxMatDateRangeInput } from "./components/date-range-input/date-range-input";
+import {
+  NgxMatEndDate,
+  NgxMatStartDate,
+} from "./directives/date-range-input-parts";
+import { NgxMatDateRangePicker } from "./directives/date-range-picker";
+import { NgxMatDatetimepicker } from "./components/datepicker/datepicker";
 import {
   NgxMatDatepickerActions,
   NgxMatDatepickerApply,
   NgxMatDatepickerCancel,
-} from "./datepicker-actions";
+} from "./components/datepicker-actions/datepicker-actions";
 import {
   NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
   NgxMatDatepickerContent,
-} from "./datepicker-base";
-import { NgxMatDatepickerInput } from "./datepicker-input";
-import { NgxMatDatepickerIntl } from "./datepicker-intl";
+} from "./components/datepicker-content/datepicker-base";
+import { NgxMatDatepickerInput } from "./directives/datepicker-input";
+import { NgxMatDatepickerIntl } from "./utils/datepicker-intl";
 import {
   NgxMatDatepickerToggleIcon,
   NgxMatDatepickerToggle,
-} from "./datepicker-toggle";
-import { NgxMatMonthView } from "./month-view";
-import { NgxMatMultiYearView } from "./multi-year-view";
-import { NgxMatYearView } from "./year-view";
+} from "./components/datepicker-toggle/datepicker-toggle";
+import { NgxMatMonthView } from "./components/month-view/month-view";
+import { NgxMatMultiYearView } from "./components/multi-year-view/multi-year-view";
+import { NgxMatYearView } from "./components/year-view/year-view";
 import { NgxMatTimepickerModule } from "./timepicker.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 

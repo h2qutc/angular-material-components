@@ -33,11 +33,14 @@ import {
   NgxMatCalendarCell,
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body/calendar-body.component";
-import { NgxMatDateAdapter } from "./core/date-adapter";
-import { NgxDateRange } from "./date-selection-model";
-import { createMissingDateImplError } from "./datepicker-errors";
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "./core/date-formats";
+} from "../calendar-body/calendar-body.component";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
+import { NgxDateRange } from "../../utils/date-selection-model";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
+import {
+  NGX_MAT_DATE_FORMATS,
+  NgxMatDateFormats,
+} from "../../core/date-formats";
 
 /**
  * An internal component used to display a single year in the datepicker.

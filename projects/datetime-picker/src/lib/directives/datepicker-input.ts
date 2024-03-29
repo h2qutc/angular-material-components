@@ -1,16 +1,38 @@
-
-
-import { Directive, ElementRef, forwardRef, Inject, Input, OnDestroy, Optional } from '@angular/core';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidatorFn, Validators } from '@angular/forms';
-import { MAT_DATE_FORMATS, MatDateFormats, ThemePalette } from '@angular/material/core';
-import { MAT_FORM_FIELD } from '@angular/material/form-field';
-import { MAT_INPUT_VALUE_ACCESSOR } from '@angular/material/input';
-import { Subscription } from 'rxjs';
-import { NgxMatDateAdapter } from './core/date-adapter';
-import { NgxDateSelectionModelChange } from './date-selection-model';
-import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
-import { _NgxMatFormFieldPartial, NgxDateFilterFn, NgxMatDatepickerInputBase } from './datepicker-input-base';
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
+import {
+  Directive,
+  ElementRef,
+  forwardRef,
+  Inject,
+  Input,
+  OnDestroy,
+  Optional,
+} from "@angular/core";
+import {
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidatorFn,
+  Validators,
+} from "@angular/forms";
+import {
+  MAT_DATE_FORMATS,
+  MatDateFormats,
+  ThemePalette,
+} from "@angular/material/core";
+import { MAT_FORM_FIELD } from "@angular/material/form-field";
+import { MAT_INPUT_VALUE_ACCESSOR } from "@angular/material/input";
+import { Subscription } from "rxjs";
+import { NgxMatDateAdapter } from "../core/date-adapter";
+import { NgxDateSelectionModelChange } from "../utils/date-selection-model";
+import {
+  NgxMatDatepickerControl,
+  NgxMatDatepickerPanel,
+} from "../components/datepicker-content/datepicker-base";
+import {
+  _NgxMatFormFieldPartial,
+  NgxDateFilterFn,
+  NgxMatDatepickerInputBase,
+} from "./datepicker-input-base";
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "../core/date-formats";
 
 /** @docs-private */
 export const NGX_MAT_DATEPICKER_VALUE_ACCESSOR: any = {
@@ -28,40 +50,45 @@ export const NGX_MAT_DATEPICKER_VALIDATORS: any = {
 
 /** Directive used to connect an input to a MatDatepicker. */
 @Directive({
-  selector: 'input[ngxMatDatetimePicker]',
+  selector: "input[ngxMatDatetimePicker]",
   providers: [
     NGX_MAT_DATEPICKER_VALUE_ACCESSOR,
     NGX_MAT_DATEPICKER_VALIDATORS,
     { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatDatepickerInput },
   ],
   host: {
-    'class': 'mat-datepicker-input',
-    '[attr.aria-haspopup]': '_datepicker ? "dialog" : null',
-    '[attr.aria-owns]': '(_datepicker?.opened && _datepicker.id) || null',
-    '[attr.min]': 'min ? _dateAdapter.toIso8601(min) : null',
-    '[attr.max]': 'max ? _dateAdapter.toIso8601(max) : null',
+    class: "mat-datepicker-input",
+    "[attr.aria-haspopup]": '_datepicker ? "dialog" : null',
+    "[attr.aria-owns]": "(_datepicker?.opened && _datepicker.id) || null",
+    "[attr.min]": "min ? _dateAdapter.toIso8601(min) : null",
+    "[attr.max]": "max ? _dateAdapter.toIso8601(max) : null",
     // Used by the test harness to tie this input to its calendar. We can't depend on
     // `aria-owns` for this, because it's only defined while the calendar is open.
-    '[attr.data-mat-calendar]': '_datepicker ? _datepicker.id : null',
-    '[disabled]': 'disabled',
-    '(input)': '_onInput($event.target.value)',
-    '(change)': '_onChange()',
-    '(blur)': '_onBlur()',
-    '(keydown)': '_onKeydown($event)',
+    "[attr.data-mat-calendar]": "_datepicker ? _datepicker.id : null",
+    "[disabled]": "disabled",
+    "(input)": "_onInput($event.target.value)",
+    "(change)": "_onChange()",
+    "(blur)": "_onBlur()",
+    "(keydown)": "_onKeydown($event)",
   },
-  exportAs: 'ngxMatDatepickerInput',
+  exportAs: "ngxMatDatepickerInput",
 })
 export class NgxMatDatepickerInput<D>
   extends NgxMatDatepickerInputBase<D | null, D>
-  implements NgxMatDatepickerControl<D | null>, OnDestroy {
+  implements NgxMatDatepickerControl<D | null>, OnDestroy
+{
   private _closedSubscription = Subscription.EMPTY;
 
   /** The datepicker that this input is associated with. */
   @Input()
-  set ngxMatDatetimePicker(datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, D | null, D>) {
+  set ngxMatDatetimePicker(
+    datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, D | null, D>,
+  ) {
     if (datepicker) {
       this._datepicker = datepicker;
-      this._closedSubscription = datepicker.closedStream.subscribe(() => this._onTouched());
+      this._closedSubscription = datepicker.closedStream.subscribe(() =>
+        this._onTouched(),
+      );
       this._registerModel(datepicker.registerInput(this));
     }
   }
@@ -73,7 +100,9 @@ export class NgxMatDatepickerInput<D>
     return this._min;
   }
   set min(value: D | null) {
-    const validValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+    const validValue = this._dateAdapter.getValidDateOrNull(
+      this._dateAdapter.deserialize(value),
+    );
 
     if (!this._dateAdapter.sameDate(validValue, this._min)) {
       this._min = validValue;
@@ -88,7 +117,9 @@ export class NgxMatDatepickerInput<D>
     return this._max;
   }
   set max(value: D | null) {
-    const validValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+    const validValue = this._dateAdapter.getValidDateOrNull(
+      this._dateAdapter.deserialize(value),
+    );
 
     if (!this._dateAdapter.sameDate(validValue, this._max)) {
       this._max = validValue;
@@ -98,7 +129,7 @@ export class NgxMatDatepickerInput<D>
   private _max: D | null;
 
   /** Function that can be used to filter out dates within the datepicker. */
-  @Input('matDatepickerFilter')
+  @Input("matDatepickerFilter")
   get dateFilter() {
     return this._dateFilter;
   }
@@ -119,7 +150,9 @@ export class NgxMatDatepickerInput<D>
     elementRef: ElementRef<HTMLInputElement>,
     @Optional() dateAdapter: NgxMatDateAdapter<D>,
     @Optional() @Inject(NGX_MAT_DATE_FORMATS) dateFormats: NgxMatDateFormats,
-    @Optional() @Inject(MAT_FORM_FIELD) private _formField?: _NgxMatFormFieldPartial,
+    @Optional()
+    @Inject(MAT_FORM_FIELD)
+    private _formField?: _NgxMatFormFieldPartial,
   ) {
     super(elementRef, dateAdapter, dateFormats);
     this._validator = Validators.compose(super._getValidators());
@@ -130,7 +163,9 @@ export class NgxMatDatepickerInput<D>
    * @return The element to connect the popup to.
    */
   getConnectedOverlayOrigin(): ElementRef {
-    return this._formField ? this._formField.getConnectedOverlayOrigin() : this._elementRef;
+    return this._formField
+      ? this._formField.getConnectedOverlayOrigin()
+      : this._elementRef;
   }
 
   /** Gets the ID of an element that should be used a description for the calendar overlay. */
@@ -139,7 +174,7 @@ export class NgxMatDatepickerInput<D>
       return this._formField.getLabelId();
     }
 
-    return this._elementRef.nativeElement.getAttribute('aria-labelledby');
+    return this._elementRef.nativeElement.getAttribute("aria-labelledby");
   }
 
   /** Returns the palette used by the input's form field, if any. */

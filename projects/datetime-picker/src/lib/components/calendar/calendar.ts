@@ -22,23 +22,26 @@ import { Subject, Subscription } from "rxjs";
 import {
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body/calendar-body.component";
-import { NgxMatDateAdapter } from "./core/date-adapter";
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "./core/date-formats";
+} from "../calendar-body/calendar-body.component";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
+import {
+  NGX_MAT_DATE_FORMATS,
+  NgxMatDateFormats,
+} from "../../core/date-formats";
 import {
   NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER,
   NgxDateRange,
-} from "./date-selection-model";
-import { createMissingDateImplError } from "./datepicker-errors";
-import { NgxMatDatepickerIntl } from "./datepicker-intl";
-import { NgxMatMonthView } from "./month-view";
+} from "../../utils/date-selection-model";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
+import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
+import { NgxMatMonthView } from "../month-view/month-view";
 import {
   NgxMatMultiYearView,
   getActiveOffset,
   isSameMultiYearView,
   yearsPerPage,
-} from "./multi-year-view";
-import { NgxMatYearView } from "./year-view";
+} from "../multi-year-view/multi-year-view";
+import { NgxMatYearView } from "../year-view/year-view";
 
 let calendarHeaderId = 1;
 
@@ -51,7 +54,7 @@ export type NgxMatCalendarView = "month" | "year" | "multi-year";
 /** Default header for MatCalendar */
 @Component({
   selector: "ngx-mat-calendar-header",
-  templateUrl: "calendar-header.html",
+  templateUrl: "./calendar-header.html",
   exportAs: "ngxMatCalendarHeader",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

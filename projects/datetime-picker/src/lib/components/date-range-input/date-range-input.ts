@@ -23,25 +23,28 @@ import {
   MatFormFieldControl,
 } from "@angular/material/form-field";
 import { Subject, Subscription, merge } from "rxjs";
-import { NgxMatDateAdapter } from "./core/date-adapter";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
 import {
   NGX_MAT_DATE_RANGE_INPUT_PARENT,
   NgxMatDateRangeInputParent,
   NgxMatEndDate,
   NgxMatStartDate,
-} from "./date-range-input-parts";
-import { NgxMatDateRangePickerInput } from "./date-range-picker";
-import { NgxDateRange, NgxMatDateSelectionModel } from "./date-selection-model";
+} from "../../directives/date-range-input-parts";
+import { NgxMatDateRangePickerInput } from "../../directives/date-range-picker";
+import {
+  NgxDateRange,
+  NgxMatDateSelectionModel,
+} from "../../utils/date-selection-model";
 import {
   NgxMatDatepickerControl,
   NgxMatDatepickerPanel,
-} from "./datepicker-base";
-import { createMissingDateImplError } from "./datepicker-errors";
+} from "../datepicker-content/datepicker-base";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
 import {
   NgxDateFilterFn,
   _NgxMatFormFieldPartial,
   dateInputsHaveChanged,
-} from "./datepicker-input-base";
+} from "../../directives/datepicker-input-base";
 
 let nextUniqueId = 0;
 

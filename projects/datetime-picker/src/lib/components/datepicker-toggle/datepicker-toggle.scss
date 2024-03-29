@@ -1,4 +1,4 @@
-@use '@angular/cdk';
+@use "../../../../../../node_modules/@angular/cdk/index";
 
 // We support the case where the form field is disabled, but the datepicker is not.
 // MDC sets `pointer-events: none` on disabled form fields which prevents clicks on the toggle.

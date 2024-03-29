@@ -1,4 +1,4 @@
-@use '@angular/cdk';
+@use "../../../../../../node_modules/@angular/cdk/index";
 
 @mixin fill {
   top: 0;
@@ -67,7 +67,7 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
     transform: rotate(180deg);
   }
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     margin: 0 $calendar-arrow-size 0 0;
   }
 
@@ -83,13 +83,13 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
 
   &::after {
     @include fill;
-    content: '';
+    content: "";
     margin: $calendar-prev-next-icon-margin;
     border: 0 solid currentColor;
     border-top-width: $calendar-prev-next-icon-border-width;
   }
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     transform: rotate(180deg);
   }
 }
@@ -122,7 +122,7 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
   // We use an absolutely positioned pseudo-element as the divider line for the table header so we
   // can extend it all the way to the edge of the calendar.
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -$calendar-padding;
@@ -134,7 +134,10 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
 // For the calendar element, default inset/offset values are necessary to ensure that
 // the focus indicator is sufficiently contrastive and renders appropriately.
 .mat-calendar-body-cell-content::before {
-  $border-width: var(--mat-focus-indicator-border-width, #{$default-border-width});
+  $border-width: var(
+    --mat-focus-indicator-border-width,
+    #{$default-border-width}
+  );
   $offset: calc(#{$border-width} + 3px);
   margin: calc(#{$offset} * -1);
 }
@@ -142,7 +145,7 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
 // For calendar cells, render the focus indicator when the parent cell is
 // focused.
 .mat-calendar-body-cell:focus .mat-focus-indicator::before {
-  content: '';
+  content: "";
 }
 
 // Label that is not rendered and removed from the accessibility tree.

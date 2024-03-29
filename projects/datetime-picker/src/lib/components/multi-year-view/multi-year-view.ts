@@ -31,10 +31,10 @@ import {
   NgxMatCalendarCell,
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from "./calendar-body/calendar-body.component";
-import { NgxMatDateAdapter } from "./core/date-adapter";
-import { NgxDateRange } from "./date-selection-model";
-import { createMissingDateImplError } from "./datepicker-errors";
+} from "../calendar-body/calendar-body.component";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
+import { NgxDateRange } from "../../utils/date-selection-model";
+import { createMissingDateImplError } from "../../utils/datepicker-errors";
 
 export const yearsPerPage = 24;
 

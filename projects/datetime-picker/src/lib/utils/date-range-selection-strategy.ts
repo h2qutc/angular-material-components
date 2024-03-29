@@ -1,11 +1,17 @@
-import { FactoryProvider, Injectable, InjectionToken, Optional, SkipSelf } from '@angular/core';
-import { NgxMatDateAdapter } from './core/date-adapter';
-import { NgxDateRange } from './date-selection-model';
+import {
+  FactoryProvider,
+  Injectable,
+  InjectionToken,
+  Optional,
+  SkipSelf,
+} from "@angular/core";
+import { NgxMatDateAdapter } from "../core/date-adapter";
+import { NgxDateRange } from "./date-selection-model";
 
 /** Injection token used to customize the date range selection behavior. */
 export const NGX_MAT_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<
   NgxMatDateRangeSelectionStrategy<any>
->('NGX_MAT_DATE_RANGE_SELECTION_STRATEGY');
+>("NGX_MAT_DATE_RANGE_SELECTION_STRATEGY");
 
 /** Object that can be provided in order to customize the date range selection behavior. */
 export interface NgxMatDateRangeSelectionStrategy<D> {
@@ -16,7 +22,11 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    * @param event DOM event that triggered the selection. Currently only corresponds to a `click`
    *    event, but it may get expanded in the future.
    */
-  selectionFinished(date: D | null, currentRange: NgxDateRange<D>, event: Event): NgxDateRange<D>;
+  selectionFinished(
+    date: D | null,
+    currentRange: NgxDateRange<D>,
+    event: Event,
+  ): NgxDateRange<D>;
 
   /**
    * Called when the user has activated a new date (e.g. by hovering over
@@ -28,7 +38,11 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    * @param event DOM event that caused the preview to be changed. Will be either a
    *    `mouseenter`/`mouseleave` or `focus`/`blur` depending on how the user is navigating.
    */
-  createPreview(activeDate: D | null, currentRange: NgxDateRange<D>, event: Event): NgxDateRange<D>;
+  createPreview(
+    activeDate: D | null,
+    currentRange: NgxDateRange<D>,
+    event: Event,
+  ): NgxDateRange<D>;
 
   /**
    * Called when the user has dragged a date in the currently selected range to another
@@ -50,15 +64,21 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
 
 /** Provides the default date range selection behavior. */
 @Injectable()
-export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSelectionStrategy<D> {
-  constructor(private _dateAdapter: NgxMatDateAdapter<D>) { }
+export class DefaultNgxMatCalendarRangeStrategy<D>
+  implements NgxMatDateRangeSelectionStrategy<D>
+{
+  constructor(private _dateAdapter: NgxMatDateAdapter<D>) {}
 
   selectionFinished(date: D, currentRange: NgxDateRange<D>) {
     let { start, end } = currentRange;
 
     if (start == null) {
       start = date;
-    } else if (end == null && date && this._dateAdapter.compareDate(date, start) >= 0) {
+    } else if (
+      end == null &&
+      date &&
+      this._dateAdapter.compareDate(date, start) >= 0
+    ) {
       end = date;
     } else {
       start = date;
@@ -133,6 +153,9 @@ export function NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
 
 export const NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER: FactoryProvider = {
   provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
-  deps: [[new Optional(), new SkipSelf(), NGX_MAT_DATE_RANGE_SELECTION_STRATEGY], NgxMatDateAdapter],
+  deps: [
+    [new Optional(), new SkipSelf(), NGX_MAT_DATE_RANGE_SELECTION_STRATEGY],
+    NgxMatDateAdapter,
+  ],
   useFactory: NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY,
 };

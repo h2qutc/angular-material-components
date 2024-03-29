@@ -19,7 +19,7 @@ import {
 import { ThemePalette } from "@angular/material/core";
 import { Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
-import { NgxMatDateAdapter } from "./core/date-adapter";
+import { NgxMatDateAdapter } from "../../core/date-adapter";
 import {
   createMissingDateImplError,
   DEFAULT_STEP,
@@ -30,7 +30,7 @@ import {
   PATTERN_INPUT_HOUR,
   PATTERN_INPUT_MINUTE,
   PATTERN_INPUT_SECOND,
-} from "./utils/date-utils";
+} from "../../utils/date-utils";
 
 @Component({
   selector: "ngx-mat-timepicker",

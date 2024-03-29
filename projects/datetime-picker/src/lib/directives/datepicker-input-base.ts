@@ -23,14 +23,14 @@ import {
 } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
 import { Subject, Subscription } from "rxjs";
-import { NgxMatDateAdapter } from "./core/date-adapter";
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "./core/date-formats";
+import { NgxMatDateAdapter } from "../core/date-adapter";
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "../core/date-formats";
 import {
   NgxDateSelectionModelChange,
   NgxExtractDateTypeFromSelection,
   NgxMatDateSelectionModel,
-} from "./date-selection-model";
-import { createMissingDateImplError } from "./datepicker-errors";
+} from "../utils/date-selection-model";
+import { createMissingDateImplError } from "../utils/datepicker-errors";
 
 /**
  * An event used for datepicker input and change events. We don't always have access to a native
