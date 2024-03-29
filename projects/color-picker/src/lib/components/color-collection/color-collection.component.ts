@@ -1,10 +1,10 @@
 import {
   Component,
   EventEmitter,
-  OnInit,
   Output,
   ViewEncapsulation,
   Input,
+  HostBinding,
 } from "@angular/core";
 import { Color } from "../../models";
 import { BASIC_COLORS, stringInputToObject } from "../../helpers";
@@ -14,11 +14,9 @@ import { BASIC_COLORS, stringInputToObject } from "../../helpers";
   templateUrl: "./color-collection.component.html",
   styleUrls: ["./color-collection.component.scss"],
   encapsulation: ViewEncapsulation.None,
-  host: {
-    class: "ngx-mat-color-collection",
-  },
 })
-export class NgxMatColorCollectionComponent implements OnInit {
+export class NgxMatColorCollectionComponent {
+  @HostBinding("class") class = "ngx-mat-color-collection";
   @Output() colorChanged: EventEmitter<Color> = new EventEmitter<Color>();
 
   @Input()
@@ -32,8 +30,6 @@ export class NgxMatColorCollectionComponent implements OnInit {
 
   colors1: string[] = BASIC_COLORS.slice(0, 8);
   colors2: string[] = BASIC_COLORS.slice(8, 16);
-
-  constructor() {}
 
   select(hex: string) {
     this.selectedColor = hex;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, NgZone } from "@angular/core";
+import { AfterViewInit, Component, NgZone } from "@angular/core";
 import { Color } from "../../../models";
 import { getColorAtPosition } from "../../../helpers";
 import { NgxMatBaseColorCanvas } from "../base-color-canvas";
@@ -10,13 +10,11 @@ import { NgxMatBaseColorCanvas } from "../base-color-canvas";
 })
 export class NgxMatColorSliderComponent
   extends NgxMatBaseColorCanvas
-  implements OnInit
+  implements AfterViewInit
 {
   constructor(protected zone: NgZone) {
     super(zone, "color-strip");
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
@@ -27,6 +25,9 @@ export class NgxMatColorSliderComponent
       throw new Error(
         "Could not fill gradient. Canvas context is not initialized",
       );
+    }
+    if (!this.height) {
+      throw new Error("Could not fill gradient. Height is not defined");
     }
     const grd = this.ctx.createLinearGradient(0, 0, 0, this.height);
     grd.addColorStop(0, "rgba(255, 0, 0, 1)");
