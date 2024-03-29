@@ -9,7 +9,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
@@ -107,11 +106,11 @@ export class NgxMatColorToggleComponent
   }
 
   private _watchStateChanges() {
-    const disabled$ = this.picker ? this.picker._disabledChange : of();
+    const disabled$ = this.picker ? this.picker._disabledChange : of(false);
     const inputDisabled$ =
       this.picker && this.picker._pickerInput
         ? this.picker._pickerInput._disabledChange
-        : of();
+        : of(false);
 
     const pickerToggled$ = this.picker
       ? merge(this.picker.openedStream, this.picker.closedStream)
