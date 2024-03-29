@@ -13,9 +13,9 @@ import {
   OnDestroy,
   AfterViewChecked,
   inject,
+  HostBinding,
 } from "@angular/core";
 import { take } from "rxjs/operators";
-import moment from "moment";
 
 /** Extra CSS classes that can be associated with a calendar cell. */
 export type NgxMatCalendarCellCssClasses =
@@ -34,7 +34,7 @@ export type NgxMatCalendarCellClassFunction<D> = (
  * An internal class that represents the data corresponding to a single calendar cell.
  * @docs-private
  */
-export class NgxMatCalendarCell<D = unknown> {
+export class NgxMatCalendarCell<D> {
   constructor(
     public value: number,
     public displayValue: string,
@@ -58,9 +58,6 @@ let calendarBodyId = 1;
   selector: "[ngx-mat-calendar-body]",
   templateUrl: "calendar-body.component.html",
   styleUrls: ["calendar-body.component.scss"],
-  host: {
-    class: "ngx-mat-calendar-body",
-  },
   exportAs: "matCalendarBody",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,6 +65,7 @@ let calendarBodyId = 1;
 export class NgxMatCalendarBodyComponent<D = unknown>
   implements OnChanges, OnDestroy, AfterViewChecked
 {
+  @HostBinding("class") hostClass = "ngx-mat-calendar-body";
   private _platform = inject(Platform);
   /**
    * Used to skip the next focus event when rendering the preview range.
@@ -84,7 +82,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
   @Input() label: string | null = null;
 
   /** The cells to display in the table. */
-  @Input() rows: NgxMatCalendarCell[][] | null = null;
+  @Input() rows: NgxMatCalendarCell<D>[][] | null = null;
 
   /** The value in the table that corresponds to today. */
   @Input() todayValue: number | null = null;
@@ -145,7 +143,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
 
   /** Emits when the preview has changed as a result of a user action. */
   @Output() readonly previewChange = new EventEmitter<
-    NgxMatCalendarUserEvent<NgxMatCalendarCell | null>
+    NgxMatCalendarUserEvent<NgxMatCalendarCell<D> | null>
   >();
 
   @Output() readonly activeDateChange = new EventEmitter<
@@ -195,7 +193,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
   }
 
   /** Called when a cell is clicked. */
-  _cellClicked(cell: NgxMatCalendarCell, event: MouseEvent): void {
+  _cellClicked(cell: NgxMatCalendarCell<D>, event: MouseEvent): void {
     // Ignore "clicks" that are actually canceled drags (eg the user dragged
     // off and then went back to this cell to undo).
     if (this._didDragSinceMouseDown) {
@@ -207,7 +205,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
     }
   }
 
-  _emitActiveDateChange(cell: NgxMatCalendarCell, event: FocusEvent): void {
+  _emitActiveDateChange(cell: NgxMatCalendarCell<D>, event: FocusEvent): void {
     if (cell.enabled) {
       this.activeDateChange.emit({ value: cell.value, event });
     }
@@ -325,7 +323,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
       );
       return false;
     }
-    let previousCell: NgxMatCalendarCell | undefined =
+    let previousCell: NgxMatCalendarCell<D> | undefined =
       this.rows[rowIndex][colIndex - 1];
 
     if (!previousCell) {
@@ -352,7 +350,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
       );
       return false;
     }
-    let nextCell: NgxMatCalendarCell | undefined =
+    let nextCell: NgxMatCalendarCell<D> | undefined =
       this.rows[rowIndex][colIndex + 1];
 
     if (!nextCell) {
@@ -508,11 +506,12 @@ export class NgxMatCalendarBodyComponent<D = unknown>
     }
 
     let rawValue = cell.rawValue;
-
-    // Try to convert rawValue to a number
-    if (typeof rawValue === "string") {
-      rawValue = parseInt(rawValue);
+    if (rawValue === undefined) {
+      console.warn("Could not start drag sequence. Cell has no raw value.");
+      return;
     }
+    const rawValueD = rawValue as D;
+    rawValue = parseInt(rawValueD);
 
     if (!this._isInRange(rawValue)) {
       return;
@@ -564,7 +563,9 @@ export class NgxMatCalendarBodyComponent<D = unknown>
   };
 
   /** Finds the MatCalendarCell that corresponds to a DOM node. */
-  private _getCellFromElement(element: HTMLElement): NgxMatCalendarCell | null {
+  private _getCellFromElement(
+    element: HTMLElement,
+  ): NgxMatCalendarCell<D> | null {
     const cell = getCellElement(element);
 
     if (cell) {

@@ -35,7 +35,7 @@ import {
 } from "../../utils/date-selection-model";
 import { createMissingDateImplError } from "../../utils/datepicker-errors";
 import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
-import { NgxMatMonthView } from "../month-view/month-view";
+import { NgxMatMonthViewComponent } from "../month-view/month-view.component";
 import {
   NgxMatMultiYearView,
   getActiveOffset,
@@ -381,7 +381,8 @@ export class NgxMatCalendarComponent<D>
   >();
 
   /** Reference to the current month view component. */
-  @ViewChild(NgxMatMonthView) monthView: NgxMatMonthView<D> | null = null;
+  @ViewChild(NgxMatMonthViewComponent)
+  monthView: NgxMatMonthViewComponent<D> | null = null;
 
   /** Reference to the current year view component. */
   @ViewChild(NgxMatYearView) yearView: NgxMatYearView<D> | null = null;
@@ -588,7 +589,7 @@ export class NgxMatCalendarComponent<D>
 
   /** Returns the component instance that corresponds to the current calendar view. */
   private _getCurrentViewComponent():
-    | NgxMatMonthView<D>
+    | NgxMatMonthViewComponent<D>
     | NgxMatYearView<D>
     | NgxMatMultiYearView<D> {
     // The return type is explicitly written as a union to ensure that the Closure compiler does

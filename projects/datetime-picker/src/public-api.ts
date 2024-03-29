@@ -11,7 +11,7 @@ export * from "./lib/core/native-date-formats";
 export * from "./lib/core/native-date.module";
 export * from "./lib/utils/date-range-selection-strategy";
 export * from "./lib/datepicker-module";
-export * from "./lib/components/month-view/month-view";
+export * from "./lib/components/month-view/month-view.component";
 export * from "./lib/components/multi-year-view/multi-year-view";
 export * from "./lib/components/timepicker/timepicker.component";
 export * from "./lib/timepicker.module";

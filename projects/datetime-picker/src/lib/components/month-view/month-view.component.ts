@@ -57,12 +57,12 @@ const DAYS_PER_WEEK = 7;
  */
 @Component({
   selector: "ngx-mat-month-view",
-  templateUrl: "month-view.html",
+  templateUrl: "month-view.component.html",
   exportAs: "ngxMatMonthView",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatMonthView<D>
+export class NgxMatMonthViewComponent<D>
   implements AfterContentInit, OnChanges, OnDestroy
 {
   private _rerenderSubscription = Subscription.EMPTY;
@@ -190,7 +190,7 @@ export class NgxMatMonthView<D>
   _monthLabel: string | null = null;
 
   /** Grid of calendar cells representing the dates of the month. */
-  _weeks: NgxMatCalendarCell[][] | null = null;
+  _weeks: NgxMatCalendarCell<D>[][] | null = null;
 
   /** The number of blank cells in the first row before the 1st of the month. */
   _firstWeekOffset: number | null = null;
@@ -479,10 +479,13 @@ export class NgxMatMonthView<D>
     event,
     value: cell,
   }: NgxMatCalendarUserEvent<NgxMatCalendarCell<D> | null>) {
+    if (!event) {
+      throw Error("Could not update preview. Event is missing.");
+    }
     if (this._rangeStrategy) {
       // We can assume that this will be a range, because preview
       // events aren't fired for single date selections.
-      const value = cell ? cell.rawValue! : null;
+      const value = cell?.rawValue || null;
       const previewRange = this._rangeStrategy.createPreview(
         value,
         this.selected as NgxDateRange<D>,
@@ -518,6 +521,9 @@ export class NgxMatMonthView<D>
    * computes and emits the new range selection.
    */
   protected _dragEnded(event: NgxMatCalendarUserEvent<D | null>) {
+    if (!event.event) {
+      throw Error("Could not end drag. Event is missing.");
+    }
     if (!this.activeDrag) return;
 
     if (event.value) {
