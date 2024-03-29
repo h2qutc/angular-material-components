@@ -15,6 +15,7 @@ import {
   inject,
 } from "@angular/core";
 import { take } from "rxjs/operators";
+import moment from "moment";
 
 /** Extra CSS classes that can be associated with a calendar cell. */
 export type NgxMatCalendarCellCssClasses =
@@ -48,7 +49,7 @@ export class NgxMatCalendarCell<D = unknown> {
 /** Event emitted when a date inside the calendar is triggered as a result of a user action. */
 export interface NgxMatCalendarUserEvent<D> {
   value: D;
-  event: Event;
+  event: Event | null;
 }
 
 let calendarBodyId = 1;
@@ -506,20 +507,11 @@ export class NgxMatCalendarBodyComponent<D = unknown>
       return;
     }
 
-    let rawValue: number;
-    if (typeof cell.rawValue === "number") {
-      rawValue = cell.rawValue;
-    } else if (cell.rawValue instanceof Date) {
-      rawValue = cell.rawValue.getTime();
-    } else if (moment.isMoment(cell.rawValue)) {
-      rawValue = cell.rawValue.valueOf();
-    } else if (cell.rawValue && typeof cell.rawValue.toNumber === "function") {
-      rawValue = cell.rawValue.toNumber();
-    } else {
-      console.error(
-        "Could not start drag sequence. Unable to convert rawValue to number.",
-      );
-      return;
+    let rawValue = cell.rawValue;
+
+    // Try to convert rawValue to a number
+    if (typeof rawValue === "string") {
+      rawValue = parseInt(rawValue);
     }
 
     if (!this._isInRange(rawValue)) {

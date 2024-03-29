@@ -305,7 +305,7 @@ export class NgxMatCalendar<D>
       );
     }
   }
-  private _selected: NgxDateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null = null;
 
   /** The minimum selectable date. */
   @Input()

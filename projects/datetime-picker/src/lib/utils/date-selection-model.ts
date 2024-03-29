@@ -127,7 +127,7 @@ export class NgxMatSingleDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Checks whether the current selection is valid. */
-  isValid(): boolean {
+  protected isValid(): boolean {
     return this.selection != null && this._isValidDateInstance(this.selection);
   }
 
@@ -181,7 +181,7 @@ export class NgxMatRangeDateSelectionModel<D> extends NgxMatDateSelectionModel<
   }
 
   /** Checks whether the current selection is valid. */
-  isValid(): boolean {
+  protected isValid(): boolean {
     const { start, end } = this.selection;
 
     // Empty ranges are valid.

@@ -10,7 +10,7 @@ import { NgxDateRange } from "./date-selection-model";
 
 /** Injection token used to customize the date range selection behavior. */
 export const NGX_MAT_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<
-  NgxMatDateRangeSelectionStrategy<any>
+  NgxMatDateRangeSelectionStrategy<unknown>
 >("NGX_MAT_DATE_RANGE_SELECTION_STRATEGY");
 
 /** Object that can be provided in order to customize the date range selection behavior. */
@@ -48,7 +48,7 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    * Called when the user has dragged a date in the currently selected range to another
    * date. Returns the date updated range that should result from this interaction.
    *
-   * @param dateOrigin The date the user started dragging from.
+   * @param dragOrigin
    * @param originalRange The originally selected date range.
    * @param newDate The currently targeted date in the drag operation.
    * @param event DOM event that triggered the updated drag state. Will be

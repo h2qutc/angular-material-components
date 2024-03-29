@@ -21,6 +21,7 @@ import {
   NgxMatDatepickerPanel,
 } from "../datepicker-content/datepicker-base";
 import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
+import { NgxExtractDateTypeFromSelection } from "../../utils/date-selection-model";
 
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
@@ -55,16 +56,16 @@ export class NgxMatDatepickerToggle<D>
   private _stateChanges = Subscription.EMPTY;
 
   /** Datepicker instance that the button will toggle. */
-  @Input("for") datepicker: NgxMatDatepickerPanel<
-    NgxMatDatepickerControl<any>,
+  @Input() datepicker: NgxMatDatepickerPanel<
+    NgxMatDatepickerControl<NgxExtractDateTypeFromSelection<D>>,
     D
-  >;
+  > | null = null;
 
   /** Tabindex for the toggle. */
   @Input() tabIndex: number | null;
 
   /** Screen-reader label for the button. */
-  @Input("aria-label") ariaLabel: string;
+  @Input("aria-label") ariaLabel: string | null = null;
 
   /** Whether the toggle button is disabled. */
   @Input()
@@ -73,22 +74,22 @@ export class NgxMatDatepickerToggle<D>
       return this.datepicker.disabled;
     }
 
-    return !!this._disabled;
+    return this._disabled;
   }
   set disabled(value: BooleanInput) {
     this._disabled = coerceBooleanProperty(value);
   }
-  private _disabled: boolean;
+  private _disabled: boolean = false;
 
   /** Whether ripples on the toggle should be disabled. */
-  @Input() disableRipple: boolean;
+  @Input() disableRipple: boolean = false;
 
   /** Custom icon set by the consumer. */
   @ContentChild(NgxMatDatepickerToggleIcon)
-  _customIcon: NgxMatDatepickerToggleIcon;
+  _customIcon: NgxMatDatepickerToggleIcon | null = null;
 
   /** Underlying button element. */
-  @ViewChild("button") _button: MatButton;
+  @ViewChild("button") _button: MatButton | null = null;
 
   constructor(
     public _intl: NgxMatDatepickerIntl,

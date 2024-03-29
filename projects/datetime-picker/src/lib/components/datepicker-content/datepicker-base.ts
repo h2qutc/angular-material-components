@@ -147,30 +147,30 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   implements OnInit, AfterViewInit, OnDestroy, CanColor
 {
   private _subscriptions = new Subscription();
-  private _model: NgxMatDateSelectionModel<S, D>;
+  private _model: NgxMatDateSelectionModel<S, D> | null = null;
   /** Reference to the internal calendar component. */
-  @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D>;
+  @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D> | null = null;
 
   /** Reference to the datepicker that created the overlay. */
-  datepicker: NgxMatDatepickerBase<any, S, D>;
+  datepicker: NgxMatDatepickerBase<any, S, D> | null = null;
 
   /** Start of the comparison range. */
-  comparisonStart: D | null;
+  comparisonStart: D | null = null;
 
   /** End of the comparison range. */
-  comparisonEnd: D | null;
+  comparisonEnd: D | null = null;
 
   /** ARIA Accessible name of the `<input matStartDate/>` */
-  startDateAccessibleName: string | null;
+  startDateAccessibleName: string | null = null;
 
   /** ARIA Accessible name of the `<input matEndDate/>` */
-  endDateAccessibleName: string | null;
+  endDateAccessibleName: string | null = null;
 
   /** Whether the datepicker is above or below the input. */
-  _isAbove: boolean;
+  _isAbove: boolean = false;
 
   /** Current state of the animation. */
-  _animationState: "enter-dropdown" | "enter-dialog" | "void";
+  _animationState: "enter-dropdown" | "enter-dialog" | "void" | null = null;
 
   /** Emits when an animation has finished. */
   readonly _animationDone = new Subject<void>();
@@ -182,20 +182,20 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   _closeButtonText: string;
 
   /** Whether the close button currently has focus. */
-  _closeButtonFocused: boolean;
+  _closeButtonFocused: boolean = false;
 
   /** Portal with projected action buttons. */
   _actionsPortal: TemplatePortal | null = null;
 
   /** Id of the label for the `role="dialog"` element. */
-  _dialogLabelId: string | null;
+  _dialogLabelId: string | null = null;
 
   get isViewMonth(): boolean {
     if (!this._calendar || this._calendar.currentView == null) return true;
     return this._calendar.currentView == "month";
   }
 
-  _modelTime: D | null;
+  _modelTime: D | null = null;
 
   constructor(
     elementRef: ElementRef,
@@ -212,17 +212,30 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   }
 
   ngOnInit() {
+    if (!this.datepicker) {
+      throw Error(
+        "MatDatepickerContent must be associated with a MatDatepicker instance.",
+      );
+    }
     this._animationState = this.datepicker.touchUi
       ? "enter-dialog"
       : "enter-dropdown";
   }
 
   ngAfterViewInit() {
+    if (!this.datepicker) {
+      throw Error(
+        "MatDatepickerContent must be associated with a MatDatepicker instance.",
+      );
+    }
     this._subscriptions.add(
       this.datepicker.stateChanges.subscribe(() => {
         this._changeDetectorRef.markForCheck();
       }),
     );
+    if (!this._calendar) {
+      throw Error("MatDatepickerContent must have an NgxMatCalendar instance.");
+    }
     this._calendar.focusActiveCell();
   }
 
@@ -242,7 +255,11 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
 
   _handleUserSelection(event: NgxMatCalendarUserEvent<D | null>) {
     this._updateUserSelectionWithCalendarUserEvent(event);
-
+    if (!this.datepicker) {
+      throw Error(
+        "MatDatepickerContent must be associated with a MatDatepicker instance.",
+      );
+    }
     // Delegate closing the overlay to the actions.
     if (this.datepicker.hideTime) {
       if ((!this._model || this._model.isComplete()) && !this._actionsPortal) {
@@ -254,6 +271,11 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   private _updateUserSelectionWithCalendarUserEvent(
     event: NgxMatCalendarUserEvent<D | null>,
   ) {
+    if (!this._model) {
+      throw Error(
+        "Could not update the user selection on the calendar because the NgxMatDateSelectionModel is missing.",
+      );
+    }
     const selection = this._model.selection;
     const value = event.value;
     const isRange = selection instanceof NgxDateRange;
@@ -643,10 +665,11 @@ export abstract class NgxMatDatepickerBase<
   }
 
   /** A reference to the overlay into which we've rendered the calendar. */
-  private _overlayRef: OverlayRef | null;
+  private _overlayRef: OverlayRef | null = null;
 
   /** Reference to the component instance rendered in the overlay. */
-  private _componentRef: ComponentRef<NgxMatDatepickerContent<S, D>> | null;
+  private _componentRef: ComponentRef<NgxMatDatepickerContent<S, D>> | null =
+    null;
 
   /** The element that was focused before the datepicker was opened. */
   private _focusedElementBeforeOpen: HTMLElement | null = null;
@@ -658,7 +681,7 @@ export abstract class NgxMatDatepickerBase<
   private _actionsPortal: TemplatePortal | null;
 
   /** The input element this datepicker is associated with. */
-  datepickerInput: C;
+  datepickerInput: C | null = null;
 
   /** Emits when the datepicker's state changes. */
   readonly stateChanges = new Subject<void>();

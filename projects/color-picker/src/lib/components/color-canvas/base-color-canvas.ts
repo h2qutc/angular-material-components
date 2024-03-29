@@ -94,7 +94,7 @@ export abstract class NgxMatBaseColorCanvas
     }
   }
 
-  public onMouseup() {
+  public onMouseup(_: MouseEvent) {
     this.drag = false;
     if (!this.canvas) {
       console.error(

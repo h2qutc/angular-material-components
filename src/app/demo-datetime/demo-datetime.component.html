@@ -294,7 +294,7 @@
             />
             <ngx-mat-datepicker-toggle
               matSuffix
-              [for]="picker"
+              [datepicker]="picker"
             ></ngx-mat-datepicker-toggle>
             <ngx-mat-datetime-picker
               #picker
@@ -514,7 +514,7 @@
           />
           <ngx-mat-datepicker-toggle
             matSuffix
-            [for]="pickerWithActions"
+            [datepicker]="pickerWithActions"
           ></ngx-mat-datepicker-toggle>
           <ngx-mat-datetime-picker
             #pickerWithActions
@@ -560,7 +560,7 @@
             [max]="maxDate"
             [disabled]="disabled"
           />
-          <ngx-mat-datepicker-toggle matSuffix [for]="pickerCustomIcon">
+          <ngx-mat-datepicker-toggle matSuffix [datepicker]="pickerCustomIcon">
             <mat-icon ngxMatDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </ngx-mat-datepicker-toggle>
           <ngx-mat-datetime-picker

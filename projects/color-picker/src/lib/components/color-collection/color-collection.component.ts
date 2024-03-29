@@ -37,7 +37,13 @@ export class NgxMatColorCollectionComponent implements OnInit {
 
   select(hex: string) {
     this.selectedColor = hex;
-    const { r, g, b, a } = stringInputToObject(hex);
+    const inputToObject = stringInputToObject(hex);
+    if (!inputToObject) {
+      throw new Error(
+        "Could not parse color string. The input should be a valid hex color string.",
+      );
+    }
+    const { r, g, b, a } = inputToObject;
     this.colorChanged.emit(new Color(r, g, b, a));
   }
 }

@@ -435,11 +435,12 @@ export class NgxMatMonthView<D>
           this.activeDate,
           this._dateFormats.display.monthLabel,
         )
-      : this._dateAdapter
-          .getMonthNames("short")
-          [this._dateAdapter.getMonth(this.activeDate)].toLocaleUpperCase();
+      : this._dateAdapter.getMonthNames("short")[
+          // eslint-disable-next-line no-unexpected-multiline
+          this._dateAdapter.getMonth(this.activeDate)
+        ].toLocaleUpperCase();
 
-    let firstOfMonth = this._dateAdapter.createDate(
+    const firstOfMonth = this._dateAdapter.createDate(
       this._dateAdapter.getYear(this.activeDate),
       this._dateAdapter.getMonth(this.activeDate),
       1,
@@ -457,11 +458,19 @@ export class NgxMatMonthView<D>
 
   /** Focuses the active cell after the microtask queue is empty. */
   _focusActiveCell(movePreview?: boolean) {
+    if (!this._matCalendarBody) {
+      throw Error("Could not focus active cell. Calendar body is missing.");
+    }
     this._matCalendarBody._focusActiveCell(movePreview);
   }
 
   /** Focuses the active cell after change detection has run and the microtask queue is empty. */
   _focusActiveCellAfterViewChecked() {
+    if (!this._matCalendarBody) {
+      throw Error(
+        "Could not focus active cell after view has been checked. Calendar body is missing.",
+      );
+    }
     this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
   }
 
@@ -548,7 +557,7 @@ export class NgxMatMonthView<D>
     const longWeekdays = this._dateAdapter.getDayOfWeekNames("long");
 
     // Rotate the labels for days of the week based on the configured first day of the week.
-    let weekdays = longWeekdays.map((long, i) => {
+    const weekdays = longWeekdays.map((long, i) => {
       return { long, narrow: narrowWeekdays[i] };
     });
     this._weekdays = weekdays
@@ -561,6 +570,9 @@ export class NgxMatMonthView<D>
     const daysInMonth = this._dateAdapter.getNumDaysInMonth(this.activeDate);
     const dateNames = this._dateAdapter.getDateNames();
     this._weeks = [[]];
+    if (!this._firstWeekOffset) {
+      throw Error("Could not create week cells. First week offset is missing.");
+    }
     for (
       let i = 0, cell = this._firstWeekOffset;
       i < daysInMonth;
