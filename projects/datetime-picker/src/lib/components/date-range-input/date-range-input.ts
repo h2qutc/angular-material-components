@@ -38,7 +38,7 @@ import {
 import {
   NgxMatDatepickerControl,
   NgxMatDatepickerPanel,
-} from "../datepicker-content/datepicker-base";
+} from "../datepicker-content/datepicker-base.component";
 import { createMissingDateImplError } from "../../utils/datepicker-errors";
 import {
   NgxDateFilterFn,

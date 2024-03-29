@@ -53,8 +53,9 @@ import {
   ViewContainerRef,
   ViewEncapsulation,
   inject,
+  HostBinding,
 } from "@angular/core";
-import { CanColor, ThemePalette, mixinColor } from "@angular/material/core";
+import { ThemePalette } from "@angular/material/core";
 import { Observable, Subject, Subscription, merge } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import {
@@ -109,14 +110,6 @@ export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
   useFactory: NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY,
 };
 
-// Boilerplate for applying mixins to MatDatepickerContent.
-/** @docs-private */
-const _NgxMatDatepickerContentBase = mixinColor(
-  class {
-    constructor(public _elementRef: ElementRef) {}
-  },
-);
-
 /**
  * Component used as the content for the datepicker overlay. We use this instead of using
  * MatCalendar directly as the content so we can control the initial focus. This also gives us a
@@ -126,16 +119,8 @@ const _NgxMatDatepickerContentBase = mixinColor(
  */
 @Component({
   selector: "ngx-mat-datepicker-content",
-  templateUrl: "datepicker-content.html",
-  styleUrls: ["datepicker-content.scss"],
-  host: {
-    class: "mat-datepicker-content",
-    "[@transformPanel]": "_animationState",
-    "(@transformPanel.start)": "_handleAnimationEvent($event)",
-    "(@transformPanel.done)": "_handleAnimationEvent($event)",
-    "[class.mat-datepicker-content-touch]": "datepicker.touchUi",
-    "[class.mat-datepicker-content-touch-with-time]": "!datepicker.hideTime",
-  },
+  templateUrl: "datepicker-content.component.html",
+  styleUrls: ["datepicker-content.component.scss"],
   animations: [
     ngxMatDatepickerAnimations.transformPanel,
     ngxMatDatepickerAnimations.fadeInCalendar,
@@ -143,20 +128,41 @@ const _NgxMatDatepickerContentBase = mixinColor(
   exportAs: "ngxMatDatepickerContent",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ["color"],
 })
-export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
-  extends _NgxMatDatepickerContentBase
-  implements OnInit, AfterViewInit, OnDestroy, CanColor
+export class NgxMatDatepickerContentComponent<
+    S,
+    D = NgxExtractDateTypeFromSelection<S>,
+  >
+  implements OnInit, AfterViewInit, OnDestroy
 {
+  /** Reference to the datepicker that created the overlay. */
+  datepicker: NgxMatDatepickerBase<any, S, D> | null = null;
+  @HostBinding("class") hostClass = "mat-datepicker-content";
+  @HostBinding("[class.mat-datepicker-content-touch]")
+  matDatepickerContentTouch = this.datepicker ? this.datepicker.touchUi : false;
+  @HostBinding("[class.mat-datepicker-content-touch-with-time]")
+  matDatepickerContentTouchWithTime = this.datepicker
+    ? !this.datepicker.hideTime
+    : false;
+  @HostBinding("(@transformPanel.start)") startTransformPanel = (
+    $event: AnimationEvent,
+  ) => this._handleAnimationEvent($event);
+  @HostBinding("(@transformPanel.done)") doneTransformPanel = (
+    $event: AnimationEvent,
+  ) => this._handleAnimationEvent($event);
+
+  /** Current state of the animation. */
+  @HostBinding("[@transformPanel]") _animationState:
+    | "enter-dropdown"
+    | "enter-dialog"
+    | "void"
+    | null = null;
+  @Input({ required: true }) color: ThemePalette;
   private _subscriptions = new Subscription();
   private _model: NgxMatDateSelectionModel<S, D> | null = null;
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatCalendarComponent)
   _calendar: NgxMatCalendarComponent<D> | null = null;
-
-  /** Reference to the datepicker that created the overlay. */
-  datepicker: NgxMatDatepickerBase<any, S, D> | null = null;
 
   /** Start of the comparison range. */
   comparisonStart: D | null = null;
@@ -172,9 +178,6 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
 
   /** Whether the datepicker is above or below the input. */
   _isAbove: boolean = false;
-
-  /** Current state of the animation. */
-  _animationState: "enter-dropdown" | "enter-dialog" | "void" | null = null;
 
   /** Emits when an animation has finished. */
   readonly _animationDone = new Subject<void>();
@@ -672,8 +675,9 @@ export abstract class NgxMatDatepickerBase<
   private _overlayRef: OverlayRef | null = null;
 
   /** Reference to the component instance rendered in the overlay. */
-  private _componentRef: ComponentRef<NgxMatDatepickerContent<S, D>> | null =
-    null;
+  private _componentRef: ComponentRef<
+    NgxMatDatepickerContentComponent<S, D>
+  > | null = null;
 
   /** The element that was focused before the datepicker was opened. */
   private _focusedElementBeforeOpen: HTMLElement | null = null;
@@ -881,7 +885,9 @@ export abstract class NgxMatDatepickerBase<
   }
 
   /** Forwards relevant values from the datepicker to the datepicker content inside the overlay. */
-  protected _forwardContentValues(instance: NgxMatDatepickerContent<S, D>) {
+  protected _forwardContentValues(
+    instance: NgxMatDatepickerContentComponent<S, D>,
+  ) {
     if (!this.datepickerInput) {
       throw Error(
         "Could not forward content values to the datepicker instance because the datepicker input is missing.",
@@ -898,8 +904,8 @@ export abstract class NgxMatDatepickerBase<
     this._destroyOverlay();
 
     const isDialog = this.touchUi;
-    const portal = new ComponentPortal<NgxMatDatepickerContent<S, D>>(
-      NgxMatDatepickerContent,
+    const portal = new ComponentPortal<NgxMatDatepickerContentComponent<S, D>>(
+      NgxMatDatepickerContentComponent,
       this._viewContainerRef,
     );
     const overlayRef = (this._overlayRef = this._overlay.create(

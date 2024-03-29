@@ -19,7 +19,7 @@ import { Observable, Subscription, merge, of as observableOf } from "rxjs";
 import {
   NgxMatDatepickerControl,
   NgxMatDatepickerPanel,
-} from "../datepicker-content/datepicker-base";
+} from "../datepicker-content/datepicker-base.component";
 import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
 import { NgxExtractDateTypeFromSelection } from "../../utils/date-selection-model";
 

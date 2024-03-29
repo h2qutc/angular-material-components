@@ -5,9 +5,9 @@ import {
 } from "@angular/core";
 import {
   NgxMatDatepickerBase,
-  NgxMatDatepickerContent,
+  NgxMatDatepickerContentComponent,
   NgxMatDatepickerControl,
-} from "../components/datepicker-content/datepicker-base";
+} from "../components/datepicker-content/datepicker-base.component";
 import {
   NGX_MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER,
   NgxDateRange,
@@ -48,7 +48,7 @@ export class NgxMatDateRangePicker<D> extends NgxMatDatepickerBase<
   D
 > {
   protected override _forwardContentValues(
-    instance: NgxMatDatepickerContent<NgxDateRange<D>, D>,
+    instance: NgxMatDatepickerContentComponent<NgxDateRange<D>, D>,
   ) {
     super._forwardContentValues(instance);
 

@@ -7,7 +7,7 @@ import { NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from "../../utils/date-s
 import {
   NgxMatDatepickerBase,
   NgxMatDatepickerControl,
-} from "../datepicker-content/datepicker-base";
+} from "../datepicker-content/datepicker-base.component";
 
 // TODO(mmalerba): We use a component instead of a directive here so the user can use implicit
 // template reference variables (e.g. #d vs #d="matDatepicker"). We can change this to a directive

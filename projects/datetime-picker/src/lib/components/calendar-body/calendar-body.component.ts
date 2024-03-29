@@ -327,7 +327,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
       this.rows[rowIndex][colIndex - 1];
 
     if (!previousCell) {
-      const previousRow = this.rows[rowIndex - 1];
+      const previousRow: NgxMatCalendarCell<D>[] = this.rows[rowIndex - 1];
       previousCell = previousRow && previousRow[previousRow.length - 1];
     }
 
@@ -354,7 +354,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
       this.rows[rowIndex][colIndex + 1];
 
     if (!nextCell) {
-      const nextRow = this.rows[rowIndex + 1];
+      const nextRow: NgxMatCalendarCell<D>[] = this.rows[rowIndex + 1];
       nextCell = nextRow && nextRow[0];
     }
 
@@ -428,7 +428,9 @@ export class NgxMatCalendarBodyComponent<D = unknown>
 
     // We only need to hit the zone when we're selecting a range.
     if (event.target && this.isRange) {
-      const cell = this._getCellFromElement(event.target as HTMLElement);
+      const cell: NgxMatCalendarCell<D> | null = this._getCellFromElement(
+        event.target as HTMLElement,
+      );
 
       if (cell) {
         this._ngZone.run(() =>
@@ -442,7 +444,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
     if (!this.isRange) return;
 
     const target = getActualTouchTarget(event);
-    const cell = target
+    const cell: NgxMatCalendarCell<D> | null = target
       ? this._getCellFromElement(target as HTMLElement)
       : null;
 
@@ -498,23 +500,19 @@ export class NgxMatCalendarBodyComponent<D = unknown>
     if (!this.isRange) return;
 
     this._didDragSinceMouseDown = false;
-    const cell =
+    const cell: NgxMatCalendarCell<D> | null =
       event.target && this._getCellFromElement(event.target as HTMLElement);
-    if (!cell) {
+    if (!cell || !this._isInRange(cell.value)) {
       console.error("Could not start drag sequence. Target is not a cell.");
       return;
     }
-
     let rawValue = cell.rawValue;
+
     if (rawValue === undefined) {
       console.warn("Could not start drag sequence. Cell has no raw value.");
       return;
-    }
-    const rawValueD = rawValue as D;
-    rawValue = parseInt(rawValueD);
-
-    if (!this._isInRange(rawValue)) {
-      return;
+    } else {
+      rawValue = rawValue as D;
     }
 
     this._ngZone.run(() => {
@@ -566,6 +564,9 @@ export class NgxMatCalendarBodyComponent<D = unknown>
   private _getCellFromElement(
     element: HTMLElement,
   ): NgxMatCalendarCell<D> | null {
+    if (!this.rows) {
+      throw Error("Could not get cell from element, because there are no rows");
+    }
     const cell = getCellElement(element);
 
     if (cell) {

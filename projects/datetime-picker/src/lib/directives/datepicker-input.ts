@@ -22,7 +22,7 @@ import { NgxDateSelectionModelChange } from "../utils/date-selection-model";
 import {
   NgxMatDatepickerControl,
   NgxMatDatepickerPanel,
-} from "../components/datepicker-content/datepicker-base";
+} from "../components/datepicker-content/datepicker-base.component";
 import {
   _NgxMatFormFieldPartial,
   NgxDateFilterFn,

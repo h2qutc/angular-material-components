@@ -25,8 +25,8 @@ import {
 } from "./components/datepicker-actions/datepicker-actions";
 import {
   NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
-  NgxMatDatepickerContent,
-} from "./components/datepicker-content/datepicker-base";
+  NgxMatDatepickerContentComponent,
+} from "./components/datepicker-content/datepicker-base.component";
 import { NgxMatDatepickerInput } from "./directives/datepicker-input";
 import { NgxMatDatepickerIntl } from "./utils/datepicker-intl";
 import {
@@ -56,7 +56,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatCalendarComponent,
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
-    NgxMatDatepickerContent,
+    NgxMatDatepickerContentComponent,
     NgxMatDatepickerInput,
     NgxMatDatepickerToggle,
     NgxMatDatepickerToggleIcon,
@@ -76,7 +76,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatCalendarComponent,
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
-    NgxMatDatepickerContent,
+    NgxMatDatepickerContentComponent,
     NgxMatDatepickerInput,
     NgxMatDatepickerToggle,
     NgxMatDatepickerToggleIcon,

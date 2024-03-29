@@ -21,7 +21,7 @@ export * from "./lib/directives/date-range-input-parts";
 export * from "./lib/components/datepicker-actions/datepicker-actions";
 export * from "./lib/directives/datepicker-input";
 export * from "./lib/components/datepicker-toggle/datepicker-toggle";
-export * from "./lib/components/datepicker-content/datepicker-base";
+export * from "./lib/components/datepicker-content/datepicker-base.component";
 export * from "./lib/directives/date-range-picker";
 export * from "./lib/directives/datepicker-input";
 export * from "./lib/components/datepicker/datepicker";

@@ -13,7 +13,7 @@ import { TemplatePortal } from "@angular/cdk/portal";
 import {
   NgxMatDatepickerBase,
   NgxMatDatepickerControl,
-} from "../datepicker-content/datepicker-base";
+} from "../datepicker-content/datepicker-base.component";
 
 /** Button that will close the datepicker and assign the current selection to the data model. */
 @Directive({
