@@ -17,6 +17,7 @@ import {
   ViewChild,
   ViewEncapsulation,
   forwardRef,
+  HostBinding,
 } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 import {
@@ -59,11 +60,11 @@ export type NgxMatCalendarView = "month" | "year" | "multi-year";
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatCalendarHeader<D> {
+export class NgxMatCalendarHeaderComponent<D> {
   constructor(
     private _intl: NgxMatDatepickerIntl,
-    @Inject(forwardRef(() => NgxMatCalendar))
-    public calendar: NgxMatCalendar<D>,
+    @Inject(forwardRef(() => NgxMatCalendarComponent))
+    public calendar: NgxMatCalendarComponent<D>,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
     @Optional()
     @Inject(NGX_MAT_DATE_FORMATS)
@@ -250,22 +251,20 @@ export class NgxMatCalendarHeader<D> {
   selector: "ngx-mat-calendar",
   templateUrl: "calendar.html",
   styleUrls: ["calendar.scss"],
-  host: {
-    class: "mat-calendar",
-  },
   exportAs: "ngxMatCalendar",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER],
 })
-export class NgxMatCalendar<D>
+export class NgxMatCalendarComponent<D>
   implements AfterContentInit, AfterViewChecked, OnDestroy, OnChanges
 {
+  @HostBinding("class") class = "ngx-mat-calendar";
   /** An input indicating the type of the header component, if set. */
-  @Input() headerComponent: ComponentType<unknown>;
+  @Input() headerComponent: ComponentType<unknown> | null = null;
 
   /** A portal containing the header component type for this calendar. */
-  _calendarHeaderPortal: Portal<unknown>;
+  _calendarHeaderPortal: Portal<unknown> | null = null;
 
   private _intlChanges: Subscription;
 
@@ -286,7 +285,7 @@ export class NgxMatCalendar<D>
       this._dateAdapter.deserialize(value),
     );
   }
-  private _startAt: D | null;
+  private _startAt: D | null = null;
 
   /** Whether the calendar should be started in month or year view. */
   @Input() startView: NgxMatCalendarView = "month";
@@ -317,7 +316,7 @@ export class NgxMatCalendar<D>
       this._dateAdapter.deserialize(value),
     );
   }
-  private _minDate: D | null;
+  private _minDate: D | null = null;
 
   /** The maximum selectable date. */
   @Input()
@@ -329,25 +328,25 @@ export class NgxMatCalendar<D>
       this._dateAdapter.deserialize(value),
     );
   }
-  private _maxDate: D | null;
+  private _maxDate: D | null = null;
 
   /** Function used to filter which dates are selectable. */
   @Input() dateFilter: ((date: D) => boolean) | null = null;
 
   /** Function that can be used to add custom CSS classes to dates. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D> | null = null;
 
   /** Start of the comparison range. */
-  @Input() comparisonStart: D | null;
+  @Input() comparisonStart: D | null = null;
 
   /** End of the comparison range. */
-  @Input() comparisonEnd: D | null;
+  @Input() comparisonEnd: D | null = null;
 
   /** ARIA Accessible name of the `<input matStartDate/>` */
-  @Input() startDateAccessibleName: string | null;
+  @Input() startDateAccessibleName: string | null = null;
 
   /** ARIA Accessible name of the `<input matEndDate/>` */
-  @Input() endDateAccessibleName: string | null;
+  @Input() endDateAccessibleName: string | null = null;
 
   /** Emits when the currently selected date changes. */
   @Output() readonly selectedChange: EventEmitter<D | null> =
@@ -382,19 +381,25 @@ export class NgxMatCalendar<D>
   >();
 
   /** Reference to the current month view component. */
-  @ViewChild(NgxMatMonthView) monthView: NgxMatMonthView<D>;
+  @ViewChild(NgxMatMonthView) monthView: NgxMatMonthView<D> | null = null;
 
   /** Reference to the current year view component. */
-  @ViewChild(NgxMatYearView) yearView: NgxMatYearView<D>;
+  @ViewChild(NgxMatYearView) yearView: NgxMatYearView<D> | null = null;
 
   /** Reference to the current multi-year view component. */
-  @ViewChild(NgxMatMultiYearView) multiYearView: NgxMatMultiYearView<D>;
+  @ViewChild(NgxMatMultiYearView) multiYearView: NgxMatMultiYearView<D> | null =
+    null;
 
   /**
    * The current active date. This determines which time period is shown and which date is
    * highlighted when using keyboard navigation.
    */
   get activeDate(): D {
+    if (!this._clampedActiveDate) {
+      throw Error(
+        "Could not determine the active date. Active date is not set.",
+      );
+    }
     return this._clampedActiveDate;
   }
   set activeDate(value: D) {
@@ -406,10 +411,14 @@ export class NgxMatCalendar<D>
     this.stateChanges.next();
     this._changeDetectorRef.markForCheck();
   }
-  private _clampedActiveDate: D;
+  private _clampedActiveDate: D | null = null;
 
-  /** Whether the calendar is in month view. */
   get currentView(): NgxMatCalendarView {
+    if (!this._currentView) {
+      throw Error(
+        "Could not determine the current calendar view. Current view is not set.",
+      );
+    }
     return this._currentView;
   }
   set currentView(value: NgxMatCalendarView) {
@@ -421,7 +430,7 @@ export class NgxMatCalendar<D>
       this.viewChanged.emit(viewChangedResult);
     }
   }
-  private _currentView: NgxMatCalendarView;
+  private _currentView: NgxMatCalendarView | null = null;
 
   /** Origin of active drag, or null when dragging is not active. */
   protected _activeDrag: NgxMatCalendarUserEvent<D> | null = null;
@@ -455,7 +464,7 @@ export class NgxMatCalendar<D>
 
   ngAfterContentInit() {
     this._calendarHeaderPortal = new ComponentPortal(
-      this.headerComponent || NgxMatCalendarHeader,
+      this.headerComponent || NgxMatCalendarHeaderComponent,
     );
     this.activeDate = this.startAt || this._dateAdapter.today();
 
@@ -585,6 +594,12 @@ export class NgxMatCalendar<D>
     // The return type is explicitly written as a union to ensure that the Closure compiler does
     // not optimize calls to _init(). Without the explicit return type, TypeScript narrows it to
     // only the first component type. See https://github.com/angular/components/issues/22996.
-    return this.monthView || this.yearView || this.multiYearView;
+    const currentView = this.monthView || this.yearView || this.multiYearView;
+    if (!currentView) {
+      throw Error(
+        "Could not find the current calendar view. All views are null.",
+      );
+    }
+    return currentView;
   }
 }

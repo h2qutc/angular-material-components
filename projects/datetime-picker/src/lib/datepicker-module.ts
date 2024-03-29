@@ -7,8 +7,8 @@ import { NgModule } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCommonModule } from "@angular/material/core";
 import {
-  NgxMatCalendar,
-  NgxMatCalendarHeader,
+  NgxMatCalendarComponent,
+  NgxMatCalendarHeaderComponent,
 } from "./components/calendar/calendar";
 import { NgxMatCalendarBodyComponent } from "./components/calendar-body/calendar-body.component";
 import { NgxMatDateRangeInput } from "./components/date-range-input/date-range-input";
@@ -53,7 +53,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
   ],
   exports: [
     CdkScrollableModule,
-    NgxMatCalendar,
+    NgxMatCalendarComponent,
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContent,
@@ -63,7 +63,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatMonthView,
     NgxMatYearView,
     NgxMatMultiYearView,
-    NgxMatCalendarHeader,
+    NgxMatCalendarHeaderComponent,
     NgxMatDateRangeInput,
     NgxMatStartDate,
     NgxMatEndDate,
@@ -73,7 +73,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatDatepickerApply,
   ],
   declarations: [
-    NgxMatCalendar,
+    NgxMatCalendarComponent,
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContent,
@@ -83,7 +83,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatMonthView,
     NgxMatYearView,
     NgxMatMultiYearView,
-    NgxMatCalendarHeader,
+    NgxMatCalendarHeaderComponent,
     NgxMatDateRangeInput,
     NgxMatStartDate,
     NgxMatEndDate,

@@ -57,7 +57,10 @@ import {
 import { CanColor, ThemePalette, mixinColor } from "@angular/material/core";
 import { Observable, Subject, Subscription, merge } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { NgxMatCalendar, NgxMatCalendarView } from "../calendar/calendar";
+import {
+  NgxMatCalendarComponent,
+  NgxMatCalendarView,
+} from "../calendar/calendar";
 import {
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
@@ -149,7 +152,8 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   private _subscriptions = new Subscription();
   private _model: NgxMatDateSelectionModel<S, D> | null = null;
   /** Reference to the internal calendar component. */
-  @ViewChild(NgxMatCalendar) _calendar: NgxMatCalendar<D> | null = null;
+  @ViewChild(NgxMatCalendarComponent)
+  _calendar: NgxMatCalendarComponent<D> | null = null;
 
   /** Reference to the datepicker that created the overlay. */
   datepicker: NgxMatDatepickerBase<any, S, D> | null = null;

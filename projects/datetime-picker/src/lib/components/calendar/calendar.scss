@@ -70,7 +70,6 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
   [dir="rtl"] & {
     margin: 0 $calendar-arrow-size 0 0;
   }
-
   @include cdk.high-contrast(active, off) {
     // Setting the fill to `currentColor` doesn't work on Chromium browsers.
     fill: CanvasText;
