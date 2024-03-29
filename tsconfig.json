@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "strict": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -9,23 +10,16 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "importHelpers": true,
     "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es5",
-      "es2015",
-      "dom"
-    ],
-    "types": [
-      "node"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es5", "es2015", "dom"],
+    "types": ["node"],
     "paths": {
-      "@angular-material-components/*": [
-        "dist/@angular-material-components/*"
-      ],
+      "@angular-material-components/*": ["dist/@angular-material-components/*"],
       "@angular-material-components/color-picker": [
         "dist/@angular-material-components/color-picker"
       ],
@@ -38,13 +32,14 @@
       "@angular-material-components/datetime-picker/*": [
         "dist/@angular-material-components/datetime-picker/*"
       ],
-      "file-input": [
-        "dist/file-input"
-      ],
-      "file-input/*": [
-        "dist/file-input/*"
-      ]
+      "file-input": ["dist/file-input"],
+      "file-input/*": ["dist/file-input/*"]
     },
     "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplate": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
   }
 }

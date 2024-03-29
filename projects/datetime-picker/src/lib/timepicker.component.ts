@@ -1,33 +1,57 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { NgxMatDateAdapter } from './core/date-adapter';
 import {
-  createMissingDateImplError, DEFAULT_STEP, formatTwoDigitTimeValue,
-  LIMIT_TIMES, MERIDIANS, NUMERIC_REGEX, PATTERN_INPUT_HOUR, PATTERN_INPUT_MINUTE, PATTERN_INPUT_SECOND
-} from './utils/date-utils';
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  ViewEncapsulation,
+} from "@angular/core";
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from "@angular/forms";
+import { ThemePalette } from "@angular/material/core";
+import { Subject } from "rxjs";
+import { debounceTime, takeUntil } from "rxjs/operators";
+import { NgxMatDateAdapter } from "./core/date-adapter";
+import {
+  createMissingDateImplError,
+  DEFAULT_STEP,
+  formatTwoDigitTimeValue,
+  LIMIT_TIMES,
+  MERIDIANS,
+  NUMERIC_REGEX,
+  PATTERN_INPUT_HOUR,
+  PATTERN_INPUT_MINUTE,
+  PATTERN_INPUT_SECOND,
+} from "./utils/date-utils";
 
 @Component({
-  selector: 'ngx-mat-timepicker',
-  templateUrl: './timepicker.component.html',
-  styleUrls: ['./timepicker.component.scss'],
+  selector: "ngx-mat-timepicker",
+  templateUrl: "./timepicker.component.html",
+  styleUrls: ["./timepicker.component.scss"],
   host: {
-    'class': 'ngx-mat-timepicker'
+    class: "ngx-mat-timepicker",
   },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxMatTimepickerComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  exportAs: 'ngxMatTimepicker',
+  exportAs: "ngxMatTimepicker",
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnInit, OnChanges {
-
+export class NgxMatTimepickerComponent<D>
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   public form: FormGroup;
 
   @Input() disabled = false;
@@ -39,33 +63,33 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   @Input() disableMinute = false;
   @Input() enableMeridian = false;
   @Input() defaultTime: number[];
-  @Input() color: ThemePalette = 'primary';
+  @Input() color: ThemePalette = "primary";
 
   public meridian: string = MERIDIANS.AM;
 
   /** Hour */
   private get hour() {
-    let val = Number(this.form.controls['hour'].value);
+    let val = Number(this.form.controls["hour"].value);
     return isNaN(val) ? 0 : val;
-  };
+  }
 
   private get minute() {
-    let val = Number(this.form.controls['minute'].value);
+    let val = Number(this.form.controls["minute"].value);
     return isNaN(val) ? 0 : val;
-  };
+  }
 
   private get second() {
-    let val = Number(this.form.controls['second'].value);
+    let val = Number(this.form.controls["second"].value);
     return isNaN(val) ? 0 : val;
-  };
+  }
 
   /** Whether or not the form is valid */
   public get valid(): boolean {
     return this.form.valid;
   }
 
-  private _onChange: any = () => { };
-  private _onTouched: any = () => { };
+  private _onChange: any = () => {};
+  private _onTouched: any = () => {};
   private _disabled: boolean;
   private _model: D;
 
@@ -73,23 +97,36 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   public pattern = PATTERN_INPUT_HOUR;
 
-  constructor(@Optional() public _dateAdapter: NgxMatDateAdapter<D>,
-    private cd: ChangeDetectorRef, private formBuilder: FormBuilder) {
+  constructor(
+    @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
+    private cd: ChangeDetectorRef,
+    private formBuilder: FormBuilder,
+  ) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('NgxMatDateAdapter');
+      throw createMissingDateImplError("NgxMatDateAdapter");
     }
-    this.form = this.formBuilder.group(
-      {
-        hour: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)]],
-        minute: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_MINUTE)]],
-        second: [{ value: null, disabled: this.disabled }, [Validators.required, Validators.pattern(PATTERN_INPUT_SECOND)]]
-      });
+    this.form = this.formBuilder.group({
+      hour: [
+        { value: null, disabled: this.disabled },
+        [Validators.required, Validators.pattern(PATTERN_INPUT_HOUR)],
+      ],
+      minute: [
+        { value: null, disabled: this.disabled },
+        [Validators.required, Validators.pattern(PATTERN_INPUT_MINUTE)],
+      ],
+      second: [
+        { value: null, disabled: this.disabled },
+        [Validators.required, Validators.pattern(PATTERN_INPUT_SECOND)],
+      ],
+    });
   }
 
   ngOnInit() {
-    this.form.valueChanges.pipe(takeUntil(this._destroyed), debounceTime(400)).subscribe(val => {
-      this._updateModel();
-    })
+    this.form.valueChanges
+      .pipe(takeUntil(this._destroyed), debounceTime(400))
+      .subscribe((val) => {
+        this._updateModel();
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -112,7 +149,6 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       this._model = val;
       this._updateHourMinuteSecond();
     }
-
   }
 
   /** Registers a callback function that is called when the control's value changes in the UI. */
@@ -135,22 +171,26 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /**
    * Format input
-   * @param input 
+   * @param input
    */
   public formatInput(input: HTMLInputElement) {
-    input.value = input.value.replace(NUMERIC_REGEX, '');
+    input.value = input.value.replace(NUMERIC_REGEX, "");
   }
 
   /** Toggle meridian */
   public toggleMeridian() {
-    this.meridian = (this.meridian === MERIDIANS.AM) ? MERIDIANS.PM : MERIDIANS.AM;
-    this.change('hour');
+    this.meridian =
+      this.meridian === MERIDIANS.AM ? MERIDIANS.PM : MERIDIANS.AM;
+    this.change("hour");
   }
 
   /** Change property of time */
   public change(prop: string, up?: boolean) {
     const next = this._getNextValueByProp(prop, up);
-    this.form.controls[prop].setValue(formatTwoDigitTimeValue(next), { onlySelf: false, emitEvent: false });
+    this.form.controls[prop].setValue(formatTwoDigitTimeValue(next), {
+      onlySelf: false,
+      emitEvent: false,
+    });
     this._updateModel();
   }
 
@@ -172,14 +212,16 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
       }
     }
 
-    this.form.patchValue({
-      hour: formatTwoDigitTimeValue(_hour),
-      minute: formatTwoDigitTimeValue(_minute),
-      second: formatTwoDigitTimeValue(_second)
-    }, {
-      emitEvent: false
-    })
-
+    this.form.patchValue(
+      {
+        hour: formatTwoDigitTimeValue(_hour),
+        minute: formatTwoDigitTimeValue(_minute),
+        second: formatTwoDigitTimeValue(_second),
+      },
+      {
+        emitEvent: false,
+      },
+    );
   }
 
   /** Update model */
@@ -189,7 +231,10 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     if (this.enableMeridian) {
       if (this.meridian === MERIDIANS.AM && _hour === LIMIT_TIMES.meridian) {
         _hour = 0;
-      } else if (this.meridian === MERIDIANS.PM && _hour !== LIMIT_TIMES.meridian) {
+      } else if (
+        this.meridian === MERIDIANS.PM &&
+        _hour !== LIMIT_TIMES.meridian
+      ) {
         _hour = _hour + LIMIT_TIMES.meridian;
       }
     }
@@ -206,7 +251,7 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
 
   /**
    * Get next value by property
-   * @param prop 
+   * @param prop
    * @param up
    */
   private _getNextValueByProp(prop: string, up?: boolean): number {
@@ -214,30 +259,31 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
     const min = LIMIT_TIMES[`min${keyProp}`];
     let max = LIMIT_TIMES[`max${keyProp}`];
 
-    if (prop === 'hour' && this.enableMeridian) {
+    if (prop === "hour" && this.enableMeridian) {
       max = LIMIT_TIMES.meridian;
     }
 
     let next;
     if (up == null) {
-      next = this[prop] % (max);
-      if (prop === 'hour' && this.enableMeridian) {
+      next = this[prop] % max;
+      if (prop === "hour" && this.enableMeridian) {
         if (next === 0) next = max;
       }
     } else {
-      next = up ? this[prop] + this[`step${keyProp}`] : this[prop] - this[`step${keyProp}`];
-      if (prop === 'hour' && this.enableMeridian) {
+      next = up
+        ? this[prop] + this[`step${keyProp}`]
+        : this[prop] - this[`step${keyProp}`];
+      if (prop === "hour" && this.enableMeridian) {
         next = next % (max + 1);
         if (next === 0) next = up ? 1 : max;
       } else {
         next = next % max;
       }
       if (up) {
-        next = next > max ? (next - max + min) : next;
+        next = next > max ? next - max + min : next;
       } else {
-        next = next < min ? (next - min + max) : next;
+        next = next < min ? next - min + max : next;
       }
-
     }
 
     return next;
@@ -249,16 +295,24 @@ export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnIni
   private _setDisableStates() {
     if (this.disabled) {
       this.form.disable();
-    }
-    else {
+    } else {
       this.form.enable();
       if (this.disableMinute) {
-        this.form.get('minute').disable();
+        const minuteChildControl = this.form.get("minute");
+        if (minuteChildControl) {
+          minuteChildControl.disable();
+        } else {
+          console.error("Minute control is not found");
+        }
         if (this.showSeconds) {
-          this.form.get('second').disable();
+          const secondChildControl = this.form.get("second");
+          if (secondChildControl) {
+            secondChildControl.disable();
+          } else {
+            console.error("Second control is not found");
+          }
         }
       }
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -19,16 +19,14 @@ const routes: Routes = [
 //'rgb' | 'hex' | 'hex6' | 'hex3' | 'hex4' | 'hex8'
 const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
   display: {
-    colorInput: 'hex8'
-  }
-}
+    colorInput: "hex8",
+  },
+};
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(
-      routes,
-    ),
+    RouterModule.forChild(routes),
     NgxMatColorPickerModule,
     MatCardModule,
     FormsModule,
@@ -38,13 +36,12 @@ const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     MatRadioModule,
     MatSelectModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    NgOptimizedImage,
   ],
   providers: [
-    { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
+    { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS },
   ],
-  declarations: [
-    DemoColorpickerComponent
-  ]
+  declarations: [DemoColorpickerComponent],
 })
-export class DemoColorpickerModule { }
+export class DemoColorpickerModule {}

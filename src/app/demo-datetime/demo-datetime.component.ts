@@ -1,44 +1,44 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { ThemePalette } from "@angular/material/core";
 
 @Component({
-  selector: 'app-demo-datetime',
-  templateUrl: './demo-datetime.component.html',
-  styleUrls: ['./demo-datetime.component.scss']
+  selector: "app-demo-datetime",
+  templateUrl: "./demo-datetime.component.html",
+  styleUrls: ["./demo-datetime.component.scss"],
 })
 export class DemoDatetimeComponent implements OnInit {
-
-  @ViewChild('picker', { static: true }) picker: any;
+  @ViewChild("picker", { static: true }) picker: any;
 
   public disabled = false;
   public showSpinners = true;
   public showSeconds = false;
   public touchUi = false;
   public enableMeridian = false;
-  public minDate: Date;
-  public maxDate: Date;
+  public minDate: Date | null = null;
+  public maxDate: Date | null = null;
   public stepHour = 1;
   public stepMinute = 1;
   public stepSecond = 1;
-  public color: ThemePalette = 'primary';
+  public color: ThemePalette = "primary";
   public disableMinute = false;
   public hideTime = false;
 
   public dateControl = new FormControl(new Date());
 
   public options = [
-    { value: true, label: 'True' },
-    { value: false, label: 'False' }
+    { value: true, label: "True" },
+    { value: false, label: "False" },
   ];
 
-  public listColors = ['primary', 'accent', 'warn'];
+  public listColors = ["primary", "accent", "warn"];
 
   public stepHours = [1, 2, 3, 4, 5];
   public stepMinutes = [1, 5, 10, 15, 20, 25];
   public stepSeconds = [1, 5, 10, 15, 20, 25];
 
-  public code1 = 'npm install --save @angular-material-components/datetime-picker';
+  public code1 =
+    "npm install --save @angular-material-components/datetime-picker";
 
   public code3 = `<mat-form-field>
   <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
@@ -51,11 +51,11 @@ export class DemoDatetimeComponent implements OnInit {
 </mat-form-field>`;
 
   public code2 = `import {
-           NgxMatDatetimePickerModule, 
-           NgxMatNativeDateModule, 
-           NgxMatTimepickerModule 
+           NgxMatDatetimePickerModule,
+           NgxMatNativeDateModule,
+           NgxMatTimepickerModule
   } from '@angular-material-components/datetime-picker';
-  
+
 @NgModule({
   imports: [
     ...
@@ -66,7 +66,8 @@ export class DemoDatetimeComponent implements OnInit {
   ]
 })
 export class AppModule { }`;
-  public code4 = 'npm install --save  @angular-material-components/moment-adapter';
+  public code4 =
+    "npm install --save  @angular-material-components/moment-adapter";
   public code5 = `@Injectable()
 export class CustomDateAdapter extends NgxMatDateAdapter<D> {...}
 // D can be Date, Moment or customized type`;
@@ -95,13 +96,13 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   }
 };
 
-//and in the module providers 
+//and in the module providers
 providers: [
     { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS }
   ]`;
 
-  public code8 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
-
+  public code8 =
+    '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
 
   public code9 = `<mat-form-field>
   <input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date"
@@ -117,7 +118,7 @@ providers: [
   </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
-public code10 = `<mat-form-field>
+  public code10 = `<mat-form-field>
 <input matInput [ngxMatDatetimePicker]="pickerCustomIcon" placeholder="Choose a date"
   [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
 <ngx-mat-datepicker-toggle matSuffix [for]="pickerCustomIcon">
@@ -129,7 +130,7 @@ public code10 = `<mat-form-field>
 </ngx-mat-datetime-picker>
 </mat-form-field>`;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     // this.picker.closedStream.subscribe(() => {
@@ -156,7 +157,7 @@ public code10 = `<mat-form-field>
     }
   }
 
-  closePicker() {
+  public closePicker() {
     this.picker.cancel();
   }
 
@@ -166,11 +167,9 @@ public code10 = `<mat-form-field>
     this.minDate.setDate(now.getDate() - 1);
   }
 
-
   private _setMaxDate() {
     const now = new Date();
     this.maxDate = new Date();
     this.maxDate.setDate(now.getDate() + 1);
   }
-
 }

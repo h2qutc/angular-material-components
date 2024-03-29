@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home';
+import {NgOptimizedImage} from "@angular/common";
 
 const appRoutes: Routes = [
    { path: 'home', component: HomeComponent },
@@ -50,24 +51,20 @@ const appRoutes: Routes = [
 export class AppRoutingModule { }
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      HomeComponent
-   ],
-   imports: [
-      BrowserModule,
-      HttpClientModule,
-      BrowserAnimationsModule,
-      AppRoutingModule,
-      MatButtonModule,
-      MatSidenavModule,
-      MatToolbarModule,
-      MatIconModule,
-      MatListModule,
-      MatCardModule
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [AppComponent, HomeComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    NgOptimizedImage,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

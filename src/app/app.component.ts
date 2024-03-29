@@ -1,41 +1,35 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
+  public nameApp = "angular-material-components";
 
-  public nameApp = 'angular-material-components';
-
-  isHandset: boolean;
-  sidenavMode: 'side' | 'over' | 'push';
-  sidenavHasBackdrop: boolean;
-  sidenavOpened: boolean;
-
+  isHandset: boolean = false;
+  sidenavMode: "side" | "over" | "push" = "side";
+  sidenavHasBackdrop: boolean = false;
+  sidenavOpened: boolean = false;
 
   protected _destroyed = new Subject<void>();
 
-  constructor(
-    protected breakpointObserver: BreakpointObserver
-  ) {
-    this.breakpointObserver.observe([Breakpoints.XSmall])
+  constructor(protected breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall])
       .pipe(takeUntil(this._destroyed))
-      .subscribe(resp => {
+      .subscribe((resp) => {
         this.isHandset = resp?.matches;
         if (this.isHandset) {
           this.activateHandsetLayout();
         } else {
           this.activateWebLayout();
         }
-      })
-  }
-
-  ngOnInit() {
+      });
   }
 
   ngOnDestroy(): void {
@@ -44,15 +38,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   protected activateHandsetLayout() {
-    this.sidenavMode = 'over';
+    this.sidenavMode = "over";
     this.sidenavHasBackdrop = true;
     this.sidenavOpened = false;
   }
 
   protected activateWebLayout() {
-    this.sidenavMode = 'side';
+    this.sidenavMode = "side";
     this.sidenavHasBackdrop = false;
     this.sidenavOpened = true;
   }
-
 }

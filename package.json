@@ -94,6 +94,7 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^17.3.0",
     "prettier": "^3.2.5",
+    "protractor": "^7.0.0",
     "typescript": "~5.4.3"
   },
   "browserslist": [

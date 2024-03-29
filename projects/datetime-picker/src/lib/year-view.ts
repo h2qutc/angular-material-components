@@ -1,6 +1,4 @@
-
-
-import { Directionality } from '@angular/cdk/bidi';
+import { Directionality } from "@angular/cdk/bidi";
 import {
   DOWN_ARROW,
   END,
@@ -12,7 +10,7 @@ import {
   RIGHT_ARROW,
   SPACE,
   UP_ARROW,
-} from '@angular/cdk/keycodes';
+} from "@angular/cdk/keycodes";
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -26,29 +24,29 @@ import {
   Output,
   ViewChild,
   ViewEncapsulation,
-} from '@angular/core';
-import { MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
-import { Subscription } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+} from "@angular/core";
+import { MAT_DATE_FORMATS, MatDateFormats } from "@angular/material/core";
+import { Subscription } from "rxjs";
+import { startWith } from "rxjs/operators";
 import {
   NgxMatCalendarBody,
   NgxMatCalendarCell,
   NgxMatCalendarCellClassFunction,
   NgxMatCalendarUserEvent,
-} from './calendar-body';
-import { NgxMatDateAdapter } from './core/date-adapter';
-import { NgxDateRange } from './date-selection-model';
-import { createMissingDateImplError } from './datepicker-errors';
-import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
+} from "./calendar-body";
+import { NgxMatDateAdapter } from "./core/date-adapter";
+import { NgxDateRange } from "./date-selection-model";
+import { createMissingDateImplError } from "./datepicker-errors";
+import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "./core/date-formats";
 
 /**
  * An internal component used to display a single year in the datepicker.
  * @docs-private
  */
 @Component({
-  selector: 'ngx-mat-year-view',
-  templateUrl: 'year-view.html',
-  exportAs: 'ngxMatYearView',
+  selector: "ngx-mat-year-view",
+  templateUrl: "year-view.html",
+  exportAs: "ngxMatYearView",
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,7 +54,7 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
-  private _selectionKeyPressed: boolean;
+  private _selectionKeyPressed: boolean = false;
 
   /** The date to display in this year view (everything other than the year is ignored). */
   @Input()
@@ -66,10 +64,18 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   set activeDate(value: D) {
     let oldActiveDate = this._activeDate;
     const validDate =
-      this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value)) ||
-      this._dateAdapter.today();
-    this._activeDate = this._dateAdapter.clampDate(validDate, this.minDate, this.maxDate);
-    if (this._dateAdapter.getYear(oldActiveDate) !== this._dateAdapter.getYear(this._activeDate)) {
+      this._dateAdapter.getValidDateOrNull(
+        this._dateAdapter.deserialize(value),
+      ) || this._dateAdapter.today();
+    this._activeDate = this._dateAdapter.clampDate(
+      validDate,
+      this.minDate,
+      this.maxDate,
+    );
+    if (
+      this._dateAdapter.getYear(oldActiveDate) !==
+      this._dateAdapter.getYear(this._activeDate)
+    ) {
       this._init();
     }
   }
@@ -84,12 +90,14 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     if (value instanceof NgxDateRange) {
       this._selected = value;
     } else {
-      this._selected = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+      this._selected = this._dateAdapter.getValidDateOrNull(
+        this._dateAdapter.deserialize(value),
+      );
     }
 
     this._setSelectedMonth(value);
   }
-  private _selected: NgxDateRange<D> | D | null;
+  private _selected: NgxDateRange<D> | D | null = null;
 
   /** The minimum selectable date. */
   @Input()
@@ -97,9 +105,11 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     return this._minDate;
   }
   set minDate(value: D | null) {
-    this._minDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+    this._minDate = this._dateAdapter.getValidDateOrNull(
+      this._dateAdapter.deserialize(value),
+    );
   }
-  private _minDate: D | null;
+  private _minDate: D | null = null;
 
   /** The maximum selectable date. */
   @Input()
@@ -107,15 +117,17 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     return this._maxDate;
   }
   set maxDate(value: D | null) {
-    this._maxDate = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
+    this._maxDate = this._dateAdapter.getValidDateOrNull(
+      this._dateAdapter.deserialize(value),
+    );
   }
-  private _maxDate: D | null;
+  private _maxDate: D | null = null;
 
   /** A function used to filter which dates are selectable. */
-  @Input() dateFilter: (date: D) => boolean;
+  @Input() dateFilter: ((date: D) => boolean) | null = null;
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D> | null = null;
 
   /** Emits when a new month is selected. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -127,34 +139,37 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
 
   /** The body of calendar table */
-  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
+  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody | null =
+    null;
 
   /** Grid of calendar cells representing the months of the year. */
-  _months: NgxMatCalendarCell[][];
+  _months: NgxMatCalendarCell[][] | null = null;
 
   /** The label for this year (e.g. "2017"). */
-  _yearLabel: string;
+  _yearLabel: string | null = null;
 
   /** The month in this year that today falls on. Null if today is in a different year. */
-  _todayMonth: number | null;
+  _todayMonth: number | null = null;
 
   /**
    * The month in this year that the selected Date falls on.
    * Null if the selected Date is in a different year.
    */
-  _selectedMonth: number | null;
+  _selectedMonth: number | null = null;
 
   constructor(
     readonly _changeDetectorRef: ChangeDetectorRef,
-    @Optional() @Inject(NGX_MAT_DATE_FORMATS) private _dateFormats: NgxMatDateFormats,
+    @Optional()
+    @Inject(NGX_MAT_DATE_FORMATS)
+    private _dateFormats: NgxMatDateFormats,
     @Optional() public _dateAdapter: NgxMatDateAdapter<D>,
     @Optional() private _dir?: Directionality,
   ) {
     if (!this._dateAdapter) {
-      throw createMissingDateImplError('NgxMatDateAdapter');
+      throw createMissingDateImplError("NgxMatDateAdapter");
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
+      throw createMissingDateImplError("NGX_MAT_DATE_FORMATS");
     }
 
     this._activeDate = this._dateAdapter.today();
@@ -217,16 +232,28 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
 
     switch (event.keyCode) {
       case LEFT_ARROW:
-        this.activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, isRtl ? 1 : -1);
+        this.activeDate = this._dateAdapter.addCalendarMonths(
+          this._activeDate,
+          isRtl ? 1 : -1,
+        );
         break;
       case RIGHT_ARROW:
-        this.activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, isRtl ? -1 : 1);
+        this.activeDate = this._dateAdapter.addCalendarMonths(
+          this._activeDate,
+          isRtl ? -1 : 1,
+        );
         break;
       case UP_ARROW:
-        this.activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, -4);
+        this.activeDate = this._dateAdapter.addCalendarMonths(
+          this._activeDate,
+          -4,
+        );
         break;
       case DOWN_ARROW:
-        this.activeDate = this._dateAdapter.addCalendarMonths(this._activeDate, 4);
+        this.activeDate = this._dateAdapter.addCalendarMonths(
+          this._activeDate,
+          4,
+        );
         break;
       case HOME:
         this.activeDate = this._dateAdapter.addCalendarMonths(
@@ -278,7 +305,10 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   _handleCalendarBodyKeyup(event: KeyboardEvent): void {
     if (event.keyCode === SPACE || event.keyCode === ENTER) {
       if (this._selectionKeyPressed) {
-        this._monthSelected({ value: this._dateAdapter.getMonth(this._activeDate), event });
+        this._monthSelected({
+          value: this._dateAdapter.getMonth(this._activeDate),
+          event,
+        });
       }
 
       this._selectionKeyPressed = false;
@@ -291,24 +321,34 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     this._todayMonth = this._getMonthInCurrentYear(this._dateAdapter.today());
     this._yearLabel = this._dateAdapter.getYearName(this.activeDate);
 
-    let monthNames = this._dateAdapter.getMonthNames('short');
+    let monthNames = this._dateAdapter.getMonthNames("short");
     // First row of months only contains 5 elements so we can fit the year label on the same row.
     this._months = [
       [0, 1, 2, 3],
       [4, 5, 6, 7],
       [8, 9, 10, 11],
-    ].map(row => row.map(month => this._createCellForMonth(month, monthNames[month])));
+    ].map((row) =>
+      row.map((month) => this._createCellForMonth(month, monthNames[month])),
+    );
     this._changeDetectorRef.markForCheck();
   }
 
   /** Focuses the active cell after the microtask queue is empty. */
   _focusActiveCell() {
-    this._matCalendarBody._focusActiveCell();
+    if (this._matCalendarBody) {
+      this._matCalendarBody._focusActiveCell();
+    } else {
+      console.error("Missing calendar body in year view.");
+    }
   }
 
   /** Schedules the matCalendarBody to focus the active cell after change detection has run */
   _focusActiveCellAfterViewChecked() {
-    this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
+    if (this._matCalendarBody) {
+      this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
+    } else {
+      console.error("Missing calendar body in year view.");
+    }
   }
 
   /**
@@ -316,7 +356,9 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
    * Returns null if the given Date is in another year.
    */
   private _getMonthInCurrentYear(date: D | null) {
-    return date && this._dateAdapter.getYear(date) == this._dateAdapter.getYear(this.activeDate)
+    return date &&
+      this._dateAdapter.getYear(date) ==
+        this._dateAdapter.getYear(this.activeDate)
       ? this._dateAdapter.getMonth(date)
       : null;
   }
@@ -343,9 +385,18 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
 
   /** Creates an MatCalendarCell for the given month. */
   private _createCellForMonth(month: number, monthName: string) {
-    const date = this._dateAdapter.createDate(this._dateAdapter.getYear(this.activeDate), month, 1);
-    const ariaLabel = this._dateAdapter.format(date, this._dateFormats.display.monthYearA11yLabel);
-    const cellClasses = this.dateClass ? this.dateClass(date, 'year') : undefined;
+    const date = this._dateAdapter.createDate(
+      this._dateAdapter.getYear(this.activeDate),
+      month,
+      1,
+    );
+    const ariaLabel = this._dateAdapter.format(
+      date,
+      this._dateFormats.display.monthYearA11yLabel,
+    );
+    const cellClasses = this.dateClass
+      ? this.dateClass(date, "year")
+      : undefined;
 
     return new NgxMatCalendarCell(
       month,
@@ -421,14 +472,15 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
 
   /** Determines whether the user has the RTL layout direction. */
   private _isRtl() {
-    return this._dir && this._dir.value === 'rtl';
+    return this._dir && this._dir.value === "rtl";
   }
 
   /** Sets the currently-selected month based on a model value. */
   private _setSelectedMonth(value: NgxDateRange<D> | D | null) {
     if (value instanceof NgxDateRange) {
       this._selectedMonth =
-        this._getMonthInCurrentYear(value.start) || this._getMonthInCurrentYear(value.end);
+        this._getMonthInCurrentYear(value.start) ||
+        this._getMonthInCurrentYear(value.end);
     } else {
       this._selectedMonth = this._getMonthInCurrentYear(value);
     }

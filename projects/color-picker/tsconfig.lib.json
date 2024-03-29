@@ -8,6 +8,7 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "strict": true
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
@@ -18,8 +19,5 @@
     "strictInjectionParameters": true,
     "enableResourceInlining": true
   },
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
 }
