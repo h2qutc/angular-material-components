@@ -1,65 +1,92 @@
 import {
-  AfterContentInit, ChangeDetectorRef, Component, ContentChild, Directive, Input, OnChanges, OnDestroy,
-  OnInit, SimpleChanges, ViewChild, ViewEncapsulation
-} from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { Subscription, merge, of } from 'rxjs';
-import { NgxMatColorPickerComponent } from '../color-picker/color-picker.component';
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  Directive,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
+import { MatButton } from "@angular/material/button";
+import { Subscription, merge, of } from "rxjs";
+import { NgxMatColorPickerComponent } from "../color-picker/color-picker.component";
 
 @Directive({
-  selector: '[ngxMatColorpickerToggleIcon]',
+  selector: "[ngxMatColorpickerToggleIcon]",
 })
-export class NgxMatColorpickerToggleIcon { }
+export class NgxMatColorPickerToggleIconDirective {}
 
 @Component({
-  selector: 'ngx-mat-color-toggle',
-  templateUrl: './color-toggle.component.html',
-  styleUrls: ['./color-toggle.component.scss'],
-  host: {
-    'class': 'ngx-mat-color-toggle',
-    // Always set the tabindex to -1 so that it doesn't overlap with any custom tabindex the
-    // consumer may have provided, while still being able to receive focus.
-    '[attr.tabindex]': '-1',
-    '[class.ngx-mat-color-toggle-active]': 'picker && picker.opened',
-    '[class.mat-accent]': 'picker && picker.color === "accent"',
-    '[class.mat-warn]': 'picker && picker.color === "warn"',
-    '(focus)': '_button.focus()',
-  },
-  exportAs: 'ngxMatColorPickerToggle',
-  encapsulation: ViewEncapsulation.None
+  selector: "ngx-mat-color-toggle",
+  templateUrl: "./color-toggle.component.html",
+  styleUrls: ["./color-toggle.component.scss"],
+  exportAs: "ngxMatColorPickerToggle",
+  encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
+export class NgxMatColorToggleComponent
+  implements AfterContentInit, OnChanges, OnDestroy
+{
+  @HostBinding("class.ngx-mat-color-toggle-active")
+  get isActive() {
+    return this.picker && this.picker.opened;
+  }
 
+  @HostBinding("class.mat-accent")
+  get isAccent() {
+    return this.picker && this.picker.color === "accent";
+  }
+
+  @HostBinding("class.mat-warn")
+  get isWarn() {
+    return this.picker && this.picker.color === "warn";
+  }
+
+  @HostListener("focus")
+  onFocus() {
+    if (!this._button) {
+      throw new Error(
+        "Could not focus the toggle because the toggle is missing a button ViewChild",
+      );
+    }
+    this._button.focus();
+  }
   private _stateChanges = Subscription.EMPTY;
 
-  @Input('for') picker: NgxMatColorPickerComponent;
-  @Input() tabIndex: number;
+  @Input() picker: NgxMatColorPickerComponent | null = null;
+  @Input() tabIndex: number | null = null;
 
   @Input() get disabled(): boolean {
     if (this._disabled == null && this.picker) {
       return this.picker.disabled;
+    } else {
+      return this._disabled;
     }
   }
   set disabled(value: boolean) {
     this._disabled = value;
   }
-  private _disabled: boolean;
+  private _disabled: boolean = false;
 
   /** Whether ripples on the toggle should be disabled. */
-  @Input() disableRipple: boolean;
+  @Input() disableRipple: boolean = false;
 
   /** Custom icon set by the consumer. */
-  @ContentChild(NgxMatColorpickerToggleIcon) _customIcon: NgxMatColorpickerToggleIcon;
+  @ContentChild(NgxMatColorPickerToggleIconDirective)
+  _customIcon: NgxMatColorPickerToggleIconDirective | null = null;
 
-  @ViewChild('button') _button: MatButton;
+  @ViewChild("button") _button: MatButton | null = null;
 
-  constructor(private _cd: ChangeDetectorRef) { }
-
-  ngOnInit() {
-  }
+  constructor(private _cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['picker']) {
+    if (changes["picker"]) {
       this._watchStateChanges();
     }
   }
@@ -81,14 +108,20 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
 
   private _watchStateChanges() {
     const disabled$ = this.picker ? this.picker._disabledChange : of();
-    const inputDisabled$ = this.picker && this.picker._pickerInput ?
-      this.picker._pickerInput._disabledChange : of();
+    const inputDisabled$ =
+      this.picker && this.picker._pickerInput
+        ? this.picker._pickerInput._disabledChange
+        : of();
 
-    const pickerToggled$ = this.picker ?
-      merge(this.picker.openedStream, this.picker.closedStream) : of();
+    const pickerToggled$ = this.picker
+      ? merge(this.picker.openedStream, this.picker.closedStream)
+      : of();
     this._stateChanges.unsubscribe();
 
-    this._stateChanges = merge(disabled$, inputDisabled$, pickerToggled$).subscribe(() => this._cd.markForCheck());
+    this._stateChanges = merge(
+      disabled$,
+      inputDisabled$,
+      pickerToggled$,
+    ).subscribe(() => this._cd.markForCheck());
   }
-
 }

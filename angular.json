@@ -253,7 +253,7 @@
       "skipTests": true
     },
     "@schematics/angular:directive": {
-      "prefix": "ngx-mat",
+      "prefix": "ngxMat",
       "skipTests": true
     },
     "@schematics/angular:pipe": {

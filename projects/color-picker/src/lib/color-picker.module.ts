@@ -18,7 +18,7 @@ import {
   NgxMatColorPickerInputDirective,
   NgxMatColorSliderComponent,
   NgxMatColorToggleComponent,
-  NgxMatColorpickerToggleIcon,
+  NgxMatColorPickerToggleIconDirective,
 } from "./components";
 import { NumericColorInputDirective } from "./directives";
 import { ColorAdapter } from "./services";
@@ -33,7 +33,7 @@ import { ColorAdapter } from "./services";
     NgxMatColorPickerContentComponent,
     NgxMatColorPickerComponent,
     NgxMatColorToggleComponent,
-    NgxMatColorpickerToggleIcon,
+    NgxMatColorPickerToggleIconDirective,
     NgxMatColorPickerInputDirective,
   ],
   imports: [
@@ -52,7 +52,7 @@ import { ColorAdapter } from "./services";
     NgxMatColorToggleComponent,
     NgxMatColorPickerInputDirective,
     NgxMatColorPickerComponent,
-    NgxMatColorpickerToggleIcon,
+    NgxMatColorPickerToggleIconDirective,
   ],
   providers: [
     ColorAdapter,
