@@ -85,15 +85,14 @@ import { DEFAULT_STEP } from "../../utils/date-utils";
 let datepickerUid = 0;
 
 /** Injection token that determines the scroll handling while the calendar is open. */
-export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY = new InjectionToken<
-  () => ScrollStrategy
->("ngx-mat-datepicker-scroll-strategy");
+export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY =
+  new InjectionToken<ScrollStrategy>("ngx-mat-datepicker-scroll-strategy");
 
 /** @docs-private */
 export function NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY(
   overlay: Overlay,
-): () => ScrollStrategy {
-  return () => overlay.scrollStrategies.reposition();
+): ScrollStrategy {
+  return overlay.scrollStrategies.reposition();
 }
 
 /** Possible positions for the datepicker dropdown along the X axis. */
