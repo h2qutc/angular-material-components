@@ -10,7 +10,6 @@ import {
   OnInit,
   Optional,
   inject,
-  Output,
 } from "@angular/core";
 import {
   AbstractControl,
@@ -26,8 +25,6 @@ import {
 import {
   CanUpdateErrorState,
   ErrorStateMatcher,
-  MAT_DATE_FORMATS,
-  MatDateFormats,
   mixinErrorState,
 } from "@angular/material/core";
 import { _computeAriaAccessibleName } from "../utils/aria-accessible-name";
@@ -52,8 +49,8 @@ export interface NgxMatDateRangeInputParent<D> {
     opened: boolean;
     id: string;
   };
-  _startInput: NgxMatDateRangeInputPartBase<D>;
-  _endInput: NgxMatDateRangeInputPartBase<D>;
+  _startInput: NgxMatDateRangeInputPartBase<D> | null;
+  _endInput: NgxMatDateRangeInputPartBase<D> | null;
   _groupDisabled: boolean;
   _handleChildValueChange(): void;
   _openDatepicker(): void;
@@ -341,6 +338,9 @@ export class NgxMatStartDateDirective<D>
       element.selectionEnd === element.value.length
     ) {
       event.preventDefault();
+      if (endInput === null) {
+        throw Error("Could not handle onKeydown event: end input is missing");
+      }
       endInput._elementRef.nativeElement.setSelectionRange(0, 0);
       endInput.focus();
     } else {
@@ -457,7 +457,9 @@ export class NgxMatEndDateDirective<D>
     const startInput = this._rangeInput._startInput;
     const element = this._elementRef.nativeElement;
     const isLtr = this._dir?.value !== "rtl";
-
+    if (startInput === null) {
+      throw Error("Could not handle onKeydown event: start input is missing");
+    }
     // If the user is pressing backspace on an empty end input, move focus back to the start.
     if (event.keyCode === BACKSPACE && !element.value) {
       startInput.focus();

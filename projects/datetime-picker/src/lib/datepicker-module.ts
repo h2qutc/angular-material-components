@@ -19,23 +19,23 @@ import {
 import { NgxMatDateRangePickerComponent } from "./directives/date-range-picker";
 import { NgxMatDatetimepicker } from "./components/datepicker/datepicker";
 import {
-  NgxMatDatepickerActions,
-  NgxMatDatepickerApply,
-  NgxMatDatepickerCancel,
+  NgxMatDatepickerActionsComponent,
+  NgxMatDatepickerApplyDirective,
+  NgxMatDatepickerCancelDirective,
 } from "./components/datepicker-actions/datepicker-actions";
 import {
   NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
   NgxMatDatepickerContentComponent,
 } from "./components/datepicker-content/datepicker-base.component";
-import { NgxMatDatepickerInput } from "./directives/datepicker-input";
+import { NgxMatDatepickerInputDirective } from "./directives/datepicker-input";
 import { NgxMatDatepickerIntl } from "./utils/datepicker-intl";
 import {
   NgxMatDatepickerToggleIcon,
   NgxMatDatepickerToggle,
 } from "./components/datepicker-toggle/datepicker-toggle";
 import { NgxMatMonthViewComponent } from "./components/month-view/month-view.component";
-import { NgxMatMultiYearView } from "./components/multi-year-view/multi-year-view";
-import { NgxMatYearView } from "./components/year-view/year-view";
+import { NgxMatMultiYearViewComponent } from "./components/multi-year-view/multi-year-view";
+import { NgxMatYearViewComponent } from "./components/year-view/year-view";
 import { NgxMatTimepickerModule } from "./timepicker.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -57,40 +57,40 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContentComponent,
-    NgxMatDatepickerInput,
+    NgxMatDatepickerInputDirective,
     NgxMatDatepickerToggle,
     NgxMatDatepickerToggleIcon,
     NgxMatMonthViewComponent,
-    NgxMatYearView,
-    NgxMatMultiYearView,
+    NgxMatYearViewComponent,
+    NgxMatMultiYearViewComponent,
     NgxMatCalendarHeaderComponent,
     NgxMatDateRangeInputComponent,
     NgxMatStartDateDirective,
     NgxMatEndDateDirective,
     NgxMatDateRangePickerComponent,
-    NgxMatDatepickerActions,
-    NgxMatDatepickerCancel,
-    NgxMatDatepickerApply,
+    NgxMatDatepickerActionsComponent,
+    NgxMatDatepickerCancelDirective,
+    NgxMatDatepickerApplyDirective,
   ],
   declarations: [
     NgxMatCalendarComponent,
     NgxMatCalendarBodyComponent,
     NgxMatDatetimepicker,
     NgxMatDatepickerContentComponent,
-    NgxMatDatepickerInput,
+    NgxMatDatepickerInputDirective,
     NgxMatDatepickerToggle,
     NgxMatDatepickerToggleIcon,
     NgxMatMonthViewComponent,
-    NgxMatYearView,
-    NgxMatMultiYearView,
+    NgxMatYearViewComponent,
+    NgxMatMultiYearViewComponent,
     NgxMatCalendarHeaderComponent,
     NgxMatDateRangeInputComponent,
     NgxMatStartDateDirective,
     NgxMatEndDateDirective,
     NgxMatDateRangePickerComponent,
-    NgxMatDatepickerActions,
-    NgxMatDatepickerCancel,
-    NgxMatDatepickerApply,
+    NgxMatDatepickerActionsComponent,
+    NgxMatDatepickerCancelDirective,
+    NgxMatDatepickerApplyDirective,
   ],
   providers: [
     NgxMatDatepickerIntl,

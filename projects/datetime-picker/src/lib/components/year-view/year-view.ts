@@ -25,7 +25,6 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { MAT_DATE_FORMATS, MatDateFormats } from "@angular/material/core";
 import { Subscription } from "rxjs";
 import { startWith } from "rxjs/operators";
 import {
@@ -53,7 +52,7 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
+export class NgxMatYearViewComponent<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
@@ -65,8 +64,8 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     return this._activeDate;
   }
   set activeDate(value: D) {
-    let oldActiveDate = this._activeDate;
-    const validDate =
+    const oldActiveDate: D = this._activeDate;
+    const validDate: D =
       this._dateAdapter.getValidDateOrNull(
         this._dateAdapter.deserialize(value),
       ) || this._dateAdapter.today();
@@ -146,7 +145,7 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   _matCalendarBody: NgxMatCalendarBodyComponent | null = null;
 
   /** Grid of calendar cells representing the months of the year. */
-  _months: NgxMatCalendarCell[][] | null = null;
+  _months: NgxMatCalendarCell<D>[][] | null = null;
 
   /** The label for this year (e.g. "2017"). */
   _yearLabel: string | null = null;
@@ -324,8 +323,8 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
     this._todayMonth = this._getMonthInCurrentYear(this._dateAdapter.today());
     this._yearLabel = this._dateAdapter.getYearName(this.activeDate);
 
-    let monthNames = this._dateAdapter.getMonthNames("short");
-    // First row of months only contains 5 elements so we can fit the year label on the same row.
+    const monthNames = this._dateAdapter.getMonthNames("short");
+    // First row of months only contains 5 elements, so we can fit the year label on the same row.
     this._months = [
       [0, 1, 2, 3],
       [4, 5, 6, 7],
@@ -387,7 +386,10 @@ export class NgxMatYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Creates an MatCalendarCell for the given month. */
-  private _createCellForMonth(month: number, monthName: string) {
+  private _createCellForMonth(
+    month: number,
+    monthName: string,
+  ): NgxMatCalendarCell<D> {
     const date = this._dateAdapter.createDate(
       this._dateAdapter.getYear(this.activeDate),
       month,

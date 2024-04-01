@@ -20,14 +20,14 @@ import {
 @Directive({
   selector: "[ngxMatDatepickerApply], [ngxMatDateRangePickerApply]",
 })
-export class NgxMatDatepickerApply {
+export class NgxMatDatepickerApplyDirective {
   @HostBinding("(click)") _applySelection() {
     this._datepicker._applyPendingSelection();
     this._datepicker.close();
   }
   constructor(
     private _datepicker: NgxMatDatepickerBase<
-      NgxMatDatepickerControl<unknown>,
+      NgxMatDatepickerControl<object>,
       unknown
     >,
   ) {}
@@ -36,12 +36,14 @@ export class NgxMatDatepickerApply {
 /** Button that will close the datepicker and discard the current selection. */
 @Directive({
   selector: "[ngxMatDatepickerCancel], [ngxMatDateRangePickerCancel]",
-  host: { "(click)": "_datepicker.close()" },
 })
-export class NgxMatDatepickerCancel {
+export class NgxMatDatepickerCancelDirective {
+  @HostBinding("(click)") _cancelSelection() {
+    this._datepicker.close();
+  }
   constructor(
     public _datepicker: NgxMatDatepickerBase<
-      NgxMatDatepickerControl<any>,
+      NgxMatDatepickerControl<object>,
       unknown
     >,
   ) {}
@@ -64,24 +66,32 @@ export class NgxMatDatepickerCancel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxMatDatepickerActions implements AfterViewInit, OnDestroy {
-  @ViewChild(TemplateRef) _template: TemplateRef<unknown>;
-  private _portal: TemplatePortal;
+export class NgxMatDatepickerActionsComponent
+  implements AfterViewInit, OnDestroy
+{
+  @ViewChild(TemplateRef) _template: TemplateRef<unknown> | null = null;
+  private _portal: TemplatePortal | null = null;
 
   constructor(
     private _datepicker: NgxMatDatepickerBase<
-      NgxMatDatepickerControl<any>,
+      NgxMatDatepickerControl<object>,
       unknown
     >,
     private _viewContainerRef: ViewContainerRef,
   ) {}
 
   ngAfterViewInit() {
+    if (this._template === null) {
+      throw Error("NgxMatDatepickerActionsComponent: Missing template");
+    }
     this._portal = new TemplatePortal(this._template, this._viewContainerRef);
     this._datepicker.registerActions(this._portal);
   }
 
   ngOnDestroy() {
+    if (this._portal === null) {
+      throw Error("NgxMatDatepickerActionsComponent: Missing portal");
+    }
     this._datepicker.removeActions(this._portal);
 
     // Needs to be null checked since we initialize it in `ngAfterViewInit`.

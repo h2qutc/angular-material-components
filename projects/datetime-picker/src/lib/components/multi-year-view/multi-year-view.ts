@@ -51,7 +51,9 @@ export const yearsPerRow = 4;
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
+export class NgxMatMultiYearViewComponent<D>
+  implements AfterContentInit, OnDestroy
+{
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
@@ -63,8 +65,8 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
     return this._activeDate;
   }
   set activeDate(value: D) {
-    let oldActiveDate = this._activeDate;
-    const validDate =
+    const oldActiveDate: D = this._activeDate;
+    const validDate: D =
       this._dateAdapter.getValidDateOrNull(
         this._dateAdapter.deserialize(value),
       ) || this._dateAdapter.today();
@@ -150,7 +152,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   _matCalendarBody: NgxMatCalendarBodyComponent | null = null;
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: NgxMatCalendarCell[][] | null = null;
+  _years: NgxMatCalendarCell<D>[][] | null = null;
 
   /** The year that today falls on. */
   _todayYear: number | null = null;
@@ -386,7 +388,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Creates an MatCalendarCell for the given year. */
-  private _createCellForYear(year: number) {
+  private _createCellForYear(year: number): NgxMatCalendarCell<D> {
     const date = this._dateAdapter.createDate(year, 0, 1);
     const yearName = this._dateAdapter.getYearName(date);
     const cellClasses = this.dateClass

@@ -175,6 +175,11 @@ export class NgxMatCalendarBodyComponent<D = unknown>
     private _elementRef: ElementRef<HTMLElement>,
     private _ngZone: NgZone,
   ) {
+    if (this.labelMinRequiredCells === null) {
+      throw Error(
+        "Could not initialize calendar body. Label min required cells is null.",
+      );
+    }
     _ngZone.runOutsideAngular(() => {
       const element = _elementRef.nativeElement;
       element.addEventListener("mouseenter", this._enterHandler, true);

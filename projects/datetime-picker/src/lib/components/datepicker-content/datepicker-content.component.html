@@ -4,33 +4,35 @@
   [attr.aria-modal]="true"
   [attr.aria-labelledby]="_dialogLabelId ?? undefined"
   class="mat-datepicker-content-container"
-  [class.mat-datepicker-content-container-with-custom-header]="datepicker.calendarHeaderComponent"
+  [class.mat-datepicker-content-container-with-custom-header]="
+    datepicker?.calendarHeaderComponent
+  "
   [class.mat-datepicker-content-container-with-actions]="_actionsPortal"
-  [class.mat-datepicker-content-container-with-time]="!datepicker._hideTime"
+  [class.mat-datepicker-content-container-with-time]="!datepicker?._hideTime"
 >
   @if (datepicker) {
-  <ngx-mat-calendar
-    [id]="datepicker.id"
-    [ngClass]="datepicker.panelClass"
-    [startAt]="datepicker.startAt"
-    [startView]="datepicker.startView"
-    [minDate]="datepicker._getMinDate()"
-    [maxDate]="datepicker._getMaxDate()"
-    [dateFilter]="datepicker._getDateFilter()"
-    [headerComponent]="datepicker.calendarHeaderComponent"
-    [selected]="_getSelected()"
-    [dateClass]="datepicker.dateClass"
-    [comparisonStart]="comparisonStart"
-    [comparisonEnd]="comparisonEnd"
-    [@fadeInCalendar]="'enter'"
-    [startDateAccessibleName]="startDateAccessibleName"
-    [endDateAccessibleName]="endDateAccessibleName"
-    (yearSelected)="datepicker._selectYear($event)"
-    (monthSelected)="datepicker._selectMonth($event)"
-    (viewChanged)="datepicker._viewChanged($event)"
-    (_userSelection)="_handleUserSelection($event)"
-    (_userDragDrop)="_handleUserDragDrop($event)"
-  ></ngx-mat-calendar>
+    <ngx-mat-calendar
+      [id]="datepicker.id"
+      [ngClass]="datepicker.panelClass"
+      [startAt]="datepicker.startAt"
+      [startView]="datepicker.startView"
+      [minDate]="datepicker._getMinDate()"
+      [maxDate]="datepicker._getMaxDate()"
+      [dateFilter]="datepicker._getDateFilter()"
+      [headerComponent]="datepicker.calendarHeaderComponent"
+      [selected]="_getSelected()"
+      [dateClass]="datepicker.dateClass"
+      [comparisonStart]="comparisonStart"
+      [comparisonEnd]="comparisonEnd"
+      [@fadeInCalendar]="'enter'"
+      [startDateAccessibleName]="startDateAccessibleName"
+      [endDateAccessibleName]="endDateAccessibleName"
+      (yearSelected)="datepicker._selectYear($event)"
+      (monthSelected)="datepicker._selectMonth($event)"
+      (viewChanged)="datepicker._viewChanged($event)"
+      (_userSelection)="_handleUserSelection($event)"
+      (_userDragDrop)="_handleUserDragDrop($event)"
+    ></ngx-mat-calendar>
   }
 
   <ng-container *ngIf="isViewMonth">
@@ -67,7 +69,7 @@
     [class.cdk-visually-hidden]="!_closeButtonFocused"
     (focus)="_closeButtonFocused = true"
     (blur)="_closeButtonFocused = false"
-    (click)="datepicker.close()"
+    (click)="datepicker!.close()"
   >
     {{ _closeButtonText }}
   </button>

@@ -8,7 +8,6 @@ import {
 } from "@angular/cdk/coercion";
 import {
   DOWN_ARROW,
-  ESCAPE,
   LEFT_ARROW,
   PAGE_DOWN,
   PAGE_UP,
@@ -56,7 +55,7 @@ import {
   HostBinding,
 } from "@angular/core";
 import { ThemePalette } from "@angular/material/core";
-import { Observable, Subject, Subscription, merge } from "rxjs";
+import { Observable, Subject, Subscription, merge, of } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import {
   NgxMatCalendarComponent,
@@ -214,6 +213,11 @@ export class NgxMatDatepickerContentComponent<
     intl: NgxMatDatepickerIntl,
   ) {
     this._closeButtonText = intl.closeCalendarLabel;
+    if (this.datepicker === null) {
+      throw Error(
+        "Could not initialize the datepicker content component because the associated datepicker is missing.",
+      );
+    }
   }
 
   ngOnInit() {
@@ -411,7 +415,7 @@ export interface NgxMatDatepickerPanel<
   /** Color palette to use on the datepicker's calendar. */
   color: ThemePalette;
   /** The input element the datepicker is associated with. */
-  datepickerInput: C;
+  datepickerInput: C | null;
   /** Whether the datepicker pop-up should be disabled. */
   disabled: boolean;
   /** The id for the datepicker's calendar. */
@@ -506,7 +510,7 @@ export abstract class NgxMatDatepickerBase<
   get disabled(): boolean {
     return this._disabled === undefined && this.datepickerInput
       ? this.datepickerInput.disabled
-      : !!this._disabled;
+      : this._disabled;
   }
   set disabled(value: BooleanInput) {
     const newValue = coerceBooleanProperty(value);
@@ -957,7 +961,7 @@ export abstract class NgxMatDatepickerBase<
         direction: this._dir,
         scrollStrategy: isDialog
           ? this._overlay.scrollStrategies.block()
-          : this._scrollStrategy(),
+          : this._scrollStrategy,
         panelClass: `mat-datepicker-${isDialog ? "dialog" : "popup"}`,
       }),
     ));
@@ -1018,6 +1022,11 @@ export abstract class NgxMatDatepickerBase<
 
   /** Gets a position strategy that will open the calendar as a dropdown. */
   private _getDropdownStrategy() {
+    if (this.datepickerInput === null) {
+      throw Error(
+        "Could not get dropdown position strategy because the datepicker input is missing.",
+      );
+    }
     const strategy = this._overlay
       .position()
       .flexibleConnectedTo(this.datepickerInput.getConnectedOverlayOrigin())
@@ -1076,17 +1085,17 @@ export abstract class NgxMatDatepickerBase<
       overlayRef.detachments(),
       overlayRef.keydownEvents().pipe(
         filter((event) => {
-          // Closing on alt + up is only valid when there's an input associated with the datepicker.
-          return (
-            (event.keyCode === ESCAPE && !hasModifierKey(event)) ||
-            (this.datepickerInput &&
-              hasModifierKey(event, "altKey") &&
-              event.keyCode === UP_ARROW &&
-              ctrlShiftMetaModifiers.every(
-                (modifier: ListKeyManagerModifierKey) =>
-                  !hasModifierKey(event, modifier),
-              ))
-          );
+          const escapeNoModifier =
+            event.key === "Escape" && !hasModifierKey(event);
+          const arrowUpAndCtrl =
+            this.datepickerInput &&
+            hasModifierKey(event, "altKey") &&
+            event.key === "ArrowUp" &&
+            ctrlShiftMetaModifiers.every(
+              (modifier: ListKeyManagerModifierKey) =>
+                !hasModifierKey(event, modifier),
+            );
+          return escapeNoModifier || !!arrowUpAndCtrl;
         }),
       ),
     );

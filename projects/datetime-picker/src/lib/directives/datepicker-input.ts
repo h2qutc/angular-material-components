@@ -33,14 +33,14 @@ import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from "../core/date-formats";
 /** @docs-private */
 export const NGX_MAT_DATEPICKER_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgxMatDatepickerInput),
+  useExisting: forwardRef(() => NgxMatDatepickerInputDirective),
   multi: true,
 };
 
 /** @docs-private */
 export const NGX_MAT_DATEPICKER_VALIDATORS = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => NgxMatDatepickerInput),
+  useExisting: forwardRef(() => NgxMatDatepickerInputDirective),
   multi: true,
 };
 
@@ -50,7 +50,10 @@ export const NGX_MAT_DATEPICKER_VALIDATORS = {
   providers: [
     NGX_MAT_DATEPICKER_VALUE_ACCESSOR,
     NGX_MAT_DATEPICKER_VALIDATORS,
-    { provide: MAT_INPUT_VALUE_ACCESSOR, useExisting: NgxMatDatepickerInput },
+    {
+      provide: MAT_INPUT_VALUE_ACCESSOR,
+      useExisting: NgxMatDatepickerInputDirective,
+    },
   ],
   host: {
     class: "mat-datepicker-input",
@@ -69,7 +72,7 @@ export const NGX_MAT_DATEPICKER_VALIDATORS = {
   },
   exportAs: "ngxMatDatepickerInput",
 })
-export class NgxMatDatepickerInput<D>
+export class NgxMatDatepickerInputDirective<D>
   extends NgxMatDatepickerInputBase<D | null, D>
   implements NgxMatDatepickerControl<D | null>, OnDestroy
 {
@@ -133,7 +136,7 @@ export class NgxMatDatepickerInput<D>
   get dateFilter() {
     return this._dateFilter;
   }
-  set dateFilter(value: NgxDateFilterFn<D | null>) {
+  set dateFilter(value: NgxDateFilterFn<D | null> | null) {
     const wasMatchingValue = this._matchesFilter(this.value);
     this._dateFilter = value;
 

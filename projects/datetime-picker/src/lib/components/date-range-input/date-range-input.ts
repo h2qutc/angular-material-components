@@ -174,7 +174,7 @@ export class NgxMatDateRangeInputComponent<D>
   @Input()
   get dateFilter() {
     if (this._dateFilter === null) {
-      throw Error("mat-date-range-input must contain a date filter function");
+      throw Error("Could not get dateFilter because it is null");
     }
     return this._dateFilter;
   }
@@ -322,7 +322,7 @@ export class NgxMatDateRangeInputComponent<D>
     this.ngControl = control as unknown as NgControl;
   }
 
-  id: string | null = null;
+  id: string;
   autofilled?: boolean | undefined;
   userAriaDescribedBy?: string | undefined;
 
@@ -339,10 +339,20 @@ export class NgxMatDateRangeInputComponent<D>
    * @docs-private
    */
   onContainerClick(): void {
+    if (this._startInput === null) {
+      throw Error(
+        "Could not trigger onContainerClick because start input is null",
+      );
+    }
     if (!this.focused && !this.disabled) {
       if (!this._model || !this._model.selection.start) {
         this._startInput.focus();
       } else {
+        if (this._endInput === null) {
+          throw Error(
+            "Could not trigger onContainerClick because end input is null",
+          );
+        }
         this._endInput.focus();
       }
     }
@@ -446,10 +456,18 @@ export class NgxMatDateRangeInputComponent<D>
   }
 
   _getStartDateAccessibleName(): string {
+    if (this._startInput === null) {
+      throw Error(
+        "Could not get start date accessible name because it is null",
+      );
+    }
     return this._startInput._getAccessibleName();
   }
 
   _getEndDateAccessibleName(): string {
+    if (this._endInput === null) {
+      throw Error("Could not get end date accessible name because it is null");
+    }
     return this._endInput._getAccessibleName();
   }
 

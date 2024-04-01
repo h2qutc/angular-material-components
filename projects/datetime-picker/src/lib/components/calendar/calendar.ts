@@ -37,12 +37,12 @@ import { createMissingDateImplError } from "../../utils/datepicker-errors";
 import { NgxMatDatepickerIntl } from "../../utils/datepicker-intl";
 import { NgxMatMonthViewComponent } from "../month-view/month-view.component";
 import {
-  NgxMatMultiYearView,
+  NgxMatMultiYearViewComponent,
   getActiveOffset,
   isSameMultiYearView,
   yearsPerPage,
 } from "../multi-year-view/multi-year-view";
-import { NgxMatYearView } from "../year-view/year-view";
+import { NgxMatYearViewComponent } from "../year-view/year-view";
 
 let calendarHeaderId = 1;
 
@@ -385,11 +385,12 @@ export class NgxMatCalendarComponent<D>
   monthView: NgxMatMonthViewComponent<D> | null = null;
 
   /** Reference to the current year view component. */
-  @ViewChild(NgxMatYearView) yearView: NgxMatYearView<D> | null = null;
+  @ViewChild(NgxMatYearViewComponent)
+  yearView: NgxMatYearViewComponent<D> | null = null;
 
   /** Reference to the current multi-year view component. */
-  @ViewChild(NgxMatMultiYearView) multiYearView: NgxMatMultiYearView<D> | null =
-    null;
+  @ViewChild(NgxMatMultiYearViewComponent)
+  multiYearView: NgxMatMultiYearViewComponent<D> | null = null;
 
   /**
    * The current active date. This determines which time period is shown and which date is
@@ -590,8 +591,8 @@ export class NgxMatCalendarComponent<D>
   /** Returns the component instance that corresponds to the current calendar view. */
   private _getCurrentViewComponent():
     | NgxMatMonthViewComponent<D>
-    | NgxMatYearView<D>
-    | NgxMatMultiYearView<D> {
+    | NgxMatYearViewComponent<D>
+    | NgxMatMultiYearViewComponent<D> {
     // The return type is explicitly written as a union to ensure that the Closure compiler does
     // not optimize calls to _init(). Without the explicit return type, TypeScript narrows it to
     // only the first component type. See https://github.com/angular/components/issues/22996.

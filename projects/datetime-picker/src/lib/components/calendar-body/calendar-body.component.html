@@ -6,10 +6,10 @@
   <td
     class="mat-calendar-body-label"
     [attr.colspan]="numCols"
-    [style.paddingTop]="_cellPadding"
-    [style.paddingBottom]="_cellPadding"
+    [style.padding-top]="_cellPadding"
+    [style.padding-bottom]="_cellPadding"
   >
-    {{label}}
+    {{ label }}
   </td>
 </tr>
 
@@ -25,10 +25,10 @@
     *ngIf="rowIndex === 0 && _firstRowOffset"
     class="mat-calendar-body-label"
     [attr.colspan]="_firstRowOffset"
-    [style.paddingTop]="_cellPadding"
-    [style.paddingBottom]="_cellPadding"
+    [style.padding-top]="_cellPadding"
+    [style.padding-bottom]="_cellPadding"
   >
-    {{_firstRowOffset >= labelMinRequiredCells ? label : ''}}
+    {{ _firstRowOffset >= labelMinRequiredCells ? label : "" }}
   </td>
   <!--
     Each gridcell in the calendar contains a button, which signals to assistive technology that the
@@ -40,8 +40,8 @@
     role="gridcell"
     class="mat-calendar-body-cell-container"
     [style.width]="_cellWidth"
-    [style.paddingTop]="_cellPadding"
-    [style.paddingBottom]="_cellPadding"
+    [style.padding-top]="_cellPadding"
+    [style.padding-bottom]="_cellPadding"
     [attr.data-mat-row]="rowIndex"
     [attr.data-mat-col]="colIndex"
   >
@@ -55,12 +55,24 @@
       [class.mat-calendar-body-range-start]="_isRangeStart(item.compareValue)"
       [class.mat-calendar-body-range-end]="_isRangeEnd(item.compareValue)"
       [class.mat-calendar-body-in-range]="_isInRange(item.compareValue)"
-      [class.mat-calendar-body-comparison-bridge-start]="_isComparisonBridgeStart(item.compareValue, rowIndex, colIndex)"
-      [class.mat-calendar-body-comparison-bridge-end]="_isComparisonBridgeEnd(item.compareValue, rowIndex, colIndex)"
-      [class.mat-calendar-body-comparison-start]="_isComparisonStart(item.compareValue)"
-      [class.mat-calendar-body-comparison-end]="_isComparisonEnd(item.compareValue)"
-      [class.mat-calendar-body-in-comparison-range]="_isInComparisonRange(item.compareValue)"
-      [class.mat-calendar-body-preview-start]="_isPreviewStart(item.compareValue)"
+      [class.mat-calendar-body-comparison-bridge-start]="
+        _isComparisonBridgeStart(item.compareValue, rowIndex, colIndex)
+      "
+      [class.mat-calendar-body-comparison-bridge-end]="
+        _isComparisonBridgeEnd(item.compareValue, rowIndex, colIndex)
+      "
+      [class.mat-calendar-body-comparison-start]="
+        _isComparisonStart(item.compareValue)
+      "
+      [class.mat-calendar-body-comparison-end]="
+        _isComparisonEnd(item.compareValue)
+      "
+      [class.mat-calendar-body-in-comparison-range]="
+        _isInComparisonRange(item.compareValue)
+      "
+      [class.mat-calendar-body-preview-start]="
+        _isPreviewStart(item.compareValue)
+      "
       [class.mat-calendar-body-preview-end]="_isPreviewEnd(item.compareValue)"
       [class.mat-calendar-body-in-preview]="_isInPreview(item.compareValue)"
       [attr.aria-label]="item.ariaLabel"
@@ -74,10 +86,12 @@
       <span
         class="mat-calendar-body-cell-content mat-focus-indicator"
         [class.mat-calendar-body-selected]="_isSelected(item.compareValue)"
-        [class.mat-calendar-body-comparison-identical]="_isComparisonIdentical(item.compareValue)"
+        [class.mat-calendar-body-comparison-identical]="
+          _isComparisonIdentical(item.compareValue)
+        "
         [class.mat-calendar-body-today]="todayValue === item.compareValue"
       >
-        {{item.displayValue}}
+        {{ item.displayValue }}
       </span>
       <span class="mat-calendar-body-cell-preview" aria-hidden="true"></span>
     </button>
@@ -85,8 +99,8 @@
 </tr>
 
 <span [id]="_startDateLabelId" class="mat-calendar-body-hidden-label">
-  {{startDateAccessibleName}}
+  {{ startDateAccessibleName }}
 </span>
 <span [id]="_endDateLabelId" class="mat-calendar-body-hidden-label">
-  {{endDateAccessibleName}}
+  {{ endDateAccessibleName }}
 </span>

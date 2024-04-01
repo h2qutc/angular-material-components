@@ -55,7 +55,7 @@ export class NgxMatDateRangePickerComponent<D> extends NgxMatDatepickerBase<
   ) {
     super._forwardContentValues(instance);
 
-    const input = this.datepickerInput;
+    const input: NgxMatDateRangePickerInput<D> | null = this.datepickerInput;
 
     if (input) {
       instance.comparisonStart = input.comparisonStart;
