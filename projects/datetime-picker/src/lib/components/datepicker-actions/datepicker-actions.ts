@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Directive,
+  HostBinding,
   OnDestroy,
   TemplateRef,
   ViewChild,
@@ -18,20 +19,18 @@ import {
 /** Button that will close the datepicker and assign the current selection to the data model. */
 @Directive({
   selector: "[ngxMatDatepickerApply], [ngxMatDateRangePickerApply]",
-  host: { "(click)": "_applySelection()" },
 })
 export class NgxMatDatepickerApply {
-  constructor(
-    private _datepicker: NgxMatDatepickerBase<
-      NgxMatDatepickerControl<any>,
-      unknown
-    >,
-  ) {}
-
-  _applySelection() {
+  @HostBinding("(click)") _applySelection() {
     this._datepicker._applyPendingSelection();
     this._datepicker.close();
   }
+  constructor(
+    private _datepicker: NgxMatDatepickerBase<
+      NgxMatDatepickerControl<unknown>,
+      unknown
+    >,
+  ) {}
 }
 
 /** Button that will close the datepicker and discard the current selection. */

@@ -39,10 +39,13 @@ export interface NgxMatDateRangePickerInput<D>
   providers: [
     NGX_MAT_RANGE_DATE_SELECTION_MODEL_PROVIDER,
     NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER,
-    { provide: NgxMatDatepickerBase, useExisting: NgxMatDateRangePicker },
+    {
+      provide: NgxMatDatepickerBase,
+      useExisting: NgxMatDateRangePickerComponent,
+    },
   ],
 })
-export class NgxMatDateRangePicker<D> extends NgxMatDatepickerBase<
+export class NgxMatDateRangePickerComponent<D> extends NgxMatDatepickerBase<
   NgxMatDateRangePickerInput<D>,
   NgxDateRange<D>,
   D

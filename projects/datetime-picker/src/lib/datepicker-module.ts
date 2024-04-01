@@ -11,12 +11,12 @@ import {
   NgxMatCalendarHeaderComponent,
 } from "./components/calendar/calendar";
 import { NgxMatCalendarBodyComponent } from "./components/calendar-body/calendar-body.component";
-import { NgxMatDateRangeInput } from "./components/date-range-input/date-range-input";
+import { NgxMatDateRangeInputComponent } from "./components/date-range-input/date-range-input";
 import {
-  NgxMatEndDate,
-  NgxMatStartDate,
+  NgxMatEndDateDirective,
+  NgxMatStartDateDirective,
 } from "./directives/date-range-input-parts";
-import { NgxMatDateRangePicker } from "./directives/date-range-picker";
+import { NgxMatDateRangePickerComponent } from "./directives/date-range-picker";
 import { NgxMatDatetimepicker } from "./components/datepicker/datepicker";
 import {
   NgxMatDatepickerActions,
@@ -64,10 +64,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatYearView,
     NgxMatMultiYearView,
     NgxMatCalendarHeaderComponent,
-    NgxMatDateRangeInput,
-    NgxMatStartDate,
-    NgxMatEndDate,
-    NgxMatDateRangePicker,
+    NgxMatDateRangeInputComponent,
+    NgxMatStartDateDirective,
+    NgxMatEndDateDirective,
+    NgxMatDateRangePickerComponent,
     NgxMatDatepickerActions,
     NgxMatDatepickerCancel,
     NgxMatDatepickerApply,
@@ -84,10 +84,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatYearView,
     NgxMatMultiYearView,
     NgxMatCalendarHeaderComponent,
-    NgxMatDateRangeInput,
-    NgxMatStartDate,
-    NgxMatEndDate,
-    NgxMatDateRangePicker,
+    NgxMatDateRangeInputComponent,
+    NgxMatStartDateDirective,
+    NgxMatEndDateDirective,
+    NgxMatDateRangePickerComponent,
     NgxMatDatepickerActions,
     NgxMatDatepickerCancel,
     NgxMatDatepickerApply,

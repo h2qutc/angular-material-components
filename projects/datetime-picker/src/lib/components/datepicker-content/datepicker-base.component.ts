@@ -136,7 +136,7 @@ export class NgxMatDatepickerContentComponent<
   implements OnInit, AfterViewInit, OnDestroy
 {
   /** Reference to the datepicker that created the overlay. */
-  datepicker: NgxMatDatepickerBase<any, S, D> | null = null;
+  datepicker: NgxMatDatepickerBase<unknown, S, D> | null = null;
   @HostBinding("class") hostClass = "mat-datepicker-content";
   @HostBinding("[class.mat-datepicker-content-touch]")
   matDatepickerContentTouch = this.datepicker ? this.datepicker.touchUi : false;
@@ -205,7 +205,6 @@ export class NgxMatDatepickerContentComponent<
   _modelTime: D | null = null;
 
   constructor(
-    elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
     private _globalModel: NgxMatDateSelectionModel<S, D>,
     private _dateAdapter: NgxMatDateAdapter<D>,
@@ -214,7 +213,6 @@ export class NgxMatDatepickerContentComponent<
     private _rangeSelectionStrategy: NgxMatDateRangeSelectionStrategy<D>,
     intl: NgxMatDatepickerIntl,
   ) {
-    super(elementRef);
     this._closeButtonText = intl.closeCalendarLabel;
   }
 
@@ -293,6 +291,12 @@ export class NgxMatDatepickerContentComponent<
     // pressing escape), whereas when selecting a single value it means that the value didn't
     // change. This isn't very intuitive, but it's here for backwards-compatibility.
     if (isRange && this._rangeSelectionStrategy) {
+      if (!event.event) {
+        throw Error(
+          "The user event must contain the native event on the calendar when selecting a range.",
+        );
+      }
+
       const newSelection = this._rangeSelectionStrategy.selectionFinished(
         value,
         selection as unknown as NgxDateRange<D>,
@@ -317,6 +321,11 @@ export class NgxMatDatepickerContentComponent<
   }
 
   _handleUserDragDrop(event: NgxMatCalendarUserEvent<NgxDateRange<D>>) {
+    if (!this._model) {
+      throw Error(
+        "Could not update the user selection on the calendar because the NgxMatDateSelectionModel is missing.",
+      );
+    }
     this._model.updateSelection(event.value as unknown as S, this);
   }
 
@@ -334,12 +343,22 @@ export class NgxMatDatepickerContentComponent<
   }
 
   _getSelected() {
+    if (!this._model) {
+      throw Error(
+        "Could not get the selected value from the calendar because the NgxMatDateSelectionModel is missing.",
+      );
+    }
     this._modelTime = this._model.selection as unknown as D;
     return this._model.selection as unknown as D | NgxDateRange<D> | null;
   }
 
   /** Applies the current pending selection to the global model. */
   _applyPendingSelection() {
+    if (!this._model) {
+      throw Error(
+        "Could not apply the pending selection because the NgxMatDateSelectionModel is missing.",
+      );
+    }
     if (this._model !== this._globalModel) {
       this._globalModel.updateSelection(this._model.selection, this);
     }
@@ -418,7 +437,7 @@ export abstract class NgxMatDatepickerBase<
   >
   implements NgxMatDatepickerPanel<C, S, D>, OnDestroy, OnChanges
 {
-  private readonly _scrollStrategy: () => ScrollStrategy;
+  private readonly _scrollStrategy: ScrollStrategy;
   private _inputStateChanges = Subscription.EMPTY;
   private _document = inject(DOCUMENT);
 
@@ -540,13 +559,13 @@ export abstract class NgxMatDatepickerBase<
     new EventEmitter<NgxMatCalendarView>(true);
 
   /** Function that can be used to add custom CSS classes to dates. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  @Input() dateClass: NgxMatCalendarCellClassFunction<D> | null = null;
 
   /** Emits when the datepicker has been opened. */
-  @Output("opened") readonly openedStream = new EventEmitter<void>();
+  @Output() readonly openedStream = new EventEmitter<void>();
 
   /** Emits when the datepicker has been closed. */
-  @Output("closed") readonly closedStream = new EventEmitter<void>();
+  @Output() readonly closedStream = new EventEmitter<void>();
 
   /**
    * Classes to be passed to the date picker panel.
@@ -554,12 +573,17 @@ export abstract class NgxMatDatepickerBase<
    */
   @Input()
   get panelClass(): string | string[] {
+    if (this._panelClass === null) {
+      throw Error(
+        "The panelClass property is required for the datepicker component.",
+      );
+    }
     return this._panelClass;
   }
   set panelClass(value: string | string[]) {
     this._panelClass = coerceStringArray(value);
   }
-  private _panelClass: string[];
+  private _panelClass: string[] | null = null;
 
   /** Whether the calendar is open. */
   @Input()
@@ -639,17 +663,22 @@ export abstract class NgxMatDatepickerBase<
   set disableMinute(value: boolean) {
     this._disableMinute = value;
   }
-  public _disableMinute: boolean;
+  public _disableMinute: boolean = false;
 
   /** Step second */
   @Input()
   get defaultTime(): number[] {
+    if (this._defaultTime === null) {
+      throw Error(
+        "The defaultTime property is required for the datepicker component.",
+      );
+    }
     return this._defaultTime;
   }
   set defaultTime(value: number[]) {
     this._defaultTime = value;
   }
-  public _defaultTime: number[];
+  public _defaultTime: number[] | null = null;
 
   /** The id for the datepicker calendar. */
   id: string = `mat-datepicker-${datepickerUid++}`;
@@ -665,6 +694,11 @@ export abstract class NgxMatDatepickerBase<
   }
 
   _getDateFilter(): NgxDateFilterFn<D> | null {
+    if (this.datepickerInput === null) {
+      throw Error(
+        "Could not retrieve date filter function for the datepicker because the associated input is missing.",
+      );
+    }
     if (!this.datepickerInput.dateFilter) {
       return null;
     }
@@ -686,7 +720,7 @@ export abstract class NgxMatDatepickerBase<
   private _backdropHarnessClass = `${this.id}-backdrop`;
 
   /** Currently-registered actions portal. */
-  private _actionsPortal: TemplatePortal | null;
+  private _actionsPortal: TemplatePortal | null = null;
 
   /** The input element this datepicker is associated with. */
   datepickerInput: C | null = null;

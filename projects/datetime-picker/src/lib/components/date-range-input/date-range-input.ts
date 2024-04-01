@@ -7,6 +7,7 @@ import {
   Component,
   ContentChild,
   ElementRef,
+  HostBinding,
   Inject,
   Input,
   OnChanges,
@@ -14,7 +15,6 @@ import {
   Optional,
   Self,
   SimpleChanges,
-  ViewEncapsulation,
 } from "@angular/core";
 import { ControlContainer, NgControl, Validators } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
@@ -27,8 +27,8 @@ import { NgxMatDateAdapter } from "../../core/date-adapter";
 import {
   NGX_MAT_DATE_RANGE_INPUT_PARENT,
   NgxMatDateRangeInputParent,
-  NgxMatEndDate,
-  NgxMatStartDate,
+  NgxMatEndDateDirective,
+  NgxMatStartDateDirective,
 } from "../../directives/date-range-input-parts";
 import { NgxMatDateRangePickerInput } from "../../directives/date-range-picker";
 import {
@@ -53,29 +53,19 @@ let nextUniqueId = 0;
   templateUrl: "date-range-input.html",
   styleUrls: ["date-range-input.scss"],
   exportAs: "ngxMatDateRangeInput",
-  host: {
-    class: "mat-date-range-input",
-    "[class.mat-date-range-input-hide-placeholders]":
-      "_shouldHidePlaceholders()",
-    "[class.mat-date-range-input-required]": "required",
-    "[attr.id]": "id",
-    role: "group",
-    "[attr.aria-labelledby]": "_getAriaLabelledby()",
-    "[attr.aria-describedby]": "_ariaDescribedBy",
-    // Used by the test harness to tie this input to its calendar. We can't depend on
-    // `aria-owns` for this, because it's only defined while the calendar is open.
-    "[attr.data-mat-calendar]": "rangePicker ? rangePicker.id : null",
-  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: MatFormFieldControl, useExisting: NgxMatDateRangeInput },
+    {
+      provide: MatFormFieldControl,
+      useExisting: NgxMatDateRangeInputComponent,
+    },
     {
       provide: NGX_MAT_DATE_RANGE_INPUT_PARENT,
-      useExisting: NgxMatDateRangeInput,
+      useExisting: NgxMatDateRangeInputComponent,
     },
   ],
 })
-export class NgxMatDateRangeInput<D>
+export class NgxMatDateRangeInputComponent<D>
   implements
     MatFormFieldControl<NgxDateRange<D>>,
     NgxMatDatepickerControl<D>,
@@ -85,15 +75,29 @@ export class NgxMatDateRangeInput<D>
     OnChanges,
     OnDestroy
 {
+  @HostBinding("class") hostClass = "mat-date-range-input";
+  @HostBinding("[class.mat-date-range-input-hide-placeholders]")
+  shouldHidePlaceholders = this._shouldHidePlaceholders();
+
+  @HostBinding("[class.mat-date-range-input-required]") _required =
+    this.required;
   private _closedSubscription = Subscription.EMPTY;
+  /** Unique ID for the group. */
+  @HostBinding("[attr.id]") _id = `mat-date-range-input-${nextUniqueId++}`;
+  @HostBinding("role") _role = `group`;
+  @HostBinding("[attr.data-mat-calendar]") dataMatCalendar = this.rangePicker
+    ? this.rangePicker.id
+    : null;
+  @HostBinding("[attr.aria-describedby]") _ariaDescribedBy: string | null =
+    null;
+  /** Value for the `aria-describedby` attribute of the inputs. */
+  @HostBinding("[attr.aria-labelledby]") ariaLabeledBy =
+    this._getAriaLabelledby();
 
   /** Current value of the range input. */
   get value() {
     return this._model ? this._model.selection : null;
   }
-
-  /** Unique ID for the group. */
-  id = `mat-date-range-input-${nextUniqueId++}`;
 
   /** Whether the control is focused. */
   focused = false;
@@ -120,6 +124,11 @@ export class NgxMatDateRangeInput<D>
   /** The range picker that this input is associated with. */
   @Input()
   get rangePicker() {
+    if (this._rangePicker === null) {
+      throw Error(
+        "mat-date-range-input must be associated with a mat-date-range-picker",
+      );
+    }
     return this._rangePicker;
   }
   set rangePicker(
@@ -144,7 +153,7 @@ export class NgxMatDateRangeInput<D>
     NgxMatDatepickerControl<D>,
     NgxDateRange<D>,
     D
-  >;
+  > | null = null;
 
   /** Whether the input is required. */
   @Input()
@@ -160,17 +169,22 @@ export class NgxMatDateRangeInput<D>
   set required(value: BooleanInput) {
     this._required = coerceBooleanProperty(value);
   }
-  private _required: boolean | undefined;
 
   /** Function that can be used to filter out dates within the date range picker. */
   @Input()
   get dateFilter() {
+    if (this._dateFilter === null) {
+      throw Error("mat-date-range-input must contain a date filter function");
+    }
     return this._dateFilter;
   }
-  set dateFilter(value: NgxDateFilterFn<D>) {
+  set dateFilter(value: NgxDateFilterFn<D | null>) {
     const start = this._startInput;
     const end = this._endInput;
     const wasMatchingStart = start && start._matchesFilter(start.value);
+    if (start === null) {
+      throw Error("mat-date-range-input must contain a matStartDate input");
+    }
     const wasMatchingEnd = end && end._matchesFilter(start.value);
     this._dateFilter = value;
 
@@ -182,7 +196,7 @@ export class NgxMatDateRangeInput<D>
       end._validatorOnChange();
     }
   }
-  private _dateFilter: NgxDateFilterFn<D>;
+  private _dateFilter: NgxDateFilterFn<D> | null = null;
 
   /** The minimum valid date. */
   @Input()
@@ -199,7 +213,7 @@ export class NgxMatDateRangeInput<D>
       this._revalidate();
     }
   }
-  private _min: D | null;
+  private _min: D | null = null;
 
   /** The maximum valid date. */
   @Input()
@@ -216,7 +230,7 @@ export class NgxMatDateRangeInput<D>
       this._revalidate();
     }
   }
-  private _max: D | null;
+  private _max: D | null = null;
 
   /** Whether the input is disabled. */
   @Input()
@@ -251,9 +265,6 @@ export class NgxMatDateRangeInput<D>
     return startEmpty && endEmpty;
   }
 
-  /** Value for the `aria-describedby` attribute of the inputs. */
-  _ariaDescribedBy: string | null = null;
-
   /** Date selection model currently registered with the input. */
   private _model: NgxMatDateSelectionModel<NgxDateRange<D>> | undefined;
 
@@ -266,8 +277,10 @@ export class NgxMatDateRangeInput<D>
   /** End of the comparison range that should be shown in the calendar. */
   @Input() comparisonEnd: D | null = null;
 
-  @ContentChild(NgxMatStartDate) _startInput: NgxMatStartDate<D>;
-  @ContentChild(NgxMatEndDate) _endInput: NgxMatEndDate<D>;
+  @ContentChild(NgxMatStartDateDirective)
+  _startInput: NgxMatStartDateDirective<D> | null = null;
+  @ContentChild(NgxMatEndDateDirective)
+  _endInput: NgxMatEndDateDirective<D> | null = null;
 
   /**
    * Implemented as a part of `MatFormFieldControl`.
@@ -306,9 +319,12 @@ export class NgxMatDateRangeInput<D>
       );
     }
 
-    // TODO(crisbeto): remove `as any` after #18206 lands.
-    this.ngControl = control as any;
+    this.ngControl = control as unknown as NgControl;
   }
+
+  id: string | null = null;
+  autofilled?: boolean | undefined;
+  userAriaDescribedBy?: string | undefined;
 
   /**
    * Implemented as a part of `MatFormFieldControl`.

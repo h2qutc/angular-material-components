@@ -10,6 +10,7 @@ import {
   OnInit,
   Optional,
   inject,
+  Output,
 } from "@angular/core";
 import {
   AbstractControl,
@@ -231,15 +232,23 @@ const _NgxMatDateRangeInputBase = mixinErrorState(NgxMatDateRangeInputPartBase);
     type: "text",
   },
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatStartDate, multi: true },
-    { provide: NG_VALIDATORS, useExisting: NgxMatStartDate, multi: true },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: NgxMatStartDateDirective,
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: NgxMatStartDateDirective,
+      multi: true,
+    },
   ],
   // These need to be specified explicitly, because some tooling doesn't
   // seem to pick them up from the base class. See #20932.
   outputs: ["dateChange", "dateInput"],
   inputs: ["errorStateMatcher"],
 })
-export class NgxMatStartDate<D>
+export class NgxMatStartDateDirective<D>
   extends _NgxMatDateRangeInputBase<D>
   implements CanUpdateErrorState
 {
@@ -360,15 +369,19 @@ export class NgxMatStartDate<D>
     type: "text",
   },
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatEndDate, multi: true },
-    { provide: NG_VALIDATORS, useExisting: NgxMatEndDate, multi: true },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: NgxMatEndDateDirective,
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: NgxMatEndDateDirective,
+      multi: true,
+    },
   ],
-  // These need to be specified explicitly, because some tooling doesn't
-  // seem to pick them up from the base class. See #20932.
-  outputs: ["dateChange", "dateInput"],
-  inputs: ["errorStateMatcher"],
 })
-export class NgxMatEndDate<D>
+export class NgxMatEndDateDirective<D>
   extends _NgxMatDateRangeInputBase<D>
   implements CanUpdateErrorState
 {
