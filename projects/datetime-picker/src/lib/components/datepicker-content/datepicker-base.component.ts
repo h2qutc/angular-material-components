@@ -55,7 +55,7 @@ import {
   HostBinding,
 } from "@angular/core";
 import { ThemePalette } from "@angular/material/core";
-import { Observable, Subject, Subscription, merge, of } from "rxjs";
+import { Observable, Subject, Subscription, merge } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import {
   NgxMatCalendarComponent,
@@ -135,7 +135,8 @@ export class NgxMatDatepickerContentComponent<
   implements OnInit, AfterViewInit, OnDestroy
 {
   /** Reference to the datepicker that created the overlay. */
-  datepicker: NgxMatDatepickerBase<unknown, S, D> | null = null;
+  datepicker: NgxMatDatepickerBase<NgxMatDatepickerControl<D>, S, D> | null =
+    null;
   @HostBinding("class") hostClass = "mat-datepicker-content";
   @HostBinding("[class.mat-datepicker-content-touch]")
   matDatepickerContentTouch = this.datepicker ? this.datepicker.touchUi : false;
