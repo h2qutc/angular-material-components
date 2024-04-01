@@ -32,6 +32,7 @@ export class NgxMatColorPickerToggleIconDirective {}
 export class NgxMatColorToggleComponent
   implements AfterContentInit, OnChanges, OnDestroy
 {
+  @Input() for!: NgxMatColorPickerComponent;
   @HostBinding("class.ngx-mat-color-toggle-active")
   get isActive() {
     return this.picker && this.picker.opened;

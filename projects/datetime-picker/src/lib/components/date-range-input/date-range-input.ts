@@ -196,7 +196,7 @@ export class NgxMatDateRangeInputComponent<D>
       end._validatorOnChange();
     }
   }
-  private _dateFilter: NgxDateFilterFn<D> | null = null;
+  private _dateFilter: NgxDateFilterFn<D | null> | null = null;
 
   /** The minimum valid date. */
   @Input()
@@ -301,6 +301,10 @@ export class NgxMatDateRangeInputComponent<D>
     @Inject(MAT_FORM_FIELD)
     private _formField?: _NgxMatFormFieldPartial,
   ) {
+    if (this.id === null || this.id === undefined) {
+      throw Error("mat-date-range-input must have an id");
+    }
+
     if (!_dateAdapter) {
       throw createMissingDateImplError("NgxMatDateAdapter");
     }
@@ -322,7 +326,7 @@ export class NgxMatDateRangeInputComponent<D>
     this.ngControl = control as unknown as NgControl;
   }
 
-  id: string;
+  id!: string;
   autofilled?: boolean | undefined;
   userAriaDescribedBy?: string | undefined;
 

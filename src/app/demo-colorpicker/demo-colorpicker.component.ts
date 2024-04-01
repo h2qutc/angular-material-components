@@ -8,12 +8,12 @@ import { Color } from "projects/color-picker/src/public-api";
   templateUrl: "./demo-colorpicker.component.html",
   styleUrls: ["./demo-colorpicker.component.scss"],
 })
-export class DemoColorpickerComponent implements OnInit {
+export class DemoColorpickerComponent {
   public disabled = false;
   public color: ThemePalette = "primary";
   public touchUi = false;
 
-  colorCtr: AbstractControl = new FormControl(new Color(0, 255, 255), [
+  colorCtr: FormControl = new FormControl(new Color(0, 255, 255), [
     Validators.required,
   ]);
 
@@ -79,8 +79,6 @@ export class AppModule { }`;
 </mat-form-field>`;
 
   constructor() {}
-
-  ngOnInit() {}
 
   onDisabledChanged(value: boolean) {
     if (!value) {

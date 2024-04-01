@@ -93,7 +93,7 @@ export class NgxMatCalendarBodyComponent<D = unknown>
   /** End value of the selected date range. */
   @Input() endValue: number | null = null;
 
-  /** The minimum number of free cells needed to fit the label in the first row. */
+  /** The minimum number of free cells needed to fit the label in the first row.*/
   @Input() labelMinRequiredCells: number | null = null;
 
   /** The number of columns in the table. */

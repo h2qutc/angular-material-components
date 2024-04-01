@@ -87,14 +87,25 @@ export class NgxMatColorPickerContentComponent {
   }
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatColorPaletteComponent)
+  _palette: NgxMatColorPaletteComponent | null = null;
   @Input({
     required: true,
   })
   color: ThemePalette;
-  _palette: NgxMatColorPaletteComponent | null = null;
 
   picker: NgxMatColorPickerComponent | null = null;
   _isAbove: boolean = false;
+
+  constructor() {
+    if (this.picker === null) {
+      throw Error(
+        "No picker instance associated with the color picker content.",
+      );
+    }
+    if (this.color === undefined) {
+      throw Error("Color is required for the color picker content.");
+    }
+  }
 }
 
 @Component({
