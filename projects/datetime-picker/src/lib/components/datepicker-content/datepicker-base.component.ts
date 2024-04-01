@@ -947,7 +947,7 @@ export abstract class NgxMatDatepickerBase<
       NgxMatDatepickerContentComponent,
       this._viewContainerRef,
     );
-    const overlayRef = (this._overlayRef = this._overlay.create(
+    const overlayRef: OverlayRef = (this._overlayRef = this._overlay.create(
       new OverlayConfig({
         positionStrategy: isDialog
           ? this._getDialogStrategy()

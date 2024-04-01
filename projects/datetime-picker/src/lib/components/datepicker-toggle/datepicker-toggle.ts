@@ -27,7 +27,7 @@ import { NgxExtractDateTypeFromSelection } from "../../utils/date-selection-mode
 @Directive({
   selector: "[ngxMatDatepickerToggleIcon]",
 })
-export class NgxMatDatepickerToggleIcon {}
+export class NgxMatDatepickerToggleIconDirective {}
 
 @Component({
   selector: "ngx-mat-datepicker-toggle",
@@ -85,8 +85,8 @@ export class NgxMatDatepickerToggleComponent<D>
   @Input() disableRipple: boolean = false;
 
   /** Custom icon set by the consumer. */
-  @ContentChild(NgxMatDatepickerToggleIcon)
-  _customIcon: NgxMatDatepickerToggleIcon | null = null;
+  @ContentChild(NgxMatDatepickerToggleIconDirective)
+  _customIcon: NgxMatDatepickerToggleIconDirective | null = null;
 
   /** Underlying button element. */
   @ViewChild("button") _button: MatButton | null = null;
