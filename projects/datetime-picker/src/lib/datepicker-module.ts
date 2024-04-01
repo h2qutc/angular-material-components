@@ -31,7 +31,7 @@ import { NgxMatDatepickerInputDirective } from "./directives/datepicker-input";
 import { NgxMatDatepickerIntl } from "./utils/datepicker-intl";
 import {
   NgxMatDatepickerToggleIcon,
-  NgxMatDatepickerToggle,
+  NgxMatDatepickerToggleComponent,
 } from "./components/datepicker-toggle/datepicker-toggle";
 import { NgxMatMonthViewComponent } from "./components/month-view/month-view.component";
 import { NgxMatMultiYearViewComponent } from "./components/multi-year-view/multi-year-view";
@@ -58,7 +58,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatDatetimepicker,
     NgxMatDatepickerContentComponent,
     NgxMatDatepickerInputDirective,
-    NgxMatDatepickerToggle,
+    NgxMatDatepickerToggleComponent,
     NgxMatDatepickerToggleIcon,
     NgxMatMonthViewComponent,
     NgxMatYearViewComponent,
@@ -78,7 +78,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NgxMatDatetimepicker,
     NgxMatDatepickerContentComponent,
     NgxMatDatepickerInputDirective,
-    NgxMatDatepickerToggle,
+    NgxMatDatepickerToggleComponent,
     NgxMatDatepickerToggleIcon,
     NgxMatMonthViewComponent,
     NgxMatYearViewComponent,

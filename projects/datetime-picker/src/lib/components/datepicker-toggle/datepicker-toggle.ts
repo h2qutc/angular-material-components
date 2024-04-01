@@ -50,7 +50,7 @@ export class NgxMatDatepickerToggleIcon {}
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxMatDatepickerToggle<D>
+export class NgxMatDatepickerToggleComponent<D>
   implements AfterContentInit, OnChanges, OnDestroy
 {
   private _stateChanges = Subscription.EMPTY;

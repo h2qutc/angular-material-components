@@ -116,7 +116,7 @@ export class NgxMatColorPickerContentComponent {
   encapsulation: ViewEncapsulation.None,
 })
 export class NgxMatColorPickerComponent implements OnDestroy {
-  private readonly _scrollStrategy: () => ScrollStrategy;
+  private readonly _scrollStrategy: ScrollStrategy;
 
   /** Emits when the datepicker has been opened. */
   @Output() openedStream: EventEmitter<void> = new EventEmitter<void>();
@@ -223,7 +223,7 @@ export class NgxMatColorPickerComponent implements OnDestroy {
     private _adapter: ColorAdapter,
     @Optional() private _dir: Directionality,
     @Inject(NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY)
-    scrollStrategy: () => ScrollStrategy,
+    scrollStrategy: ScrollStrategy,
     @Optional() @Inject(DOCUMENT) private _document: Document,
     private _viewContainerRef: ViewContainerRef,
   ) {
@@ -343,7 +343,7 @@ export class NgxMatColorPickerComponent implements OnDestroy {
       hasBackdrop: true,
       backdropClass: "mat-overlay-transparent-backdrop",
       direction: this._dir,
-      scrollStrategy: this._scrollStrategy(),
+      scrollStrategy: this._scrollStrategy,
       panelClass: "mat-colorpicker-popup",
     });
     const newOverlay = this._overlay.create(overlayConfig);

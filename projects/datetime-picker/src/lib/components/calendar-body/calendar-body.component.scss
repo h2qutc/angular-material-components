@@ -1,5 +1,5 @@
 @use "sass:math";
-@use "../../../../../../node_modules/@angular/cdk/index";
+@use "../../../../../../node_modules/@angular/cdk/index" as cdk;
 
 @mixin user-select($value) {
   -webkit-user-select: $value;
