@@ -243,6 +243,16 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     // pressing escape), whereas when selecting a single value it means that the value didn't
     // change. This isn't very intuitive, but it's here for backwards-compatibility.
     if (isRange && this._rangeSelectionStrategy) {
+      // Set default time if there is no date set and defined
+      if (this.datepicker._defaultTime && 3 == this.datepicker._defaultTime.length )
+      {
+        const sel = selection as NgxDateRange<D>;
+        if (null == sel.start || (sel.start && sel.end)) {
+          this._dateAdapter.setTimeByDefaultValues(value, this.datepicker._defaultTime);
+        }
+      }
+
+
       const newSelection = this._rangeSelectionStrategy.selectionFinished(
         value,
         selection as unknown as NgxDateRange<D>,
@@ -257,6 +267,11 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
       if (value &&
         (isRange || !isSame)
       ) {
+        // There ist no date set until now, so set default time if defined
+        if (null == this._model.selection && this.datepicker._defaultTime && 3 == this.datepicker._defaultTime.length ) {
+          this._dateAdapter.setTimeByDefaultValues(value, this.datepicker._defaultTime);
+        }
+
         this._model.add(value);
       }
     }
