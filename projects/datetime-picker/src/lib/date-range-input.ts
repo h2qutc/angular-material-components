@@ -1,4 +1,4 @@
-import { FocusOrigin } from '@angular/cdk/a11y';
+import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   AfterContentInit,
@@ -31,7 +31,11 @@ import { NgxMatDateRangePickerInput } from './date-range-picker';
 import { NgxDateRange, NgxMatDateSelectionModel } from './date-selection-model';
 import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
 import { createMissingDateImplError } from './datepicker-errors';
-import { NgxDateFilterFn, _NgxMatFormFieldPartial, dateInputsHaveChanged } from './datepicker-input-base';
+import {
+  NgxDateFilterFn,
+  _NgxMatFormFieldPartial,
+  dateInputsHaveChanged,
+} from './datepicker-input-base';
 
 let nextUniqueId = 0;
 
@@ -41,11 +45,11 @@ let nextUniqueId = 0;
   styleUrls: ['date-range-input.scss'],
   exportAs: 'ngxMatDateRangeInput',
   host: {
-    'class': 'mat-date-range-input',
+    class: 'mat-date-range-input',
     '[class.mat-date-range-input-hide-placeholders]': '_shouldHidePlaceholders()',
     '[class.mat-date-range-input-required]': 'required',
     '[attr.id]': 'id',
-    'role': 'group',
+    role: 'group',
     '[attr.aria-labelledby]': '_getAriaLabelledby()',
     '[attr.aria-describedby]': '_ariaDescribedBy',
     // Used by the test harness to tie this input to its calendar. We can't depend on
@@ -56,18 +60,24 @@ let nextUniqueId = 0;
   encapsulation: ViewEncapsulation.None,
   providers: [
     { provide: MatFormFieldControl, useExisting: NgxMatDateRangeInput },
-    { provide: NGX_MAT_DATE_RANGE_INPUT_PARENT, useExisting: NgxMatDateRangeInput },
+    {
+      provide: NGX_MAT_DATE_RANGE_INPUT_PARENT,
+      useExisting: NgxMatDateRangeInput,
+    },
   ],
+  standalone: true,
+  imports: [CdkMonitorFocus],
 })
 export class NgxMatDateRangeInput<D>
   implements
-  MatFormFieldControl<NgxDateRange<D>>,
-  NgxMatDatepickerControl<D>,
-  NgxMatDateRangeInputParent<D>,
-  NgxMatDateRangePickerInput<D>,
-  AfterContentInit,
-  OnChanges,
-  OnDestroy {
+    MatFormFieldControl<NgxDateRange<D>>,
+    NgxMatDatepickerControl<D>,
+    NgxMatDateRangeInputParent<D>,
+    NgxMatDateRangePickerInput<D>,
+    AfterContentInit,
+    OnChanges,
+    OnDestroy
+{
   private _closedSubscription = Subscription.EMPTY;
 
   /** Current value of the range input. */
@@ -105,7 +115,9 @@ export class NgxMatDateRangeInput<D>
   get rangePicker() {
     return this._rangePicker;
   }
-  set rangePicker(rangePicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, NgxDateRange<D>, D>) {
+  set rangePicker(
+    rangePicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, NgxDateRange<D>, D>,
+  ) {
     if (rangePicker) {
       this._model = rangePicker.registerInput(this);
       this._rangePicker = rangePicker;
@@ -237,7 +249,6 @@ export class NgxMatDateRangeInput<D>
 
   @ContentChild(NgxMatStartDate) _startInput: NgxMatStartDate<D>;
   @ContentChild(NgxMatEndDate) _endInput: NgxMatEndDate<D>;
-
   /**
    * Implemented as a part of `MatFormFieldControl`.
    * TODO(crisbeto): change type to `AbstractControlDirective` after #18206 lands.
@@ -253,7 +264,9 @@ export class NgxMatDateRangeInput<D>
     private _elementRef: ElementRef<HTMLElement>,
     @Optional() @Self() control: ControlContainer,
     @Optional() private _dateAdapter: NgxMatDateAdapter<D>,
-    @Optional() @Inject(MAT_FORM_FIELD) private _formField?: _NgxMatFormFieldPartial,
+    @Optional()
+    @Inject(MAT_FORM_FIELD)
+    private _formField?: _NgxMatFormFieldPartial,
   ) {
     if (!_dateAdapter) {
       throw createMissingDateImplError('NgxMatDateAdapter');
@@ -356,7 +369,6 @@ export class NgxMatDateRangeInput<D>
   _shouldHidePlaceholders() {
     return this._startInput ? !this._startInput.isEmpty() : false;
   }
-
   /** Handles the value in one of the child inputs changing. */
   _handleChildValueChange() {
     this.stateChanges.next(undefined);

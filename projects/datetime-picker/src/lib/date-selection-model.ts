@@ -1,5 +1,3 @@
-
-
 import { FactoryProvider, Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { NgxMatDateAdapter } from './core/date-adapter';
@@ -18,14 +16,15 @@ export class NgxDateRange<D> {
     readonly start: D | null,
     /** The end date of the range. */
     readonly end: D | null,
-  ) { }
+  ) {}
 }
 
 /**
  * Conditionally picks the date type, if a DateRange is passed in.
  * @docs-private
  */
-export type NgxExtractDateTypeFromSelection<T> = T extends NgxDateRange<infer D> ? D : NonNullable<T>;
+export type NgxExtractDateTypeFromSelection<T> =
+  T extends NgxDateRange<infer D> ? D : NonNullable<T>;
 
 /**
  * Event emitted by the date selection model when its selection changes.
@@ -48,7 +47,8 @@ export interface NgxDateSelectionModelChange<S> {
  */
 @Injectable()
 export abstract class NgxMatDateSelectionModel<S, D = NgxExtractDateTypeFromSelection<S>>
-  implements OnDestroy {
+  implements OnDestroy
+{
   private readonly _selectionChanged = new Subject<NgxDateSelectionModelChange<S>>();
 
   /** Emits when the selection has changed. */

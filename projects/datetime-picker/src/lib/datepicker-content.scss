@@ -24,8 +24,15 @@ $touch-max-height: 815px;
 .mat-datepicker-content {
   display: block;
   border-radius: 4px;
+  background-color: var(--mat-datepicker-calendar-container-background-color);
+
+  color: var(--mat-datepicker-calendar-container-text-color);
+  box-shadow: var(--mat-datepicker-calendar-container-elevation-shadow);
+  border-radius: var(--mat-datepicker-calendar-container-shape);
 
   .mat-calendar {
+    font-family: var(--mat-datepicker-calendar-text-font);
+    font-size: var(--mat-datepicker-calendar-text-size);
     width: $non-touch-calendar-width;
     height: $non-touch-calendar-height;
   }
@@ -117,6 +124,7 @@ $touch-max-height: 815px;
 
     &.mat-datepicker-content-container-with-time {
       height: auto;
+      max-height: none;
     }
   }
 }
@@ -124,6 +132,7 @@ $touch-max-height: 815px;
 @media all and (orientation: portrait) {
   .mat-datepicker-content-touch {
     max-height: 100vh;
+
     .mat-datepicker-content-container {
       width: $touch-portrait-width;
       height: $touch-portrait-height;
@@ -132,7 +141,7 @@ $touch-max-height: 815px;
         height: auto;
         max-height: 870px;
 
-        &.mat-datepicker-content-container-with-actions{
+        &.mat-datepicker-content-container-with-actions {
           max-height: none !important;
         }
       }

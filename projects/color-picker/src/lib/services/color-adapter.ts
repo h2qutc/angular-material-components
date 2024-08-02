@@ -4,9 +4,6 @@ import { Color, ColorInputFormat } from '../models';
 
 @Injectable()
 export class ColorAdapter {
-
-  constructor() { }
-
   sameColor(a: Color, b: Color) {
     if (a == null && b == null) return true;
     if (a != null && b != null) return a.rgba === b.rgba;
@@ -24,5 +21,4 @@ export class ColorAdapter {
     }
     return null;
   }
-
 }

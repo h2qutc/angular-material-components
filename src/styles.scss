@@ -4,11 +4,15 @@
 @include mat.core();
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import '~highlight.js/styles/github.css';
+@import 'highlight.js/styles/github.css';
 
+html {
+  height: 100%;
+}
 
 body {
   margin: 0;
+  height: 100%;
 }
 
 pre {
@@ -50,14 +54,14 @@ $ngxMat-palette: (
   )
 );
 
-$ngxMat-primary: mat.define-palette($ngxMat-palette, 500);
-$ngxMat-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$ngxMat-primary: mat.m2-define-palette($ngxMat-palette, 500);
+$ngxMat-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 
 
-$ngxMat-theme: mat.define-light-theme((color: (primary: $ngxMat-primary,
+$ngxMat-theme: mat.m2-define-light-theme((color: (primary: $ngxMat-primary,
         accent: $ngxMat-accent,
       ),
-      typography: mat.define-typography-config(),
+      typography: mat.m2-define-typography-config(),
       density: 0,
     ));
 

@@ -22,13 +22,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {
-  CanUpdateErrorState,
-  ErrorStateMatcher,
-  MAT_DATE_FORMATS,
-  MatDateFormats,
-  mixinErrorState
-} from '@angular/material/core';
+import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
 import { _computeAriaAccessibleName } from './aria-accessible-name';
 import { NgxMatDateAdapter } from './core/date-adapter';
 import { NGX_MAT_DATE_FORMATS, NgxMatDateFormats } from './core/date-formats';
@@ -56,9 +50,9 @@ export interface NgxMatDateRangeInputParent<D> {
  * Used to provide the date range input wrapper component
  * to the parts without circular dependencies.
  */
-export const NGX_MAT_DATE_RANGE_INPUT_PARENT = new InjectionToken<NgxMatDateRangeInputParent<unknown>>(
-  'NGX_MAT_DATE_RANGE_INPUT_PARENT',
-);
+export const NGX_MAT_DATE_RANGE_INPUT_PARENT = new InjectionToken<
+  NgxMatDateRangeInputParent<unknown>
+>('NGX_MAT_DATE_RANGE_INPUT_PARENT');
 
 /**
  * Base class for the individual inputs that can be projected inside a `mat-date-range-input`.
@@ -66,7 +60,8 @@ export const NGX_MAT_DATE_RANGE_INPUT_PARENT = new InjectionToken<NgxMatDateRang
 @Directive()
 abstract class NgxMatDateRangeInputPartBase<D>
   extends NgxMatDatepickerInputBase<NgxDateRange<D>>
-  implements OnInit, DoCheck {
+  implements OnInit, DoCheck
+{
   /**
    * Form control bound to this input part.
    * @docs-private
@@ -83,7 +78,8 @@ abstract class NgxMatDateRangeInputPartBase<D>
   protected readonly _dir = inject(Directionality, { optional: true });
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT) public _rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
+    public _rangeInput: NgxMatDateRangeInputParent<D>,
     public override _elementRef: ElementRef<HTMLInputElement>,
     public _defaultErrorStateMatcher: ErrorStateMatcher,
     private _injector: Injector,
@@ -103,7 +99,10 @@ abstract class NgxMatDateRangeInputPartBase<D>
     // validator. We work around it here by injecting the `NgControl` in `ngOnInit`, after
     // everything has been resolved.
     // tslint:disable-next-line:no-bitwise
-    const ngControl = this._injector.get(NgControl, null, { optional: true, self: true });
+    const ngControl = this._injector.get(NgControl, null, {
+      optional: true,
+      self: true,
+    });
 
     if (ngControl) {
       this.ngControl = ngControl;
@@ -171,7 +170,9 @@ abstract class NgxMatDateRangeInputPartBase<D>
     return this._rangeInput._groupDisabled;
   }
 
-  protected _shouldHandleChangeEvent({ source }: NgxDateSelectionModelChange<NgxDateRange<D>>): boolean {
+  protected _shouldHandleChangeEvent({
+    source,
+  }: NgxDateSelectionModelChange<NgxDateRange<D>>): boolean {
     return source !== this._rangeInput._startInput && source !== this._rangeInput._endInput;
   }
 
@@ -197,7 +198,7 @@ const _NgxMatDateRangeInputBase = mixinErrorState(NgxMatDateRangeInputPartBase);
 @Directive({
   selector: 'input[ngxMatStartDate]',
   host: {
-    'class': 'mat-start-date mat-date-range-input-inner',
+    class: 'mat-start-date mat-date-range-input-inner',
     '[disabled]': 'disabled',
     '(input)': '_onInput($event.target.value)',
     '(change)': '_onChange()',
@@ -207,7 +208,7 @@ const _NgxMatDateRangeInputBase = mixinErrorState(NgxMatDateRangeInputPartBase);
     '[attr.min]': '_getMinDate() ? _dateAdapter.toIso8601(_getMinDate()) : null',
     '[attr.max]': '_getMaxDate() ? _dateAdapter.toIso8601(_getMaxDate()) : null',
     '(blur)': '_onBlur()',
-    'type': 'text',
+    type: 'text',
   },
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatStartDate, multi: true },
@@ -217,8 +218,12 @@ const _NgxMatDateRangeInputBase = mixinErrorState(NgxMatDateRangeInputPartBase);
   // seem to pick them up from the base class. See #20932.
   outputs: ['dateChange', 'dateInput'],
   inputs: ['errorStateMatcher'],
+  standalone: true,
 })
-export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements CanUpdateErrorState {
+export class NgxMatStartDate<D>
+  extends _NgxMatDateRangeInputBase<D>
+  implements CanUpdateErrorState
+{
   /** Validator that checks that the start date isn't after the end date. */
   private _startValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const start = this._dateAdapter.getValidDateOrNull(
@@ -227,11 +232,12 @@ export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements 
     const end = this._model ? this._model.selection.end : null;
     return !start || !end || this._dateAdapter.compareDate(start, end) <= 0
       ? null
-      : { 'matStartDateInvalid': { 'end': end, 'actual': start } };
+      : { matStartDateInvalid: { end: end, actual: start } };
   };
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT) rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
+    rangeInput: NgxMatDateRangeInputParent<D>,
     elementRef: ElementRef<HTMLInputElement>,
     defaultErrorStateMatcher: ErrorStateMatcher,
     injector: Injector,
@@ -267,7 +273,7 @@ export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements 
       return !change.oldValue?.start
         ? !!change.selection.start
         : !change.selection.start ||
-        !!this._dateAdapter.compareDate(change.oldValue.start, change.selection.start);
+            !!this._dateAdapter.compareDate(change.oldValue.start, change.selection.start);
     }
   }
 
@@ -310,7 +316,7 @@ export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements 
 @Directive({
   selector: 'input[ngxMatEndDate]',
   host: {
-    'class': 'mat-end-date mat-date-range-input-inner',
+    class: 'mat-end-date mat-date-range-input-inner',
     '[disabled]': 'disabled',
     '(input)': '_onInput($event.target.value)',
     '(change)': '_onChange()',
@@ -320,7 +326,7 @@ export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements 
     '[attr.min]': '_getMinDate() ? _dateAdapter.toIso8601(_getMinDate()) : null',
     '[attr.max]': '_getMaxDate() ? _dateAdapter.toIso8601(_getMaxDate()) : null',
     '(blur)': '_onBlur()',
-    'type': 'text',
+    type: 'text',
   },
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatEndDate, multi: true },
@@ -330,6 +336,7 @@ export class NgxMatStartDate<D> extends _NgxMatDateRangeInputBase<D> implements 
   // seem to pick them up from the base class. See #20932.
   outputs: ['dateChange', 'dateInput'],
   inputs: ['errorStateMatcher'],
+  standalone: true,
 })
 export class NgxMatEndDate<D> extends _NgxMatDateRangeInputBase<D> implements CanUpdateErrorState {
   /** Validator that checks that the end date isn't before the start date. */
@@ -338,11 +345,12 @@ export class NgxMatEndDate<D> extends _NgxMatDateRangeInputBase<D> implements Ca
     const start = this._model ? this._model.selection.start : null;
     return !end || !start || this._dateAdapter.compareDate(end, start) >= 0
       ? null
-      : { 'matEndDateInvalid': { 'start': start, 'actual': end } };
+      : { matEndDateInvalid: { start: start, actual: end } };
   };
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT) rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
+    rangeInput: NgxMatDateRangeInputParent<D>,
     elementRef: ElementRef<HTMLInputElement>,
     defaultErrorStateMatcher: ErrorStateMatcher,
     injector: Injector,
@@ -378,7 +386,7 @@ export class NgxMatEndDate<D> extends _NgxMatDateRangeInputBase<D> implements Ca
       return !change.oldValue?.end
         ? !!change.selection.end
         : !change.selection.end ||
-        !!this._dateAdapter.compareDate(change.oldValue.end, change.selection.end);
+            !!this._dateAdapter.compareDate(change.oldValue.end, change.selection.end);
     }
   }
 

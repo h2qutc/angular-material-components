@@ -1,21 +1,17 @@
-import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
-import { Color } from '../../../models';
+import { Component, NgZone } from '@angular/core';
 import { getColorAtPosition } from '../../../helpers';
+import { Color } from '../../../models';
 import { NgxMatBaseColorCanvas } from '../base-color-canvas';
 
 @Component({
   selector: 'ngx-mat-color-slider',
   templateUrl: './color-slider.component.html',
-  styleUrls: ['./color-slider.component.scss']
+  styleUrls: ['./color-slider.component.scss'],
+  standalone: true,
 })
-export class NgxMatColorSliderComponent extends NgxMatBaseColorCanvas implements OnInit {
-
+export class NgxMatColorSliderComponent extends NgxMatBaseColorCanvas {
   constructor(protected zone: NgZone) {
-    super(zone,'color-strip');
-  }
-
-  ngOnInit() {
-
+    super(zone, 'color-strip');
   }
 
   ngAfterViewInit(): void {
@@ -52,6 +48,4 @@ export class NgxMatColorSliderComponent extends NgxMatBaseColorCanvas implements
     const { r, g, b } = getColorAtPosition(this.ctx, e.offsetX, e.offsetY);
     this.emitChange(new Color(r, g, b));
   }
-
-
 }

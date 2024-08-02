@@ -1,0 +1,21 @@
+{
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ],
+  "trailingComma": "all",
+  "semi": true,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSameLine": true,
+  "printWidth": 100,
+  "proseWrap": "always"
+}

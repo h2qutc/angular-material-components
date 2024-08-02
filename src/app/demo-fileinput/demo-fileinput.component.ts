@@ -1,19 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
-import { FormControl, Validators } from '@angular/forms';
-import { AcceptValidator, MaxSizeValidator } from '../../../projects/file-input/src';
-
-const presetFiles = [new File([], "file 1"), new File([], "file 2")];
-const presetFile = new File([], "file 1");
+import { JsonPipe } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { ThemePalette } from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatTabsModule } from "@angular/material/tabs";
+import { NgxMatNativeDateModule } from "projects/datetime-picker/src";
+import {
+  MaxSizeValidator,
+  NgxMatFileInputComponent,
+} from "../../../projects/file-input/src";
+import { NgxMatHighlightDirective } from "../shared/NgxMatHighlightDirective";
 
 @Component({
-  selector: 'app-demo-fileinput',
-  templateUrl: './demo-fileinput.component.html',
-  styleUrls: ['./demo-fileinput.component.scss']
+  selector: "app-demo-fileinput",
+  templateUrl: "./demo-fileinput.component.html",
+  styleUrls: ["./demo-fileinput.component.scss"],
+  standalone: true,
+  imports: [
+    DemoFileInputComponent,
+    FormsModule,
+    JsonPipe,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatTabsModule,
+    NgxMatFileInputComponent,
+    NgxMatHighlightDirective,
+    NgxMatNativeDateModule,
+    ReactiveFormsModule,
+  ],
 })
 export class DemoFileInputComponent implements OnInit {
-
-  color: ThemePalette = 'primary';
+  color: ThemePalette = "primary";
   disabled: boolean = false;
   multiple: boolean = false;
   accept: string;
@@ -23,16 +58,16 @@ export class DemoFileInputComponent implements OnInit {
   file3Control: FormControl;
 
   public options = [
-    { value: true, label: 'True' },
-    { value: false, label: 'False' }
+    { value: true, label: "True" },
+    { value: false, label: "False" },
   ];
 
-  public listColors = ['primary', 'accent', 'warn'];
+  public listColors = ["primary", "accent", "warn"];
   public listAccepts = [
     null,
     ".png",
     "image/*",
-    ".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
 
   public files;
@@ -56,19 +91,20 @@ export class DemoFileInputComponent implements OnInit {
 
   code1 = `npm install --save @angular-material-components/file-input`;
 
-  code2 = `import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-  
-  @NgModule({
+  code2 = `import { NgxMatFileInputComponent } from '@angular-material-components/file-input';
+
+  @Component({
      ...
      imports: [
           ...
-          NgxMatFileInputModule
+          NgxMatFileInputComponent
      ]
      ...
   })
-  export class AppModule { }`;
+  export class AppComponent { }`;
 
-  public code6 = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
+  public code6 =
+    '<link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">';
 
   maxSize = 16;
   nbFiles = 0;
@@ -76,8 +112,8 @@ export class DemoFileInputComponent implements OnInit {
   constructor() {
     this.fileControl = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(this.maxSize * 1024)
-    ])
+      MaxSizeValidator(this.maxSize * 1024),
+    ]);
 
     this.file2Control = new FormControl(this.files);
 
@@ -91,7 +127,7 @@ export class DemoFileInputComponent implements OnInit {
       } else {
         this.files = files;
       }
-    })
+    });
 
     this.file3Control.valueChanges.subscribe((files: any) => {
       let data: any;
@@ -101,7 +137,7 @@ export class DemoFileInputComponent implements OnInit {
         data = files;
       }
       this.nbFiles = data.length;
-    })
+    });
   }
 
   onDisabledChanged(value: boolean) {
@@ -111,5 +147,4 @@ export class DemoFileInputComponent implements OnInit {
       this.fileControl.disable();
     }
   }
-
 }

@@ -1,38 +1,68 @@
 <mat-toolbar color="primary" class="header">
-
   <button mat-button class="app-menu-button" (click)="sidenav.toggle()">
     <i class="material-icons">menu</i>
   </button>
-  <span class="title">{{nameApp}}</span>
+  <span class="title">{{ nameApp }}</span>
 
-  <ng-container *ngIf="!isHandset">
+  @if (!isHandset) {
     <a mat-button href="https://github.com/h2qutc/angular-material-components">
       <img src="./assets/GitHub-Mark-Light-32px.png" />
     </a>
-  </ng-container>
-
+  }
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav">
-  <mat-sidenav #sidenav [mode]="sidenavMode" [opened]="sidenavOpened" [disableClose]="!isHandset" [fixedInViewport]="false" [fixedBottomGap]="0">
+  <mat-sidenav
+    #sidenav
+    [mode]="sidenavMode"
+    [opened]="sidenavOpened"
+    [disableClose]="!isHandset"
+    [fixedInViewport]="false"
+    [fixedBottomGap]="0"
+  >
     <mat-nav-list>
-      <a mat-list-item routerLink="/home" routerLinkActive="active" class="sidebar-item">
+      <a
+        mat-list-item
+        routerLink="/home"
+        routerLinkActive="active"
+        class="sidebar-item"
+      >
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>
-      <a mat-list-item routerLink="/datetimepicker" routerLinkActive="active" class="sidebar-item">
+      <a
+        mat-list-item
+        routerLink="/datetimepicker"
+        routerLinkActive="active"
+        class="sidebar-item"
+      >
         <mat-icon>date_range</mat-icon>
         <span>Datetime picker</span>
       </a>
-      <a mat-list-item routerLink="/timepicker" routerLinkActive="active" class="sidebar-item">
+      <a
+        mat-list-item
+        routerLink="/timepicker"
+        routerLinkActive="active"
+        class="sidebar-item"
+      >
         <mat-icon>access_time</mat-icon>
         <span>Time picker</span>
       </a>
-      <a mat-list-item routerLink="/colorpicker" routerLinkActive="active" class="sidebar-item">
+      <a
+        mat-list-item
+        routerLink="/colorpicker"
+        routerLinkActive="active"
+        class="sidebar-item"
+      >
         <mat-icon>colorize</mat-icon>
         <span>Color picker</span>
       </a>
-      <a mat-list-item routerLink="/fileinput" routerLinkActive="active" class="sidebar-item">
+      <a
+        mat-list-item
+        routerLink="/fileinput"
+        routerLinkActive="active"
+        class="sidebar-item"
+      >
         <mat-icon>attach_file</mat-icon>
         <span>File input</span>
       </a>

@@ -16,13 +16,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   Optional,
-  Output,
-  ViewChild,
   ViewEncapsulation,
+  input,
+  output,
+  viewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -50,6 +50,8 @@ export const yearsPerRow = 4;
   exportAs: 'ngxMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgxMatCalendarBody],
 })
 export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
@@ -120,22 +122,22 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _maxDate: D | null;
 
   /** A function used to filter which dates are selectable. */
-  @Input() dateFilter: (date: D) => boolean;
+  dateFilter = input<(date: D) => boolean>();
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  @Input() dateClass: NgxMatCalendarCellClassFunction<D>;
+  dateClass = input<NgxMatCalendarCellClassFunction<D>>();
 
   /** Emits when a new year is selected. */
-  @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
+  readonly selectedChange = output<D>();
 
   /** Emits the selected year. This doesn't imply a change on the selected date */
-  @Output() readonly yearSelected: EventEmitter<D> = new EventEmitter<D>();
+  readonly yearSelected = output<D>();
 
   /** Emits when any date is activated. */
-  @Output() readonly activeDateChange: EventEmitter<D> = new EventEmitter<D>();
+  readonly activeDateChange = output<D>();
 
   /** The body of calendar table */
-  @ViewChild(NgxMatCalendarBody) _matCalendarBody: NgxMatCalendarBody;
+  _matCalendarBody = viewChild(NgxMatCalendarBody);
 
   /** Grid of calendar cells representing the currently displayed years. */
   _years: NgxMatCalendarCell[][];
@@ -186,7 +188,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
     for (let i = 0, row: number[] = []; i < yearsPerPage; i++) {
       row.push(minYearOfPage + i);
       if (row.length == yearsPerRow) {
-        this._years.push(row.map(year => this._createCellForYear(year)));
+        this._years.push(row.map((year) => this._createCellForYear(year)));
         row = [];
       }
     }
@@ -251,8 +253,8 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
         this.activeDate = this._dateAdapter.addCalendarYears(
           this._activeDate,
           yearsPerPage -
-          getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate) -
-          1,
+            getActiveOffset(this._dateAdapter, this.activeDate, this.minDate, this.maxDate) -
+            1,
         );
         break;
       case PAGE_UP:
@@ -292,7 +294,10 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   _handleCalendarBodyKeyup(event: KeyboardEvent): void {
     if (event.keyCode === SPACE || event.keyCode === ENTER) {
       if (this._selectionKeyPressed) {
-        this._yearSelected({ value: this._dateAdapter.getYear(this._activeDate), event });
+        this._yearSelected({
+          value: this._dateAdapter.getYear(this._activeDate),
+          event,
+        });
       }
 
       this._selectionKeyPressed = false;
@@ -305,12 +310,12 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   /** Focuses the active cell after the microtask queue is empty. */
   _focusActiveCell() {
-    this._matCalendarBody._focusActiveCell();
+    this._matCalendarBody()._focusActiveCell();
   }
 
   /** Focuses the active cell after change detection has run and the microtask queue is empty. */
   _focusActiveCellAfterViewChecked() {
-    this._matCalendarBody._scheduleFocusActiveCellAfterViewChecked();
+    this._matCalendarBody()._scheduleFocusActiveCellAfterViewChecked();
   }
 
   /**
@@ -334,9 +339,15 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _createCellForYear(year: number) {
     const date = this._dateAdapter.createDate(year, 0, 1);
     const yearName = this._dateAdapter.getYearName(date);
-    const cellClasses = this.dateClass ? this.dateClass(date, 'multi-year') : undefined;
+    const cellClasses = this.dateClass() ? this.dateClass()!(date, 'multi-year') : undefined;
 
-    return new NgxMatCalendarCell(year, yearName, yearName, this._shouldEnableYear(year), cellClasses);
+    return new NgxMatCalendarCell(
+      year,
+      yearName,
+      yearName,
+      this._shouldEnableYear(year),
+      cellClasses,
+    );
   }
 
   /** Whether the given year is enabled. */
@@ -352,7 +363,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
     }
 
     // enable if it reaches here and there's no filter defined
-    if (!this.dateFilter) {
+    if (!this.dateFilter()) {
       return true;
     }
 
@@ -364,7 +375,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
       this._dateAdapter.getYear(date) == year;
       date = this._dateAdapter.addCalendarDays(date, 1)
     ) {
-      if (this.dateFilter(date)) {
+      if (this.dateFilter()(date)) {
         return true;
       }
     }

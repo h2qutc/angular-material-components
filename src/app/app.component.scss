@@ -4,6 +4,8 @@
 
 :host {
   ::ng-deep mat-sidenav-container {
+    height: 100%;
+
     mat-sidenav {
       .mat-mdc-nav-list {
         padding: 0;

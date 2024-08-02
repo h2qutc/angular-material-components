@@ -1,10 +1,28 @@
-import { AfterViewInit, Component, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
 import { Color } from '../../models';
 import { NgxMatBaseColorCanvas } from './base-color-canvas';
+import { NgxMatColorSliderComponent } from './color-slider/color-slider.component';
 
 const RADIUS_NOB = 5;
 
@@ -14,12 +32,15 @@ const RADIUS_NOB = 5;
   styleUrls: ['./color-canvas.component.scss'],
   encapsulation: ViewEncapsulation.None,
   host: {
-    'class': 'ngx-mat-color-canvas'
-  }
+    class: 'ngx-mat-color-canvas',
+  },
+  standalone: true,
+  imports: [MatFormFieldModule, MatInputModule, NgxMatColorSliderComponent, ReactiveFormsModule],
 })
-export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
-
+export class NgxMatColorCanvasComponent
+  extends NgxMatBaseColorCanvas
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
   private _baseColor: Color;
 
   get rCtrl(): AbstractControl {
@@ -60,25 +81,32 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
   }
 
   ngOnInit() {
-
-    const rgbaCtrl$ = merge(this.rCtrl.valueChanges, this.gCtrl.valueChanges,
-      this.bCtrl.valueChanges, this.aCtrl.valueChanges);
-    rgbaCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400))
-      .subscribe(_ => {
-        const color = new Color(Number(this.rCtrl.value),
-          Number(this.gCtrl.value), Number(this.bCtrl.value), Number(this.aCtrl.value));
-        this.emitChange(color);
-      });
+    const rgbaCtrl$ = merge(
+      this.rCtrl.valueChanges,
+      this.gCtrl.valueChanges,
+      this.bCtrl.valueChanges,
+      this.aCtrl.valueChanges,
+    );
+    rgbaCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400)).subscribe((_) => {
+      const color = new Color(
+        Number(this.rCtrl.value),
+        Number(this.gCtrl.value),
+        Number(this.bCtrl.value),
+        Number(this.aCtrl.value),
+      );
+      this.emitChange(color);
+    });
 
     const hexCtrl$ = this.hexCtrl.valueChanges;
-    hexCtrl$.pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
-      .subscribe(hex => {
+    hexCtrl$
+      .pipe(takeUntil(this._destroyed), debounceTime(400), distinctUntilChanged())
+      .subscribe((hex) => {
         const obj = stringInputToObject(hex);
         if (obj != null) {
           const color = new Color(obj.r, obj.g, obj.b, obj.a);
           this.emitChange(color);
         }
-      })
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -132,7 +160,7 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
 
   public onSliderColorChanged(c: Color) {
     this._baseColor = c;
-    this.color = c;
+    this.color.set(c);
     this.fillGradient();
     this.emitChange(c);
   }
@@ -145,5 +173,4 @@ export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
     const { r, g, b } = getColorAtPosition(this.ctx, e.offsetX, e.offsetY);
     this.emitChange(new Color(r, g, b));
   }
-
 }

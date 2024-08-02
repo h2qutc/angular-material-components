@@ -1,5 +1,3 @@
-
-
 // This file contains the `_computeAriaAccessibleName` function, which computes what the *expected*
 // ARIA accessible name would be for a given element. Implements a subset of ARIA specification
 // [Accessible Name and Description Computation 1.2](https://www.w3.org/TR/accname-1.2/).
@@ -113,7 +111,7 @@ function _computeAriaAccessibleNameInternal(
 
     if (validIdRefs.length) {
       return validIdRefs
-        .map(idRef => {
+        .map((idRef) => {
           return _computeAriaAccessibleNameInternal(idRef, false);
         })
         .join(' ');
@@ -138,7 +136,7 @@ function _computeAriaAccessibleNameInternal(
     // use label with a `for` attribute referencing the current node
     if (currentNode.labels?.length) {
       return Array.from(currentNode.labels)
-        .map(x => _computeAriaAccessibleNameInternal(x, false))
+        .map((x) => _computeAriaAccessibleNameInternal(x, false))
         .join(' ');
     }
 

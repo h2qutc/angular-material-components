@@ -45,6 +45,7 @@
         "dist/file-input/*"
       ]
     },
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "skipLibCheck": true
   }
 }

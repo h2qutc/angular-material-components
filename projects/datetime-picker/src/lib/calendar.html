@@ -1,46 +1,48 @@
-<ng-template [cdkPortalOutlet]="_calendarHeaderPortal"></ng-template>
+<ng-template [cdkPortalOutlet]="_calendarHeaderPortal" />
 
-<div class="mat-calendar-content" [ngSwitch]="currentView" cdkMonitorSubtreeFocus tabindex="-1">
-  <ngx-mat-month-view
-      *ngSwitchCase="'month'"
-      [(activeDate)]="activeDate"
-      [selected]="selected"
-      [dateFilter]="dateFilter"
-      [maxDate]="maxDate"
-      [minDate]="minDate"
-      [dateClass]="dateClass"
-      [comparisonStart]="comparisonStart"
-      [comparisonEnd]="comparisonEnd"
-      [startDateAccessibleName]="startDateAccessibleName"
-      [endDateAccessibleName]="endDateAccessibleName"
-      (_userSelection)="_dateSelected($event)"
-      (dragStarted)="_dragStarted($event)"
-      (dragEnded)="_dragEnded($event)"
-      [activeDrag]="_activeDrag"
-      >
-  </ngx-mat-month-view>
-
-  <ngx-mat-year-view
-      *ngSwitchCase="'year'"
-      [(activeDate)]="activeDate"
-      [selected]="selected"
-      [dateFilter]="dateFilter"
-      [maxDate]="maxDate"
-      [minDate]="minDate"
-      [dateClass]="dateClass"
-      (monthSelected)="_monthSelectedInYearView($event)"
-      (selectedChange)="_goToDateInView($event, 'month')">
-  </ngx-mat-year-view>
-
-  <ngx-mat-multi-year-view
-      *ngSwitchCase="'multi-year'"
-      [(activeDate)]="activeDate"
-      [selected]="selected"
-      [dateFilter]="dateFilter"
-      [maxDate]="maxDate"
-      [minDate]="minDate"
-      [dateClass]="dateClass"
-      (yearSelected)="_yearSelectedInMultiYearView($event)"
-      (selectedChange)="_goToDateInView($event, 'year')">
-  </ngx-mat-multi-year-view>
+<div class="mat-calendar-content" cdkMonitorSubtreeFocus tabindex="-1">
+  @switch (currentView) {
+    @case ("month") {
+      <ngx-mat-month-view
+        [(activeDate)]="activeDate"
+        [selected]="selected"
+        [dateFilter]="dateFilter()"
+        [maxDate]="maxDate"
+        [minDate]="minDate"
+        [dateClass]="dateClass()"
+        [comparisonStart]="comparisonStart()"
+        [comparisonEnd]="comparisonEnd()"
+        [startDateAccessibleName]="startDateAccessibleName()"
+        [endDateAccessibleName]="endDateAccessibleName()"
+        (_userSelection)="_dateSelected($event)"
+        (dragStarted)="_dragStarted($event)"
+        (dragEnded)="_dragEnded($event)"
+        [activeDrag]="_activeDrag"
+      />
+    }
+    @case ("year") {
+      <ngx-mat-year-view
+        [(activeDate)]="activeDate"
+        [selected]="selected"
+        [dateFilter]="dateFilter()"
+        [maxDate]="maxDate"
+        [minDate]="minDate"
+        [dateClass]="dateClass()"
+        (monthSelected)="_monthSelectedInYearView($event)"
+        (selectedChange)="_goToDateInView($event, 'month')"
+      />
+    }
+    @case ("multi-year") {
+      <ngx-mat-multi-year-view
+        [(activeDate)]="activeDate"
+        [selected]="selected"
+        [dateFilter]="dateFilter()"
+        [maxDate]="maxDate"
+        [minDate]="minDate"
+        [dateClass]="dateClass()"
+        (yearSelected)="_yearSelectedInMultiYearView($event)"
+        (selectedChange)="_goToDateInView($event, 'year')"
+      />
+    }
+  }
 </div>

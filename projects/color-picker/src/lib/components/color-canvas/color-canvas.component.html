@@ -1,39 +1,72 @@
 <form [formGroup]="formGroup">
-    <div class="color-canvas-row">
-        <div class="zone-canvas">
-            <canvas id="color-block" class="zone-block" (mousedown)="onMousedown($event)" (mouseup)="onMouseup($event)"
-                width="200" height="235"></canvas>
-            <ngx-mat-color-slider (colorChanged)="onSliderColorChanged($event)"></ngx-mat-color-slider>
-        </div>
-
-        <div class="zone-inputs">
-            <mat-form-field [color]="theme">
-                <mat-label>R</mat-label>
-                <input matInput formControlName="r" ngxMatNumericColorInput autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field [color]="theme">
-                <mat-label>G</mat-label>
-                <input matInput formControlName="g" ngxMatNumericColorInput autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field [color]="theme">
-                <mat-label>B</mat-label>
-                <input matInput formControlName="b" ngxMatNumericColorInput autocomplete="off">
-            </mat-form-field>
-        </div>
+  <div class="color-canvas-row">
+    <div class="zone-canvas">
+      <canvas
+        id="color-block"
+        class="zone-block"
+        (mousedown)="onMousedown($event)"
+        (mouseup)="onMouseup($event)"
+        width="200"
+        height="235"
+      ></canvas>
+      <ngx-mat-color-slider (colorChanged)="onSliderColorChanged($event)" />
     </div>
 
-    <div class="color-canvas-row">
-        <button mat-mini-fab [style.background-color]="color?.rgba || 'transparent'" class="preview"></button>
-        <mat-form-field [color]="theme">
-            <mat-label>HEX6</mat-label>
-            <mat-label matPrefix class="symbol">#&nbsp;</mat-label>
-            <input matInput formControlName="hex" autocomplete="off">
-        </mat-form-field>
-        <mat-form-field class="input-opacity" [color]="theme">
-            <mat-label>A</mat-label>
-            <input matInput formControlName="a" type="number" min="0" max="1" step="0.1" autocomplete="off">
-        </mat-form-field>
+    <div class="zone-inputs">
+      <mat-form-field [color]="theme">
+        <mat-label>R</mat-label>
+        <input
+          matInput
+          formControlName="r"
+          ngxMatNumericColorInput
+          autocomplete="off"
+        />
+      </mat-form-field>
+
+      <mat-form-field [color]="theme">
+        <mat-label>G</mat-label>
+        <input
+          matInput
+          formControlName="g"
+          ngxMatNumericColorInput
+          autocomplete="off"
+        />
+      </mat-form-field>
+
+      <mat-form-field [color]="theme">
+        <mat-label>B</mat-label>
+        <input
+          matInput
+          formControlName="b"
+          ngxMatNumericColorInput
+          autocomplete="off"
+        />
+      </mat-form-field>
     </div>
+  </div>
+
+  <div class="color-canvas-row">
+    <button
+      mat-mini-fab
+      [style.background-color]="color()?.rgba || 'transparent'"
+      class="preview"
+    ></button>
+    <mat-form-field [color]="theme">
+      <mat-label>HEX6</mat-label>
+      <mat-label matPrefix class="symbol">#&nbsp;</mat-label>
+      <input matInput formControlName="hex" autocomplete="off" />
+    </mat-form-field>
+    <mat-form-field class="input-opacity" [color]="theme">
+      <mat-label>A</mat-label>
+      <input
+        matInput
+        formControlName="a"
+        type="number"
+        min="0"
+        max="1"
+        step="0.1"
+        autocomplete="off"
+      />
+    </mat-form-field>
+  </div>
 </form>

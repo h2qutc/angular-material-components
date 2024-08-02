@@ -1,12 +1,18 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, isDevMode } from "@angular/core";
+import { bootstrapApplication } from "@angular/platform-browser";
+import { AppComponent } from "./app/app.component";
+import { appConfig } from "./app/app.config";
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+function bootstrap() {
+  bootstrapApplication(AppComponent, appConfig).catch(console.error);
+}
 
-if (environment.production) {
+if (!isDevMode()) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+if (document.readyState === "complete") {
+  bootstrap();
+} else {
+  document.addEventListener("DOMContentLoaded", bootstrap);
+}

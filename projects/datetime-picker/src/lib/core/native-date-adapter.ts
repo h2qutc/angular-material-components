@@ -1,5 +1,3 @@
-
-
 import { Platform } from '@angular/cdk/platform';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -22,26 +20,33 @@ try {
 
 /** The default month names to use if Intl API is not available. */
 const DEFAULT_MONTH_NAMES = {
-  'long': [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-    'October', 'November', 'December'
+  long: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ],
-  'short': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  'narrow': ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+  short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
 };
 
-
 /** The default date names to use if Intl API is not available. */
-const DEFAULT_DATE_NAMES = range(31, i => String(i + 1));
-
+const DEFAULT_DATE_NAMES = range(31, (i) => String(i + 1));
 
 /** The default day of the week names to use if Intl API is not available. */
 const DEFAULT_DAY_OF_WEEK_NAMES = {
-  'long': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-  'short': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  'narrow': ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+  long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 };
-
 
 /**
  * Matches strings that have the form of a valid RFC 3339 string
@@ -50,7 +55,6 @@ const DEFAULT_DAY_OF_WEEK_NAMES = {
  */
 const ISO_8601_REGEX =
   /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|(?:(?:\+|-)\d{2}:\d{2}))?)?$/;
-
 
 /** Creates an array and fills it with values. */
 function range<T>(length: number, valueFunction: (index: number) => T): T[] {
@@ -64,7 +68,6 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
 /** Adapts the native JS Date for use with cdk-based components that work with dates. */
 @Injectable()
 export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
-
   /** Whether to clamp the date between 1 and 9999 to avoid IE and Edge errors. */
   private readonly _clampDate: boolean;
 
@@ -108,34 +111,49 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
 
   getMonthNames(style: 'long' | 'short' | 'narrow'): string[] {
     if (SUPPORTS_INTL_API) {
-      const dtf = new Intl.DateTimeFormat(this.locale, { month: style, timeZone: 'utc' });
-      return range(12, i =>
-        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, i, 1))));
+      const dtf = new Intl.DateTimeFormat(this.locale, {
+        month: style,
+        timeZone: 'utc',
+      });
+      return range(12, (i) =>
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, i, 1))),
+      );
     }
     return DEFAULT_MONTH_NAMES[style];
   }
 
   getDateNames(): string[] {
     if (SUPPORTS_INTL_API) {
-      const dtf = new Intl.DateTimeFormat(this.locale, { day: 'numeric', timeZone: 'utc' });
-      return range(31, i => this._stripDirectionalityCharacters(
-        this._format(dtf, new Date(2017, 0, i + 1))));
+      const dtf = new Intl.DateTimeFormat(this.locale, {
+        day: 'numeric',
+        timeZone: 'utc',
+      });
+      return range(31, (i) =>
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1))),
+      );
     }
     return DEFAULT_DATE_NAMES;
   }
 
   getDayOfWeekNames(style: 'long' | 'short' | 'narrow'): string[] {
     if (SUPPORTS_INTL_API) {
-      const dtf = new Intl.DateTimeFormat(this.locale, { weekday: style, timeZone: 'utc' });
-      return range(7, i => this._stripDirectionalityCharacters(
-        this._format(dtf, new Date(2017, 0, i + 1))));
+      const dtf = new Intl.DateTimeFormat(this.locale, {
+        weekday: style,
+        timeZone: 'utc',
+      });
+      return range(7, (i) =>
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1))),
+      );
     }
     return DEFAULT_DAY_OF_WEEK_NAMES[style];
   }
 
   getYearName(date: Date): string {
     if (SUPPORTS_INTL_API) {
-      const dtf = new Intl.DateTimeFormat(this.locale, { year: 'numeric', timeZone: 'utc' });
+      const dtf = new Intl.DateTimeFormat(this.locale, {
+        year: 'numeric',
+        timeZone: 'utc',
+      });
       return this._stripDirectionalityCharacters(this._format(dtf, date));
     }
     return String(this.getYear(date));
@@ -147,8 +165,9 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
   }
 
   getNumDaysInMonth(date: Date): number {
-    return this.getDate(this._createDateWithOverflow(
-      this.getYear(date), this.getMonth(date) + 1, 0));
+    return this.getDate(
+      this._createDateWithOverflow(this.getYear(date), this.getMonth(date) + 1, 0),
+    );
   }
 
   clone(date: Date): Date {
@@ -215,13 +234,16 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
 
   addCalendarMonths(date: Date, months: number): Date {
     let newDate = this._createDateWithOverflow(
-      this.getYear(date), this.getMonth(date) + months, this.getDate(date));
+      this.getYear(date),
+      this.getMonth(date) + months,
+      this.getDate(date),
+    );
 
     // It's possible to wind up in the wrong month if the original month has more days than the new
     // month. In this case we want to go to the last day of the desired month.
     // Note: the additional + 12 % 12 ensures we end up with a positive number, since JS % doesn't
     // guarantee this.
-    if (this.getMonth(newDate) != ((this.getMonth(date) + months) % 12 + 12) % 12) {
+    if (this.getMonth(newDate) != (((this.getMonth(date) + months) % 12) + 12) % 12) {
       newDate = this._createDateWithOverflow(this.getYear(newDate), this.getMonth(newDate), 0);
     }
 
@@ -230,14 +252,17 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
 
   addCalendarDays(date: Date, days: number): Date {
     return this._createDateWithOverflow(
-      this.getYear(date), this.getMonth(date), this.getDate(date) + days);
+      this.getYear(date),
+      this.getMonth(date),
+      this.getDate(date) + days,
+    );
   }
 
   toIso8601(date: Date): string {
     return [
       date.getUTCFullYear(),
       this._2digit(date.getUTCMonth() + 1),
-      this._2digit(date.getUTCDate())
+      this._2digit(date.getUTCDate()),
     ].join('-');
   }
 
@@ -282,7 +307,7 @@ export class NgxMatNativeDateAdapter extends NgxMatDateAdapter<Date> {
     return date.getMinutes();
   }
   getSecond(date: Date): number {
-    return date.getSeconds()
+    return date.getSeconds();
   }
 
   setHour(date: Date, value: number): void {

@@ -1,85 +1,210 @@
 <form [formGroup]="form">
   <table class="ngx-mat-timepicker-table">
     <tbody class="ngx-mat-timepicker-tbody">
-      <tr *ngIf="showSpinners">
-        <td>
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('hour', true)"
-            [disabled]="disabled">
-            <mat-icon>expand_less</mat-icon>
-          </button>
-        </td>
-        <td></td>
-        <td>
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('minute', true)"
-            [disabled]="disabled || disableMinute">
-            <mat-icon>expand_less</mat-icon>
-          </button> </td>
-        <td></td>
-        <td *ngIf="showSeconds">
-          <button type="button" mat-icon-button aria-label="expand_less icon" (click)="change('second', true)"
-            [disabled]="disabled || disableMinute">
-            <mat-icon>expand_less</mat-icon>
-          </button>
-        </td>
-        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
-        <td *ngIf="enableMeridian"></td>
-      </tr>
+      @if (showSpinners()) {
+        <tr>
+          <td>
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="expand_less icon"
+              (click)="change('hour', true)"
+              [disabled]="disabled()">
+              <mat-icon>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M18 15l-6-6-6 6" />
+                </svg>
+              </mat-icon>
+            </button>
+          </td>
+          <td></td>
+          <td>
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="expand_less icon"
+              (click)="change('minute', true)"
+              [disabled]="disabled() || disableMinute()">
+              <mat-icon
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M18 15l-6-6-6 6" /></svg
+              ></mat-icon>
+            </button>
+          </td>
+          <td></td>
+          @if (showSeconds()) {
+            <td>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="expand_less icon"
+                (click)="change('second', true)"
+                [disabled]="disabled() || disableMinute()">
+                <mat-icon
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 15l-6-6-6 6" /></svg
+                ></mat-icon>
+              </button>
+            </td>
+          }
+          @if (enableMeridian()) {
+            <td class="ngx-mat-timepicker-spacer"></td>
+            <td></td>
+          }
+        </tr>
+      }
 
       <tr>
         <td>
-          <mat-form-field appearance="fill" [color]="color">
-            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2" formControlName="hour"
+          <mat-form-field appearance="fill" [color]="color()">
+            <input
+              type="text"
+              matInput
+              (input)="formatInput($any($event).target)"
+              maxlength="2"
+              formControlName="hour"
               (keydown.ArrowUp)="change('hour', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()" (blur)="change('hour')">
+              (keydown.ArrowDown)="change('hour', false); $event.preventDefault()"
+              (blur)="change('hour')" />
           </mat-form-field>
         </td>
         <td class="ngx-mat-timepicker-spacer">&#58;</td>
         <td>
-          <mat-form-field appearance="fill" [color]="color">
-            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
-              formControlName="minute" (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()" (blur)="change('minute')">
+          <mat-form-field appearance="fill" [color]="color()">
+            <input
+              type="text"
+              matInput
+              (input)="formatInput($any($event).target)"
+              maxlength="2"
+              formControlName="minute"
+              (keydown.ArrowUp)="change('minute', true); $event.preventDefault()"
+              (keydown.ArrowDown)="change('minute', false); $event.preventDefault()"
+              (blur)="change('minute')" />
           </mat-form-field>
         </td>
-        <td *ngIf="showSeconds" class="ngx-mat-timepicker-spacer">&#58;</td>
-        <td *ngIf="showSeconds">
-          <mat-form-field appearance="fill" [color]="color">
-            <input type="text" matInput (input)="formatInput($any($event).target)" maxlength="2"
-              formControlName="second" (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
-              (keydown.ArrowDown)="change('second', false); $event.preventDefault()" (blur)="change('second')">
-          </mat-form-field>
-        </td>
+        @if (showSeconds()) {
+          <td class="ngx-mat-timepicker-spacer">&#58;</td>
+          <td>
+            <mat-form-field appearance="fill" [color]="color()">
+              <input
+                type="text"
+                matInput
+                (input)="formatInput($any($event).target)"
+                maxlength="2"
+                formControlName="second"
+                (keydown.ArrowUp)="change('second', true); $event.preventDefault()"
+                (keydown.ArrowDown)="change('second', false); $event.preventDefault()"
+                (blur)="change('second')" />
+            </mat-form-field>
+          </td>
+        }
 
-        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
-        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-meridian">
-          <button mat-button (click)="toggleMeridian()" mat-stroked-button [color]="color" [disabled]="disabled">
-            {{meridian}}
-          </button>
-        </td>
+        @if (enableMeridian()) {
+          <td class="ngx-mat-timepicker-spacer"></td>
+
+          <td class="ngx-mat-timepicker-meridian">
+            <button
+              mat-button
+              (click)="toggleMeridian()"
+              mat-stroked-button
+              [color]="color()"
+              [disabled]="disabled()">
+              {{ meridian }}
+            </button>
+          </td>
+        }
       </tr>
 
-      <tr *ngIf="showSpinners">
-        <td>
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('hour', false)"
-            [disabled]="disabled">
-            <mat-icon>expand_more</mat-icon>
-          </button> </td>
-        <td></td>
-        <td>
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('minute', false)"
-            [disabled]="disabled || disableMinute">
-            <mat-icon>expand_more</mat-icon>
-          </button> </td>
-        <td *ngIf="showSeconds"></td>
-        <td *ngIf="showSeconds">
-          <button type="button" mat-icon-button aria-label="expand_more icon" (click)="change('second', false)"
-            [disabled]="disabled || disableMinute">
-            <mat-icon>expand_more</mat-icon>
-          </button>
-        </td>
-        <td *ngIf="enableMeridian" class="ngx-mat-timepicker-spacer"></td>
-        <td *ngIf="enableMeridian"></td>
-      </tr>
+      @if (showSpinners()) {
+        <tr>
+          <td>
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="keyboard_arrow_down icon"
+              (click)="change('hour', false)"
+              [disabled]="disabled()">
+              <mat-icon>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </mat-icon>
+            </button>
+          </td>
+          <td></td>
+          <td>
+            <button
+              type="button"
+              mat-icon-button
+              aria-label="keyboard_arrow_down icon"
+              (click)="change('minute', false)"
+              [disabled]="disabled() || disableMinute()">
+              <mat-icon
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M6 9l6 6 6-6" /></svg
+              ></mat-icon>
+            </button>
+          </td>
+          @if (showSeconds()) {
+            <td></td>
+
+            <td>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="keyboard_arrow_down icon"
+                (click)="change('second', false)"
+                [disabled]="disabled() || disableMinute()">
+                <mat-icon
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6" /></svg
+                ></mat-icon>
+              </button>
+            </td>
+          }
+
+          @if (enableMeridian()) {
+            <td class="ngx-mat-timepicker-spacer"></td>
+            <td></td>
+          }
+        </tr>
+      }
     </tbody>
   </table>
 </form>

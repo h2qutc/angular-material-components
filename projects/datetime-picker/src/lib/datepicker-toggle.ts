@@ -1,5 +1,3 @@
-
-
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   AfterContentInit,
@@ -7,16 +5,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChild,
   Directive,
   Input,
-  OnChanges,
   OnDestroy,
-  SimpleChanges,
-  ViewChild,
   ViewEncapsulation,
+  effect,
+  input,
+  untracked,
+  viewChild,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { Observable, Subscription, merge, of as observableOf } from 'rxjs';
 import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
 import { NgxMatDatepickerIntl } from './datepicker-intl';
@@ -24,15 +22,16 @@ import { NgxMatDatepickerIntl } from './datepicker-intl';
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
   selector: '[ngxMatDatepickerToggleIcon]',
+  standalone: true,
 })
-export class NgxMatDatepickerToggleIcon { }
+export class NgxMatDatepickerToggleIcon {}
 
 @Component({
   selector: 'ngx-mat-datepicker-toggle',
   templateUrl: 'datepicker-toggle.html',
   styleUrls: ['datepicker-toggle.scss'],
   host: {
-    'class': 'mat-datepicker-toggle',
+    class: 'mat-datepicker-toggle',
     '[attr.tabindex]': 'null',
     '[class.mat-datepicker-toggle-active]': 'datepicker && datepicker.opened',
     '[class.mat-accent]': 'datepicker && datepicker.color === "accent"',
@@ -47,24 +46,29 @@ export class NgxMatDatepickerToggleIcon { }
   exportAs: 'ngxMatDatepickerToggle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatIconButton],
 })
-export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, OnDestroy {
+export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnDestroy {
   private _stateChanges = Subscription.EMPTY;
 
   /** Datepicker instance that the button will toggle. */
-  @Input('for') datepicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<any>, D>;
+  readonly datepicker = input<NgxMatDatepickerPanel<NgxMatDatepickerControl<any>, D>>(undefined, {
+    alias: 'for',
+  });
 
+  @Input()
   /** Tabindex for the toggle. */
-  @Input() tabIndex: number | null;
+  tabIndex: number | null = null;
 
   /** Screen-reader label for the button. */
-  @Input('aria-label') ariaLabel: string;
+  readonly ariaLabel = input<string>(undefined, { alias: 'aria-label' });
 
   /** Whether the toggle button is disabled. */
   @Input()
   get disabled(): boolean {
-    if (this._disabled === undefined && this.datepicker) {
-      return this.datepicker.disabled;
+    if (this._disabled === undefined && this.datepicker()) {
+      return this.datepicker().disabled;
     }
 
     return !!this._disabled;
@@ -75,13 +79,10 @@ export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, O
   private _disabled: boolean;
 
   /** Whether ripples on the toggle should be disabled. */
-  @Input() disableRipple: boolean;
-
-  /** Custom icon set by the consumer. */
-  @ContentChild(NgxMatDatepickerToggleIcon) _customIcon: NgxMatDatepickerToggleIcon;
+  disableRipple = input<boolean>();
 
   /** Underlying button element. */
-  @ViewChild('button') _button: MatButton;
+  _button = viewChild<MatButton>('button');
 
   constructor(
     public _intl: NgxMatDatepickerIntl,
@@ -90,12 +91,11 @@ export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, O
   ) {
     const parsedTabIndex = Number(defaultTabIndex);
     this.tabIndex = parsedTabIndex || parsedTabIndex === 0 ? parsedTabIndex : null;
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['datepicker']) {
-      this._watchStateChanges();
-    }
+    effect(() => {
+      this.datepicker();
+      untracked(() => this._watchStateChanges());
+    });
   }
 
   ngOnDestroy() {
@@ -107,20 +107,22 @@ export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, O
   }
 
   _open(event: Event): void {
-    if (this.datepicker && !this.disabled) {
-      this.datepicker.open();
+    if (this.datepicker() && !this.disabled) {
+      this.datepicker().open();
       event.stopPropagation();
     }
   }
 
   private _watchStateChanges() {
-    const datepickerStateChanged = this.datepicker ? this.datepicker.stateChanges : observableOf();
+    const datepickerStateChanged = this.datepicker()
+      ? this.datepicker()!.stateChanges
+      : observableOf();
     const inputStateChanged =
-      this.datepicker && this.datepicker.datepickerInput
-        ? this.datepicker.datepickerInput.stateChanges
+      this.datepicker()! && this.datepicker()!.datepickerInput
+        ? this.datepicker()!.datepickerInput.stateChanges
         : observableOf();
-    const datepickerToggled = this.datepicker
-      ? merge(this.datepicker.openedStream, this.datepicker.closedStream)
+    const datepickerToggled = this.datepicker()
+      ? merge(this.datepicker()!.openedStream, this.datepicker()!.closedStream)
       : observableOf();
 
     this._stateChanges.unsubscribe();

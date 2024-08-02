@@ -51,7 +51,7 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
 /** Provides the default date range selection behavior. */
 @Injectable()
 export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSelectionStrategy<D> {
-  constructor(private _dateAdapter: NgxMatDateAdapter<D>) { }
+  constructor(private _dateAdapter: NgxMatDateAdapter<D>) {}
 
   selectionFinished(date: D, currentRange: NgxDateRange<D>) {
     let { start, end } = currentRange;
@@ -133,6 +133,9 @@ export function NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
 
 export const NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER: FactoryProvider = {
   provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
-  deps: [[new Optional(), new SkipSelf(), NGX_MAT_DATE_RANGE_SELECTION_STRATEGY], NgxMatDateAdapter],
+  deps: [
+    [new Optional(), new SkipSelf(), NGX_MAT_DATE_RANGE_SELECTION_STRATEGY],
+    NgxMatDateAdapter,
+  ],
   useFactory: NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY,
 };

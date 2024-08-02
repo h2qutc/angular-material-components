@@ -1,10 +1,22 @@
 <div class="color-collection-row">
-  <button *ngFor="let c of colors1" mat-mini-fab [style.background-color]="c" class="btn-color"
-    (click)="select(c)" [ngClass]="{'active': selectedColor === c}" [disableRipple]="true">
-  </button>
+  @for (c of colors1; track c) {
+    <button
+      mat-mini-fab
+      [style.background-color]="c"
+      class="btn-color"
+      (click)="select(c)"
+      [ngClass]="{ active: selectedColor() === c }"
+      [disableRipple]="true"></button>
+  }
 </div>
 <div class="color-collection-row">
-  <button *ngFor="let c of colors2" mat-mini-fab [style.background-color]="c" class="btn-color"
-    (click)="select(c)" [ngClass]="{'active': selectedColor === c}" [disableRipple]="true">
-  </button>
+  @for (c of colors2; track c) {
+    <button
+      mat-mini-fab
+      [style.background-color]="c"
+      class="btn-color"
+      (click)="select(c)"
+      [ngClass]="{ active: selectedColor() === c }"
+      [disableRipple]="true"></button>
+  }
 </div>

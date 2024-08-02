@@ -1,15 +1,23 @@
 <mat-tab-group [mat-stretch-tabs]="false">
   <mat-tab label="API">
-    <p>Thank you so much for your coffee ❤️ </p>
+    <p>Thank you so much for your coffee ❤️</p>
     <a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
-      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-        style="height: 35px !important;width: 150px !important;">
+      <img
+        src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+        alt="Buy Me A Coffee"
+        style="height: 35px !important; width: 150px !important"
+      />
     </a>
-    <h1>API reference for @angular-material-components/file-input</h1>
+    <h1>API reference for &#64;angular-material-components/file-input</h1>
     <h2>Getting started</h2>
 
-    <a href="https://www.npmjs.com/package/@angular-material-components/file-input" target="_blank">
-      <img src="https://badge.fury.io/js/%40angular-material-components%2Ffile-input.svg">
+    <a
+      href="https://www.npmjs.com/package/@angular-material-components/file-input"
+      target="_blank"
+    >
+      <img
+        src="https://badge.fury.io/js/%40angular-material-components%2Ffile-input.svg"
+      />
     </a>
 
     <pre><code ngxMatHighlight>{{code1}}</code></pre>
@@ -17,7 +25,7 @@
     <h2>Setup</h2>
     <pre><code ngxMatHighlight class="language-typescript">{{code2}}</code></pre>
 
-    <h2>Properties @Input</h2>
+    <h2>Properties &#64;Input</h2>
     <table class="api-table-properties">
       <tbody>
         <tr>
@@ -45,7 +53,9 @@
           <td>boolean</td>
           <td>false</td>
           <td>
-            <p>If true, the file input allows the user to select more than one file.
+            <p>
+              If true, the file input allows the user to select more than one
+              file.
             </p>
           </td>
         </tr>
@@ -57,8 +67,10 @@
           <td>string</td>
           <td>null</td>
           <td>
-            <p>Limiting accepted file types (For example: accept="image/png, image/jpeg" or accept=".png, .jpg, .jpeg" —
-              Accept PNG or JPEG files.)
+            <p>
+              Limiting accepted file types (For example: accept="image/png,
+              image/jpeg" or accept=".png, .jpg, .jpeg" — Accept PNG or JPEG
+              files.)
             </p>
           </td>
         </tr>
@@ -70,17 +82,20 @@
           <td>ThemePalette</td>
           <td>null</td>
           <td>
-            <p>Theme color palette for the component.
-            </p>
+            <p>Theme color palette for the component.</p>
           </td>
         </tr>
-
       </tbody>
     </table>
 
     <h2>Theming</h2>
-    <p>@see @angular/material <a href="https://material.angular.io/guide/theming#using-a-pre-built-theme">Using a
-        pre-built theme</a></p>
+    <p>
+      &#64;see &#64;angular/material
+      <a
+        href="https://material.angular.io/guide/theming#using-a-pre-built-theme"
+        >Using a pre-built theme</a
+      >
+    </p>
     <p>Add the Material Design icon font to your index.html</p>
     <pre><code ngxMatHighlight class="language-css">{{code6}}</code></pre>
   </mat-tab>
@@ -88,7 +103,12 @@
     <mat-card class="zone zone-picker">
       <mat-card-content>
         <mat-form-field>
-          <ngx-mat-file-input [formControl]="fileControl" [multiple]="multiple" [accept]="accept" [color]="color">
+          <ngx-mat-file-input
+            [formControl]="fileControl"
+            [multiple]="multiple"
+            [accept]="accept"
+            [color]="color"
+          >
             <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
           </ngx-mat-file-input>
         </mat-form-field>
@@ -96,12 +116,13 @@
     </mat-card>
 
     <mat-card class="zone zone-value flex-column">
-
       <mat-card-content>
         <div class="title">Selected file(s):</div>
         <div class="value">
           <ul>
-            <li *ngFor="let item of files">{{item?.name}}</li>
+            @for (item of files; track item) {
+              <li>{{ item?.name }}</li>
+            }
           </ul>
         </div>
       </mat-card-content>
@@ -109,8 +130,8 @@
 
     <mat-card class="zone zone-errors flex-column">
       <mat-card-content>
-        <div class="title">Errors (Max size: {{maxSize}}Ko)</div>
-        <div class="value">{{fileControl.errors | json}}</div>
+        <div class="title">Errors (Max size: {{ maxSize }}Ko)</div>
+        <div class="value">{{ fileControl.errors | json }}</div>
       </mat-card-content>
     </mat-card>
 
@@ -118,18 +139,33 @@
       <mat-card-content>
         <div class="config-wrapper">
           <span class="label">disabled (Default: false) </span>
-          <mat-radio-group aria-label="Select an option" [ngModel]="disabled"
-            (ngModelChange)="onDisabledChanged($event)">
-            <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-              {{option.label}}</mat-radio-button>
+          <mat-radio-group
+            aria-label="Select an option"
+            [ngModel]="disabled"
+            (ngModelChange)="onDisabledChanged($event)"
+          >
+            @for (option of options; track option) {
+              <mat-radio-button
+                class="example-radio-button"
+                [value]="option.value"
+              >
+                {{ option.label }}</mat-radio-button
+              >
+            }
           </mat-radio-group>
         </div>
 
         <div class="config-wrapper">
           <span class="label">multiple (Default: false) </span>
           <mat-radio-group aria-label="Select an option" [(ngModel)]="multiple">
-            <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-              {{option.label}}</mat-radio-button>
+            @for (option of options; track option) {
+              <mat-radio-button
+                class="example-radio-button"
+                [value]="option.value"
+              >
+                {{ option.label }}</mat-radio-button
+              >
+            }
           </mat-radio-group>
         </div>
 
@@ -138,9 +174,11 @@
           <mat-form-field>
             <mat-label>Select accept</mat-label>
             <mat-select [(ngModel)]="accept">
-              <mat-option *ngFor="let item of listAccepts" [value]="item">
-                {{item}}
-              </mat-option>
+              @for (item of listAccepts; track item) {
+                <mat-option [value]="item">
+                  {{ item }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
@@ -150,9 +188,11 @@
           <mat-form-field>
             <mat-label>Select color</mat-label>
             <mat-select [(ngModel)]="color">
-              <mat-option *ngFor="let item of listColors" [value]="item">
-                {{item}}
-              </mat-option>
+              @for (item of listColors; track item) {
+                <mat-option [value]="item">
+                  {{ item }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
@@ -161,7 +201,9 @@
 
     <pre><code ngxMatHighlight class="language-html">{{code3}}</code></pre>
 
-    <h4>You can provide a custom icon by using the directive ngxMatFileInputIcon</h4>
+    <h4>
+      You can provide a custom icon by using the directive ngxMatFileInputIcon
+    </h4>
 
     <pre><code ngxMatHighlight class="language-html">{{code4}}</code></pre>
 
@@ -171,16 +213,16 @@
       </ngx-mat-file-input>
     </mat-form-field>
 
-    <h4>You can use with all properties of MatFormField such as appearance variants, hint...</h4>
+    <h4>
+      You can use with all properties of MatFormField such as appearance
+      variants, hint...
+    </h4>
 
     <pre><code ngxMatHighlight class="language-html">{{code5}}</code></pre>
 
     <mat-form-field appearance="outline">
-      <ngx-mat-file-input [formControl]="file3Control">
-      </ngx-mat-file-input>
-      <mat-hint>{{nbFiles}} selected file(s)</mat-hint>
+      <ngx-mat-file-input [formControl]="file3Control"> </ngx-mat-file-input>
+      <mat-hint>{{ nbFiles }} selected file(s)</mat-hint>
     </mat-form-field>
-
   </mat-tab>
-
 </mat-tab-group>

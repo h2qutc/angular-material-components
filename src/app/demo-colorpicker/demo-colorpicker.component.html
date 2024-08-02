@@ -1,16 +1,24 @@
 <mat-tab-group [mat-stretch-tabs]="false">
   <mat-tab label="API">
-    <p>Thank you so much for your coffee ❤️ </p>
+    <p>Thank you so much for your coffee ❤️</p>
     <a href="https://www.buymeacoffee.com/h2qutc" target="_blank">
-      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-        style="height: 35px !important;width: 150px !important;">
+      <img
+        src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+        alt="Buy Me A Coffee"
+        style="height: 35px !important; width: 150px !important"
+      />
     </a>
 
-    <h1>API reference for @angular-material-components/color-picker</h1>
+    <h1>API reference for &#64;angular-material-components/color-picker</h1>
     <h2>Getting started</h2>
 
-    <a href="https://www.npmjs.com/package/@angular-material-components/color-picker" target="_blank">
-      <img src="https://badge.fury.io/js/%40angular-material-components%2Fcolor-picker.svg">
+    <a
+      href="https://www.npmjs.com/package/@angular-material-components/color-picker"
+      target="_blank"
+    >
+      <img
+        src="https://badge.fury.io/js/%40angular-material-components%2Fcolor-picker.svg"
+      />
     </a>
 
     <pre><code ngxMatHighlight>{{code1}}</code></pre>
@@ -18,7 +26,7 @@
     <h2>Setup</h2>
     <pre><code ngxMatHighlight class="language-typescript">{{code2}}</code></pre>
 
-    <h2>Properties @Input</h2>
+    <h2>Properties &#64;Input</h2>
     <table class="api-table-properties">
       <tbody>
         <tr>
@@ -46,9 +54,10 @@
           <td>boolean</td>
           <td>false</td>
           <td>
-            <p>Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather
-              than a
-              popup and elements have more padding to allow for bigger touch targets.
+            <p>
+              Whether the calendar UI is in touch mode. In touch mode the
+              calendar opens in a dialog rather than a popup and elements have
+              more padding to allow for bigger touch targets.
             </p>
           </td>
         </tr>
@@ -60,43 +69,61 @@
           <td>ThemePalette</td>
           <td>undefined</td>
           <td>
-            <p>Color palette to use on the color picker
-            </p>
+            <p>Color palette to use on the color picker</p>
           </td>
         </tr>
-
       </tbody>
     </table>
 
-    <h2>Choosing color format settings to display in input
-    </h2>
+    <h2>Choosing color format settings to display in input</h2>
 
-    <p>The color-picker use <strong>NGX_MAT_COLOR_FORMATS</strong> by default.</p>
+    <p>
+      The color-picker use <strong>NGX_MAT_COLOR_FORMATS</strong> by default.
+    </p>
 
-    <p>You can also customize the color format by providing your custom MAT_COLOR_FORMATS in your module.</p>
+    <p>
+      You can also customize the color format by providing your custom
+      MAT_COLOR_FORMATS in your module.
+    </p>
     For example:
     <pre><code ngxMatHighlight class="language-typescript">{{code4}}</code></pre>
 
     <h2>Theming</h2>
-    <p>@see @angular/material <a href="https://material.angular.io/guide/theming#using-a-pre-built-theme">Using a
-        pre-built theme</a></p>
+    <p>
+      &#64;see &#64;angular/material
+      <a
+        href="https://material.angular.io/guide/theming#using-a-pre-built-theme"
+        >Using a pre-built theme</a
+      >
+    </p>
     <p>Add the Material Design icon font to your index.html</p>
     <pre><code ngxMatHighlight class="language-css">{{code5}}</code></pre>
   </mat-tab>
   <mat-tab label="Example">
     <mat-card class="zone zone-value">
       <mat-card-content>
-        <div class="row" [style.background-color]="colorCtr.value?.rgba">HEX: {{colorCtr.value?.hex}}</div>
-        <div class="row">RGBA: {{colorCtr.value?.rgba}}</div>
+        <div class="row" [style.background-color]="colorCtr.value?.rgba">
+          HEX: {{ colorCtr.value?.hex }}
+        </div>
+        <div class="row">RGBA: {{ colorCtr.value?.rgba }}</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card class="zone zone-picker">
       <mat-card-content>
         <mat-form-field>
-          <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr" [disabled]="disabled">
+          <input
+            matInput
+            [ngxMatColorPicker]="picker"
+            [formControl]="colorCtr"
+            [disabled]="disabled"
+          />
           <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-          <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+          <ngx-mat-color-picker
+            #picker
+            [touchUi]="touchUi"
+            [color]="color"
+          ></ngx-mat-color-picker>
         </mat-form-field>
       </mat-card-content>
     </mat-card>
@@ -104,18 +131,38 @@
     <mat-card class="zone zone-config">
       <div class="config-wrapper">
         <span class="label">disabled (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [color]="color" [ngModel]="disabled"
-          (ngModelChange)="onDisabledChanged($event)">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
+        <mat-radio-group
+          aria-label="Select an option"
+          [color]="color"
+          [ngModel]="disabled"
+          (ngModelChange)="onDisabledChanged($event)"
+        >
+          @for (option of options; track option.value) {
+            <mat-radio-button
+              class="example-radio-button"
+              [value]="option.value"
+            >
+              {{ option.label }}</mat-radio-button
+            >
+          }
         </mat-radio-group>
       </div>
 
       <div class="config-wrapper">
         <span class="label">touchUi (Default: false) </span>
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="touchUi" [color]="color">
-          <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option.value">
-            {{option.label}}</mat-radio-button>
+        <mat-radio-group
+          aria-label="Select an option"
+          [(ngModel)]="touchUi"
+          [color]="color"
+        >
+          @for (option of options; track option.value) {
+            <mat-radio-button
+              class="example-radio-button"
+              [value]="option.value"
+            >
+              {{ option.label }}</mat-radio-button
+            >
+          }
         </mat-radio-group>
       </div>
 
@@ -124,13 +171,14 @@
         <mat-form-field [color]="color">
           <mat-label>Select color</mat-label>
           <mat-select [(ngModel)]="color">
-            <mat-option *ngFor="let item of listColors" [value]="item">
-              {{item}}
-            </mat-option>
+            @for (item of listColors; track item) {
+              <mat-option [value]="item">
+                {{ item }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>
-
     </mat-card>
 
     <pre><code ngxMatHighlight class="language-typescript">{{code6}}</code></pre>
@@ -142,14 +190,22 @@
     <mat-card class="zone zone-picker">
       <mat-card-content>
         <mat-form-field>
-          <input matInput [ngxMatColorPicker]="pickerCustomIcon" [formControl]="colorCtr" [disabled]="disabled">
+          <input
+            matInput
+            [ngxMatColorPicker]="pickerCustomIcon"
+            [formControl]="colorCtr"
+            [disabled]="disabled"
+          />
           <ngx-mat-color-toggle matSuffix [for]="pickerCustomIcon">
             <mat-icon ngxMatColorpickerToggleIcon>keyboard_arrow_down</mat-icon>
           </ngx-mat-color-toggle>
-          <ngx-mat-color-picker #pickerCustomIcon [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+          <ngx-mat-color-picker
+            #pickerCustomIcon
+            [touchUi]="touchUi"
+            [color]="color"
+          ></ngx-mat-color-picker>
         </mat-form-field>
       </mat-card-content>
     </mat-card>
-
   </mat-tab>
 </mat-tab-group>

@@ -1,14 +1,36 @@
-<input #inputValue autocomplete="off"
-  class="mat-mdc-input-element  mat-mdc-form-field-input-control mdc-text-field__input" [attr.id]='id'
-  [attr.placeholder]='placeholder' [disabled]='disabled' [required]='required' [attr.readonly]='readonly || null'
-  [attr.aria-describedby]='_ariaDescribedby || null' [attr.aria-invalid]='errorState'
-  [attr.aria-required]='required.toString()'>
+<input
+  #inputValue
+  autocomplete="off"
+  class="mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input"
+  [attr.id]="id"
+  [attr.placeholder]="placeholder"
+  [disabled]="disabled"
+  [required]="required"
+  [attr.readonly]="readonly || null"
+  [attr.aria-describedby]="_ariaDescribedby || null"
+  [attr.aria-invalid]="errorState"
+  [attr.aria-required]="required.toString()"
+/>
 <div class="mat-mdc-form-field-suffix">
-  <button matSuffix mat-icon-button [color]="color" class="button-browse" (click)="openFilePicker($event)" type="button"
-    [disabled]="disabled">
-    <mat-icon *ngIf="!_customIcon" class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
-    <ng-content select="[ngxMatFileInputIcon]"></ng-content>
+  <button
+    matSuffix
+    mat-icon-button
+    [color]="color()"
+    class="button-browse"
+    (click)="openFilePicker($event)"
+    type="button"
+    [disabled]="disabled"
+  >
+    <ng-content select="[ngxMatFileInputIcon]">
+      <mat-icon class="ngx-mat-file-input--default-icon">attach_file</mat-icon>
+    </ng-content>
   </button>
 </div>
-<input type="file" #inputFile (change)="handleFiles($event.target.files)" class="input-file" [multiple]="multiple"
-  [accept]="accept">
+<input
+  type="file"
+  #inputFile
+  (change)="handleFiles($event.target.files)"
+  class="input-file"
+  [multiple]="multiple"
+  [accept]="accept"
+/>

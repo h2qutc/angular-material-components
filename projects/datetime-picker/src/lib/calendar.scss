@@ -113,6 +113,9 @@ $calendar-next-icon-transform: translateX(-2px) rotate(45deg);
 .mat-calendar-table-header th {
   text-align: center;
   padding: 0 0 $calendar-padding 0;
+  color: var(--mat-datepicker-calendar-header-text-color);
+  font-size: var(--mat-datepicker-calendar-header-text-size);
+  font-weight: var(--mat-datepicker-calendar-header-text-weight);
 }
 
 .mat-calendar-table-header-divider {

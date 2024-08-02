@@ -18,7 +18,7 @@
   .mat-datepicker-actions {
     $spacing: 8px;
 
-    .mat-button-base + .mat-button-base {
+    .mat-button-base+.mat-button-base {
       margin-left: $spacing;
 
       [dir='rtl'] & {
@@ -31,6 +31,7 @@
 
 @mixin legacy-form-field-compat() {
   .mat-form-field {
+
     .mat-form-field-prefix,
     .mat-form-field-suffix {
       .mat-datepicker-toggle .mat-mdc-button-base {
@@ -53,6 +54,7 @@
   }
 
   .mat-form-field-appearance-legacy {
+
     .mat-form-field-prefix,
     .mat-form-field-suffix {
       .mat-datepicker-toggle .mat-mdc-icon-button {
