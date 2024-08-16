@@ -1,16 +1,16 @@
 {
-  "name": "@angular-material-components/datetime-picker",
-  "version": "16.0.1",
+  "name": "@angular-material-components-awm/datetime-picker",
+  "version": "17.0.1",
   "description": "Angular Material Datetime Picker",
-  "author": "HO Hong Quan",
+  "author": "HO Hong Quan/AWM",
   "repository": {
     "type": "git",
-    "url": "https://github.com/h2qutc/angular-material-components.git"
+    "url": "git+https://github.com/furozen/angular-material-components.git"
   },
   "bugs": {
-    "url": "https://github.com/h2qutc/angular-material-components/issues"
+    "url": "https://github.com/furozen/angular-material-components/issues"
   },
-  "homepage": "https://github.com/h2qutc/angular-material-components",
+  "homepage": "https://github.com/furozen/angular-material-components",
   "keywords": [
     "angular",
     "angular2",
@@ -32,11 +32,11 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/platform-browser": "^16.0.0",
-    "@angular/common": "^16.0.0",
-    "@angular/core": "^16.0.0",
-    "@angular/forms": "^16.0.0",
-    "@angular/material": "^16.0.0",
-    "@angular/cdk": "^16.0.0"
+    "@angular/platform-browser": "^17.0.0",
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0",
+    "@angular/forms": "^17.0.0",
+    "@angular/material": "^17.0.0",
+    "@angular/cdk": "^17.0.0"
   }
 }
