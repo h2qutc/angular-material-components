@@ -75,7 +75,7 @@ export class NgxMatDatepickerInput<D>
   set min(value: D | null) {
     const validValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
 
-    if (!this._dateAdapter.sameDate(validValue, this._min)) {
+    if (!this._dateAdapter.sameDateWithTime(validValue, this._min)) {
       this._min = validValue;
       this._validatorOnChange();
     }
@@ -90,7 +90,7 @@ export class NgxMatDatepickerInput<D>
   set max(value: D | null) {
     const validValue = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
 
-    if (!this._dateAdapter.sameDate(validValue, this._max)) {
+    if (!this._dateAdapter.sameDateWithTime(validValue, this._max)) {
       this._max = validValue;
       this._validatorOnChange();
     }

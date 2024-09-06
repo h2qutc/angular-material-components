@@ -57,8 +57,8 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
 
   /**
    * Copy time from a date to a another date
-   * @param toDate 
-   * @param fromDate 
+   * @param toDate
+   * @param fromDate
    */
   copyTime(toDate: D, fromDate: D) {
     this.setHour(toDate, this.getHour(fromDate));
@@ -81,6 +81,16 @@ export abstract class NgxMatDateAdapter<D> extends DateAdapter<D> {
       res = res || this.getSecond(first) - this.getSecond(second);
     }
     return res;
+  }
+
+  /**
+ * Compares two dates and returns whether they are the same or not.
+ * @param first The first date to compare.
+ * @param second The second date to compare.
+ * @returns true if the dates are equal, false if they are not equal
+ */
+  sameDateWithTime(first: D, second: D): boolean {
+    return this.compareDateWithTime(first, second, true) === 0;
   }
 
   /**
