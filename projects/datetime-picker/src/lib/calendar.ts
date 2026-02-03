@@ -1,4 +1,7 @@
-import { ComponentPortal, ComponentType, Portal } from '@angular/cdk/portal';
+import { ComponentPortal, ComponentType, Portal, PortalModule } from '@angular/cdk/portal';
+import { CdkMonitorFocus } from '@angular/cdk/a11y';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import {
   AfterContentInit,
   AfterViewChecked,
@@ -227,6 +230,8 @@ export class NgxMatCalendarHeader<D> {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER],
+  standalone: true,
+  imports: [CommonModule, PortalModule, MatButtonModule, CdkMonitorFocus, NgxMatMonthView, NgxMatYearView, NgxMatMultiYearView]
 })
 export class NgxMatCalendar<D> implements AfterContentInit, AfterViewChecked, OnDestroy, OnChanges {
   /** An input indicating the type of the header component, if set. */

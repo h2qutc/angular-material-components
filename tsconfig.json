@@ -5,8 +5,8 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
@@ -15,8 +15,7 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es5",
-      "es2015",
+      "ES2022",
       "dom"
     ],
     "types": [

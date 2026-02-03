@@ -1,31 +1,20 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Platform } from '@angular/cdk/platform';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ContentChild, Directive, DoCheck, ElementRef, forwardRef, Input, OnDestroy, Optional, Self, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState, ThemePalette } from '@angular/material/core';
+import { ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Subject } from 'rxjs';
 import { FileOrArrayFile } from './file-input-type';
 
 let nextUniqueId = 0;
 
-const _NgxMatInputMixinBase = mixinErrorState(
-  class {
-
-    readonly stateChanges = new Subject<void>();
-
-    constructor(
-      public _defaultErrorStateMatcher: ErrorStateMatcher,
-      public _parentForm: NgForm,
-      public _parentFormGroup: FormGroupDirective,
-      /** @docs-private */
-      public ngControl: NgControl,
-    ) { }
-  },
-);
-
 @Directive({
-  selector: '[ngxMatFileInputIcon]'
+  selector: '[ngxMatFileInputIcon]',
+  standalone: true,
 })
 export class NgxMatFileInputIcon { }
 
@@ -40,11 +29,15 @@ export class NgxMatFileInputIcon { }
   providers: [
     { provide: MatFormFieldControl, useExisting: forwardRef(() => NgxMatFileInputComponent) }
   ],
-  exportAs: 'ngx-mat-file-input'
+  exportAs: 'ngx-mat-file-input',
+  standalone: true,
+  imports: [CommonModule, MatIconModule, MatButtonModule]
 })
-export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements MatFormFieldControl<FileOrArrayFile>,
-  OnDestroy, DoCheck, CanUpdateErrorState, ControlValueAccessor {
+export class NgxMatFileInputComponent implements MatFormFieldControl<FileOrArrayFile>,
+  OnDestroy, DoCheck, ControlValueAccessor {
 
+  readonly stateChanges = new Subject<void>();
+  
   @ViewChild('inputFile', { static: true }) private _inputFileRef: ElementRef;
   @ViewChild('inputValue', { static: true }) private _inputValueRef: ElementRef;
 
@@ -59,9 +52,8 @@ export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements M
   protected _previousNativeValue: any;
   _ariaDescribedby: string;
 
-  readonly stateChanges: Subject<void> = new Subject<void>();
   focused: boolean = false;
-  errorState: boolean;
+  errorState: boolean = false;
   controlType: string = 'ngx-mat-file-input';
   autofilled: boolean = false;
 
@@ -136,10 +128,9 @@ export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements M
     protected _platform: Platform,
     private _cd: ChangeDetectorRef,
     @Optional() @Self() public ngControl: NgControl,
-    @Optional() _parentForm: NgForm,
-    @Optional() _parentFormGroup: FormGroupDirective,
-    _defaultErrorStateMatcher: ErrorStateMatcher) {
-    super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
+    @Optional() private _parentForm: NgForm,
+    @Optional() private _parentFormGroup: FormGroupDirective,
+    private _defaultErrorStateMatcher: ErrorStateMatcher) {
 
     this.id = this.id;
 
@@ -161,6 +152,20 @@ export class NgxMatFileInputComponent extends _NgxMatInputMixinBase implements M
   ngDoCheck() {
     if (this.ngControl) {
       this.updateErrorState();
+    }
+  }
+  
+  /** Updates the error state based on the provided error state matcher. */
+  updateErrorState() {
+    const oldState = this.errorState;
+    const parent = this._parentFormGroup || this._parentForm;
+    const matcher = this.errorStateMatcher || this._defaultErrorStateMatcher;
+    const control = this.ngControl ? this.ngControl.control : null;
+    const newState = matcher?.isErrorState(control, parent) ?? false;
+
+    if (newState !== oldState) {
+      this.errorState = newState;
+      this.stateChanges.next();
     }
   }
 

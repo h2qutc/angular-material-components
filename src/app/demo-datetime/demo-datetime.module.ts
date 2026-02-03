@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import {
   NgxMatDatetimePickerModule,
@@ -29,6 +30,7 @@ const routes: Routes = [
       routes,
     ),
     MatInputModule,
+    MatFormFieldModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     FormsModule,
@@ -40,9 +42,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatCardModule,
-    SharedModule
-  ],
-  declarations: [
+    MatTabsModule,
+    SharedModule,
     DemoDatetimeComponent
   ],
   providers: [

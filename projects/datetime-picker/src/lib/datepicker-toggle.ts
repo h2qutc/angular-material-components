@@ -1,6 +1,9 @@
 
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {
   AfterContentInit,
   Attribute,
@@ -24,6 +27,7 @@ import { NgxMatDatepickerIntl } from './datepicker-intl';
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
   selector: '[ngxMatDatepickerToggleIcon]',
+  standalone: true
 })
 export class NgxMatDatepickerToggleIcon { }
 
@@ -47,6 +51,8 @@ export class NgxMatDatepickerToggleIcon { }
   exportAs: 'ngxMatDatepickerToggle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatIconModule]
 })
 export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnChanges, OnDestroy {
   private _stateChanges = Subscription.EMPTY;

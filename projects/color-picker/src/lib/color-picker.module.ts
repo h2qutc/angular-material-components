@@ -23,7 +23,17 @@ import { NumericColorInputDirective } from './directives';
 import { ColorAdapter } from './services';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    PortalModule,
+    MatIconModule,
     NgxMatColorPaletteComponent,
     NgxMatColorCanvasComponent,
     NgxMatColorCollectionComponent,
@@ -35,26 +45,11 @@ import { ColorAdapter } from './services';
     NgxMatColorpickerToggleIcon,
     NgxMatColorPickerInput
   ],
-  imports: [
-    CommonModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatRadioModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    PortalModule,
-    MatIconModule
-  ],
   exports: [
     NgxMatColorToggleComponent,
     NgxMatColorPickerInput,
     NgxMatColorPickerComponent,
     NgxMatColorpickerToggleIcon
-  ],
-  entryComponents: [
-    NgxMatColorPickerContentComponent
   ],
   providers: [
     ColorAdapter,

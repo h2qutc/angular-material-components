@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
 import { Color } from '../../models';
 import { BASIC_COLORS, stringInputToObject } from '../../helpers';
 
@@ -9,7 +11,9 @@ import { BASIC_COLORS, stringInputToObject } from '../../helpers';
   encapsulation: ViewEncapsulation.None,
   host: {
     'class': 'ngx-mat-color-collection'
-  }
+  },
+  standalone: true,
+  imports: [CommonModule, MatRadioModule]
 })
 export class NgxMatColorCollectionComponent implements OnInit {
 

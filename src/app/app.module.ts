@@ -50,10 +50,6 @@ const appRoutes: Routes = [
 export class AppRoutingModule { }
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      HomeComponent
-   ],
    imports: [
       BrowserModule,
       HttpClientModule,
@@ -64,7 +60,9 @@ export class AppRoutingModule { }
       MatToolbarModule,
       MatIconModule,
       MatListModule,
-      MatCardModule
+      MatCardModule,
+      AppComponent,
+      HomeComponent
    ],
    bootstrap: [
       AppComponent

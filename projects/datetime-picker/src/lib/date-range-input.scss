@@ -1,6 +1,6 @@
 @use 'sass:math';
 @use '@angular/cdk';
-@import './vendor-prefixes';
+@use './vendor-prefixes' as *;
 
 // @use '../core/style/variables';
 // @use '../core/style/vendor-prefixes';

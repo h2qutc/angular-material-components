@@ -1,10 +1,42 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '../../../projects/datetime-picker/src/public-api';
+import { SharedModule } from '../shared';
 
 @Component({
   selector: 'app-demo-time',
   templateUrl: './demo-time.component.html',
-  styleUrls: ['./demo-time.component.scss']
+  styleUrls: ['./demo-time.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatIconModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    SharedModule
+  ]
 })
 export class DemoTimeComponent implements OnInit {
 

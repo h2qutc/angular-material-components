@@ -38,13 +38,11 @@ const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     MatRadioModule,
     MatSelectModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    DemoColorpickerComponent
   ],
   providers: [
     { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
-  ],
-  declarations: [
-    DemoColorpickerComponent
   ]
 })
 export class DemoColorpickerModule { }

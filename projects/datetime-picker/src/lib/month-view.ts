@@ -60,6 +60,8 @@ const DAYS_PER_WEEK = 7;
   exportAs: 'ngxMatMonthView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgxMatCalendarBody]
 })
 export class NgxMatMonthView<D> implements AfterContentInit, OnChanges, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;

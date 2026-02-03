@@ -5,7 +5,7 @@ import { Overlay, OverlayConfig, OverlayRef, PositionStrategy, ScrollStrategy } 
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, ElementRef, EventEmitter, Inject, InjectionToken, Input, NgZone, OnDestroy, OnInit, Optional, Output, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { CanColor, ThemePalette, mixinColor } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { matDatepickerAnimations } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, Subscription, merge } from 'rxjs';
@@ -31,13 +31,6 @@ export const NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
   useFactory: NGX_MAT_COLOR_PICKER_SCROLL_STRATEGY_FACTORY,
 };
 
-const _MatColorpickerContentBase = mixinColor(
-  class {
-    constructor(public _elementRef: ElementRef) { }
-  },
-);
-
-
 @Component({
   selector: 'ngx-mat-color-picker-content',
   templateUrl: './color-picker-content.component.html',
@@ -54,10 +47,11 @@ const _MatColorpickerContentBase = mixinColor(
   exportAs: 'ngxMatColorPickerContent',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ['color']
+  standalone: true,
+  imports: [NgxMatColorPaletteComponent]
 })
-export class NgxMatColorPickerContentComponent extends _MatColorpickerContentBase
-  implements CanColor {
+export class NgxMatColorPickerContentComponent {
+  @Input() color: ThemePalette;
 
   /** Reference to the internal calendar component. */
   @ViewChild(NgxMatColorPaletteComponent) _palette: NgxMatColorPaletteComponent;
@@ -65,8 +59,7 @@ export class NgxMatColorPickerContentComponent extends _MatColorpickerContentBas
   picker: NgxMatColorPickerComponent;
   _isAbove: boolean;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  constructor(public _elementRef: ElementRef) {
   }
 
 }
@@ -77,8 +70,9 @@ export class NgxMatColorPickerContentComponent extends _MatColorpickerContentBas
   exportAs: 'ngxMatColorPicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
-export class NgxMatColorPickerComponent implements OnInit, OnDestroy, CanColor {
+export class NgxMatColorPickerComponent implements OnInit, OnDestroy {
 
   private _scrollStrategy: () => ScrollStrategy;
 

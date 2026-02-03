@@ -38,8 +38,8 @@ const routes: Routes = [
     MatIconModule,
     MatCardModule,
     NgxMatFileInputModule,
-    SharedModule
-  ],
-  declarations: [DemoFileInputComponent]
+    SharedModule,
+    DemoFileInputComponent
+  ]
 })
 export class DemoFileInputModule { }

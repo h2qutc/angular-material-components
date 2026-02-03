@@ -2,21 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
     "inlineSources": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
+    "importHelpers": true
   },
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "compilationMode": "partial",
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
+    "compilationMode": "partial"
   },
   "exclude": [
     "src/test.ts",

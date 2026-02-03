@@ -2,12 +2,15 @@ import {
   AfterContentInit, ChangeDetectorRef, Component, ContentChild, Directive, Input, OnChanges, OnDestroy,
   OnInit, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Subscription, merge, of } from 'rxjs';
 import { NgxMatColorPickerComponent } from '../color-picker/color-picker.component';
 
 @Directive({
   selector: '[ngxMatColorpickerToggleIcon]',
+  standalone: true
 })
 export class NgxMatColorpickerToggleIcon { }
 
@@ -26,7 +29,9 @@ export class NgxMatColorpickerToggleIcon { }
     '(focus)': '_button.focus()',
   },
   exportAs: 'ngxMatColorPickerToggle',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatIconModule]
 })
 export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
 
@@ -80,12 +85,12 @@ export class NgxMatColorToggleComponent implements OnInit, AfterContentInit, OnC
   }
 
   private _watchStateChanges() {
-    const disabled$ = this.picker ? this.picker._disabledChange : of();
+    const disabled$ = this.picker ? this.picker._disabledChange : of<boolean>(false);
     const inputDisabled$ = this.picker && this.picker._pickerInput ?
-      this.picker._pickerInput._disabledChange : of();
+      this.picker._pickerInput._disabledChange : of<boolean>(false);
 
     const pickerToggled$ = this.picker ?
-      merge(this.picker.openedStream, this.picker.closedStream) : of();
+      merge(this.picker.openedStream, this.picker.closedStream) : of<void>();
     this._stateChanges.unsubscribe();
 
     this._stateChanges = merge(disabled$, inputDisabled$, pickerToggled$).subscribe(() => this._cd.markForCheck());

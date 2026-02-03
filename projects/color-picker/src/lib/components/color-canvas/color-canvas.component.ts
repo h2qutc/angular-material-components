@@ -1,10 +1,15 @@
 import { AfterViewInit, Component, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AbstractControl, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { getColorAtPosition, matchers, stringInputToObject } from '../../helpers';
 import { Color } from '../../models';
 import { NgxMatBaseColorCanvas } from './base-color-canvas';
+import { NumericColorInputDirective } from '../../directives/numeric-color-input.directive';
+import { NgxMatColorSliderComponent } from './color-slider/color-slider.component';
 
 const RADIUS_NOB = 5;
 
@@ -15,7 +20,9 @@ const RADIUS_NOB = 5;
   encapsulation: ViewEncapsulation.None,
   host: {
     'class': 'ngx-mat-color-canvas'
-  }
+  },
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NumericColorInputDirective, NgxMatColorSliderComponent]
 })
 export class NgxMatColorCanvasComponent extends NgxMatBaseColorCanvas
   implements OnInit, AfterViewInit, OnChanges, OnDestroy {

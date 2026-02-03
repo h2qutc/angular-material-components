@@ -1,12 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AbstractControl, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { Color } from 'projects/color-picker/src/public-api';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { Color, NgxMatColorPickerModule } from 'projects/color-picker/src/public-api';
+import { SharedModule } from '../shared';
 
 @Component({
   selector: 'ngx-mat-demo-colorpicker',
   templateUrl: './demo-colorpicker.component.html',
-  styleUrls: ['./demo-colorpicker.component.scss']
+  styleUrls: ['./demo-colorpicker.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatIconModule,
+    NgxMatColorPickerModule,
+    SharedModule
+  ]
 })
 export class DemoColorpickerComponent implements OnInit {
 

@@ -1,6 +1,11 @@
 import { ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, Optional, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { NgxMatDateAdapter } from './core/date-adapter';
@@ -25,6 +30,15 @@ import {
   ],
   exportAs: 'ngxMatTimepicker',
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
+  ]
 })
 export class NgxMatTimepickerComponent<D> implements ControlValueAccessor, OnInit, OnChanges {
 

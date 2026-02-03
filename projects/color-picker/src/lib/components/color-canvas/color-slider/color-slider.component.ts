@@ -6,7 +6,8 @@ import { NgxMatBaseColorCanvas } from '../base-color-canvas';
 @Component({
   selector: 'ngx-mat-color-slider',
   templateUrl: './color-slider.component.html',
-  styleUrls: ['./color-slider.component.scss']
+  styleUrls: ['./color-slider.component.scss'],
+  standalone: true
 })
 export class NgxMatColorSliderComponent extends NgxMatBaseColorCanvas implements OnInit {
 

@@ -7,16 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { NgxMatFileInputComponent, NgxMatFileInputIcon } from './file-input.component';
 
 @NgModule({
-  declarations: [
-    NgxMatFileInputComponent,
-    NgxMatFileInputIcon
-  ],
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NgxMatFileInputComponent,
+    NgxMatFileInputIcon,
   ],
   exports: [
     NgxMatFileInputComponent,

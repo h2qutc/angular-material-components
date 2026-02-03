@@ -4,8 +4,7 @@ import { NgxMatHighlightDirective } from './NgxMatHighlightDirective';
 
 
 @NgModule({
-  imports: [MatTabsModule],
-  declarations: [NgxMatHighlightDirective],
+  imports: [MatTabsModule, NgxMatHighlightDirective],
   exports: [NgxMatHighlightDirective, MatTabsModule]
 })
 export class SharedModule { }

@@ -2,6 +2,8 @@ import { AnimationEvent } from '@angular/animations';
 import { ListKeyManagerModifierKey } from '@angular/cdk/a11y';
 import { Directionality } from '@angular/cdk/bidi';
 import { BooleanInput, coerceBooleanProperty, coerceStringArray } from '@angular/cdk/coercion';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import {
   DOWN_ARROW,
   ESCAPE,
@@ -46,7 +48,7 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { CanColor, ThemePalette, mixinColor } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { Observable, Subject, Subscription, merge } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { NgxMatCalendar, NgxMatCalendarView } from './calendar';
@@ -93,14 +95,6 @@ export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
   useFactory: NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY,
 };
 
-// Boilerplate for applying mixins to MatDatepickerContent.
-/** @docs-private */
-const _NgxMatDatepickerContentBase = mixinColor(
-  class {
-    constructor(public _elementRef: ElementRef) { }
-  },
-);
-
 /**
  * Component used as the content for the datepicker overlay. We use this instead of using
  * MatCalendar directly as the content so we can control the initial focus. This also gives us a
@@ -124,11 +118,13 @@ const _NgxMatDatepickerContentBase = mixinColor(
   exportAs: 'ngxMatDatepickerContent',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ['color'],
+  standalone: true,
+  imports: [NgxMatCalendar, CommonModule, MatButtonModule],
 })
 export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
-  extends _NgxMatDatepickerContentBase
-  implements OnInit, AfterViewInit, OnDestroy, CanColor {
+  implements OnInit, AfterViewInit, OnDestroy {
+  /** The datepicker's color palette. */
+  @Input() color: ThemePalette;
   private _subscriptions = new Subscription();
   private _model: NgxMatDateSelectionModel<S, D>;
   /** Reference to the internal calendar component. */
@@ -181,7 +177,6 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   _modelTime: D | null;
 
   constructor(
-    elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
     private _globalModel: NgxMatDateSelectionModel<S, D>,
     private _dateAdapter: NgxMatDateAdapter<D>,
@@ -190,7 +185,6 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     private _rangeSelectionStrategy: NgxMatDateRangeSelectionStrategy<D>,
     intl: NgxMatDatepickerIntl,
   ) {
-    super(elementRef);
     this._closeButtonText = intl.closeCalendarLabel;
   }
 

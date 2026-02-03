@@ -36,10 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatCommonModule,
     NgxMatTimepickerModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
-  exports: [
-    CdkScrollableModule,
+    ReactiveFormsModule,
+    // Import all standalone components
     NgxMatCalendar,
     NgxMatCalendarBody,
     NgxMatDatetimepicker,
@@ -59,7 +57,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxMatDatepickerCancel,
     NgxMatDatepickerApply,
   ],
-  declarations: [
+  exports: [
+    CdkScrollableModule,
     NgxMatCalendar,
     NgxMatCalendarBody,
     NgxMatDatetimepicker,

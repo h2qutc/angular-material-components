@@ -50,6 +50,8 @@ export const yearsPerRow = 4;
   exportAs: 'ngxMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgxMatCalendarBody]
 })
 export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
